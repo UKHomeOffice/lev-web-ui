@@ -1,6 +1,11 @@
 module.exports = {
-  surname: {
-    type: 'text',
-    validate: 'required'
+  'system-number': {
+    type: 'text'
+  },
+  'surname': {
+    type: 'text'
+  },
+  'forenames': {
+    type: 'text'
   }
 }

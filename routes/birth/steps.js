@@ -2,6 +2,8 @@ module.exports = {
   '/': {
     entryPoint: true,
     resetJourney: true,
-    next: '/'
-  }
+    fields: ['system-number', 'surname', 'forenames'],
+    next: 'done'
+  },
+  'done': {}
 }
