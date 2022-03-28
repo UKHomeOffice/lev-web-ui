@@ -12,11 +12,9 @@
   },
   "author": "HMPO",
   "dependencies": {
-    "body-parser": "^1.19.2",
-    "cookie-parser": "^1.4.6",
     "express": "^4.17.3",
-    "express-session": "^1.17.2",
     "govuk-frontend": "^4.0.1",
+    "hmpo-app": "^2.0.0",
     "hmpo-components": "^5.2.1",
     "hmpo-config": "^2.2.0",
     "hmpo-form-wizard": "^12.0.2",
