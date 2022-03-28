@@ -1,6 +1,6 @@
 module.exports = {
   'system-number': {
-    type: 'text'
+    type: 'number'
   },
   'surname': {
     type: 'text'
