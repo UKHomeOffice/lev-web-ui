@@ -7,5 +7,8 @@ module.exports = {
   },
   'forenames': {
     type: 'text'
+  },
+  'dob': {
+    type: 'date'
   }
 }
