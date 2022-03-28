@@ -1,5 +1,5 @@
 {
-  "port": 3000,
+  "port": 8001,
   "logs": {
     "console": true,
     "app": false,
