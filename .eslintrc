@@ -7,9 +7,6 @@
     "eslint:recommended",
     "plugin:jest/recommended"
   ],
-  "plugins": [
-    "jest"
-  ],
   "rules": {
     "no-console": "off",
     "no-unused-vars": ["error", { "argsIgnorePattern": "^(err|req|res|next)$" }],
