@@ -11,4 +11,4 @@ module.exports = {
   'dob': {
     type: 'date'
   }
-}
+};

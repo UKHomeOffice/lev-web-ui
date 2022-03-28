@@ -8,7 +8,10 @@
     "postinstall": "npm run build",
     "build": "rm -rf public/; npm-run-all build:sass build:js",
     "build:sass": "mkdir -p public/stylesheets; sass --quiet-deps --style=compressed assets/stylesheets/app.scss public/stylesheets/application.css",
-    "build:js": "mkdir -p public/javascripts; cat node_modules/govuk-frontend/govuk/all.js node_modules/hmpo-components/all.js assets/javascripts/*.js > public/javascripts/application.js"
+    "build:js": "mkdir -p public/javascripts; cat node_modules/govuk-frontend/govuk/all.js node_modules/hmpo-components/all.js assets/javascripts/*.js > public/javascripts/application.js",
+    "test": "npm-run-all lint",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix ."
   },
   "author": "HMPO",
   "dependencies": {

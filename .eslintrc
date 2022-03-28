@@ -3,13 +3,17 @@
         "node": true,
         "es6": true
     },
+    "parserOptions": {
+        "ecmaVersion": 2018
+    },
     "extends": "eslint:recommended",
     "rules": {
+        "no-console": "off",
         "no-unused-vars": ["error", { "argsIgnorePattern": "^(err|req|res|next)$" }],
         "no-mixed-requires": ["error", { "allowCall": true }],
         "quotes": ["error", "single"],
         "no-trailing-spaces": "error",
-        "indent": "error",
+        "indent": ["error", 2, { "SwitchCase": 1 }],
         "linebreak-style": ["error", "unix"],
         "semi": ["error", "always"],
         "brace-style": ["error", "1tbs", { "allowSingleLine": true }],
