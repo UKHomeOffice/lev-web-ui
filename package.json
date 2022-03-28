@@ -9,9 +9,10 @@
     "build": "rm -rf public/; npm-run-all build:sass build:js",
     "build:sass": "mkdir -p public/stylesheets; sass --quiet-deps --style=compressed assets/stylesheets/app.scss public/stylesheets/application.css",
     "build:js": "mkdir -p public/javascripts; cat node_modules/govuk-frontend/govuk/all.js node_modules/hmpo-components/all.js assets/javascripts/*.js > public/javascripts/application.js",
-    "test": "npm-run-all lint",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "test": "npm-run-all test:lint test:unit test:coverage",
+    "test:lint": "eslint .",
+    "test:unit": "jest unit",
+    "test:coverage": "jest unit --coverage"
   },
   "author": "HMPO",
   "dependencies": {
@@ -29,6 +30,7 @@
     "sass": "^1.49.9"
   },
   "devDependencies": {
-    "eslint": "^8.12.0"
+    "eslint": "^8.12.0",
+    "jest": "^27.5.1"
   }
 }
