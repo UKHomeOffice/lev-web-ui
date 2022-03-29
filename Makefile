@@ -11,3 +11,5 @@ test:
 
 dev:
 	npm run dev
+
+all: clean install test
