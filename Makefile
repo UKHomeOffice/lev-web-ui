@@ -1,3 +1,5 @@
+.PHONY: all test clean
+
 clean:
 	rm -rf node_modules/ public/
 
