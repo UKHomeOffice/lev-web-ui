@@ -11,6 +11,9 @@
     "system-number": {
       "label": "System number from birth certificate"
     },
+    "death-system-number": {
+      "label": "System number from death certificate"
+    },
     "surname": {
       "label": "Surname"
     },
@@ -19,6 +22,9 @@
     },
     "dob": {
       "label": "Date of birth"
+    },
+    "dobd": {
+      "label": "Date of birth or death"
     },
     "date-day": {
       "label": "Day"
@@ -32,6 +38,9 @@
   },
   "pages": {
     "birthSearch": {
+      "title": "Applicant's details"
+    },
+    "deathSearch": {
       "title": "Applicant's details"
     },
     "error": {

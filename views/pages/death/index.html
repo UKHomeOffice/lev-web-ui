@@ -1,0 +1,7 @@
+{% extends "../form-template.njk" %}
+{% set hmpoPageKey = "deathSearch" %}
+{% set govukServiceNameKey = "Death record check" %}
+
+{% block submitButton %}
+    {{ hmpoSubmit(ctx, {key: 'search'}) }}
+{% endblock %}
