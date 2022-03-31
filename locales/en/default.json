@@ -37,11 +37,17 @@
     }
   },
   "pages": {
-    "birthSearch": {
-      "title": "Applicant's details"
+    "birth": {
+      "serviceName": "Birth record check",
+      "searchPage": {
+        "title": "Applicant's details"
+      }
     },
-    "deathSearch": {
-      "title": "Applicant's details"
+    "death": {
+      "serviceName": "Death record check",
+      "searchPage": {
+        "title": "Applicant's details"
+      }
     },
     "error": {
       "title": "Something went wrong"

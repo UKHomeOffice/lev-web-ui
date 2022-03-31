@@ -1,7 +1,4 @@
-{% extends "../form-template.njk" %}
-{% set hmpoPageKey = "birthSearch" %}
-{% set govukServiceNameKey = "Birth record check" %}
-
-{% block submitButton %}
-    {{ hmpoSubmit(ctx, {key: 'search'}) }}
-{% endblock %}
+{% extends "../search-template.njk" %}
+{% set hmpoPageKey = "birth.searchPage" %}
+{% set govukServiceNameKey = translate("pages.birth.serviceName") %}
+{% set govukServiceUrl = "/birth" %}
