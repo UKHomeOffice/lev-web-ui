@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block pageTitle %}
-    {{ (translate("govuk.error", { default: "Error" }) + ": ") if errorlist.length }}{{ hmpoTitle | safe }} {{ "– " + govukServiceName | safe if govukServiceName }} – GOV.UK
+    {{ (translate("govuk.error", { default: "Error" }) + ": ") if errorlist.length }}{{ govukServiceName | safe if govukServiceName }} – GOV.UK
 {% endblock %}
 
 {% from "govuk/components/skip-link/macro.njk" import govukSkipLink %}
