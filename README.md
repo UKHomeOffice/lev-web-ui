@@ -1,5 +1,5 @@
 # lev-ui
-Life Events Verification User Interface
+Life Event Verification User Interface
 
 ## Getting Started
 

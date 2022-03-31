@@ -1,7 +1,7 @@
 {
   "name": "lev-ui",
   "version": "1.0.0",
-  "description": "Life Events Verification User Interface",
+  "description": "Life Event Verification User Interface",
   "main": "app.js",
   "scripts": {
     "start": "node .",
