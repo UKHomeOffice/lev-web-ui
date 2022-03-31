@@ -1,0 +1,11 @@
+{% extends "app-template.njk" %}
+
+{% from "hmpo-footer/macro.njk" import hmpoFooter %}
+
+{% block footer %}
+    {{ hmpoFooter({
+        meta: {
+            text: "Your feedback will help us improve this service. Email us ITnowServiceDesk@homeoffice.gov.uk"
+        }
+    }) }}
+{% endblock %}

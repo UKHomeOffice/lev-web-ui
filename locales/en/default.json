@@ -1,6 +1,7 @@
 {
   "govuk": {
-    "serviceName": "Birth record check"
+    "serviceName": "Life Event Verification",
+    "skipLink": "Skip to main content"
   },
   "buttons": {
     "next": "Continue",
