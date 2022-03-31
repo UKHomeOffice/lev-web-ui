@@ -9,6 +9,7 @@
 {# make default page key #}
 {% set hmpoPageKey = hmpoPageKey or ( options.route | camelcase ) %}
 {% set submitKey = submitKey or 'next' %}
+{% set assetPath = assetPath | default(assetsPath) | default("/public") %}
 
 {# find the top most question fields #}
 {% set topLevelFields = [] %}
@@ -41,7 +42,7 @@
             {% if fieldName === "system-number" %}
                 {{ hmpoDetails({
                     summaryText: "What is the system number?",
-                    text: "Who knows!!!"
+                    html: "<img src=\"/public/images/system-number-hint.png\" alt=\"The system number is a nine digit number located in the bottom left corner of the birth certificate\" title=\"Where to find the system number on a birth certificate\"/>"
                 }) }}
             {% endif %}
 
