@@ -4,6 +4,7 @@
 {% from "hmpo-html/macro.njk" import hmpoHtml %}
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
 {% from "hmpo-field/macro.njk" import hmpoField %}
+{% from "hmpo-details/macro.njk" import hmpoDetails %}
 
 {# make default page key #}
 {% set hmpoPageKey = hmpoPageKey or ( options.route | camelcase ) %}
@@ -36,6 +37,14 @@
     {% call hmpoForm(ctx) %}
         {% for fieldName in topLevelFields %}
             {{ hmpoField(ctx, fieldName, isPageHeading) }}
+
+            {% if fieldName === "system-number" %}
+                {{ hmpoDetails({
+                    summaryText: "Hello",
+                    text: "There"
+                }) }}
+            {% endif %}
+
             {% set isPageHeading = false %}
         {% endfor %}
 
