@@ -1,4 +1,25 @@
-{% extends "../search-template.njk" %}
-{% set hmpoPageKey = "birth.searchPage" %}
-{% set govukServiceNameKey = translate("pages.birth.serviceName") %}
-{% set govukServiceUrl = "/birth" %}
+{% extends '../app-template.njk' %}
+
+{% from 'hmpo-details/macro.njk' import hmpoDetails %}
+{% from 'hmpo-field/macro.njk' import hmpoField %}
+{% from 'hmpo-form/macro.njk' import hmpoForm %}
+{% from 'hmpo-submit/macro.njk' import hmpoSubmit %}
+
+{% set hmpoPageKey = 'birth.searchPage' %}
+{% set govukServiceNameKey = translate('pages.birth.serviceName') %}
+{% set govukServiceUrl = '/birth' %}
+
+{% block mainContent %}
+    {% call hmpoForm(ctx) %}
+        {{ hmpoField(ctx, 'system-number') }}
+        {{ hmpoDetails({
+            id: 'system-number-hint',
+            summaryText: 'What is the system number?',
+            html: '<img src="/public/images/system-number-hint.png" alt="The system number is a nine digit number located in the bottom left corner of the birth certificate" title="Where to find the system number on a birth certificate"/>'
+        }) }}
+        {{ hmpoField(ctx, 'surname') }}
+        {{ hmpoField(ctx, 'forenames') }}
+        {{ hmpoField(ctx, 'dob') }}
+        {{ hmpoSubmit(ctx, {key: 'search'}) }}
+    {% endcall %}
+{% endblock %}
