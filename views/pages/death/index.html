@@ -1,9 +1,9 @@
-{% extends "../app-template.njk" %}
+{% extends "app-template.njk" %}
 
 {% from "hmpo-field/macro.njk" import hmpoField %}
 {% from "hmpo-form/macro.njk" import hmpoForm %}
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
-{% from "../lev-system-number.njk" import levSystemNumber %}
+{% from "lev-system-number.njk" import levSystemNumber %}
 
 {% set hmpoPageKey = "death.searchPage" %}
 {% set govukServiceNameKey = translate("pages.death.serviceName") %}
