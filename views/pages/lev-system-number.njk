@@ -1,0 +1,14 @@
+{% macro levSystemNumber(ctx, fieldName) %}
+    {% from "hmpo-details/macro.njk" import hmpoDetails %}
+    {% from "hmpo-field/macro.njk" import hmpoField %}
+
+    {{ hmpoField(ctx, fieldName) }}
+
+    {% set detailsKey = fieldName + "-hint" %}
+
+    {{ hmpoDetails({
+        id: detailsKey,
+        summaryText: ctx().translate(detailsKey + ".summaryText"),
+        html: "<img src=\"/public/images/system-number-hint.png\" alt=\"" + ctx().translate(detailsKey + ".html.alt") + "\" title=\"" + ctx().translate(detailsKey + ".html.title") + "\"/>"
+    }) }}
+{% endmacro %}
