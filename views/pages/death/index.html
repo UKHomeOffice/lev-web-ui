@@ -10,6 +10,8 @@
 {% set govukServiceUrl = '/death' %}
 
 {% block mainContent %}
+    {{ super() }}
+
     {% call hmpoForm(ctx) %}
         {{ hmpoField(ctx, 'system-number') }}
         {{ hmpoDetails({
