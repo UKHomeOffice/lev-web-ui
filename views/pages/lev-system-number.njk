@@ -1,10 +1,10 @@
-{% macro levSystemNumber(ctx, fieldName) %}
+{% macro levSystemNumber(ctx, fieldName, detailsKey) %}
     {% from "hmpo-details/macro.njk" import hmpoDetails %}
     {% from "hmpo-field/macro.njk" import hmpoField %}
 
     {{ hmpoField(ctx, fieldName) }}
 
-    {% set detailsKey = fieldName + "-hint" %}
+    {% set detailsKey = detailsKey or fieldName + "-hint" %}
 
     {{ hmpoDetails({
         id: detailsKey,
