@@ -1,13 +1,13 @@
-{% extends "../app-template.njk" %}
+{% extends '../app-template.njk' %}
 
 {% from 'hmpo-details/macro.njk' import hmpoDetails %}
 {% from 'hmpo-field/macro.njk' import hmpoField %}
 {% from 'hmpo-form/macro.njk' import hmpoForm %}
 {% from 'hmpo-submit/macro.njk' import hmpoSubmit %}
 
-{% set hmpoPageKey = "death.searchPage" %}
-{% set govukServiceNameKey = translate("pages.death.serviceName") %}
-{% set govukServiceUrl = "/death" %}
+{% set hmpoPageKey = 'death.searchPage' %}
+{% set govukServiceNameKey = translate('pages.death.serviceName') %}
+{% set govukServiceUrl = '/death' %}
 
 {% block mainContent %}
     {% call hmpoForm(ctx) %}

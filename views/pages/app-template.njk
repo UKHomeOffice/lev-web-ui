@@ -1,11 +1,15 @@
-{% extends "./hmpo-template.njk" %}
+{% extends 'hmpo-template.njk' %}
 
-{% from "hmpo-footer/macro.njk" import hmpoFooter %}
+{% from 'hmpo-footer/macro.njk' import hmpoFooter %}
+
+{% block pageTitle %}
+    {{ (translate('govuk.error', { default: 'Error' }) + ': ') if errorlist.length }}{{ govukServiceName | safe if govukServiceName }} – GOV.UK
+{% endblock %}
 
 {% block footer %}
     {{ hmpoFooter({
         meta: {
-            text: "Your feedback will help us improve this service. Email us ITnowServiceDesk@homeoffice.gov.uk"
+            text: 'Your feedback will help us improve this service. Email us ITnowServiceDesk@homeoffice.gov.uk'
         }
     }) }}
 {% endblock %}
