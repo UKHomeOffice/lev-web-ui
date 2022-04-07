@@ -13,20 +13,14 @@
     },
     "birth-system-number-hint": {
       "summaryText": "What is the system number?",
-      "html": {
-        "alt": "The system number is a nine digit number located in the bottom left corner of the birth certificate",
-        "title": "Where to find the system number on a birth certificate"
-      }
+      "html": "<img src=\"/public/images/system-number-hint.png\" alt=\"The system number is a nine digit number located in the bottom left corner of the birth certificate\" title=\"Where to find the system number on a birth certificate\"/>"
     },
     "death-system-number": {
       "label": "System number from death certificate"
     },
     "death-system-number-hint": {
       "summaryText": "What is the system number?",
-      "html": {
-        "alt": "The system number is a nine digit number located in the bottom left corner of the death certificate",
-        "title": "Where to find the system number on a death certificate"
-      }
+      "html": "<img src=\"/public/images/system-number-hint.png\" alt=\"The system number is a nine digit number located in the bottom left corner of the death certificate\" title=\"Where to find the system number on a death certificate\"/>"
     },
     "surname": {
       "label": "Surname"
@@ -72,5 +66,6 @@
     "sessionEnded": {
       "title": "Session expired"
     }
-  }
+  },
+  "footer": "Your feedback will help us improve this service. Email us <a href=\"mailto:ITnowServiceDesk@homeoffice.gov.uk?subject=LEV%20Feedback\">ITnowServiceDesk@homeoffice.gov.uk</a>"
 }
