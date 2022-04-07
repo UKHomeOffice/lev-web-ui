@@ -1,6 +1,7 @@
 module.exports = {
   'system-number': {
-    type: 'number'
+    type: 'number',
+    contentKey: 'birth-system-number'
   },
   'surname': {
     type: 'text'

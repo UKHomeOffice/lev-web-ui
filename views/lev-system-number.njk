@@ -4,7 +4,7 @@
 
     {{ hmpoField(ctx, fieldName) }}
 
-    {% set detailsKey = detailsKey or fieldName + "-hint" %}
+    {% set detailsKey = "fields." + detailsKey or fieldName + "-hint" %}
 
     {{ hmpoDetails({
         id: fieldName + "-hint",

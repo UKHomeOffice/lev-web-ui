@@ -8,11 +8,25 @@
     "search": "Search"
   },
   "fields": {
-    "system-number": {
+    "birth-system-number": {
       "label": "System number from birth certificate"
+    },
+    "birth-system-number-hint": {
+      "summaryText": "What is the system number?",
+      "html": {
+        "alt": "The system number is a nine digit number located in the bottom left corner of the birth certificate",
+        "title": "Where to find the system number on a birth certificate"
+      }
     },
     "death-system-number": {
       "label": "System number from death certificate"
+    },
+    "death-system-number-hint": {
+      "summaryText": "What is the system number?",
+      "html": {
+        "alt": "The system number is a nine digit number located in the bottom left corner of the death certificate",
+        "title": "Where to find the system number on a death certificate"
+      }
     },
     "surname": {
       "label": "Surname"
@@ -57,20 +71,6 @@
     },
     "sessionEnded": {
       "title": "Session expired"
-    }
-  },
-  "birth-system-number-hint": {
-    "summaryText": "What is the system number?",
-    "html": {
-      "alt": "The system number is a nine digit number located in the bottom left corner of the birth certificate",
-      "title": "Where to find the system number on a birth certificate"
-    }
-  },
-  "death-system-number-hint": {
-    "summaryText": "What is the system number?",
-    "html": {
-      "alt": "The system number is a nine digit number located in the bottom left corner of the death certificate",
-      "title": "Where to find the system number on a death certificate"
     }
   }
 }
