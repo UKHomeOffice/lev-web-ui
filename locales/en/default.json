@@ -1,11 +1,14 @@
 {
   "govuk": {
     "serviceName": "Life Event Verification",
-    "skipLink": "Skip to main content"
+    "skipLink": "Skip to main content",
+    "backLink": "Back"
   },
   "buttons": {
-    "next": "Continue",
-    "search": "Search"
+    "search": "Search",
+    "newSearch": "New search",
+    "editSearch": "Edit search",
+    "backToResults": "Back to results"
   },
   "fields": {
     "birth-system-number": {

@@ -1,0 +1,104 @@
+{% extends "app-template.njk" %}
+
+{% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+
+{% set hmpoPageKey = "birth.detailsPage" %}
+{% set govukServiceNameKey = translate("pages.birth.serviceName") %}
+{% set govukServiceUrl = "/birth" %}
+
+{% set hmpoTitle = "Tester One Multiple 01/01/2010" %}
+
+{% block mainContent %}
+    {{ super() }}
+
+    {{ govukTable({
+        firstCellIsHeader: true,
+        rows: [
+            [
+                { text: "System number" },
+                { text: "999999901" }
+            ],
+            [
+                { text: "Child", colspan: 2 }
+            ],
+            [
+                { text: "Surname" },
+                { text: "Multiple"}
+            ],
+            [
+                { text: "Forename(s)" },
+                { text: "Tester One"}
+            ],
+            [
+                { text: "Date of birth" },
+                { text: "01/01/2010"}
+            ],
+            [
+                { text: "Sex" },
+                { text: "Male"}
+            ],
+            [
+                { text: "Place of birth" },
+                { text: "Test Address"}
+            ],
+            [
+                { text: "Mother", colspan: 2 }
+            ],
+            [
+                { text: "Name" },
+                { text: "Mum One Multiple"}
+            ],
+            [
+                { text: "Maiden Name" },
+                { text: "prev-Multiple"}
+            ],
+            [
+                { text: "Surname at marriage if different from maiden name" },
+                { text: "prev-M-Multiple"}
+            ],
+            [
+                { text: "Place of birth" },
+                { text: "Test Birthplace"}
+            ],
+            [
+                { text: "Father / Parent", colspan: 2 }
+            ],
+            [
+                { text: "Name" },
+                { text: "Dad One Multiple"}
+            ],
+            [
+                { text: "Place of birth" },
+                { text: "Test Birthplace"}
+            ],
+            [
+                { text: "Registration", colspan: 2 }
+            ],
+            [
+                { text: "Birth registered by" },
+                { text: "Mother"}
+            ],
+            [
+                { text: "Registration district" },
+                { text: "Test District"}
+            ],
+            [
+                { text: "Sub-district" },
+                { text: "Test Subdistrict"}
+            ],
+            [
+                { text: "Administrative area" },
+                { text: "Reading"}
+            ],
+            [
+                { text: "Date of registration" },
+                { text: "10/10/2014"}
+            ]
+        ]
+    }) }}
+
+    {{ hmpoSubmit(ctx, {key: "newSearch"}) }}
+    {{ hmpoSubmit(ctx, {key: "editSearch"}) }}
+    {{ hmpoSubmit(ctx, {key: "backToResults"}) }}
+{% endblock %}
