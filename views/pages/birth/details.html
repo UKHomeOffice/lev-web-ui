@@ -99,7 +99,10 @@
         ]
     }) }}
 
-    {{ hmpoSubmit(ctx, {key: "newSearch"}) }}
-    {{ hmpoSubmit(ctx, {key: "editSearch"}) }}
-    {{ hmpoSubmit(ctx, {key: "backToResults"}) }}
+    {{ hmpoSubmit(ctx, {key: "newSearch", href: "/"}) }}
+    {{ hmpoSubmit(ctx, {key: "editSearch", href: "/"}) }}
+    {{ hmpoSubmit(ctx, {
+        key: "backToResults",
+        href: "/results"
+    }) }}
 {% endblock %}
