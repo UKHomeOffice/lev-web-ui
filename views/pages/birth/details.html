@@ -13,6 +13,7 @@
     {{ super() }}
 
     {{ govukTable({
+        classes: "details",
         firstCellIsHeader: true,
         rows: [
             [
@@ -20,7 +21,7 @@
                 { text: "999999901" }
             ],
             [
-                { text: "Child", colspan: 2 }
+                { text: "Child", colspan: 2, classes: "section-head" }
             ],
             [
                 { text: "Surname" },
@@ -43,7 +44,7 @@
                 { text: "Test Address"}
             ],
             [
-                { text: "Mother", colspan: 2 }
+                { text: "Mother", colspan: 2, classes: "section-head" }
             ],
             [
                 { text: "Name" },
@@ -62,7 +63,7 @@
                 { text: "Test Birthplace"}
             ],
             [
-                { text: "Father / Parent", colspan: 2 }
+                { text: "Father / Parent", colspan: 2, classes: "section-head" }
             ],
             [
                 { text: "Name" },
@@ -73,7 +74,7 @@
                 { text: "Test Birthplace"}
             ],
             [
-                { text: "Registration", colspan: 2 }
+                { text: "Registration", colspan: 2, classes: "section-head" }
             ],
             [
                 { text: "Birth registered by" },
