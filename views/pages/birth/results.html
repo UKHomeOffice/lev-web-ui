@@ -1,6 +1,7 @@
-{% extends "app-template.njk" %}
+{% extends "results-template.njk" %}
 
 {% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "hmpo-form/macro.njk" import hmpoForm %}
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
 
 {% set hmpoPageKey = "birth.resultsPage" %}
@@ -108,6 +109,8 @@
         ]
     }) }}
 
-    {{ hmpoSubmit(ctx, {key: "newSearch"}) }}
-    {{ hmpoSubmit(ctx, {key: "editSearch"}) }}
+    {% call hmpoForm(ctx) %}
+        {{ hmpoSubmit(ctx, {key: "newSearch"}) }}
+        {{ hmpoSubmit(ctx, {key: "editSearch"}) }}
+    {% endcall %}
 {% endblock %}
