@@ -1,0 +1,116 @@
+{% extends "results-template.njk" %}
+
+{% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "hmpo-form/macro.njk" import hmpoForm %}
+{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+
+{% set hmpoPageKey = "birth.resultsPage" %}
+{% set govukServiceNameKey = translate("pages.birth.serviceName") %}
+{% set govukServiceUrl = "/birth" %}
+
+{% set hmpoTitle = "3 records found for Tester MULTIPLE 01/01/2010" %}
+
+{% block mainContent %}
+    {{ super() }}
+
+    {{ govukTable({
+        firstCellIsHeader: true,
+        rows: [
+            [
+                {
+                    html: "<a href=\"#\">Tester One Multiple</a>",
+                    colspan: 2
+                }
+            ],
+            [
+                {
+                    text: "Place of Birth"
+                },
+                {
+                    text: "Test Address"
+                }
+            ],
+            [
+                {
+                    text: "Mother"
+                },
+                {
+                    text: "Mum One Multiple"
+                }
+            ],
+            [
+                {
+                    text: "Father"
+                },
+                {
+                    text: "Dad One Multiple"
+                }
+            ],
+            [
+                {
+                    html: "<a href=\"#\">Tester Three Multiple</a>",
+                    colspan: 2
+                }
+            ],
+            [
+                {
+                    text: "Place of Birth"
+                },
+                {
+                    text: "Test Address"
+                }
+            ],
+            [
+                {
+                    text: "Mother"
+                },
+                {
+                    text: "Mum Three Multiple"
+                }
+            ],
+            [
+                {
+                    text: "Father"
+                },
+                {
+                    text: "Dad Three Multiple"
+                }
+            ],
+            [
+                {
+                    html: "<a href=\"#\">Tester Two Multiple</a>",
+                    colspan: 2
+                }
+            ],
+            [
+                {
+                    text: "Place of Birth"
+                },
+                {
+                    text: "Test Address"
+                }
+            ],
+            [
+                {
+                    text: "Mother"
+                },
+                {
+                    text: "Mum Two Multiple"
+                }
+            ],
+            [
+                {
+                    text: "Father"
+                },
+                {
+                    text: "Dad Two Multiple"
+                }
+            ]
+        ]
+    }) }}
+
+    {% call hmpoForm(ctx) %}
+        {{ hmpoSubmit(ctx, {key: "newSearch"}) }}
+        {{ hmpoSubmit(ctx, {key: "editSearch"}) }}
+    {% endcall %}
+{% endblock %}
