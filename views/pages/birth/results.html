@@ -7,105 +7,48 @@
 {% set govukServiceNameKey = translate("pages.birth.serviceName") %}
 {% set govukServiceUrl = "/birth" %}
 
-{% set hmpoTitle = searchResults %}
+{% set hmpoTitle = searchResults.length + " records found for " + searchTerms.forenames + " " + searchTerms.surname + " " + searchTerms.dob %}
 
 {% block mainContent %}
     {{ super() }}
 
+    {% set rowsArray = [] %}
+    {% for result in searchResults %}
+        {% set rowsArray = (rowsArray.push([
+            {
+                html: "<a href=\"#\">" + result.forenames + " " + result.surname + "</a>",
+                colspan: 2
+            }
+        ]), rowsArray) %}
+        {% set rowsArray = (rowsArray.push([
+            {
+                text: "Place of birth"
+            },
+            {
+                text: result.placeOfBirth
+            }
+        ]), rowsArray) %}
+        {% set rowsArray = (rowsArray.push([
+            {
+                text: "Mother"
+            },
+            {
+                text: result.mother
+            }
+        ]), rowsArray) %}
+        {% set rowsArray = (rowsArray.push([
+            {
+                text: "Father"
+            },
+            {
+                text: result.father
+            }
+        ]), rowsArray) %}
+    {% endfor %}
+
     {{ govukTable({
         firstCellIsHeader: true,
-        rows: [
-            [
-                {
-                    html: "<a href=\"#\">Tester One Multiple</a>",
-                    colspan: 2
-                }
-            ],
-            [
-                {
-                    text: "Place of Birth"
-                },
-                {
-                    text: "Test Address"
-                }
-            ],
-            [
-                {
-                    text: "Mother"
-                },
-                {
-                    text: "Mum One Multiple"
-                }
-            ],
-            [
-                {
-                    text: "Father"
-                },
-                {
-                    text: "Dad One Multiple"
-                }
-            ],
-            [
-                {
-                    html: "<a href=\"#\">Tester Three Multiple</a>",
-                    colspan: 2
-                }
-            ],
-            [
-                {
-                    text: "Place of Birth"
-                },
-                {
-                    text: "Test Address"
-                }
-            ],
-            [
-                {
-                    text: "Mother"
-                },
-                {
-                    text: "Mum Three Multiple"
-                }
-            ],
-            [
-                {
-                    text: "Father"
-                },
-                {
-                    text: "Dad Three Multiple"
-                }
-            ],
-            [
-                {
-                    html: "<a href=\"#\">Tester Two Multiple</a>",
-                    colspan: 2
-                }
-            ],
-            [
-                {
-                    text: "Place of Birth"
-                },
-                {
-                    text: "Test Address"
-                }
-            ],
-            [
-                {
-                    text: "Mother"
-                },
-                {
-                    text: "Mum Two Multiple"
-                }
-            ],
-            [
-                {
-                    text: "Father"
-                },
-                {
-                    text: "Dad Two Multiple"
-                }
-            ]
-        ]
+        rows: rowsArray
     }) }}
 
     {{ hmpoSubmit(ctx, {key: "newSearch", href: "/"}) }}
