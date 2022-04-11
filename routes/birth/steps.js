@@ -1,3 +1,5 @@
+const BirthResultsController = require('../../controllers/BirthResultsController');
+
 module.exports = {
   '/': {
     entryPoint: true,
@@ -6,6 +8,7 @@ module.exports = {
     next: 'results'
   },
   '/results': {
+    controller: BirthResultsController,
     next: 'details'
   },
   '/details': {
