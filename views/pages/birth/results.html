@@ -8,14 +8,14 @@
 {% set govukServiceUrl = "/birth" %}
 
 {% set hmpoTitle -%}
-    {{- searchResults.length }} records found for {{ searchTerms.forenames }} {{ searchTerms.surname }} {{ searchTerms.dob | date("DD/MM/YYYY")}}
+    {{- results.length }} records found for {{ values.forenames }} {{ values.surname }} {{ values.dob | date("DD/MM/YYYY")}}
 {%- endset %}
 
 {% block mainContent %}
     {{ super() }}
 
     {% set rowsArray = [] %}
-    {% for result in searchResults %}
+    {% for result in results %}
         {% set rowsArray = (rowsArray.push([
             {
                 html: "<a href=\"#\">" + result.forenames + " " + result.surname + "</a>",

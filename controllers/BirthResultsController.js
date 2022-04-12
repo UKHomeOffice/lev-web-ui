@@ -7,8 +7,7 @@ class BirthResultsController extends Controller {
     super.locals(req, res, (error, locals) => {
       if (error) return callback(error);
 
-      locals.searchTerms = req.sessionModel.get('searchTerms');
-      locals.searchResults = [
+      locals.results = [
         {
           surname: 'Multiple',
           forenames: 'Tester One',
