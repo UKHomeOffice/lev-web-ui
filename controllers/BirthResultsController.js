@@ -1,16 +1,13 @@
-const Controller = require('hmpo-form-wizard').Controller;
+'use strict';
+
+const { Controller } = require('hmpo-form-wizard');
 
 class BirthResultsController extends Controller {
   locals(req, res, callback) {
     super.locals(req, res, (error, locals) => {
       if (error) return callback(error);
 
-      locals.searchTerms = {
-        systemNumber: '',
-        surname: 'MULTIPLE',
-        forenames: 'Tester',
-        dob: '01/01/2010'
-      }
+      locals.searchTerms = req.sessionModel.get('searchTerms');
       locals.searchResults = [
         {
           surname: 'Multiple',
