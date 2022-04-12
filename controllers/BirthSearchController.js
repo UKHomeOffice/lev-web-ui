@@ -12,9 +12,9 @@ class BirthSearchController extends SearchController {
       dob: req.form.values['dob'],
     });
 
-    req.sessionModel.set('searchResults', searchResults)
+    req.sessionModel.set('searchResults', searchResults);
     super.saveValues(req, res, next);
   }
 }
 
-module.exports = BirthSearchController
+module.exports = BirthSearchController;
