@@ -17,4 +17,12 @@ table {
       }
     }
   }
+
+  &.results {
+    tbody {
+      th {
+        width: 10em;
+      }
+    }
+  }
 }
