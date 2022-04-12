@@ -1,10 +1,8 @@
 'use strict';
 
-const { Controller } = require('hmpo-form-wizard');
-const DateControllerMixin = require('hmpo-components').mixins.Date;
-const DateController = DateControllerMixin(Controller);
+const SearchController = require('./SearchController');
 
-class BirthSearchController extends DateController {
+class BirthSearchController extends SearchController {
 }
 
 module.exports = BirthSearchController
