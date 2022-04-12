@@ -7,7 +7,10 @@ module.exports = {
     resetJourney: true,
     fields: ['system-number', 'surname', 'forenames', 'dob'],
     controller: BirthSearchController,
-    next: 'results'
+    next: [
+      { fn: 'conditionMethod', next: 'details' },
+      'results'
+    ]
   },
   '/results': {
     controller: BirthResultsController,
