@@ -7,7 +7,7 @@
 {% set govukServiceNameKey = translate("pages.birth.serviceName") %}
 {% set govukServiceUrl = "/birth" %}
 
-{% set hmpoTitle = searchResults.length + " records found for " + searchTerms.forenames + " " + searchTerms.surname + " " + searchTerms.dob %}
+{% set hmpoTitle = searchResults.length + " records found for " + searchTerms.forenames + " " + searchTerms.surname + " " + searchTerms.dob | date("DD/MM/YYYY") %}
 
 {% block mainContent %}
     {{ super() }}
