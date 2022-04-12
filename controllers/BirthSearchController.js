@@ -13,6 +13,7 @@ class BirthSearchController extends SearchController {
     });
 
     req.sessionModel.set('searchResults', searchResults);
+
     super.saveValues(req, res, next);
   }
 }
