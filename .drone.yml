@@ -8,7 +8,7 @@ platform:
   arch: amd64
 
 steps:
-- name: test
+- name: testing
   pull: if-not-exists
   image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
   commands:
