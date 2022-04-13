@@ -10,6 +10,7 @@ module.exports = {
     type: 'text'
   },
   'dob': {
-    type: 'date'
+    type: 'date',
+    validate: 'date'
   }
 };

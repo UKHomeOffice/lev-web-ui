@@ -9,8 +9,26 @@ $section-colour: #F2F3F3;
   background-color: $section-colour;
 }
 
+a {
+  &.blue {
+    background-color: #005ea5;
+  }
+
+  &.grey {
+    background-color: #52585a;
+  }
+}
+
 table {
   &.details {
+    tbody {
+      th {
+        width: 10em;
+      }
+    }
+  }
+
+  &.results {
     tbody {
       th {
         width: 10em;
