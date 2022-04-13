@@ -9,6 +9,18 @@ $section-colour: #F2F3F3;
   background-color: $section-colour;
 }
 
+a {
+  &.blue {
+    background-color: #005ea5;
+  }
+}
+
+a {
+  &.grey {
+    background-color: #52585a;
+  }
+}
+
 table {
   &.details {
     tbody {

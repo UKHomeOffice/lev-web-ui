@@ -99,10 +99,13 @@
         ]
     }) }}
 
-    {{ hmpoSubmit(ctx, {key: "newSearch", href: "/"}) }}
-    {{ hmpoSubmit(ctx, {key: "editSearch", href: "/"}) }}
-    {{ hmpoSubmit(ctx, {
-        key: "backToResults",
-        href: "/results"
-    }) }}
+    <div class="govuk-button-group">
+        {{ hmpoSubmit(ctx, {key: "newSearch", href: "/"}) }}
+        {{ hmpoSubmit(ctx, {key: "editSearch", classes: "blue", href: "/"}) }}
+        {{ hmpoSubmit(ctx, {
+            key: "backToResults",
+            classes: "grey",
+            href: "/results"
+        }) }}
+    </div>
 {% endblock %}
