@@ -1,0 +1,9 @@
+#ide specific
+.idea/
+
+node_modules/
+.git/
+coverage
+public
+*.log
+.DS_Store
