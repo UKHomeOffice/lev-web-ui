@@ -15,3 +15,9 @@ npm start
 ```shell
 npm run dev
 ```
+
+###To run the application in Docker
+The application can be run locally using Docker containers  (MOCK db addition coming soon) with a single command:
+```shell
+docker-compose up
+```
