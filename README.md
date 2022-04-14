@@ -1,4 +1,4 @@
-# lev-ui
+# lev-web-ui
 Life Event Verification User Interface
 
 ## Getting Started
