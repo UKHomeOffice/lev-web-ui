@@ -17,3 +17,19 @@ steps:
   when:
     event:
     - pull_request
+
+- name: docker-build-and-push
+  pull: if-not-exists
+  image: plugins/docker
+  settings:
+    repo: quay.io/ukhomeofficedigital/lev-web-ui
+    tags:
+    - "1.0.0-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT:0:10}"
+    - "1.0.0"
+    - "1.0"
+    - "latest"
+  when:
+    branch:
+    - master
+    event:
+    - push
