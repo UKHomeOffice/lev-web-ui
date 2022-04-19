@@ -28,6 +28,10 @@ steps:
     - "1.0.0"
     - "1.0"
     - "latest"
+    username: ukhomeofficedigital+lev_web_ui
+  environment:
+    DOCKER_PASSWORD:
+      from_secret: quay_robot_token
   when:
     branch:
     - master
