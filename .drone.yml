@@ -8,13 +8,32 @@ platform:
   arch: amd64
 
 steps:
-- name: testing
+- name: docker-build
   pull: if-not-exists
-  image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
-  commands:
-  - echo 'Test'
+  image: plugins/docker
+  settings:
+    dry_run: true
+    repo: quay.io/ukhomeofficedigital/lev-web-ui
+  when:
+    event:
+    - pull_request
 
-services:
-- name: docker
-  image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
-
+- name: docker-build-and-push
+  pull: if-not-exists
+  image: plugins/docker
+  settings:
+    repo: quay.io/ukhomeofficedigital/lev-web-ui
+    tags:
+    - "1.0.0-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT:0:10}"
+    - "1.0.0"
+    - "1.0"
+    - "latest"
+    username: ukhomeofficedigital+lev_web_ui
+  environment:
+    DOCKER_PASSWORD:
+      from_secret: quay_robot_token
+  when:
+    branch:
+    - master
+    event:
+    - push
