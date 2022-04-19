@@ -17,7 +17,7 @@ steps:
   when:
     event:
     - pull_request
-
+    
   - name: push_to_quay
     image: plugins/docker
     settings:
@@ -37,3 +37,4 @@ steps:
         - master
       event:
         - push
+
