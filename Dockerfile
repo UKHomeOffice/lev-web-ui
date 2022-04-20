@@ -10,12 +10,12 @@ USER app
 WORKDIR /app
 ENV NODE_ENV production
 
-COPY --chown=node:node package.json package-lock.json /app/
-COPY --chown=node:node assets/ /app/assets/
+COPY --chown=app:app package.json package-lock.json /app/
+COPY --chown=app:app assets/ /app/assets/
 
 RUN npm ci --only=production
 
-COPY --chown=node:node . /app
+COPY --chown=app:app . /app
 
 USER 31337
 
