@@ -1,6 +1,6 @@
 {
   "name": "lev-web-ui",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "Life Event Verification User Interface",
   "main": "app.js",
   "scripts": {
