@@ -19,8 +19,8 @@ class BirthSearchPage extends SearchPage {
     // Has title
     cy.get('h1').contains('Applicant\'s details');
 
-    // // Has focus
-    // cy.get('#system-number').should('have.focus');
+    // Has focus
+    cy.get('#system-number').should('have.focus');
 
     // Has labels
     cy.get('label[for=system-number]').contains('System number from birth certificate');
