@@ -1,26 +1,30 @@
 FROM node:16-alpine3.15 as base
 
 RUN apk add --no-cache ca-certificates \
- && apk upgrade --no-cache \
- && addgroup -S app \
+ && apk upgrade --no-cache
+
+RUN addgroup -S app \
  && adduser -S app -G app -u 31337 -h /app/ \
  && chown -R app:app /app/
-
 USER app
 WORKDIR /app
+
 COPY --chown=app:app package.json package-lock.json /app/
 COPY --chown=app:app assets/ /app/assets/
 
 FROM cypress/browsers:node16.5.0-chrome97-ff96 as cypress
 
-RUN apk add --no-cache ca-certificates \
- && apk upgrade --no-cache \
- && addgroup -S app \
- && adduser -S app -G app -u 31337 -h /app/ \
- && chown -R app:app /app/
+RUN apt-get update --quiet -y \
+ && apt-get upgrade --quiet -y \
+ && apt-get install g++ build-essential -y \
+ && apt-get install ca-certificates -y
 
+RUN addgroup --system app \
+ && adduser --system --home /app/ --uid 31337 --ingroup app app \
+ && chown -R app:app /app/
 USER app
 WORKDIR /app
+
 COPY --chown=app:app package.json package-lock.json /app/
 COPY --chown=app:app assets/ /app/assets/
 
