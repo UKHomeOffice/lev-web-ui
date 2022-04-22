@@ -1,10 +1,19 @@
 {% extends "hmpo-template.njk" %}
 
 {% from "hmpo-footer/macro.njk" import hmpoFooter %}
+{% from "header-template.njk" import levHeader %}
 {% from "hmpo-html/macro.njk" import hmpoHtml %}
 
 {% block pageTitle %}
     {{ (translate("govuk.error", { default: "Error" }) + ": ") if errorlist.length }}{{ govukServiceName | safe if govukServiceName }} – GOV.UK
+{% endblock %}
+
+{% block header %}
+	{{ levHeader({
+                 homepageUrl: hmpoPageKey,
+                 serviceName: govukServiceNameKey,
+                 serviceUrl: govukServiceUrl
+               }) }}
 {% endblock %}
 
 {% block footer %}
