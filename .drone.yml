@@ -23,7 +23,5 @@ steps:
       from_secret: QUAY_PASSWORD
     DOCKER_USERNAME: ukhomeofficedigital+lev_web_ui
   when:
-    branch:
-      - master
     event:
       - push
