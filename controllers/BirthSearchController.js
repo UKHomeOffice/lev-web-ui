@@ -17,7 +17,7 @@ class BirthSearchController extends SearchController {
     super.saveValues(req, res, next);
   }
 
-  conditionMethod(req, res, con) {
+  conditionMethod(req, _res, _con) {
     const searchResults = req.sessionModel.get('searchResults');
 
     return searchResults && searchResults.length === 1;
