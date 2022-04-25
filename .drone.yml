@@ -8,6 +8,37 @@ platform:
   arch: amd64
 
 steps:
+- name: docker-test
+  image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
+  commands:
+  - dockercompose run server npm test
+  when:
+#    branch:
+#    - master
+    event:
+    - push
+
+- name: build-e2e
+  image: plugins/docker
+  settings:
+    dockerfile: Dockerfile-e2e
+    registry: quay.io
+    repo: quay.io/ukhomeofficedigital/lev-web-ui-e2e
+    tags:
+      - "1.0.0-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT:0:10}"
+      - "1.0.0"
+      - "1.0"
+      - "latest"
+  environment:
+    DOCKER_PASSWORD:
+      from_secret: QUAY_PASSWORD
+    DOCKER_USERNAME: ukhomeofficedigital+lev_web_ui_e2e
+  when:
+    branch:
+      - master
+    event:
+      - push
+
 - name: push_to_quay
   image: plugins/docker
   settings:
@@ -27,3 +58,7 @@ steps:
       - master
     event:
       - push
+
+services:
+- name: docker
+  image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
