@@ -11,7 +11,7 @@ steps:
 - name: docker-test
   image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
   commands:
-  - dockercompose run server npm test
+  - docker-compose run server npm test
   when:
 #    branch:
 #    - master
