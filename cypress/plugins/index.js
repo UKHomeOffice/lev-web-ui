@@ -29,7 +29,7 @@ module.exports = (on, config) => {
     username: process.env.TEST_USERNAME,
     password: process.env.TEST_PASSWORD,
     // eslint-disable-next-line camelcase
-    client_id: 'lev-web',
+    client_id: 'lev-web-ui',
     // eslint-disable-next-line camelcase
     redirect_uri: process.env.TEST_URL
   };

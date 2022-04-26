@@ -8,6 +8,17 @@ platform:
   arch: amd64
 
 steps:
+- name: cypress
+  image: cypress/browsers:node16.5.0-chrome97-ff96
+  commands:
+  - npm ci
+  - npm run test
+  when:
+    branch:
+    - master
+    event:
+    - pull_request
+
 - name: push_to_quay
   image: plugins/docker
   settings:

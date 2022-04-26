@@ -1,2 +1,8 @@
-{% extends "hmpo-template.njk" %}
+{% extends "../app-template.njk" %}
+
+{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
 {% set hmpoPageKey = "sessionEnded" %}
+
+{% block mainContent %}
+    {{ super() }}
+{% endblock %}

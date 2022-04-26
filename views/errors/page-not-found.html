@@ -1,2 +1,12 @@
-{% extends "hmpo-template.njk" %}
+{% extends "../app-template.njk" %}
+
+{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
 {% set hmpoPageKey = "pageNotFound" %}
+
+{% block mainContent %}
+    {{ super() }}
+
+    <div class="govuk-button-group">
+        {{ hmpoSubmit(ctx, {key: "startAgain", href: "/"}) }}
+    </div>
+{% endblock %}

@@ -1,7 +1,10 @@
 module.exports = {
   'system-number': {
     type: 'number',
-    contentKey: 'birth-system-number'
+    contentKey: 'birth-system-number',
+    attributes: {
+      autofocus: true
+    }
   },
   'surname': {
     type: 'text'
