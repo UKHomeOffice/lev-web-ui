@@ -9,7 +9,7 @@ platform:
 
 steps:
 - name: cypress
-  image: cypress/browsers:node16.5.0-chrome97-ff96
+  image: cypress/browsers:node16.14.0-chrome99-ff97
   commands:
   - npm ci
   - npm run test

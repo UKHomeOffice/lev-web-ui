@@ -12,7 +12,7 @@ WORKDIR /app
 COPY --chown=app:app package.json package-lock.json /app/
 COPY --chown=app:app assets/ /app/assets/
 
-FROM cypress/browsers:node16.5.0-chrome97-ff96 as cypress
+FROM cypress/browsers:node16.14.0-chrome99-ff97 as cypress
 
 RUN apt-get update --quiet -y \
  && apt-get upgrade --quiet -y \
