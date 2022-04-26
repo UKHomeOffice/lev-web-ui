@@ -10,13 +10,3 @@ const { router } = setup();
 router.use('/', birthRoute);
 router.use('/birth', birthRoute);
 router.use('/death', deathRoute);
-
-// healthz endpoint
-router.use('/healthz', ((req, res) => {
-  res.send('OK');
-}));
-
-// readiness endpoint
-router.use('/readiness', (req, res) => {
-  res.send('OK');
-});

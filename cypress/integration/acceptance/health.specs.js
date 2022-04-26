@@ -1,14 +1,14 @@
 'use strict';
 
 describe('Health check', () => {
-  describe('the "/healthz" endpoint', () => {
+  describe('the livenessProbe', () => {
     it('should return a "200 - OK" status', () => {
-      cy.request('/healthz').its('status').should('equal', 200);
+      cy.request('/healthcheck').its('status').should('equal', 200);
     });
   });
-  describe('the "/readiness" endpoint', () => {
+  describe('the readinessProbe', () => {
     it('should return a "200 - OK" status', () => {
-      cy.request('/readiness').its('status').should('equal', 200);
+      cy.request('/healthcheck').its('status').should('equal', 200);
     });
   });
 });
