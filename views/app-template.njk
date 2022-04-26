@@ -1,7 +1,7 @@
 {% extends "hmpo-template.njk" %}
 
 {% from "hmpo-footer/macro.njk" import hmpoFooter %}
-{% from "header-template.njk" import levHeader %}
+{% from "components/lev-header.njk" import levHeader %}
 {% from "hmpo-html/macro.njk" import hmpoHtml %}
 
 {% block pageTitle %}
@@ -10,10 +10,11 @@
 
 {% block header %}
 	{{ levHeader({
-                 homepageUrl: hmpoPageKey,
-                 serviceName: govukServiceNameKey,
-                 serviceUrl: govukServiceUrl
-               }) }}
+        homepageUrl: hmpoPageKey,
+        serviceName: govukServiceNameKey,
+        serviceUrl: govukServiceUrl,
+        signOut: translate("buttons.signOut")
+    }) }}
 {% endblock %}
 
 {% block footer %}
