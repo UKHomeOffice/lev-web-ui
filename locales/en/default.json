@@ -8,7 +8,8 @@
     "search": "Search",
     "newSearch": "New search",
     "editSearch": "Edit search",
-    "backToResults": "Back to results"
+    "backToResults": "Back to results",
+    "startAgain": "Start again"
   },
   "fields": {
     "birth-system-number": {
@@ -61,10 +62,11 @@
       }
     },
     "error": {
-      "title": "Something went wrong"
+      "title": "Error"
     },
     "pageNotFound": {
-      "title": "Page not found"
+      "title": "Error",
+      "content": "Not found"
     },
     "sessionEnded": {
       "title": "Session expired"
