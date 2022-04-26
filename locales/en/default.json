@@ -65,8 +65,7 @@
       "title": "Error"
     },
     "pageNotFound": {
-      "title": "Error",
-      "content": "Not found"
+      "title": "Page not found"
     },
     "sessionEnded": {
       "title": "Session expired"
