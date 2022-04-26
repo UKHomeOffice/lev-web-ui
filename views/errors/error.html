@@ -1,2 +1,17 @@
-{% extends "hmpo-template.njk" %}
+{% extends "../app-template.njk" %}
+
+{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
 {% set hmpoPageKey = "error" %}
+
+{% block mainContent %}
+    {{ super() }}
+
+    {{ error.message }}
+    {% if showStack %}
+        <pre>{{error.stack | safe}}</pre>
+    {% endif %}"
+
+    <div class="govuk-button-group">
+        {{ hmpoSubmit(ctx, {key: "startAgain", href: "/"}) }}
+    </div>
+{% endblock %}

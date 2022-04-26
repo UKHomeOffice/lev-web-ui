@@ -3,10 +3,10 @@
 class BirthSearchService {
 
   static search({
-    systemNumber,
+    _systemNumber,
     surname,
-    forenames,
-    dob
+    _forenames,
+    _dob
   }) {
     let searchResults = [];
 

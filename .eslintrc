@@ -8,7 +8,7 @@
   ],
   "rules": {
     "no-console": "off",
-    "no-unused-vars": ["error", { "argsIgnorePattern": "^(err|req|res|next)$" }],
+    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
     "no-mixed-requires": ["error", { "allowCall": true }],
     "quotes": ["error", "single"],
     "no-trailing-spaces": "error",
