@@ -17,6 +17,13 @@ a {
   &.grey {
     background-color: #52585a;
   }
+
+  &.logout {
+    float: right;
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-size: 1.1875rem;
+  }
 }
 
 table {
