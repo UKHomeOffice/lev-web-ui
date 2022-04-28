@@ -10,7 +10,7 @@
     "editSearch": "Edit search",
     "backToResults": "Back to results",
     "startAgain": "Start again",
-    "signOut": "Sign out"
+    "logout": "Sign out"
   },
   "fields": {
     "birth-system-number": {
