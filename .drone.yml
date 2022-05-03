@@ -28,7 +28,6 @@ steps:
       - "1.0.0-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT:0:10}"
       - "1.0.0"
       - "1.0"
-      - "latest"
   environment:
     DOCKER_PASSWORD:
       from_secret: QUAY_PASSWORD
