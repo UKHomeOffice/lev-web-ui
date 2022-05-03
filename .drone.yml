@@ -37,3 +37,28 @@ steps:
       - master
     event:
       - push
+
+- name: deploy_image_to_dev
+  pull: if-not-exists
+  image: quay.io/ukhomeofficedigital/lev-ci
+  commands:
+    - source get-package-details
+    - kubectl="kubectl --insecure-skip-tls-verify --server=$${KUBE_SERVER} --namespace=$${KUBE_NAMESPACE} --token=$${KUBE_TOKEN}"
+    - $${kubectl} set image deployment/$${KUBE_DEPLOYMENT} "$${KUBE_CONTAINER}=quay.io/ukhomeofficedigital/lev-web-ui:$${FULL_VERSION}"
+    - $${kubectl} rollout status deployment/$${KUBE_DEPLOYMENT}
+  environment:
+    KUBE_CONTAINER:
+      from_secret: KUBE_CONTAINER
+    KUBE_DEPLOYMENT:
+      from_secret: KUBE_DEPLOYMENT
+    KUBE_NAMESPACE:
+      from_secret: KUBE_NAMESPACE
+    KUBE_SERVER:
+      from_secret: KUBE_SERVER
+    KUBE_TOKEN:
+      from_secret: KUBE_TOKEN
+  when:
+    branch:
+      - master
+    event:
+      - push
