@@ -1,3 +1,5 @@
+'use strict';
+
 const BirthResultsController = require('../../controllers/BirthResultsController');
 const BirthSearchController = require('../../controllers/BirthSearchController');
 

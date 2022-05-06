@@ -5,14 +5,20 @@ const BirthSearchService = require('../services/BirthSearchService');
 
 class BirthSearchController extends SearchController {
   saveValues(req, res, next) {
-    const searchResults = BirthSearchService.search({
-      systemNumber: req.form.values['system-number'],
-      surname: req.form.values['surname'],
-      forenames: req.form.values['forenames'],
-      dob: req.form.values['dob'],
-    });
+    const systemNumber = req.form.values['system-number'];
+    const surname = req.form.values['surname'];
+    const forenames = req.form.values['forenames'];
+    const dateOfBirth = req.form.values['dob'];
 
-    req.sessionModel.set('searchResults', searchResults);
+    if (systemNumber && systemNumber !== '') {
+      BirthSearchService.searchById({systemNumber}, (data) => {
+        req.sessionModel.set('searchResults', [data]);
+      });
+    } else {
+      BirthSearchService.searchByName({forenames, surname, dateOfBirth}, (data) => {
+        req.sessionModel.set('searchResults', data);
+      });
+    }
 
     super.saveValues(req, res, next);
   }

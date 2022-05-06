@@ -4,5 +4,8 @@
     "console": true,
     "app": false,
     "error": false
+  },
+  "services": {
+    "restApi": "http://localhost:8080"
   }
 }
