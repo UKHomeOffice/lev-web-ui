@@ -19,5 +19,6 @@ module.exports = {
     next: 'details'
   },
   '/details': {
+    controller: BirthResultsController
   }
 };

@@ -7,7 +7,11 @@
 {% set govukServiceNameKey = translate("pages.birth.serviceName") %}
 {% set govukServiceUrl = "/birth" %}
 
-{% set hmpoTitle = "Tester One Multiple 01/01/2010" %}
+{% set result = results[0] %}
+{% set hmpoTitle -%}
+    {{ result.child.forenames }} {{ result.child.surname }} {{ result.child.dateOfBirth | date("DD/MM/YYYY")}}
+{%- endset %}
+
 
 {% block mainContent %}
     {{ super() }}
@@ -18,83 +22,83 @@
         rows: [
             [
                 { text: "System number" },
-                { text: "999999902" }
+                { text: result.id }
             ],
             [
                 { text: "Child", colspan: 2, classes: "section-head" }
             ],
             [
                 { text: "Surname" },
-                { text: "Multiple"}
+                { text: result.child.surname }
             ],
             [
                 { text: "Forename(s)" },
-                { text: "Tester One"}
+                { text: result.child.forenames }
             ],
             [
                 { text: "Date of birth" },
-                { text: "01/01/2010"}
+                { text: result.child.dateOfBirth | date("DD/MM/YYYY") }
             ],
             [
                 { text: "Sex" },
-                { text: "Male"}
+                { text: result.child.sex }
             ],
             [
                 { text: "Place of birth" },
-                { text: "Test Address"}
+                { text: result.child.birthplace }
             ],
             [
                 { text: "Mother", colspan: 2, classes: "section-head" }
             ],
             [
                 { text: "Name" },
-                { text: "Mum One Multiple"}
+                { text: result.mother.forenames + " " + result.mother.surname }
             ],
             [
                 { text: "Maiden Name" },
-                { text: "prev-Multiple"}
+                { text: result.mother.maidenSurname }
             ],
             [
                 { text: "Surname at marriage if different from maiden name" },
-                { text: "prev-M-Multiple"}
+                { text: result.mother.marriageSurname }
             ],
             [
                 { text: "Place of birth" },
-                { text: "Test Birthplace"}
+                { text: result.mother.birthplace }
             ],
             [
                 { text: "Father / Parent", colspan: 2, classes: "section-head" }
             ],
             [
                 { text: "Name" },
-                { text: "Dad One Multiple"}
+                { text: result.father.forenames + " " + result.father.surname }
             ],
             [
                 { text: "Place of birth" },
-                { text: "Test Birthplace"}
+                { text: result.father.birthplace }
             ],
             [
                 { text: "Registration", colspan: 2, classes: "section-head" }
             ],
             [
                 { text: "Birth registered by" },
-                { text: "Mother"}
+                { text: result.informant1.qualification }
             ],
             [
                 { text: "Registration district" },
-                { text: "Test District"}
+                { text: result.registrar.district }
             ],
             [
                 { text: "Sub-district" },
-                { text: "Test Subdistrict"}
+                { text: result.registrar.subdistrict }
             ],
             [
                 { text: "Administrative area" },
-                { text: "Reading"}
+                { text: result.registrar.administrativeArea }
             ],
             [
                 { text: "Date of registration" },
-                { text: "10/10/2014"}
+                { text: result.date | date("DD/MM/YYYY") }
             ]
         ]
     }) }}
