@@ -13,14 +13,14 @@ class BirthSearchController extends SearchController {
     if (systemNumber && systemNumber !== '') {
       BirthSearchService.searchById({systemNumber}, (data) => {
         req.sessionModel.set('searchResults', [data]);
+        super.saveValues(req, res, next);
       });
     } else {
       BirthSearchService.searchByName({forenames, surname, dateOfBirth}, (data) => {
         req.sessionModel.set('searchResults', data);
+        super.saveValues(req, res, next);
       });
     }
-
-    super.saveValues(req, res, next);
   }
 
   conditionMethod(req, _res, _con) {
