@@ -7,11 +7,10 @@
 {% set govukServiceNameKey = translate("pages.birth.serviceName") %}
 {% set govukServiceUrl = "/birth" %}
 
-{% set result = results[0] %}
+{% set record = results[0] %}
 {% set hmpoTitle -%}
-    {{ result.child.forenames }} {{ result.child.surname }} {{ result.child.dateOfBirth | date("DD/MM/YYYY")}}
+    {{ record.child.forenames }} {{ record.child.surname }} {{ record.child.dateOfBirth | date("DD/MM/YYYY")}}
 {%- endset %}
-
 
 {% block mainContent %}
     {{ super() }}
@@ -22,83 +21,83 @@
         rows: [
             [
                 { text: "System number" },
-                { text: result.id }
+                { text: record.id }
             ],
             [
                 { text: "Child", colspan: 2, classes: "section-head" }
             ],
             [
                 { text: "Surname" },
-                { text: result.child.surname }
+                { text: record.child.surname }
             ],
             [
                 { text: "Forename(s)" },
-                { text: result.child.forenames }
+                { text: record.child.forenames }
             ],
             [
                 { text: "Date of birth" },
-                { text: result.child.dateOfBirth | date("DD/MM/YYYY") }
+                { text: record.child.dateOfBirth | date("DD/MM/YYYY") }
             ],
             [
                 { text: "Sex" },
-                { text: result.child.sex }
+                { text: record.child.sex }
             ],
             [
                 { text: "Place of birth" },
-                { text: result.child.birthplace }
+                { text: record.child.birthplace }
             ],
             [
                 { text: "Mother", colspan: 2, classes: "section-head" }
             ],
             [
                 { text: "Name" },
-                { text: result.mother.forenames + " " + result.mother.surname }
+                { text: record.mother.forenames + " " + record.mother.surname }
             ],
             [
                 { text: "Maiden Name" },
-                { text: result.mother.maidenSurname }
+                { text: record.mother.maidenSurname }
             ],
             [
                 { text: "Surname at marriage if different from maiden name" },
-                { text: result.mother.marriageSurname }
+                { text: record.mother.marriageSurname }
             ],
             [
                 { text: "Place of birth" },
-                { text: result.mother.birthplace }
+                { text: record.mother.birthplace }
             ],
             [
                 { text: "Father / Parent", colspan: 2, classes: "section-head" }
             ],
             [
                 { text: "Name" },
-                { text: result.father.forenames + " " + result.father.surname }
+                { text: record.father.forenames + " " + record.father.surname }
             ],
             [
                 { text: "Place of birth" },
-                { text: result.father.birthplace }
+                { text: record.father.birthplace }
             ],
             [
                 { text: "Registration", colspan: 2, classes: "section-head" }
             ],
             [
                 { text: "Birth registered by" },
-                { text: result.informant1.qualification }
+                { text: [record.informant1.qualification, record.informant2.qualification] | filter | join(", ") }
             ],
             [
                 { text: "Registration district" },
-                { text: result.registrar.district }
+                { text: record.registrar.district }
             ],
             [
                 { text: "Sub-district" },
-                { text: result.registrar.subdistrict }
+                { text: record.registrar.subdistrict }
             ],
             [
                 { text: "Administrative area" },
-                { text: result.registrar.administrativeArea }
+                { text: record.registrar.administrativeArea }
             ],
             [
                 { text: "Date of registration" },
-                { text: result.date | date("DD/MM/YYYY") }
+                { text: record.date | date("DD/MM/YYYY") }
             ]
         ]
     }) }}

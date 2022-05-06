@@ -15,10 +15,10 @@
     {{ super() }}
 
     {% set rowsArray = [] %}
-    {% for result in results %}
+    {% for record in results %}
         {% set rowsArray = (rowsArray.push([
             {
-                html: "<a href=\"#\">" + result.child.forenames + " " + result.child.surname + "</a>",
+                html: "<a href=\"#\">" + record.child.forenames + " " + record.child.surname + "</a>",
                 colspan: 2
             }
         ],[
@@ -26,21 +26,21 @@
                 text: "Place of birth"
             },
             {
-                text: result.child.birthplace
+                text: record.child.birthplace
             }
         ],[
             {
                 text: "Mother"
             },
             {
-                text: result.mother.forenames + " " + result.mother.surname
+                text: record.mother.forenames + " " + record.mother.surname
             }
         ],[
             {
                 text: "Father"
             },
             {
-                text: result.father.forenames + " " + result.father.surname
+                text: record.father.forenames + " " + record.father.surname
             }
         ]), rowsArray) %}
     {% endfor %}
