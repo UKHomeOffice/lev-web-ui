@@ -26,6 +26,13 @@ class BirthSearchController extends SearchController {
       // searchById
       BirthSearchService.searchById({systemNumber}, (data) => {
         req.sessionModel.set('searchResults', data);
+
+        if (data.length === 0) {
+          req.sessionModel.unset('currentRecord');
+        } else {
+          req.sessionModel.set('currentRecord', 0);
+        }
+
         super.saveValues(req, res, next);
       });
     } else {
@@ -33,6 +40,13 @@ class BirthSearchController extends SearchController {
       // searchByName
       BirthSearchService.searchByName({forenames, surname, dateOfBirth}, (data) => {
         req.sessionModel.set('searchResults', data);
+
+        if (data.length === 0) {
+          req.sessionModel.unset('currentRecord');
+        } else {
+          req.sessionModel.set('currentRecord', 0);
+        }
+
         super.saveValues(req, res, next);
       });
     }

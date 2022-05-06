@@ -1,5 +1,6 @@
 'use strict';
 
+const BirthDetailsController = require('../../controllers/BirthDetailsController');
 const BirthResultsController = require('../../controllers/BirthResultsController');
 const BirthSearchController = require('../../controllers/BirthSearchController');
 
@@ -19,6 +20,6 @@ module.exports = {
     next: 'details'
   },
   '/details': {
-    controller: BirthResultsController
+    controller: BirthDetailsController
   }
 };

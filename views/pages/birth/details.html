@@ -7,7 +7,6 @@
 {% set govukServiceNameKey = translate("pages.birth.serviceName") %}
 {% set govukServiceUrl = "/birth" %}
 
-{% set record = results[0] %}
 {% set hmpoTitle -%}
     {{ record.child.forenames }} {{ record.child.surname }} {{ record.child.dateOfBirth | date("DD/MM/YYYY")}}
 {%- endset %}
