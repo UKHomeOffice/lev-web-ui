@@ -9,10 +9,16 @@ class BirthSearchService {
   static searchById(args, callback) {
     const model = new BirthSearchByIdModel();
     model.fetch(args, (err, data, _responseTime) => {
-      if (err) return logger.error(err);
+      if (err) {
+        logger.error(err);
+        if (err.status === 404) {
+          callback([]);
+        }
+        return;
+      }
 
       logger.info(data);
-      callback(data);
+      callback([data]);
     });
   }
 

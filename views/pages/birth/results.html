@@ -8,7 +8,7 @@
 {% set govukServiceUrl = "/birth" %}
 
 {% set hmpoTitle -%}
-    {{- "No" if results.length === 0 else results.length }} records found for {{ values.forenames }} {{ values.surname }} {{ values.dob | date("DD/MM/YYYY")}}
+    {{- "No" if results.length === 0 else results.length }} records found for {{ values['system-number']}} {{ values.forenames }} {{ values.surname }} {{ values.dob | date("DD/MM/YYYY")}}
 {%- endset %}
 
 {% block mainContent %}

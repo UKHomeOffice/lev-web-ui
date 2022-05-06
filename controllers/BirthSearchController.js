@@ -25,7 +25,7 @@ class BirthSearchController extends SearchController {
 
       // searchById
       BirthSearchService.searchById({systemNumber}, (data) => {
-        req.sessionModel.set('searchResults', [data]);
+        req.sessionModel.set('searchResults', data);
         super.saveValues(req, res, next);
       });
     } else {
