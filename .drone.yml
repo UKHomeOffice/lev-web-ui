@@ -62,3 +62,39 @@ steps:
       - master
     event:
       - push
+
+- name: notify_slack_success
+  pull: if-not-exists
+  image: plugins/slack
+  settings:
+    channel: general
+    template: "*Deployed {{repo.name}} to Dev* - <{{build.link}}|#{{build.number}}>\n"
+    username: Drone
+  environment:
+    SLACK_WEBHOOK:
+      from_secret: SLACK_WEBHOOK
+  when:
+    branch:
+      - master
+    event:
+      - push
+    status:
+      - success
+
+- name: notify_slack_failure
+  pull: if-not-exists
+  image: plugins/slack
+  settings:
+    channel: alerts
+    template: "*Failed to deploy {{repo.name}} to Dev*\nAuthor: {{build.author}}\nDuration: {{since job.started}} Job: <{{build.link}}|#{{build.number}}>\nCommit: {{build.commit}}\n"
+    username: Drone
+  environment:
+    SLACK_WEBHOOK:
+      from_secret: SLACK_WEBHOOK
+  when:
+    branch:
+      - master
+    event:
+      - push
+    status:
+      - failure
