@@ -1,12 +1,12 @@
 'use strict';
 
 const logger = require('hmpo-app').logger.get('birth-search-service');
-const LevModel = require('../models/LevModel');
+const RestApiModel = require('../models/RestApiModel');
 
 class BirthSearchService {
 
   static searchById(args, callback) {
-    const model = new LevModel(args, {
+    const model = new RestApiModel(args, {
       url: `/v1/registration/birth/${args.systemNumber}`
     });
 
@@ -25,7 +25,7 @@ class BirthSearchService {
   }
 
   static searchByName(args, callback) {
-    const model = new LevModel(args, {
+    const model = new RestApiModel(args, {
       url: '/v1/registration/birth',
       searchParams: args
     });

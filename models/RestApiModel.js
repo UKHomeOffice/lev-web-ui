@@ -4,7 +4,7 @@ const HmpoModel = require('hmpo-model');
 const appConfig = require('../config/default.json');
 const prefixUrl = appConfig.services.restApi;
 
-class LevModel extends HmpoModel {
+class RestApiModel extends HmpoModel {
 
   requestConfig(config, args) {
     const retConfig = Object.assign({}, config);
@@ -27,4 +27,4 @@ class LevModel extends HmpoModel {
   }
 }
 
-module.exports = LevModel;
+module.exports = RestApiModel;
