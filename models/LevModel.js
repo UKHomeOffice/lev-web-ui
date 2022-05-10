@@ -1,11 +1,16 @@
 'use strict';
 
 const HmpoModel = require('hmpo-model');
+const appConfig = require('../config/default.json');
+const prefixUrl = appConfig.services.restApi;
 
 class LevModel extends HmpoModel {
 
   requestConfig(config, args) {
     const retConfig = Object.assign({}, config);
+
+    // url
+    retConfig.url = `${prefixUrl}${this.options.url}`;
 
     // headers
     retConfig.headers = {
