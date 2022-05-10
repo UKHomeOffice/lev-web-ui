@@ -8,11 +8,7 @@ class BirthSearchService {
 
   static searchById(args, callback) {
     const model = new LevModel(args, {
-      url: `${config.services.restApi}/v1/registration/birth/${args.systemNumber}`,
-      headers: {
-        'X-Auth-Aud': 'xxxx',
-        'X-Auth-Username': 'xxxx'
-      }
+      url: `${config.services.restApi}/v1/registration/birth/${args.systemNumber}`
     });
 
     model.fetch(args, (err, data, _responseTime) => {
@@ -32,10 +28,6 @@ class BirthSearchService {
   static searchByName(args, callback) {
     const model = new LevModel(args, {
       url: `${config.services.restApi}/v1/registration/birth`,
-      headers: {
-        'X-Auth-Aud': 'xxxx',
-        'X-Auth-Username': 'xxxx'
-      },
       searchParams: args
     });
 
