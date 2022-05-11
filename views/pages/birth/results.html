@@ -18,7 +18,7 @@
     {% for record in results %}
         {% set rowsArray = (rowsArray.push([
             {
-                html: "<a href=\"#\">" + record.child.forenames + " " + record.child.surname + "</a>",
+                html: "<a href=\"/birth/details/" + record.id + "\">" + record.child.forenames + " " + record.child.surname + "</a>",
                 colspan: 2
             }
         ],[
