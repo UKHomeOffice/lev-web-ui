@@ -1,0 +1,8 @@
+{
+  "port": 8001,
+  "logs": {
+    "console": true,
+    "app": false,
+    "error": false
+  }
+}
