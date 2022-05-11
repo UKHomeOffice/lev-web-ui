@@ -40,4 +40,5 @@ RUN npm ci --only=production
 COPY --chown=app:app . /app
 
 USER 31337
+ENV PORT=8001
 CMD ["node", "."]
