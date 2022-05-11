@@ -31,7 +31,6 @@ COPY --chown=app:app assets/ /app/assets/
 FROM cypress as test
 RUN npm ci
 COPY --chown=app:app . /app
-ENV PORT=8001
 RUN npm run test
 
 FROM base as prod
@@ -41,5 +40,4 @@ RUN npm ci --only=production
 COPY --chown=app:app . /app
 
 USER 31337
-ENV PORT=8001
 CMD ["node", "."]
