@@ -8,6 +8,10 @@ module.exports = {
   '/': {
     entryPoint: true,
     resetJourney: true,
+    skip: true,
+    next: 'search'
+  },
+  '/search': {
     fields: ['system-number', 'surname', 'forenames', 'dob'],
     controller: BirthSearchController,
     next: [

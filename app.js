@@ -7,6 +7,6 @@ const deathRoute = require('./routes/death');
 const { router } = setup();
 
 // routes
-router.use('/', birthRoute);
 router.use('/birth', birthRoute);
 router.use('/death', deathRoute);
+router.use('/', (req, res) => res.redirect('/birth'));
