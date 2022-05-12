@@ -5,12 +5,11 @@ const RestApiModel = require('../models/RestApiModel');
 
 class BirthSearchService {
 
-  static searchById(args, callback) {
-    const model = new RestApiModel(args, {
-      url: `/v1/registration/birth/${args.systemNumber}`
-    });
+  static searchById(attributes, options, callback) {
 
-    model.fetch(args, (err, data, _responseTime) => {
+    const model = new RestApiModel(attributes, options);
+
+    model.fetch((err, data, _responseTime) => {
       if (err) {
         logger.error(err);
         if (err.status === 404) {
@@ -24,13 +23,10 @@ class BirthSearchService {
     });
   }
 
-  static searchByName(args, callback) {
-    const model = new RestApiModel(args, {
-      url: '/v1/registration/birth',
-      searchParams: args
-    });
+  static searchByName(attributes, options, callback) {
+    const model = new RestApiModel(attributes, options);
 
-    model.fetch(args, (err, data, _responseTime) => {
+    model.fetch((err, data, _responseTime) => {
       if (err) return logger.error(err);
 
       logger.info(data);

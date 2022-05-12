@@ -5,6 +5,25 @@ const BirthSearchService = require('../services/BirthSearchService');
 
 class BirthSearchController extends SearchController {
 
+  getHeaders(req) {
+    const token = req.headers['X-Auth-Token'];
+    const roles = req.headers['X-Auth-Roles'];
+
+    let headers = {};
+
+    if (token) {
+      headers = {
+        'Authorization': `Bearer ${token}`
+      };
+    } else if (roles) {
+      headers = {
+        'X-Auth-Roles': roles
+      };
+    }
+
+    return headers;
+  }
+
   /**
    * Get the form values and query the api
    *
@@ -24,7 +43,10 @@ class BirthSearchController extends SearchController {
     if (systemNumber && systemNumber !== '') {
 
       // searchById
-      BirthSearchService.searchById({systemNumber}, (data) => {
+      BirthSearchService.searchById({}, {
+        headers: this.getHeaders(req),
+        url: `/v1/registration/birth/${systemNumber}`
+      }, (data) => {
         req.sessionModel.set('searchResults', data);
 
         if (data.length === 0) {
@@ -38,7 +60,11 @@ class BirthSearchController extends SearchController {
     } else {
 
       // searchByName
-      BirthSearchService.searchByName({forenames, surname, dateOfBirth}, (data) => {
+      BirthSearchService.searchByName({}, {
+        headers: this.getHeaders(req),
+        url: '/v1/registration/birth',
+        searchParams: { forenames, surname, dateOfBirth }
+      }, (data) => {
         req.sessionModel.set('searchResults', data);
 
         if (data.length === 0) {
