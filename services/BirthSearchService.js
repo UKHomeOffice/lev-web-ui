@@ -5,9 +5,8 @@ const RestApiModel = require('../models/RestApiModel');
 
 class BirthSearchService {
 
-  static searchById(attributes, options, callback) {
-
-    const model = new RestApiModel(attributes, options);
+  static searchById(options, callback) {
+    const model = new RestApiModel({}, options);
 
     model.fetch((err, data, _responseTime) => {
       if (err) {
@@ -23,8 +22,8 @@ class BirthSearchService {
     });
   }
 
-  static searchByName(attributes, options, callback) {
-    const model = new RestApiModel(attributes, options);
+  static searchByName(options, callback) {
+    const model = new RestApiModel({}, options);
 
     model.fetch((err, data, _responseTime) => {
       if (err) return logger.error(err);

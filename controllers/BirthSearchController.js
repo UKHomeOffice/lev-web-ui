@@ -49,7 +49,7 @@ class BirthSearchController extends SearchController {
     if (systemNumber && systemNumber !== '') {
 
       // searchById
-      BirthSearchService.searchById({}, {
+      BirthSearchService.searchById({
         headers: this.getHeaders(req),
         url: `/v1/registration/birth/${systemNumber}`
       }, (data) => {
@@ -66,7 +66,7 @@ class BirthSearchController extends SearchController {
     } else {
 
       // searchByName
-      BirthSearchService.searchByName({}, {
+      BirthSearchService.searchByName({
         headers: this.getHeaders(req),
         url: '/v1/registration/birth',
         searchParams: { forenames, surname, dateOfBirth }
