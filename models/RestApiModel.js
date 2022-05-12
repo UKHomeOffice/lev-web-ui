@@ -1,8 +1,7 @@
 'use strict';
 
 const HmpoModel = require('hmpo-model');
-const appConfig = require('../config');
-const api = appConfig.api;
+const { api } = require('../config');
 const baseUrl = `${api.protocol}://${api.host}:${api.port}`;
 
 class RestApiModel extends HmpoModel {
@@ -12,13 +11,6 @@ class RestApiModel extends HmpoModel {
 
     // url
     retConfig.url = `${baseUrl}${this.options.url}`;
-
-    // headers
-    retConfig.headers = {
-      ...retConfig.headers,
-      'X-Auth-Aud': api.client,
-      'X-Auth-Username': api.username
-    };
 
     // searchParams
     const searchParams = Object.assign({}, this.options.searchParams, retConfig.searchParams);

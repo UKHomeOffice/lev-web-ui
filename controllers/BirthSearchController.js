@@ -1,5 +1,6 @@
 'use strict';
 
+const { api } = require('../config');
 const SearchController = require('./SearchController');
 const BirthSearchService = require('../services/BirthSearchService');
 
@@ -9,14 +10,19 @@ class BirthSearchController extends SearchController {
     const token = req.headers['X-Auth-Token'];
     const roles = req.headers['X-Auth-Roles'];
 
-    let headers = {};
+    let headers = {
+      'X-Auth-Aud': api.client,
+      'X-Auth-Username': api.username
+    };
 
     if (token) {
       headers = {
+        ...headers,
         'Authorization': `Bearer ${token}`
       };
     } else if (roles) {
       headers = {
+        ...headers,
         'X-Auth-Roles': roles
       };
     }
