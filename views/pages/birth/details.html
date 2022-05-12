@@ -7,7 +7,9 @@
 {% set govukServiceNameKey = translate("pages.birth.serviceName") %}
 {% set govukServiceUrl = "/birth" %}
 
-{% set hmpoTitle = "Tester One Multiple 01/01/2010" %}
+{% set hmpoTitle -%}
+    {{ record.child.forenames }} {{ record.child.surname }} {{ record.child.dateOfBirth | date("DD/MM/YYYY")}}
+{%- endset %}
 
 {% block mainContent %}
     {{ super() }}
@@ -18,94 +20,94 @@
         rows: [
             [
                 { text: "System number" },
-                { text: "999999902" }
+                { text: record.id }
             ],
             [
                 { text: "Child", colspan: 2, classes: "section-head" }
             ],
             [
                 { text: "Surname" },
-                { text: "Multiple"}
+                { text: record.child.surname }
             ],
             [
                 { text: "Forename(s)" },
-                { text: "Tester One"}
+                { text: record.child.forenames }
             ],
             [
                 { text: "Date of birth" },
-                { text: "01/01/2010"}
+                { text: record.child.dateOfBirth | date("DD/MM/YYYY") }
             ],
             [
                 { text: "Sex" },
-                { text: "Male"}
+                { text: record.child.sex }
             ],
             [
                 { text: "Place of birth" },
-                { text: "Test Address"}
+                { text: record.child.birthplace }
             ],
             [
                 { text: "Mother", colspan: 2, classes: "section-head" }
             ],
             [
                 { text: "Name" },
-                { text: "Mum One Multiple"}
+                { text: record.mother.forenames + " " + record.mother.surname }
             ],
             [
                 { text: "Maiden Name" },
-                { text: "prev-Multiple"}
+                { text: record.mother.maidenSurname }
             ],
             [
-                { text: "Surname at marriage if different from maiden name" },
-                { text: "prev-M-Multiple"}
+                { html: "Surname at marriage <p class=\"govuk-body-s\">if different from maiden name</p>" },
+                { text: record.mother.marriageSurname }
             ],
             [
                 { text: "Place of birth" },
-                { text: "Test Birthplace"}
+                { text: record.mother.birthplace }
             ],
             [
                 { text: "Father / Parent", colspan: 2, classes: "section-head" }
             ],
             [
                 { text: "Name" },
-                { text: "Dad One Multiple"}
+                { text: record.father.forenames + " " + record.father.surname }
             ],
             [
                 { text: "Place of birth" },
-                { text: "Test Birthplace"}
+                { text: record.father.birthplace }
             ],
             [
                 { text: "Registration", colspan: 2, classes: "section-head" }
             ],
             [
                 { text: "Birth registered by" },
-                { text: "Mother"}
+                { text: [record.informant1.qualification, record.informant2.qualification] | filter | join(", ") }
             ],
             [
                 { text: "Registration district" },
-                { text: "Test District"}
+                { text: record.registrar.district }
             ],
             [
                 { text: "Sub-district" },
-                { text: "Test Subdistrict"}
+                { text: record.registrar.subdistrict }
             ],
             [
                 { text: "Administrative area" },
-                { text: "Reading"}
+                { text: record.registrar.administrativeArea }
             ],
             [
                 { text: "Date of registration" },
-                { text: "10/10/2014"}
+                { text: record.date | date("DD/MM/YYYY") }
             ]
         ]
     }) }}
 
     <div class="govuk-button-group">
-        {{ hmpoSubmit(ctx, {key: "newSearch", href: "/"}) }}
-        {{ hmpoSubmit(ctx, {key: "editSearch", classes: "blue", href: "/"}) }}
+        {{ hmpoSubmit(ctx, {key: "newSearch", href: "/birth"}) }}
+        {{ hmpoSubmit(ctx, {key: "editSearch", href: "/birth/search", classes: "blue"}) }}
         {{ hmpoSubmit(ctx, {
             key: "backToResults",
-            classes: "grey",
-            href: "/results"
+            href: "/birth/results",
+            classes: "grey"
         }) }}
     </div>
 {% endblock %}

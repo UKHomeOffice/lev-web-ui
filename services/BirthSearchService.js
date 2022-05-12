@@ -1,52 +1,36 @@
 'use strict';
 
+const logger = require('hmpo-app').logger.get('birth-search-service');
+const RestApiModel = require('../models/RestApiModel');
+
 class BirthSearchService {
 
-  static search({
-    _systemNumber,
-    surname,
-    _forenames,
-    _dob
-  }) {
-    let searchResults = [];
+  static searchById(options, callback) {
+    const model = new RestApiModel({}, options);
 
-    if (surname === 'Multiple') {
-      searchResults = [
-        {
-          surname: 'Multiple',
-          forenames: 'Tester One',
-          mother: 'Mum One Multiple',
-          father: 'Dad One Multiple',
-          placeOfBirth: 'Test Address'
-        },
-        {
-          surname: 'Multiple',
-          forenames: 'Tester Three',
-          mother: 'Mum Three Multiple',
-          father: 'Dad Three Multiple',
-          placeOfBirth: 'Test Address'
-        },
-        {
-          surname: 'Multiple',
-          forenames: 'Tester Two',
-          mother: 'Mum Two Multiple',
-          father: 'Dad Two Multiple',
-          placeOfBirth: 'Test Address'
+    model.fetch((err, data, _responseTime) => {
+      if (err) {
+        logger.error(err);
+        if (err.status === 404) {
+          callback([]);
         }
-      ];
-    } else if (surname === 'Solo') {
-      searchResults = [
-        {
-          surname: 'Solo',
-          forenames: 'Tester One',
-          mother: 'Mum One Multiple',
-          father: 'Dad One Multiple',
-          placeOfBirth: 'Test Address'
-        }
-      ];
-    }
+        return;
+      }
 
-    return searchResults;
+      logger.info(data);
+      callback([data]);
+    });
+  }
+
+  static searchByName(options, callback) {
+    const model = new RestApiModel({}, options);
+
+    model.fetch((err, data, _responseTime) => {
+      if (err) return logger.error(err);
+
+      logger.info(data);
+      callback(data);
+    });
   }
 }
 
