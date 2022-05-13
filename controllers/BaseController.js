@@ -16,7 +16,9 @@ class BaseController extends Controller {
     if (api.protocol === 'https') {
       options = {
         ...options,
-        rejectUnauthorized: false
+        https: {
+          rejectUnauthorized: false
+        }
       };
 
       const token = req.headers['x-auth-token'];
@@ -27,7 +29,7 @@ class BaseController extends Controller {
           ...options,
           headers: {
             ...options.headers,
-            'Authorization': `Bearer ${token}`
+            Authorization: `Bearer ${token}`
           }
         };
       } else if (roles) {
