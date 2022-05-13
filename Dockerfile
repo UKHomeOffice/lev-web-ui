@@ -40,4 +40,9 @@ RUN npm ci --only=production
 COPY --chown=app:app . /app
 
 USER 31337
+ENV LISTEN_HOST="0.0.0.0" \
+    PORT="8001" \
+    API_PROTOCOL="http" \
+    API_HOST="localhost" \
+    API_PORT="8080"
 CMD ["node", "."]
