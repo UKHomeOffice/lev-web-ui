@@ -13,7 +13,7 @@ class BaseController extends Controller {
       }
     };
 
-    if (api.port === 'https') {
+    if (api.protocol === 'https') {
       options = {
         ...options,
         https: {
