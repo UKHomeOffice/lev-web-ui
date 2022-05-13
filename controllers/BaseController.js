@@ -16,7 +16,7 @@ class BaseController extends Controller {
     if (api.protocol === 'https') {
       options = {
         ...options,
-        rejectUnauthorized: api.rejectUnauthorized
+        rejectUnauthorized: false
       };
 
       const token = req.headers['x-auth-token'];
