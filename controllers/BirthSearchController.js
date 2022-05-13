@@ -25,7 +25,7 @@ class BirthSearchController extends SearchController {
 
       // searchById
       BirthSearchService.searchById({
-        headers: this.getHeaders(req),
+        ...this.getOptions(req),
         url: `/v1/registration/birth/${systemNumber}`
       }, (data) => {
         req.sessionModel.set('searchResults', data);
@@ -42,7 +42,7 @@ class BirthSearchController extends SearchController {
 
       // searchByName
       BirthSearchService.searchByName({
-        headers: this.getHeaders(req),
+        ...this.getOptions(req),
         url: '/v1/registration/birth',
         searchParams: { forenames, surname, dateOfBirth }
       }, (data) => {

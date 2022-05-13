@@ -34,6 +34,15 @@ class BaseController extends Controller {
 
     return headers;
   }
+
+  static getOptions(req) {
+    return {
+      headers: this.getHeaders(req),
+      https: {
+        rejectUnauthorized: api.rejectUnauthorized
+      }
+    };
+  }
 }
 
 module.exports = BaseController;
