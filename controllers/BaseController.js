@@ -5,43 +5,45 @@ const {api} = require('../config');
 
 class BaseController extends Controller {
 
-  /**
-   * Populate headers for the rest api from the current authenticated user
-   *
-   * @param req
-   * @returns {{"X-Auth-Username": *, "X-Auth-Aud"}}
-   */
-  static getHeaders(req) {
-    const token = req.headers['X-Auth-Token'];
-    const roles = req.headers['X-Auth-Roles'];
-
-    let headers = {
-      'X-Auth-Aud': api.client,
-      'X-Auth-Username': api.username
-    };
-
-    if (token) {
-      headers = {
-        ...headers,
-        'Authorization': `Bearer ${token}`
-      };
-    } else if (roles) {
-      headers = {
-        ...headers,
-        'X-Auth-Roles': roles
-      };
-    }
-
-    return headers;
-  }
-
-  static getOptions(req) {
-    return {
-      headers: this.getHeaders(req),
-      https: {
-        rejectUnauthorized: api.rejectUnauthorized
+  getOptions(req) {
+    let options = {
+      headers: {
+        'X-Auth-Aud': api.client,
+        'X-Auth-Username': api.username
       }
     };
+
+    if (api.port === 'https') {
+      options = {
+        ...options,
+        https: {
+          rejectUnauthorized: api.rejectUnauthorized
+        }
+      };
+
+      const token = req.headers['X-Auth-Token'];
+      const roles = req.headers['X-Auth-Roles'];
+
+      if (token) {
+        options = {
+          ...options,
+          headers: {
+            ...options.headers,
+            'Authorization': `Bearer ${token}`
+          }
+        };
+      } else if (roles) {
+        options = {
+          ...options,
+          headers: {
+            ...options.headers,
+            'X-Auth-Roles': roles
+          }
+        };
+      }
+    }
+
+    return options;
   }
 }
 
