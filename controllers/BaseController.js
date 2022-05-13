@@ -17,7 +17,7 @@ class BaseController extends Controller {
       options = {
         ...options,
         https: {
-          rejectUnauthorized: false
+          rejectUnauthorized: api.rejectUnauthorized
         }
       };
 
