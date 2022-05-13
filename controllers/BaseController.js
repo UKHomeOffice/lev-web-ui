@@ -8,14 +8,19 @@ class BaseController extends Controller {
   getOptions(req) {
     let options = {
       headers: {
-        'X-Auth-Aud': api.client,
-        'X-Auth-Username': api.username
+        'x-auth-aud': api.client,
+        'x-auth-username': api.username
       }
     };
 
     if (api.protocol === 'https') {
       options = {
         ...options,
+        headers: {
+          ...options.headers,
+          'x-auth-aud': req.headers['x-auth-aud'],
+          'x-auth-username': req.headers['x-auth-username']
+        },
         https: {
           rejectUnauthorized: api.rejectUnauthorized
         }
@@ -37,7 +42,7 @@ class BaseController extends Controller {
           ...options,
           headers: {
             ...options.headers,
-            'X-Auth-Roles': roles
+            'x-auth-roles': roles
           }
         };
       }
