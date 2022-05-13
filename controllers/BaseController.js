@@ -21,8 +21,8 @@ class BaseController extends Controller {
         }
       };
 
-      const token = req.headers['X-Auth-Token'];
-      const roles = req.headers['X-Auth-Roles'];
+      const token = req.headers['x-auth-token'];
+      const roles = req.headers['x-auth-roles'];
 
       if (token) {
         options = {
