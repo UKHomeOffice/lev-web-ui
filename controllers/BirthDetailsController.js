@@ -1,8 +1,8 @@
 'use strict';
 
-const { Controller } = require('hmpo-form-wizard');
+const BaseController = require('./BaseController');
 
-class BirthDetailsController extends Controller {
+class BirthDetailsController extends BaseController {
   locals(req, res, callback) {
     super.locals(req, res, (error, locals) => {
       if (error) return callback(error);

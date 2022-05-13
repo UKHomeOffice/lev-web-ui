@@ -1,8 +1,9 @@
 'use strict';
 
-const { api } = require('../config');
+const { Controller } = require('hmpo-form-wizard');
+const {api} = require('../config');
 
-class HeaderUtils {
+class BaseController extends Controller {
 
   /**
    * Populate headers for the rest api from the current authenticated user
@@ -35,4 +36,4 @@ class HeaderUtils {
   }
 }
 
-module.exports = HeaderUtils;
+module.exports = BaseController;
