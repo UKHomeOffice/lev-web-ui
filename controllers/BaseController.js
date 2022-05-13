@@ -18,7 +18,6 @@ class BaseController extends Controller {
         ...options,
         headers: {
           ...options.headers,
-          'x-auth-aud': req.headers['x-auth-aud'],
           'x-auth-username': req.headers['x-auth-username']
         },
         https: {
