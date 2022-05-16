@@ -17,7 +17,6 @@ module.exports = {
       value: ''
     },
     validate: [
-      'alphaex1',
       'required'
     ]
   },
@@ -28,7 +27,6 @@ module.exports = {
       value: ''
     },
     validate: [
-      'alphaex1',
       'required'
     ]
   },
