@@ -4,16 +4,45 @@ module.exports = {
     contentKey: 'birth-system-number',
     attributes: {
       autofocus: true
-    }
+    },
+    validate: [
+      'numeric',
+      { type: 'exactlength', arguments: [9] }
+    ],
   },
   'surname': {
-    type: 'text'
+    type: 'text',
+    dependent: {
+      field: 'system-number',
+      value: ''
+    },
+    validate: [
+      'alphaex1',
+      'required'
+    ]
   },
   'forenames': {
-    type: 'text'
+    type: 'text',
+    dependent: {
+      field: 'system-number',
+      value: ''
+    },
+    validate: [
+      'alphaex1',
+      'required'
+    ]
   },
   'dob': {
     type: 'date',
-    validate: 'date'
+    dependent: {
+      field: 'system-number',
+      value: ''
+    },
+    validate: [
+      'required',
+      'date',
+      { type: 'before', arguments: 'today' },
+      { type: 'after', arguments: '2009-01-01' }
+    ]
   }
 };
