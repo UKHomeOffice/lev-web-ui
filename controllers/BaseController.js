@@ -22,7 +22,7 @@ class BaseController extends Controller {
         headers: {
           ...options.headers,
           ...(token && { Authorization: `Bearer ${token}`}),
-          ...(roles && { 'x-auth-roles': roles })
+          ...(!token && roles && { 'x-auth-roles': roles })
         },
         https: {
           rejectUnauthorized: api.rejectUnauthorized
