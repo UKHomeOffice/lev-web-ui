@@ -3,6 +3,7 @@
 const BirthDetailsController = require('../../controllers/BirthDetailsController');
 const BirthResultsController = require('../../controllers/BirthResultsController');
 const BirthSearchController = require('../../controllers/BirthSearchController');
+const TestController = require('../../controllers/TestController');
 
 module.exports = {
   '/': {
@@ -22,6 +23,12 @@ module.exports = {
   '/results': {
     controller: BirthResultsController,
     next: 'details'
+  },
+  '/details/:id': {
+    controller: TestController,
+    entryPoint: true,
+    template: 'details',
+    noPost: true
   },
   '/details': {
     controller: BirthDetailsController
