@@ -14,37 +14,20 @@ class BaseController extends Controller {
     };
 
     if (api.protocol === 'https') {
+      const token = req.headers['x-auth-token'];
+      const roles = req.headers['x-auth-roles'];
+
       options = {
         ...options,
         headers: {
           ...options.headers,
-          'x-auth-username': req.headers['x-auth-username']
+          ...(token && { Authorization: `Bearer ${token}`}),
+          ...(roles && { 'x-auth-roles': roles })
         },
         https: {
           rejectUnauthorized: api.rejectUnauthorized
         }
       };
-
-      const token = req.headers['x-auth-token'];
-      const roles = req.headers['x-auth-roles'];
-
-      if (token) {
-        options = {
-          ...options,
-          headers: {
-            ...options.headers,
-            Authorization: `Bearer ${token}`
-          }
-        };
-      } else if (roles) {
-        options = {
-          ...options,
-          headers: {
-            ...options.headers,
-            'x-auth-roles': roles
-          }
-        };
-      }
     }
 
     return options;
