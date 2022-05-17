@@ -8,9 +8,9 @@ class BirthDetailsController extends BaseController {
       if (error) return callback(error);
 
       const searchResults = req.sessionModel.get('searchResults');
-      const currentResult = req.sessionModel.get('currentRecord');
+      const currentRecord = req.sessionModel.get('currentRecord');
 
-      locals.record = searchResults[currentResult];
+      locals.record = searchResults[currentRecord];
       locals.showBackToResults = searchResults.length > 1;
 
       callback(null, locals);
