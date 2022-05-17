@@ -8,9 +8,10 @@ class BirthDetailsController extends BaseController {
       if (error) return callback(error);
 
       const systemNumber = req.params.id && parseInt(req.params.id) || undefined;
+      const searchResults = req.sessionModel.get('searchResults') || [];
 
+      // If param exists
       if (systemNumber) {
-        const searchResults = req.sessionModel.get('searchResults') || [];
         const currentRecord = searchResults.findIndex(record => record.id === systemNumber);
 
         if (currentRecord !== -1) {
@@ -20,7 +21,6 @@ class BirthDetailsController extends BaseController {
         }
       }
 
-      const searchResults = req.sessionModel.get('searchResults') || [];
       const currentRecord = req.sessionModel.get('currentRecord');
 
       locals.record = searchResults[currentRecord];
