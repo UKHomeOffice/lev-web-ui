@@ -24,13 +24,13 @@ module.exports = {
     controller: BirthResultsController,
     next: 'details'
   },
-  '/details/:id': {
-    controller: TestController,
-    entryPoint: true,
-    template: 'details',
-    noPost: true
-  },
   '/details': {
     controller: BirthDetailsController
+  },
+  '/details/:id': {
+    entryPoint: true,
+    controller: TestController,
+    template: 'details',
+    backLink: 'results'
   }
 };

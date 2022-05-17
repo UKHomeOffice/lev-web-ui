@@ -1,28 +1,23 @@
 'use strict';
 
-const BirthDetailsContrtoller = require('./BirthDetailsController');
-const logger = require('hmpo-app').logger.get('test-controller');
+const BirthDetailsController = require('./BirthDetailsController');
 
-class TestController extends BirthDetailsContrtoller {
+class TestController extends BirthDetailsController {
   locals(req, res, callback) {
-    logger.info('locals()');
+    const systemNumber = req.params.id && parseInt(req.params.id) || undefined;
 
-    const systemNumber = req && req.params && parseInt(req.params.id) || undefined;
-    const searchResults = req && req.sessionModel.get('searchResults') || undefined;
-
-    if (systemNumber && searchResults) {
+    if (systemNumber) {
+      const searchResults = req.sessionModel.get('searchResults') || [];
       const currentRecord = searchResults.findIndex(record => record.id === systemNumber);
 
-      logger.info(`id=${systemNumber}`);
-      logger.info(`searchResults=${JSON.stringify(searchResults)}`);
-      logger.info(`currentRecord=${JSON.stringify(currentRecord)}`);
+      if (currentRecord !== -1) {
+        req.sessionModel.set('currentRecord', currentRecord);
+      } else {
+        req.sessionModel.unset('currentRecord');
+      }
 
-      req.sessionModel.set('currentRecord', currentRecord);
-    } else {
-      req.sessionModel.unset('currentRecord');
+      super.locals(req, res, callback);
     }
-
-    super.locals(req, res, callback);
   }
 }
 
