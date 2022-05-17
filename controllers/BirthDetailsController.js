@@ -1,6 +1,7 @@
 'use strict';
 
 const BaseController = require('./BaseController');
+const SearchService = require('../services/SearchService');
 
 class BirthDetailsController extends BaseController {
   locals(req, res, callback) {
@@ -20,7 +21,7 @@ class BirthDetailsController extends BaseController {
     super.locals(req, res, (error, locals) => {
       if (error) return callback(error);
 
-      const searchResults = req.sessionModel.get('searchResults');
+      const searchResults = req.sessionModel.get('searchResults') || [];
       const currentRecord = req.sessionModel.get('currentRecord');
 
       locals.record = searchResults[currentRecord];

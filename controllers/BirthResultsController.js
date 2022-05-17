@@ -7,7 +7,7 @@ class BirthResultsController extends BaseController {
     super.locals(req, res, (error, locals) => {
       if (error) return callback(error);
 
-      locals.results = req.sessionModel.get('searchResults');
+      locals.results = req.sessionModel.get('searchResults') || [];
 
       callback(null, locals);
     });

@@ -67,7 +67,7 @@ class BirthSearchController extends SearchController {
    * @returns {*|boolean}
    */
   conditionMethod(req, _res, _con) {
-    const searchResults = req.sessionModel.get('searchResults');
+    const searchResults = req.sessionModel.get('searchResults') || [];
 
     return searchResults && searchResults.length === 1;
   }
