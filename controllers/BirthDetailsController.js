@@ -11,6 +11,7 @@ class BirthDetailsController extends BaseController {
       const currentResult = req.sessionModel.get('currentRecord');
 
       locals.record = searchResults[currentResult];
+      locals.showBackToResults = searchResults.length > 1;
 
       callback(null, locals);
     });
