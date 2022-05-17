@@ -3,7 +3,6 @@
 const BirthDetailsController = require('../../controllers/BirthDetailsController');
 const BirthResultsController = require('../../controllers/BirthResultsController');
 const BirthSearchController = require('../../controllers/BirthSearchController');
-const TestController = require('../../controllers/TestController');
 
 module.exports = {
   '/': {
@@ -30,7 +29,7 @@ module.exports = {
   },
   '/details/:id': {
     entryPoint: true,
-    controller: TestController,
+    controller: BirthDetailsController,
     template: 'details'
   }
 };
