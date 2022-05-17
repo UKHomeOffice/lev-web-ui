@@ -14,11 +14,7 @@ class BirthDetailsController extends BaseController {
       if (systemNumber) {
         const currentRecord = searchResults.findIndex(record => record.id === systemNumber);
 
-        if (currentRecord !== -1) {
-          req.sessionModel.set('currentRecord', currentRecord);
-        } else {
-          req.sessionModel.unset('currentRecord');
-        }
+        req.sessionModel.set('currentRecord', currentRecord);
       }
 
       const currentRecord = req.sessionModel.get('currentRecord');

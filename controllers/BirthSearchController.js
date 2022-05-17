@@ -29,12 +29,7 @@ class BirthSearchController extends SearchController {
         url: `/v1/registration/birth/${systemNumber}`
       }, (data) => {
         req.sessionModel.set('searchResults', data);
-
-        if (data.length === 0) {
-          req.sessionModel.unset('currentRecord');
-        } else {
-          req.sessionModel.set('currentRecord', 0);
-        }
+        req.sessionModel.set('currentRecord', data.length === 0 ? -1 : 0);
 
         super.saveValues(req, res, next);
       });
@@ -47,12 +42,7 @@ class BirthSearchController extends SearchController {
         searchParams: { forenames, surname, dateOfBirth }
       }, (data) => {
         req.sessionModel.set('searchResults', data);
-
-        if (data.length === 0) {
-          req.sessionModel.unset('currentRecord');
-        } else {
-          req.sessionModel.set('currentRecord', 0);
-        }
+        req.sessionModel.set('currentRecord', data.length === 0 ? -1 : 0);
 
         super.saveValues(req, res, next);
       });
