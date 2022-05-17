@@ -1,7 +1,7 @@
 'use strict';
 
 const SearchController = require('./SearchController');
-const BirthSearchService = require('../services/BirthSearchService');
+const SearchService = require('../services/SearchService');
 
 class BirthSearchController extends SearchController {
 
@@ -24,7 +24,7 @@ class BirthSearchController extends SearchController {
     if (systemNumber && systemNumber !== '') {
 
       // searchById
-      BirthSearchService.searchById({
+      SearchService.searchById({
         ...this.getOptions(req),
         url: `/v1/registration/birth/${systemNumber}`
       }, (data) => {
@@ -41,7 +41,7 @@ class BirthSearchController extends SearchController {
     } else {
 
       // searchByName
-      BirthSearchService.searchByName({
+      SearchService.searchByName({
         ...this.getOptions(req),
         url: '/v1/registration/birth',
         searchParams: { forenames, surname, dateOfBirth }

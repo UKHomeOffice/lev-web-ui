@@ -1,9 +1,9 @@
 'use strict';
 
-const logger = require('hmpo-app').logger.get('birth-search-service');
+const logger = require('hmpo-app').logger.get('search-service');
 const RestApiModel = require('../models/RestApiModel');
 
-class BirthSearchService {
+class SearchService {
 
   static searchById(options, callback) {
     logger.info(options);
@@ -36,4 +36,4 @@ class BirthSearchService {
   }
 }
 
-module.exports = BirthSearchService;
+module.exports = SearchService;
