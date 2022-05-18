@@ -1,7 +1,7 @@
 'use strict';
 
 const SearchController = require('./SearchController');
-const RestApiModel = require('../models/RestApiModel');
+const { searchById, searchByName } = require('../api');
 
 class BirthSearchController extends SearchController {
 
@@ -26,7 +26,7 @@ class BirthSearchController extends SearchController {
       try {
 
         // searchById
-        const searchResults = await this.searchById({
+        const searchResults = await searchById({
           ...this.getOptions(req),
           url: `/v1/registration/birth/${systemNumber}`
         });
@@ -42,7 +42,7 @@ class BirthSearchController extends SearchController {
 
       // searchByName
       try {
-        const searchResults = await this.searchByName({
+        const searchResults = await searchByName({
           ...this.getOptions(req),
           url: '/v1/registration/birth',
           searchParams: { forenames, surname, dateOfBirth }
@@ -56,34 +56,6 @@ class BirthSearchController extends SearchController {
         next(err);
       }
     }
-  }
-
-  async searchById(options) {
-    return await new Promise((resolve, reject) => {
-      const model = new RestApiModel({}, options);
-      model.fetch((err, data, _responseTime) => {
-        if (err && err.status === 404) {
-          resolve([]);
-        } else if (err) {
-          reject(err);
-        } else {
-          resolve([data]);
-        }
-      });
-    });
-  }
-
-  async searchByName(options) {
-    return await new Promise((resolve, reject) => {
-      const model = new RestApiModel({}, options);
-      model.fetch((err, data, _responseTime) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(data);
-        }
-      });
-    });
   }
 
   /**
