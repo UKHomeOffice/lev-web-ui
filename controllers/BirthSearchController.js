@@ -23,16 +23,21 @@ class BirthSearchController extends SearchController {
     // If systemNumber exists, perform searchById otherwise perform searchByName
     if (systemNumber && systemNumber !== '') {
 
-      // searchById
-      const searchResults = await this.searchById({
-        ...this.getOptions(req),
-        url: `/v1/registration/birth/${systemNumber}`
-      });
+      try {
 
-      req.sessionModel.set('searchResults', searchResults);
-      req.sessionModel.set('currentRecord', searchResults.length === 0 ? -1 : 0);
+        // searchById
+        const searchResults = await this.searchById({
+          ...this.getOptions(req),
+          url: `/v1/registration/birth/${systemNumber}`
+        });
 
-      next();
+        req.sessionModel.set('searchResults', searchResults);
+        req.sessionModel.set('currentRecord', searchResults.length === 0 ? -1 : 0);
+
+        next();
+      } catch (err) {
+        next(err);
+      }
     } else {
 
       // searchByName
