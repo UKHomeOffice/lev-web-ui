@@ -3,17 +3,13 @@ $govuk-assets-path: "/public/";
 @import "node_modules/govuk-frontend/govuk/all";
 @import "node_modules/hmpo-components/all";
 
-$section-colour: #F2F3F3;
+$section-head-colour: #f2f3f3;
 
 $blue-button-colour: #005ea5;
 $blue-button-hover-colour: govuk-shade($blue-button-colour, 20%);
 
 $grey-button-colour: #52585a;
 $grey-button-hover-colour: govuk-shade($grey-button-colour, 20%);
-
-.section-head {
-  background-color: $section-colour;
-}
 
 a {
   &.blue {
@@ -42,14 +38,22 @@ a {
 
 table {
   &.details {
+    border-top: 1px solid $govuk-border-colour;
+
     tbody {
       th {
         width: 12em;
+
+        &.section-head {
+          background-color: $section-head-colour;
+        }
       }
     }
   }
 
   &.results {
+    border-top: 1px solid $govuk-border-colour;
+
     tbody {
       th {
         width: 7.2em;
