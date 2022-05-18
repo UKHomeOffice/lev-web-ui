@@ -12,7 +12,7 @@ class BirthSearchController extends SearchController {
    * @param res
    * @param next
    */
-  validate(req, _res, next) {
+  async validate(req, _res, next) {
 
     // Get the values from the search form
     const systemNumber = req.form.values['system-number'];
@@ -23,46 +23,61 @@ class BirthSearchController extends SearchController {
     // If systemNumber exists, perform searchById otherwise perform searchByName
     if (systemNumber && systemNumber !== '') {
 
-      // searchById
-      const model = new RestApiModel({}, {
+      const searchResults = await this.searchById({
         ...this.getOptions(req),
         url: `/v1/registration/birth/${systemNumber}`
       });
 
-      model.fetch((err, data, _responseTime) => {
-        if (err && err.status === 404) {
-          data = [];
-        } else if (err) {
-          return;
-        } else {
-          data = [data];
-        }
+      req.sessionModel.set('searchResults', searchResults);
+      req.sessionModel.set('currentRecord', searchResults.length === 0 ? -1 : 0);
 
-        req.sessionModel.set('searchResults', data);
-        req.sessionModel.set('currentRecord', data.length === 0 ? -1 : 0);
-
-        next();
-      });
+      next();
     } else {
 
       // searchByName
-      const model = new RestApiModel({}, {
-        ...this.getOptions(req),
-        url: '/v1/registration/birth',
-        searchParams: { forenames, surname, dateOfBirth }
-      });
+      try {
+        const searchResults = await this.searchByName({
+          ...this.getOptions(req),
+          url: '/v1/registration/birth',
+          searchParams: { forenames, surname, dateOfBirth }
+        });
 
-      model.fetch((err, data, _responseTime) => {
-        if (err) {
-          return;
-        }
-
-        req.sessionModel.set('searchResults', data);
-        req.sessionModel.set('currentRecord', data.length === 0 ? -1 : 0);
+        req.sessionModel.set('searchResults', searchResults);
+        req.sessionModel.set('currentRecord', searchResults.length === 0 ? -1 : 0);
 
         next();
-      });
+      } catch (err) {
+        next(err);
+      }
     }
+  }
+
+  async searchById(options) {
+    return await new Promise((resolve, reject) => {
+      const model = new RestApiModel({}, options);
+      model.fetch((err, data, _responseTime) => {
+        if (err && err.status === 404) {
+          resolve([]);
+        } else if (err) {
+          reject(err);
+        } else {
+          resolve([data]);
+        }
+      });
+    });
+  }
+
+  async searchByName(options) {
+    return await new Promise((resolve, reject) => {
+      const model = new RestApiModel({}, options);
+      model.fetch((err, data, _responseTime) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(data);
+        }
+      });
+    });
   }
 
   /**
