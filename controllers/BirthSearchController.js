@@ -1,7 +1,7 @@
 'use strict';
 
 const SearchController = require('./SearchController');
-const SearchService = require('../services/SearchService');
+const RestApiModel = require('../models/RestApiModel');
 
 class BirthSearchController extends SearchController {
 
@@ -24,10 +24,20 @@ class BirthSearchController extends SearchController {
     if (systemNumber && systemNumber !== '') {
 
       // searchById
-      SearchService.searchById({
+      const model = new RestApiModel({}, {
         ...this.getOptions(req),
         url: `/v1/registration/birth/${systemNumber}`
-      }, (data) => {
+      });
+
+      model.fetch((err, data, _responseTime) => {
+        if (err && err.status === 404) {
+          data = [];
+        } else if (err) {
+          return;
+        } else {
+          data = [data];
+        }
+
         req.sessionModel.set('searchResults', data);
         req.sessionModel.set('currentRecord', data.length === 0 ? -1 : 0);
 
@@ -36,11 +46,17 @@ class BirthSearchController extends SearchController {
     } else {
 
       // searchByName
-      SearchService.searchByName({
+      const model = new RestApiModel({}, {
         ...this.getOptions(req),
         url: '/v1/registration/birth',
         searchParams: { forenames, surname, dateOfBirth }
-      }, (data) => {
+      });
+
+      model.fetch((err, data, _responseTime) => {
+        if (err) {
+          return;
+        }
+
         req.sessionModel.set('searchResults', data);
         req.sessionModel.set('currentRecord', data.length === 0 ? -1 : 0);
 
