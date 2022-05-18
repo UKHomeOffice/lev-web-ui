@@ -7,10 +7,20 @@ class BirthDetailsController extends BaseController {
     super.locals(req, res, (error, locals) => {
       if (error) return callback(error);
 
-      const searchResults = req.sessionModel.get('searchResults');
-      const currentResult = req.sessionModel.get('currentRecord');
+      const systemNumber = req.params.id && parseInt(req.params.id) || undefined;
+      const searchResults = req.sessionModel.get('searchResults') || [];
 
-      locals.record = searchResults[currentResult];
+      // If param exists
+      if (systemNumber) {
+        const currentRecord = searchResults.findIndex(record => record.id === systemNumber);
+
+        req.sessionModel.set('currentRecord', currentRecord);
+      }
+
+      const currentRecord = req.sessionModel.get('currentRecord');
+
+      locals.record = searchResults[currentRecord];
+      locals.showBackToResults = searchResults.length > 1;
 
       callback(null, locals);
     });

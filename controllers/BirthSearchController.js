@@ -1,7 +1,7 @@
 'use strict';
 
 const SearchController = require('./SearchController');
-const BirthSearchService = require('../services/BirthSearchService');
+const SearchService = require('../services/SearchService');
 
 class BirthSearchController extends SearchController {
 
@@ -24,35 +24,25 @@ class BirthSearchController extends SearchController {
     if (systemNumber && systemNumber !== '') {
 
       // searchById
-      BirthSearchService.searchById({
+      SearchService.searchById({
         ...this.getOptions(req),
         url: `/v1/registration/birth/${systemNumber}`
       }, (data) => {
         req.sessionModel.set('searchResults', data);
-
-        if (data.length === 0) {
-          req.sessionModel.unset('currentRecord');
-        } else {
-          req.sessionModel.set('currentRecord', 0);
-        }
+        req.sessionModel.set('currentRecord', data.length === 0 ? -1 : 0);
 
         super.saveValues(req, res, next);
       });
     } else {
 
       // searchByName
-      BirthSearchService.searchByName({
+      SearchService.searchByName({
         ...this.getOptions(req),
         url: '/v1/registration/birth',
         searchParams: { forenames, surname, dateOfBirth }
       }, (data) => {
         req.sessionModel.set('searchResults', data);
-
-        if (data.length === 0) {
-          req.sessionModel.unset('currentRecord');
-        } else {
-          req.sessionModel.set('currentRecord', 0);
-        }
+        req.sessionModel.set('currentRecord', data.length === 0 ? -1 : 0);
 
         super.saveValues(req, res, next);
       });
@@ -67,7 +57,7 @@ class BirthSearchController extends SearchController {
    * @returns {*|boolean}
    */
   conditionMethod(req, _res, _con) {
-    const searchResults = req.sessionModel.get('searchResults');
+    const searchResults = req.sessionModel.get('searchResults') || [];
 
     return searchResults && searchResults.length === 1;
   }

@@ -104,10 +104,12 @@
     <div class="govuk-button-group">
         {{ hmpoSubmit(ctx, {key: "newSearch", href: "/birth"}) }}
         {{ hmpoSubmit(ctx, {key: "editSearch", href: "/birth/search", classes: "blue"}) }}
-        {{ hmpoSubmit(ctx, {
-            key: "backToResults",
-            href: "/birth/results",
-            classes: "grey"
-        }) }}
+        {% if showBackToResults %}
+            {{ hmpoSubmit(ctx, {
+                key: "backToResults",
+                href: "/birth/results",
+                classes: "grey"
+            }) }}
+        {% endif %}
     </div>
 {% endblock %}

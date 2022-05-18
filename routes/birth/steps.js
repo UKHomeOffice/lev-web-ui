@@ -21,9 +21,15 @@ module.exports = {
   },
   '/results': {
     controller: BirthResultsController,
-    next: 'details'
+    next: 'details',
+    noPost: true
   },
   '/details': {
     controller: BirthDetailsController
+  },
+  '/details/:id': {
+    entryPoint: true,
+    controller: BirthDetailsController,
+    template: 'details'
   }
 };
