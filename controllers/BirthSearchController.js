@@ -9,7 +9,7 @@ class BirthSearchController extends SearchController {
    * Get the form values and query the api
    *
    * @param req
-   * @param res
+   * @param _res
    * @param next
    */
   async validate(req, _res, next) {
@@ -23,6 +23,7 @@ class BirthSearchController extends SearchController {
     // If systemNumber exists, perform searchById otherwise perform searchByName
     if (systemNumber && systemNumber !== '') {
 
+      // searchById
       const searchResults = await this.searchById({
         ...this.getOptions(req),
         url: `/v1/registration/birth/${systemNumber}`
