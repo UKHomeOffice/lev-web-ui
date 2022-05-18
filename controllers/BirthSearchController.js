@@ -12,7 +12,7 @@ class BirthSearchController extends SearchController {
    * @param res
    * @param next
    */
-  saveValues(req, res, next) {
+  validate(req, _res, next) {
 
     // Get the values from the search form
     const systemNumber = req.form.values['system-number'];
@@ -31,7 +31,7 @@ class BirthSearchController extends SearchController {
         req.sessionModel.set('searchResults', data);
         req.sessionModel.set('currentRecord', data.length === 0 ? -1 : 0);
 
-        super.saveValues(req, res, next);
+        next();
       });
     } else {
 
@@ -44,7 +44,7 @@ class BirthSearchController extends SearchController {
         req.sessionModel.set('searchResults', data);
         req.sessionModel.set('currentRecord', data.length === 0 ? -1 : 0);
 
-        super.saveValues(req, res, next);
+        next();
       });
     }
   }
