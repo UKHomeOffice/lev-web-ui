@@ -49,11 +49,6 @@ class BirthResultsPage extends ResultsPage {
   static clickEditSearchLink() {
     cy.get('a[href="/birth/search"]').contains('Edit search').click();
   }
-
-  static flagsVisible() {
-    cy.get('.flag').eq(0).contains('Refer to GRO');
-    cy.get('.flag').eq(1).contains('Unmarried parents subsequently married');
-  }
 }
 
 module.exports = BirthResultsPage;

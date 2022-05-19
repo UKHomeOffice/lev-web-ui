@@ -3,7 +3,7 @@
 const LoginPage = require('../../../pages/LoginPage');
 const BirthSearchPage = require('../../../pages/birth/BirthSearchPage');
 const BirthResultsPage = require('../../../pages/birth/BirthResultsPage');
-const { multipleValidRecords, searchMultipleRecords, recordsWithFlags} = require('../../../fixtures/birth/birth');
+const { multipleValidRecords, searchMultipleRecords } = require('../../../fixtures/birth/birth');
 const BirthDetailsPage = require('../../../pages/birth/BirthDetailsPage');
 
 describe('Birth results', () => {
@@ -76,15 +76,6 @@ describe('Birth results', () => {
       });
       it('has the correct form values', () => {
         BirthSearchPage.searchFormClear();
-      });
-    });
-    describe('records with flags ', () => {
-      it('search with multiple results shows individual record flags within table if they exist', () => {
-        BirthSearchPage.visit();
-        BirthSearchPage.performSearch({
-          systemNumber: '', surname: 'howard', forenames: 'zack', day: '10', month: '10', year: '2012'
-        });
-        BirthResultsPage.flagsVisible();
       });
     });
   });
