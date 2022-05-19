@@ -1,19 +1,19 @@
 'use strict';
 
 const { Controller } = require('hmpo-form-wizard');
-const {api} = require('../config');
+const config = require('../config');
 
 class BaseController extends Controller {
 
   getOptions(req) {
     let options = {
       headers: {
-        'x-auth-aud': api.client,
-        'x-auth-username': api.username
+        'x-auth-aud': config.api.client,
+        'x-auth-username': config.api.username
       }
     };
 
-    if (api.protocol === 'https') {
+    if (config.api.protocol === 'https') {
       const token = req.headers['x-auth-token'];
       const roles = req.headers['x-auth-roles'];
 
@@ -25,7 +25,7 @@ class BaseController extends Controller {
           ...(!token && roles && { 'x-auth-roles': roles })
         },
         https: {
-          rejectUnauthorized: api.rejectUnauthorized
+          rejectUnauthorized: config.api.rejectUnauthorized
         }
       };
     }
