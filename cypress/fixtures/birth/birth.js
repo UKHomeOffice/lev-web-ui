@@ -16,7 +16,7 @@ module.exports = {
     month: '01',
     year: '2010'
   },
-  // Used forecordsWithFlagsr test where only one record should be returned
+  // Used for test where only one record should be returned
   validRecord: {
     'administrativeArea': 'Reading',
     'subDistrict': 'Test Subdistrict',
