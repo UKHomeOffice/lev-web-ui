@@ -26,13 +26,13 @@ class BirthSearchController extends SearchController {
       try {
 
         // searchById
-        const searchResults = await searchById({
+        const record = await searchById({
           ...this.getOptions(req),
           url: `/v1/registration/birth/${systemNumber}`
         });
 
-        req.sessionModel.set('searchResults', searchResults);
-        req.sessionModel.set('currentRecord', searchResults.length === 0 ? -1 : 0);
+        req.sessionModel.set('searchResults', record ? [record] : []);
+        req.sessionModel.set('currentRecord', record ? 0 : -1);
 
         next();
       } catch (err) {

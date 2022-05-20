@@ -13,35 +13,35 @@ describe('Birth search tests', () => {
   };
 
   describe('searchById', () => {
-    it('123456789 should return single element array', async () => {
+    it('123456789 should return a record', async () => {
 
       // Arrange
       const systemNumber = 123456789;
 
       // Act
-      const searchResults = await searchById({
+      const record = await searchById({
         ...options,
         url: `/v1/registration/birth/${systemNumber}`
       });
 
       // Assert
-      expect(searchResults).toHaveLength(1);
-      expect(searchResults[0].id).toEqual(systemNumber);
+      expect(record).toBeDefined();
+      expect(record.id).toEqual(systemNumber);
     });
 
-    it('123 should return empty array', async () => {
+    it('123 should return undefined', async () => {
 
       // Arrange
       const systemNumber = 123;
 
       // Act
-      const searchResults = await searchById({
+      const record = await searchById({
         ...options,
         url: `/v1/registration/birth/${systemNumber}`
       });
 
       // Assert
-      expect(searchResults).toHaveLength(0);
+      expect(record).not.toBeDefined();
     });
 
     it('invalid should throw exception', async () => {
