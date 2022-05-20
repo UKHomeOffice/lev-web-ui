@@ -42,9 +42,11 @@ class BirthDetailsController extends BaseController {
       if (record) {
         locals.record = this.processRecord(record);
         locals.showBackToResults = searchResults.length > 1;
-      }
 
-      callback(null, locals);
+        callback(null, locals);
+      } else {
+        callback(this.pageNotFound());
+      }
     });
   }
 
