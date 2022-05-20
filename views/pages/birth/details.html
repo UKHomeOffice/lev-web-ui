@@ -2,17 +2,26 @@
 
 {% from "govuk/components/table/macro.njk" import govukTable %}
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+{% from "components/lev-flag.njk" import levFlag %}
 
 {% set hmpoPageKey = "birth.detailsPage" %}
 {% set govukServiceNameKey = translate("pages.birth.serviceName") %}
 {% set govukServiceUrl = "/birth" %}
 
+{% macro redact(value) %}
+    {{ "UNAVAILABLE" if record.status.blocked else value }}
+{% endmacro %}
+
 {% set hmpoTitle -%}
-    {{ record.child.forenames }} {{ record.child.surname }} {{ record.child.dateOfBirth | date("DD/MM/YYYY")}}
+    {{ redact(record.child.forenames) }} {{ redact(record.child.surname) }} {{ redact(record.child.dateOfBirth | date("DD/MM/YYYY")) }}
 {%- endset %}
 
 {% block mainContent %}
     {{ super() }}
+
+    {% if record.status.blocked %}
+        {{ levFlag(ctx, "alert") }}
+    {% endif %}
 
     {{ govukTable({
         classes: "details",
@@ -27,76 +36,76 @@
             ],
             [
                 { text: "Surname" },
-                { text: record.child.surname }
+                { text: redact(record.child.surname) }
             ],
             [
                 { text: "Forename(s)" },
-                { text: record.child.forenames }
+                { text: redact(record.child.forenames) }
             ],
             [
                 { text: "Date of birth" },
-                { text: record.child.dateOfBirth | date("DD/MM/YYYY") }
+                { text: redact(record.child.dateOfBirth | date("DD/MM/YYYY")) }
             ],
             [
                 { text: "Sex" },
-                { text: record.child.sex }
+                { text: redact(record.child.sex) }
             ],
             [
                 { text: "Place of birth" },
-                { text: record.child.birthplace }
+                { text: redact(record.child.birthplace) }
             ],
             [
                 { text: "Mother", colspan: 2, classes: "section-head" }
             ],
             [
                 { text: "Name" },
-                { text: record.mother.forenames + " " + record.mother.surname }
+                { text: redact(record.mother.forenames + " " + record.mother.surname) }
             ],
             [
                 { text: "Maiden Name" },
-                { text: record.mother.maidenSurname }
+                { text: redact(record.mother.maidenSurname) }
             ],
             [
                 { html: "Surname at marriage <p class=\"govuk-body-s\">if different from maiden name</p>" },
-                { text: record.mother.marriageSurname }
+                { text: redact(record.mother.marriageSurname) }
             ],
             [
                 { text: "Place of birth" },
-                { text: record.mother.birthplace }
+                { text: redact(record.mother.birthplace) }
             ],
             [
                 { text: "Father / Parent", colspan: 2, classes: "section-head" }
             ],
             [
                 { text: "Name" },
-                { text: record.father.forenames + " " + record.father.surname }
+                { text: redact(record.father.forenames + " " + record.father.surname) }
             ],
             [
                 { text: "Place of birth" },
-                { text: record.father.birthplace }
+                { text: redact(record.father.birthplace) }
             ],
             [
                 { text: "Registration", colspan: 2, classes: "section-head" }
             ],
             [
                 { text: "Birth registered by" },
-                { text: [record.informant1.qualification, record.informant2.qualification] | filter | join(", ") }
+                { text: redact([record.informant1.qualification, record.informant2.qualification] | filter | join(", ")) }
             ],
             [
                 { text: "Registration district" },
-                { text: record.registrar.district }
+                { text: redact(record.registrar.district) }
             ],
             [
                 { text: "Sub-district" },
-                { text: record.registrar.subdistrict }
+                { text: redact(record.registrar.subdistrict) }
             ],
             [
                 { text: "Administrative area" },
-                { text: record.registrar.administrativeArea }
+                { text: redact(record.registrar.administrativeArea) }
             ],
             [
                 { text: "Date of registration" },
-                { text: record.date | date("DD/MM/YYYY") }
+                { text: redact(record.date | date("DD/MM/YYYY")) }
             ]
         ]
     }) }}

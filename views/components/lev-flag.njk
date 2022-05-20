@@ -1,0 +1,5 @@
+{% macro levFlag(ctx, key) %}
+    <div class="flag {{ key }} govuk-body">
+        {{ ctx().translate("flags." + key + ".text") }}
+    </div>
+{% endmacro %}

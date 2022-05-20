@@ -2,6 +2,7 @@ $govuk-assets-path: "/public/";
 
 @import "node_modules/govuk-frontend/govuk/all";
 @import "node_modules/hmpo-components/all";
+@import "./flags";
 
 $section-head-colour: #f2f3f3;
 

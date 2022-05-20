@@ -13,6 +13,11 @@
     "startAgain": "Start again",
     "logout": "Sign out"
   },
+  "flags": {
+    "alert": {
+      "text": "Refer to GRO."
+    }
+  },
   "fields": {
     "birth-system-number": {
       "label": "System number from birth certificate"
