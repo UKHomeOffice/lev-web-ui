@@ -1,5 +1,10 @@
-{% macro levFlag(ctx, key) %}
-    <div class="flag {{ key }} govuk-body">
-        {{ ctx().translate("flags." + key + ".text") }}
+{% macro levFlag(ctx, params) %}
+    {% from "hmpo-html/macro.njk" import hmpoHtml %}
+
+    {% set key = "flags." + params.key %}
+
+    <div class="flag {{ params.type | default('') }} govuk-body">
+        {{ ctx().translate(key) }}
+        {{ params.html }}
     </div>
 {% endmacro %}
