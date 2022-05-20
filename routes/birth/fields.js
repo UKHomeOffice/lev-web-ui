@@ -1,9 +1,14 @@
 module.exports = {
   'system-number': {
-    type: 'number',
+    type: 'text',
     contentKey: 'birth-system-number',
     attributes: {
-      autofocus: true
+      autofocus: true,
+      classes: 'govuk-input--width-10',
+      inputmode: 'numeric',
+      attributes: {
+        pattern: '[0-9]'
+      }
     },
     validate: [
       'numeric',
