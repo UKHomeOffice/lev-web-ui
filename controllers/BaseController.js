@@ -32,6 +32,15 @@ class BaseController extends Controller {
 
     return options;
   }
+
+  pageNotFound() {
+    const err = new Error('Page not found');
+    err.code = 'PAGE_NOT_FOUND';
+    err.template = 'errors/page-not-found';
+    err.status = 404;
+
+    return err;
+  }
 }
 
 module.exports = BaseController;

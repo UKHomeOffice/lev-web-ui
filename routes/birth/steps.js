@@ -15,7 +15,7 @@ module.exports = {
     fields: ['system-number', 'surname', 'forenames', 'dob'],
     controller: BirthSearchController,
     next: [
-      { fn: 'conditionMethod', next: 'details' },
+      { fn: 'isSingleResult', next: 'details' },
       'results'
     ]
   },

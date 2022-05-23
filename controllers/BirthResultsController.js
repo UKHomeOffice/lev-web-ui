@@ -1,13 +1,15 @@
 'use strict';
 
-const BaseController = require('./BaseController');
+const BirthController = require('./BirthController');
 
-class BirthResultsController extends BaseController {
+class BirthResultsController extends BirthController {
   locals(req, res, callback) {
     super.locals(req, res, (error, locals) => {
       if (error) return callback(error);
 
-      locals.results = req.sessionModel.get('searchResults') || [];
+      const results = req.sessionModel.get('searchResults') || [];
+
+      locals.results = results.map(record => this.processRecord(record));
 
       callback(null, locals);
     });

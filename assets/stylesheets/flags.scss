@@ -1,0 +1,52 @@
+$govuk-assets-path: "/public/";
+
+@import "node_modules/govuk-frontend/govuk/all";
+@import "node_modules/hmpo-components/all";
+
+$flag-border-colour: #EEEEEE;
+$alert-bg-colour: #FFCCCC;
+$alert-fg-colour: #CC0000;
+$warn-bg-colour: #FFEECC;
+$warn-text-colour: #CC7700;
+$warn-border-colour: #CCAA00;
+
+/* Flags */
+.flag {
+  display: block;
+  background-color: $flag-border-colour;
+  color: black;
+  border-left: 10px solid $govuk-border-colour;
+  padding: 15px;
+  margin-bottom: 20px;
+
+  .button {
+    margin: 0;
+    display: inline;
+  }
+}
+
+.alert {
+  background-color: $alert-bg-colour;
+  color: $alert-fg-colour;
+  border-color: $alert-fg-colour;
+}
+
+.warning {
+  background-color: $warn-bg-colour;
+  color: $warn-text-colour;
+  border-color: $warn-border-colour;
+}
+
+#records {
+  article {
+    .flag {
+      display: block;
+      background-color: transparent;
+      border-left: none;
+      padding: 0;
+      margin-bottom: 0;
+      font-weight: bold;
+      margin-top: 0.4em;
+    }
+  }
+}

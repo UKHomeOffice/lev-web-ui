@@ -13,11 +13,11 @@ async function searchById(options) {
     const model = new RestApiModel({}, options);
     model.fetch((err, data, _responseTime) => {
       if (err && err.status === 404) {
-        resolve([]);
+        resolve(undefined);
       } else if (err) {
         reject(err);
       } else {
-        resolve([data]);
+        resolve(data);
       }
     });
   });
