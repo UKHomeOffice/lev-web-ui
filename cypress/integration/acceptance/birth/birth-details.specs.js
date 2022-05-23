@@ -4,7 +4,7 @@ const LoginPage = require('../../../pages/LoginPage');
 const BirthSearchPage = require('../../../pages/birth/BirthSearchPage');
 const BirthDetailsPage = require('../../../pages/birth/BirthDetailsPage');
 const BirthResultsPage = require('../../../pages/birth/BirthResultsPage');
-const { searchSingleRecord, searchMultipleRecords, validRecord } = require('../../../fixtures/birth/birth');
+const { searchSingleRecord, searchMultipleRecords, validRecord, recordsWithFlags } = require('../../../fixtures/birth/birth');
 
 describe('Birth details', () => {
   before(() => {
@@ -82,6 +82,51 @@ describe('Birth details', () => {
           BirthDetailsPage.clickBackToResultsLink();
           BirthResultsPage.multipleRecordsFound();
         });
+      });
+    });
+    describe('Records with flags', () => {
+      it('blocked Record shows Refer to GRO banner ', () => {
+        BirthSearchPage.visit();
+        BirthSearchPage.performSearch({
+          systemNumber: recordsWithFlags.blocked, surname: '', forenames: '', day: '', month: '', year: ''
+        });
+        BirthDetailsPage.flagVisible('Refer to GRO');
+      });
+      it('cancelled Record shows Refer to GRO banner ', () => {
+        BirthSearchPage.visit();
+        BirthSearchPage.performSearch({
+          systemNumber: recordsWithFlags.cancelled, surname: '', forenames: '', day: '', month: '', year: ''
+        });
+        BirthDetailsPage.flagVisible('Refer to GRO');
+      });
+      it('court order Record shows a court order is in place ', () => {
+        BirthSearchPage.visit();
+        BirthSearchPage.performSearch({
+          systemNumber: recordsWithFlags.courtOrder, surname: '', forenames: '', day: '', month: '', year: ''
+        });
+        BirthDetailsPage.flagVisible('This record has an adoption / court order in place.');
+      });
+      it('fictitious birth Record shows Refer to GRO banner ', () => {
+        BirthSearchPage.visit();
+        BirthSearchPage.performSearch({
+          systemNumber: recordsWithFlags.fictitious, surname: '', forenames: '', day: '', month: '', year: ''
+        });
+        BirthDetailsPage.flagVisible('Refer to GRO');
+      });
+      it('re-registered birth Record shows unmarried parents subsequently married and contains link to new record', () => {
+        BirthSearchPage.visit();
+        BirthSearchPage.performSearch({
+          systemNumber: recordsWithFlags.reRegistered, surname: '', forenames: '', day: '', month: '', year: ''
+        });
+        BirthDetailsPage.flagVisible('Unmarried parents subsequently married.');
+        BirthDetailsPage.previousRegistrationDetails(recordsWithFlags.caution);
+      });
+      it('subsequently married birth Record shows refer to GRO banner ', () => {
+        BirthSearchPage.visit();
+        BirthSearchPage.performSearch({
+          systemNumber: recordsWithFlags.subsequentlyMarried, surname: '', forenames: '', day: '', month: '', year: ''
+        });
+        BirthDetailsPage.flagVisible('Refer to GRO');
       });
     });
   });

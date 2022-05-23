@@ -65,6 +65,15 @@ class BirthDetailsPage extends DetailsPage {
   static backToSearchResultsNotDisplayed() {
     cy.get('#backToSearchResults').should('not.exist');
   }
+
+  static flagVisible(flag) {
+    cy.get('.flag').contains(flag);
+  }
+
+  static previousRegistrationDetails(systemNumber) {
+    cy.get(`a[href="/birth/details/${systemNumber}"]`).contains('View the previous registration').click();
+    cy.get('.details tr').should('exist');
+  }
 }
 
 module.exports = BirthDetailsPage;

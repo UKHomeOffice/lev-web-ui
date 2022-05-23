@@ -16,7 +16,7 @@ module.exports = {
     month: '01',
     year: '2010'
   },
-  // Used for test where only one record should be returned
+  // Used forecordsWithFlagsr test where only one record should be returned
   validRecord: {
     'administrativeArea': 'Reading',
     'subDistrict': 'Test Subdistrict',
@@ -87,6 +87,16 @@ module.exports = {
     },
     'systemNumber': 999999901,
     'date': '10/10/2014'
+  },
+  recordsWithFlags: {
+    'blocked': 999999920,
+    'cancelled': 999999921,
+    'caution': 999999922,
+    'courtOrder': 999999923,
+    'fictitious': 999999924,
+    'reRegistered': 999999925,
+    'all': 999999926,
+    'subsequentlyMarried': 999999930
   }
 };
 
