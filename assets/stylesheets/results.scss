@@ -1,0 +1,18 @@
+$govuk-assets-path: "/public/";
+
+@import "node_modules/govuk-frontend/govuk/all";
+@import "node_modules/hmpo-components/all";
+
+table {
+  &.results {
+    border-top: 1px solid $govuk-border-colour;
+
+    margin-bottom: 0;
+
+    tbody {
+      th {
+        width: 7.2em;
+      }
+    }
+  }
+}

@@ -2,6 +2,7 @@
 
 {% from "govuk/components/table/macro.njk" import govukTable %}
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+{% from "components/lev-flag.njk" import levFlag %}
 
 {% set hmpoPageKey = "birth.resultsPage" %}
 {% set govukServiceNameKey = translate("pages.birth.serviceName") %}
@@ -14,42 +15,50 @@
 {% block mainContent %}
     {{ super() }}
 
-    {% set rowsArray = [] %}
-    {% for record in results %}
-        {% set rowsArray = (rowsArray.push([
-            {
-                html: "<a href=\"/birth/details/" + record.id + "\">" + record.child.forenames + " " + record.child.surname + "</a>",
-                colspan: 2
-            }
-        ],[
-            {
-                text: "Place of birth"
-            },
-            {
-                text: record.child.birthplace
-            }
-        ],[
-            {
-                text: "Mother"
-            },
-            {
-                text: record.mother.forenames + " " + record.mother.surname
-            }
-        ],[
-            {
-                text: "Father"
-            },
-            {
-                text: record.father.forenames + " " + record.father.surname
-            }
-        ]), rowsArray) %}
-    {% endfor %}
+    <ul id="records">
+        {% for record in results %}
+        <li>
+            <article>
+                {% set rowsArray = [] %}
+                {% set rowsArray = (rowsArray.push([
+                    {
+                        html: "<a href=\"/birth/details/" + record.id + "\">" + record.child.forenames + " " + record.child.surname + "</a>",
+                        colspan: 2
+                    }
+                ],[
+                    {
+                        text: "Place of birth"
+                    },
+                    {
+                        text: record.child.birthplace
+                    }
+                ],[
+                    {
+                        text: "Mother"
+                    },
+                    {
+                        text: record.mother.forenames + " " + record.mother.surname
+                    }
+                ],[
+                    {
+                        text: "Father"
+                    },
+                    {
+                        text: record.father.forenames + " " + record.father.surname
+                    }
+                ]), rowsArray) %}
 
-    {{ govukTable({
-        classes: "results",
-        firstCellIsHeader: true,
-        rows: rowsArray
-    }) }}
+                {{ govukTable({
+                    classes: "results",
+                    firstCellIsHeader: true,
+                    rows: rowsArray
+                }) }}
+
+                {% include "./flags.html" %}
+            </article>
+        </li>
+        {% endfor %}
+    </ul>
 
     <div class="govuk-button-group">
         {{ hmpoSubmit(ctx, {key: "newSearch", href: "/birth"}) }}

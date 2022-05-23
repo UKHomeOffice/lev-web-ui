@@ -1,3 +1,8 @@
+$govuk-assets-path: "/public/";
+
+@import "node_modules/govuk-frontend/govuk/all";
+@import "node_modules/hmpo-components/all";
+
 $flag-border-colour: #EEEEEE;
 $alert-bg-colour: #FFCCCC;
 $alert-fg-colour: #CC0000;
@@ -30,4 +35,18 @@ $warn-border-colour: #CCAA00;
   background-color: $warn-bg-colour;
   color: $warn-text-colour;
   border-color: $warn-border-colour;
+}
+
+#records {
+  article {
+    .flag {
+      display: block;
+      background-color: transparent;
+      border-left: none;
+      padding: 0;
+      margin-bottom: 0;
+      font-weight: bold;
+      margin-top: 0.4em;
+    }
+  }
 }

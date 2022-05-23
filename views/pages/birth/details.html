@@ -19,30 +19,8 @@
 {% block mainContent %}
     {{ super() }}
 
-    {% if record.flags.refer %}
-        {{ levFlag(ctx, {key: "refer", type: "alert"}) }}
-    {% endif %}
-    {% if record.flags.fatherAdded %}
-        {{ levFlag(ctx, {key: "fatherAdded", type: "warning"}) }}
-    {% endif %}
-    {% if record.flags.subsequentlyMarried %}
-        {{ levFlag(ctx, {key: "subsequentlyMarried", type: "warning"}) }}
-    {% endif %}
-    {% if record.flags.fatherModified %}
-        {{ levFlag(ctx, {key: "fatherModified", type: "warning"}) }}
-    {% endif %}
-    {% if record.flags.replaced %}
-        {{ levFlag(ctx, {key: "replaced", type: "warning"}) }}
-    {% endif %}
-    {% if record.flags.corrected %}
-        {{ levFlag(ctx, {key: "corrected", type: "warning"}) }}
-    {% endif %}
-    {% if record.flags.courtOrderInPlace %}
-        {{ levFlag(ctx, {key: "courtOrderInPlace", type: "alert"}) }}
-    {% endif %}
-    {% if record.flags.courtOrderRevoked %}
-        {{ levFlag(ctx, {key: "courtOrderRevoked"}) }}
-    {% endif %}
+    {% include "./flags.html" %}
+
     {% if record.previousRegistration %}
         {{ levFlag(ctx, {
             key: "reRegistrationLabel",
