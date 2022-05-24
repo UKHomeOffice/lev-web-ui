@@ -8,8 +8,22 @@ platform:
   arch: amd64
 
 steps:
-- name: cypress
-  image: cypress/browsers:node16.14.0-chrome99-ff97
+- name: tests
+  image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
+  environment:
+    DOCKER_HOST: tcp://127.0.0.1:2375
+  commands:
+    - sleep 20
+    - docker-compose -f docker-compose-local.yml up --exit-code-from acceptance
+  when:
+    branch:
+      - master
+    event:
+      - pull_request
+      - push
+
+- name: build
+  image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
   commands:
   - npm ci
   - npm run test
@@ -98,3 +112,7 @@ steps:
       - push
     status:
       - failure
+
+services:
+  - name: docker
+    image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
