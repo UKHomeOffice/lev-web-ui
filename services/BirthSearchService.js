@@ -1,10 +1,22 @@
 'use strict';
 
-const BaseController = require('./BaseController');
+const SearchService = require('./SearchService');
 
-class BirthController extends BaseController {
+class BirthSearchService extends SearchService {
 
-  processRecord(record) {
+  static async searchById(options) {
+    const record = await super.searchById(options);
+
+    return record ? this.processRecord(record) : undefined;
+  }
+
+  static async searchByName(options) {
+    const searchResults = await super.searchByName(options);
+
+    return searchResults.map(record => this.processRecord(record));
+  }
+
+  static processRecord(record) {
 
     // Status is blocked
     if (record.status.blocked) {
@@ -50,4 +62,4 @@ class BirthController extends BaseController {
   }
 }
 
-module.exports = BirthController;
+module.exports = BirthSearchService;
