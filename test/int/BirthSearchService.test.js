@@ -1,7 +1,7 @@
 'use strict';
 
-const { searchById, searchByName } = require('../../api');
 const config = require('../../config');
+const BirthSearchService = require('../../services/BirthSearchService');
 
 describe('Birth search tests', () => {
 
@@ -19,7 +19,7 @@ describe('Birth search tests', () => {
       const systemNumber = 123456789;
 
       // Act
-      const record = await searchById({
+      const record = await BirthSearchService.searchById({
         ...options,
         url: `/v1/registration/birth/${systemNumber}`
       });
@@ -35,7 +35,7 @@ describe('Birth search tests', () => {
       const systemNumber = 123;
 
       // Act
-      const record = await searchById({
+      const record = await BirthSearchService.searchById({
         ...options,
         url: `/v1/registration/birth/${systemNumber}`
       });
@@ -50,7 +50,7 @@ describe('Birth search tests', () => {
       const systemNumber = 'invalid';
 
       // Act & Assert
-      await expect(searchById({
+      await expect(BirthSearchService.searchById({
         ...options,
         url: `/v1/registration/birth/${systemNumber}`
       })).rejects.toEqual({
@@ -70,7 +70,7 @@ describe('Birth search tests', () => {
       const dateOfBirth = '2010-01-01';
 
       // Act
-      const searchResults = await searchByName({
+      const searchResults = await BirthSearchService.searchByName({
         ...options,
         url: '/v1/registration/birth',
         searchParams: { forenames, surname, dateOfBirth }
@@ -91,7 +91,7 @@ describe('Birth search tests', () => {
       const dateOfBirth = '2010-01-01';
 
       // Act
-      const searchResults = await searchByName({
+      const searchResults = await BirthSearchService.searchByName({
         ...options,
         url: '/v1/registration/birth',
         searchParams: { forenames, surname, dateOfBirth }
@@ -114,7 +114,7 @@ describe('Birth search tests', () => {
       const dateOfBirth = '2010-01-01';
 
       // Act
-      const searchResults = await searchByName({
+      const searchResults = await BirthSearchService.searchByName({
         ...options,
         url: '/v1/registration/birth',
         searchParams: { forenames, surname, dateOfBirth }
@@ -132,7 +132,7 @@ describe('Birth search tests', () => {
       const dateOfBirth = '2010-01-01';
 
       // Act & Assert
-      await expect(searchByName({
+      await expect(BirthSearchService.searchByName({
         ...options,
         url: '/v1/registration/birth',
         searchParams: { forenames, surname, dateOfBirth }

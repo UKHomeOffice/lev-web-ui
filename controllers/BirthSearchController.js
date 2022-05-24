@@ -1,7 +1,7 @@
 'use strict';
 
-const SearchController = require('./SearchController');
-const { searchById, searchByName } = require('../api');
+const SearchController = require('./DateController');
+const BirthSearchService = require('../services/BirthSearchService');
 
 class BirthSearchController extends SearchController {
 
@@ -26,7 +26,7 @@ class BirthSearchController extends SearchController {
       try {
 
         // searchById
-        const record = await searchById({
+        const record = await BirthSearchService.searchById({
           ...this.getOptions(req),
           url: `/v1/registration/birth/${systemNumber}`
         });
@@ -42,7 +42,7 @@ class BirthSearchController extends SearchController {
 
       // searchByName
       try {
-        const searchResults = await searchByName({
+        const searchResults = await BirthSearchService.searchByName({
           ...this.getOptions(req),
           url: '/v1/registration/birth',
           searchParams: { forenames, surname, dateOfBirth }
