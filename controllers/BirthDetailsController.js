@@ -1,9 +1,9 @@
 'use strict';
 
-const BirthController = require('./BirthController');
-const { searchById } = require('../api');
+const BaseController = require('./BaseController');
+const BirthSearchService = require('../services/BirthSearchService');
 
-class BirthDetailsController extends BirthController {
+class BirthDetailsController extends BaseController {
   locals(req, res, callback) {
     super.locals(req, res, async (error, locals) => {
       if (error) return callback(error);
@@ -27,7 +27,7 @@ class BirthDetailsController extends BirthController {
         } else {
 
           // Record not found in searchResults, call REST API
-          record = await searchById({
+          record = await BirthSearchService.searchById({
             ...this.getOptions(req),
             url: `/v1/registration/birth/${systemNumber}`
           });
@@ -40,7 +40,7 @@ class BirthDetailsController extends BirthController {
       }
 
       if (record) {
-        locals.record = this.processRecord(record);
+        locals.record = record;
         locals.showBackToResults = searchResults.length > 1;
 
         callback(null, locals);
