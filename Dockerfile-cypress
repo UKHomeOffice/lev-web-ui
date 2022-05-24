@@ -4,3 +4,5 @@ WORKDIR /app
 COPY ./ /app
 
 RUN npm i -D
+
+CMD [ "npm", "run", "cypress:acceptance" ]
