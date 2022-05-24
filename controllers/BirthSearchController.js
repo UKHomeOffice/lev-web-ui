@@ -1,9 +1,9 @@
 'use strict';
 
-const SearchController = require('./DateController');
+const DateController = require('./DateController');
 const BirthSearchService = require('../services/BirthSearchService');
 
-class BirthSearchController extends SearchController {
+class BirthSearchController extends DateController {
 
   /**
    * Get the form values and query the api
