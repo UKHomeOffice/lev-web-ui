@@ -2,7 +2,7 @@
   "port": 8001,
   "logs": {
     "console": true,
-    "app": true,
-    "error": true
+    "app": false,
+    "error": false
   }
 }

@@ -7,15 +7,11 @@ class BirthSearchService extends SearchService {
   static async searchById(options) {
     const record = await super.searchById(options);
 
-    console.log(record);
-
     return record ? this.processRecord(record) : undefined;
   }
 
   static async searchByName(options) {
     const searchResults = await super.searchByName(options);
-
-    console.log(searchResults);
 
     return searchResults.map(record => this.processRecord(record));
   }
