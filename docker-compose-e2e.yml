@@ -1,8 +1,0 @@
-version: "3"
-services:
-  lev-web:
-    build:
-      context: .
-      dockerfile: Dockerfile-e2e
-    ports:
-      - "8001:8001"
