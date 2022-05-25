@@ -16,6 +16,10 @@ class RestApiModel extends HmpoModel {
     const searchParams = Object.assign({}, this.options.searchParams, retConfig.searchParams);
     if (Object.keys(searchParams).length) retConfig.searchParams = searchParams;
 
+    // https
+    const https = Object.assign({}, this.options.https, retConfig.https);
+    if (Object.keys(https).length) retConfig.https = https;
+
     return super.requestConfig(retConfig, args);
   }
 }
