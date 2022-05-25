@@ -1,0 +1,8 @@
+FROM cypress/browsers:node16.14.0-chrome99-ff97
+
+WORKDIR /app
+COPY ./ /app
+
+RUN npm i -D
+
+CMD [ "npm", "run", "cypress:acceptance" ]

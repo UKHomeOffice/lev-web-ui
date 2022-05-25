@@ -52,6 +52,7 @@
     "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-jest": "^26.2.2",
     "jest": "^28.1.0",
+    "luxon":"^2.4.0",
     "nodemon": "^2.0.16"
   }
 }

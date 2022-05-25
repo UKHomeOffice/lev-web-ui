@@ -12,27 +12,6 @@ WORKDIR /app
 COPY --chown=app:app package.json package-lock.json /app/
 COPY --chown=app:app assets/ /app/assets/
 
-FROM cypress/browsers:node16.14.0-chrome99-ff97 as cypress
-
-RUN apt-get update --quiet -y \
- && apt-get upgrade --quiet -y \
- && apt-get install g++ build-essential -y \
- && apt-get install ca-certificates -y
-
-RUN addgroup --system app \
- && adduser --system --home /app/ --uid 31337 --ingroup app app \
- && chown -R app:app /app/
-USER app
-WORKDIR /app
-
-COPY --chown=app:app package.json package-lock.json /app/
-COPY --chown=app:app assets/ /app/assets/
-
-FROM cypress as test
-RUN npm ci
-COPY --chown=app:app . /app
-RUN npm run test
-
 FROM base as prod
 
 ENV NODE_ENV production
@@ -40,9 +19,4 @@ RUN npm ci --only=production
 COPY --chown=app:app . /app
 
 USER 31337
-ENV LISTEN_HOST="0.0.0.0" \
-    PORT="8001" \
-    API_PROTOCOL="http" \
-    API_HOST="localhost" \
-    API_PORT="8080"
 CMD ["node", "."]
