@@ -20,6 +20,8 @@ class RestApiModel extends HmpoModel {
     const https = Object.assign({}, this.options.https, retConfig.https);
     if (Object.keys(https).length) retConfig.https = https;
 
+    console.log(retConfig);
+
     return super.requestConfig(retConfig, args);
   }
 }
