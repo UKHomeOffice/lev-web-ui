@@ -11,13 +11,14 @@ class BirthResultsPage extends ResultsPage {
 
   static multipleRecordsFound(dob) {
     const child = expectedMultipleRec.child;
-    const {surname, givenName} = expectedMultipleRec.child.name;
+    const { surname, forenames } = expectedMultipleRec.child;
+    const forename = forenames.split(' ')[0];
     const dateOfBirth = dob ? dob : expectedMultipleRec.child.dateOfBirth;
 
     ResultsPage.shouldBeVisible();
 
     // displays message that multiple records found
-    cy.get('h1').contains(`3 records found for ${givenName} ${surname} ${dateOfBirth}`);
+    cy.get('h1').contains(`3 records found for ${forename} ${surname} ${dateOfBirth}`);
 
     // displays a subset of each record in a list
 
