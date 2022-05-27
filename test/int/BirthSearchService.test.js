@@ -1,14 +1,14 @@
 'use strict';
 
-const config = require('../../config');
+const { api } = require('../../config');
 const BirthSearchService = require('../../services/BirthSearchService');
 
 describe('Birth search tests', () => {
 
   const options = {
     headers: {
-      'x-auth-aud': config.api.client,
-      'x-auth-username': config.api.username
+      'x-auth-aud': api.client,
+      'x-auth-username': api.username
     }
   };
 

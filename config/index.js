@@ -3,6 +3,21 @@
 const packageJson = require('../package.json');
 
 module.exports = {
+  options: {
+    port: process.env.PORT || 8001,
+    logs: {
+      console: true,
+      app: false,
+      error: false
+    },
+    redis: {
+      host: process.env.REDIS_HOST || undefined,
+      port: process.env.REDIS_PORT || undefined
+    },
+    session: {
+      ttl: 600
+    }
+  },
   api: {
     protocol: process.env.API_PROTOCOL || 'http',
     host: process.env.API_HOST || 'localhost',
