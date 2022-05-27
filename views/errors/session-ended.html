@@ -5,4 +5,8 @@
 
 {% block mainContent %}
     {{ super() }}
+
+    <div class="govuk-button-group">
+        {{ hmpoSubmit(ctx, {key: "startAgain", href: "/"}) }}
+    </div>
 {% endblock %}

@@ -4,5 +4,8 @@
     "console": true,
     "app": false,
     "error": false
+  },
+  "session": {
+    "ttl": 600
   }
 }
