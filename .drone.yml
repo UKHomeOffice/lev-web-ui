@@ -8,7 +8,7 @@ platform:
   arch: amd64
 
 steps:
-- name: tests
+- name: cypress-tests
   image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
   environment:
     DOCKER_HOST: tcp://127.0.0.1:2375
@@ -36,6 +36,7 @@ steps:
       - "1.0.0-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT:0:10}"
       - "1.0.0"
       - "1.0"
+      - latest
   environment:
     DOCKER_PASSWORD:
       from_secret: QUAY_PASSWORD
