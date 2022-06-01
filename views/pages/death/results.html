@@ -60,7 +60,7 @@
                 {% if record.flags.corrected %}
                     {{ levFlag(ctx, {key: "corrected", type: "warning"}) }}
                 {% endif %}
-                {% if record.flags.replaced %}
+                {% if record.nextRegistration %}
                     {{ levFlag(ctx, {key: "replaced", type: "warning"}) }}
                 {% endif %}
             </article>
