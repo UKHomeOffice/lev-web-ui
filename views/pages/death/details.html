@@ -1,0 +1,110 @@
+{% extends "details-template.njk" %}
+
+{% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+{% from "components/lev-flag.njk" import levFlag %}
+
+{% set hmpoPageKey = "death.detailsPage" %}
+{% set govukServiceNameKey = translate("pages.death.serviceName") %}
+{% set govukServiceUrl = "/death" %}
+
+{% macro redact(value) %}
+    {{ "UNAVAILABLE" if record.status.blocked else value }}
+{% endmacro %}
+
+{% set hmpoTitle -%}
+    {{ redact(record.deceased.forenames) }} {{ redact(record.deceased.surname) }} {{ redact(record.deceased.dateOfDeath | date("DD/MM/YYYY")) }}
+{%- endset %}
+
+{% block mainContent %}
+    {{ super() }}
+
+    {% if record.flags.refer %}
+        {{ levFlag(ctx, {key: "refer", type: "alert"}) }}
+    {% endif %}
+    {% if record.flags.corrected %}
+        {{ levFlag(ctx, {key: "corrected", type: "warning"}) }}
+    {% endif %}
+    {% if record.nextRegistration %}
+        {{ levFlag(ctx, {key: "replaced", type: "warning"}) }}
+    {% endif %}
+
+    {% if record.previousRegistration %}
+        {{ levFlag(ctx, {
+            key: "reRegistrationLabel",
+            html: hmpoSubmit(ctx, {key: "reRegistrationLink", href: "/death/details/" + record.previousRegistration.id})
+        }) }}
+    {% endif %}
+
+    {% if record.nextRegistration %}
+        {{ levFlag(ctx, {
+            key: "reRegistrationLabel",
+            html: hmpoSubmit(ctx, {key: "reRegisteredLink", href: "/death/details/" + record.previousRegistration.id})
+        }) }}
+    {% endif %}
+
+    {{ govukTable({
+        classes: "details",
+        firstCellIsHeader: true,
+        rows: [
+            [
+                { text: "System number" },
+                { text: record.id }
+            ],
+            [
+                { text: "Deceased", colspan: 2, classes: "section-head" }
+            ],
+            [
+                { text: "Name" },
+                { text: redact(record.deceased.forenames + " " + record.deceased.surname) }
+            ],
+            [
+                { text: "Date of birth" },
+                { text: redact(record.deceased.dateOfBirth | date("DD/MM/YYYY")) }
+            ],
+            [
+                { text: "Sex" },
+                { text: redact(record.deceased.sex) }
+            ],
+            [
+                { text: "Address" },
+                { text: redact(record.deceased.address) }
+            ],
+            [
+                { text: "Date of death" },
+                { text: redact([record.deceased.dateOfDeathQualifier, record.deceased.dateOfDeath | date("DD/MM/YYYY")] | filter | join(" ")) }
+            ],
+            [
+                { text: "Registration", colspan: 2, classes: "section-head" }
+            ],
+            [
+                { text: "Sub-district" },
+                { text: redact(record.registrar.subdistrict) }
+            ],
+            [
+                { text: "District" },
+                { text: redact(record.registrar.district) }
+            ],
+            [
+                { text: "Administrative area" },
+                { text: redact(record.registrar.administrativeArea) }
+            ],
+            [
+                { text: "Date of registration" },
+                { text: redact(record.date | date("DD/MM/YYYY")) }
+            ]
+        ]
+    }) }}
+
+    <div class="govuk-button-group">
+        {{ hmpoSubmit(ctx, {key: "newSearch", href: "/death"}) }}
+        {{ hmpoSubmit(ctx, {key: "editSearch", href: "/death/search", classes: "blue"}) }}
+        {% if showBackToResults %}
+            {{ hmpoSubmit(ctx, {
+                key: "backToResults",
+                href: "/death/results",
+                classes: "grey"
+            }) }}
+        {% endif %}
+    </div>
+{% endblock %}

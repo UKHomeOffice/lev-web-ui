@@ -1,0 +1,75 @@
+{% extends "results-template.njk" %}
+
+{% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+{% from "components/lev-flag.njk" import levFlag %}
+
+{% set hmpoPageKey = "death.resultsPage" %}
+{% set govukServiceNameKey = translate("pages.death.serviceName") %}
+{% set govukServiceUrl = "/death" %}
+
+{% set hmpoTitle -%}
+    {{- "No" if results.length === 0 else results.length }} records found for {{ values['system-number']}} {{ values.forenames }} {{ values.surname }} {{ values.dobd | date("DD/MM/YYYY")}}
+{%- endset %}
+
+{% block mainContent %}
+    {{ super() }}
+
+    <ul id="records">
+        {% for record in results %}
+        <li>
+            <article>
+                {% set rowsArray = [] %}
+                {% set rowsArray = (rowsArray.push([
+                    {
+                        html: "<a href=\"/death/details/" + record.id + "\">" + record.deceased.forenames + " " + record.deceased.surname + "</a>",
+                        colspan: 2
+                    }
+                ],[
+                    {
+                        text: "Date of birth"
+                    },
+                    {
+                        text: record.deceased.dateOfBirth | date("DD/MM/YYYY")
+                    }
+                ],[
+                    {
+                        text: "Address"
+                    },
+                    {
+                        text: record.deceased.address
+                    }
+                ],[
+                    {
+                        text: "Date of death"
+                    },
+                    {
+                        text: record.deceased.dateOfDeath | date("DD/MM/YYYY")
+                    }
+                ]), rowsArray) %}
+
+                {{ govukTable({
+                    classes: "results",
+                    firstCellIsHeader: true,
+                    rows: rowsArray
+                }) }}
+
+                {% if record.flags.refer %}
+                    {{ levFlag(ctx, {key: "refer", type: "alert"}) }}
+                {% endif %}
+                {% if record.flags.corrected %}
+                    {{ levFlag(ctx, {key: "corrected", type: "warning"}) }}
+                {% endif %}
+                {% if record.flags.replaced %}
+                    {{ levFlag(ctx, {key: "replaced", type: "warning"}) }}
+                {% endif %}
+            </article>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <div class="govuk-button-group">
+        {{ hmpoSubmit(ctx, {key: "newSearch", href: "/death"}) }}
+        {{ hmpoSubmit(ctx, {key: "editSearch", href: "/death/search", classes: "blue"}) }}
+    </div>
+{% endblock %}
