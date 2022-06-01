@@ -3,7 +3,7 @@
 const LoginPage = require('../../../pages/LoginPage');
 const BirthSearchPage = require('../../../pages/birth/BirthSearchPage');
 const BirthResultsPage = require('../../../pages/birth/BirthResultsPage');
-const { multipleValidRecords, searchMultipleRecords } = require('../../../fixtures/birth/birth');
+const { multipleResults, searchMultipleRecords } = require('../../../fixtures/birth/birth');
 const BirthDetailsPage = require('../../../pages/birth/BirthDetailsPage');
 
 describe('Birth results', () => {
@@ -19,6 +19,7 @@ describe('Birth results', () => {
     });
   });
   describe('that returns multiple records', () => {
+    const multipleValidRecords = multipleResults[0];
     before(() => {
       BirthSearchPage.visit();
       BirthSearchPage.performSearch(searchMultipleRecords);

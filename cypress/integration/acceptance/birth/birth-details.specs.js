@@ -4,7 +4,7 @@ const LoginPage = require('../../../pages/LoginPage');
 const BirthSearchPage = require('../../../pages/birth/BirthSearchPage');
 const BirthDetailsPage = require('../../../pages/birth/BirthDetailsPage');
 const BirthResultsPage = require('../../../pages/birth/BirthResultsPage');
-const { searchSingleRecord, searchMultipleRecords, validRecord, recordsWithFlags } = require('../../../fixtures/birth/birth');
+const { searchSingleRecord, searchMultipleRecords, validRecordResult, recordsWithFlags } = require('../../../fixtures/birth/birth');
 
 describe('Birth details', () => {
   before(() => {
@@ -17,22 +17,22 @@ describe('Birth details', () => {
         BirthSearchPage.performSearch(searchSingleRecord);
       });
       it('single record summary should be displayed', () => {
-        BirthDetailsPage.recordSummaryDisplayed(validRecord);
+        BirthDetailsPage.recordSummaryDisplayed(validRecordResult);
       });
       it('single record summary should be displayed', () => {
-        BirthDetailsPage.recordDisplaysSystemNumber(validRecord);
+        BirthDetailsPage.recordDisplaysSystemNumber(validRecordResult);
       });
       it('child details should be displayed', () => {
-        BirthDetailsPage.recordDisplaysChildDetails(validRecord);
+        BirthDetailsPage.recordDisplaysChildDetails(validRecordResult);
       });
       it('mother details should be displayed', () => {
-        BirthDetailsPage.recordDisplaysMotherDetails(validRecord);
+        BirthDetailsPage.recordDisplaysMotherDetails(validRecordResult);
       });
       it('father details should be displayed', () => {
-        BirthDetailsPage.recordDisplaysFatherDetails(validRecord);
+        BirthDetailsPage.recordDisplaysFatherDetails(validRecordResult);
       });
       it('birth registration details should be displayed', () => {
-        BirthDetailsPage.recordDisplaysRegistrationDetails(validRecord);
+        BirthDetailsPage.recordDisplaysRegistrationDetails(validRecordResult);
       });
       it('back to search results link not displayed', () => {
         BirthDetailsPage.backToSearchResultsNotDisplayed();
