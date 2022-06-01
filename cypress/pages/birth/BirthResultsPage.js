@@ -1,7 +1,7 @@
 'use strict';
 
 const ResultsPage = require('../ResultsPage');
-const expectedMultipleRec = require('../../fixtures/birth/birth').multipleValidRecords;
+const expectedMultipleRec = require('../../fixtures/birth/birth').multipleResults;
 
 class BirthResultsPage extends ResultsPage {
 
@@ -10,10 +10,10 @@ class BirthResultsPage extends ResultsPage {
   }
 
   static multipleRecordsFound(dob) {
-    const child = expectedMultipleRec.child;
-    const { surname, forenames } = expectedMultipleRec.child;
+    const child = expectedMultipleRec[0].child;
+    const { surname, forenames } = expectedMultipleRec[0].child;
     const forename = forenames.split(' ')[0];
-    const dateOfBirth = dob ? dob : expectedMultipleRec.child.dateOfBirth;
+    const dateOfBirth = dob ? dob : expectedMultipleRec[0].child.dateOfBirth;
 
     ResultsPage.shouldBeVisible();
 
@@ -23,16 +23,16 @@ class BirthResultsPage extends ResultsPage {
     // displays a subset of each record in a list
 
     cy.get('tbody tr').eq(1).contains(`Place of birth ${child.birthplace}`);
-    cy.get('tbody tr').eq(2).contains('Mother Mum One Multiple');
-    cy.get('tbody tr').eq(3).contains('Father Dad One Multiple');
+    cy.get('tbody tr').eq(2).contains(`Mother ${expectedMultipleRec[0].mother.forenames} Multiple`);
+    cy.get('tbody tr').eq(3).contains(`Father ${expectedMultipleRec[0].father.forenames} Multiple`);
 
     cy.get('tbody tr').eq(5).contains(`Place of birth ${child.birthplace}`);
-    cy.get('tbody tr').eq(6).contains('Mother Mum Two Multiple');
-    cy.get('tbody tr').eq(7).contains('Father Dad Two Multiple');
+    cy.get('tbody tr').eq(6).contains(`Mother ${expectedMultipleRec[1].mother.forenames} Multiple`);
+    cy.get('tbody tr').eq(7).contains(`Father ${expectedMultipleRec[1].father.forenames} Multiple`);
 
     cy.get('tbody tr').eq(9).contains(`Place of birth ${child.birthplace}`);
-    cy.get('tbody tr').eq(10).contains('Mother Mum Three Multiple');
-    cy.get('tbody tr').eq(11).contains('Father Dad Three Multiple');
+    cy.get('tbody tr').eq(10).contains(`Mother ${expectedMultipleRec[2].mother.forenames} Multiple`);
+    cy.get('tbody tr').eq(11).contains(`Father ${expectedMultipleRec[2].father.forenames} Multiple`);
   }
 
   static selectFirstRecord() {
