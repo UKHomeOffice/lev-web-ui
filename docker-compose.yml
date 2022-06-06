@@ -11,7 +11,7 @@ services:
       REDIS_HOST: redis-service
       REDIS_PORT: 6379
     depends_on:
-    - redis
+    - redis-service
     - mock-api
   mock-api:
     image: quay.io/ukhomeofficedigital/lev-api:0.18
