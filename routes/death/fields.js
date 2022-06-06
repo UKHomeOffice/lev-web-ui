@@ -39,8 +39,7 @@ module.exports = {
     validate: [
       'required',
       'date',
-      { type: 'before', arguments: 'today' },
-      { type: 'after', arguments: '2009-01-01' }
+      { type: 'before', arguments: 'today' }
     ]
   }
 };
