@@ -19,7 +19,7 @@ class SearchPage extends Page {
    * Submit the search
    */
   static submit() {
-    cy.get('input[type="submit"]').click();
+    cy.get('#search').click();
   }
 
   /**

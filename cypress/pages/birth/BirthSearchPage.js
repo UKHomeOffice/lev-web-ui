@@ -41,7 +41,7 @@ class BirthSearchPage extends SearchPage {
     this.setText('#dob-day', day);
     this.setText('#dob-month', month);
     this.setText('#dob-year', year);
-    cy.get('.button').click();
+    this.submit();
   }
 
   static noSearchCriteria() {

@@ -15,21 +15,21 @@ class DetailsPage extends BackToSearchPage {
    * Check the "Back to results" button is visible
    */
   static backToSearchResultsDisplayed() {
-    cy.get('#backToSearchResults').should('exist');
+    cy.get('#backToResults').should('exist');
   }
 
   /**
    * Check the "Back to results" button is NOT visible
    */
   static backToSearchResultsNotDisplayed() {
-    cy.get('#backToSearchResults').should('not.exist');
+    cy.get('#backToResults').should('not.exist');
   }
 
   /**
    * Click the "Back to results" button
    */
   static clickBackToResultsButton() {
-    cy.get('#backToSearchResults').click();
+    cy.get('#backToResults').click();
   }
 
   /**
