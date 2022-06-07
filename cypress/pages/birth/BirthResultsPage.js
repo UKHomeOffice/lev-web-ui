@@ -39,18 +39,6 @@ class BirthResultsPage extends ResultsPage {
     cy.get('.govuk-table__body a').eq(0).click();
   }
 
-  static editSearchLinkDisplayed() {
-    cy.get('a[href="/birth/search"]').contains('Edit search');
-  }
-
-  static clickNewSearchLink() {
-    cy.get('a[href="/birth"]').contains('New search').click();
-  }
-
-  static clickEditSearchLink() {
-    cy.get('a[href="/birth/search"]').contains('Edit search').click();
-  }
-
   static flagsVisible() {
     cy.get('.flag').eq(0).contains('Refer to GRO');
     cy.get('.flag').eq(1).contains('Unmarried parents subsequently married');

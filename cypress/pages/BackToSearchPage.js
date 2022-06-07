@@ -7,7 +7,7 @@ class BackToSearchPage extends Page {
   /**
    * Check "New Search" button exists
    */
-  static hasNewSearchButton() {
+  static newSearchButtonExists() {
     cy.get('#newSearch').should('exist');
   }
 
@@ -21,7 +21,7 @@ class BackToSearchPage extends Page {
   /**
    * Check "Edit Search" button exists
    */
-  static hasEditSearchButton() {
+  static editSearchButtonExists() {
     cy.get('#editSearch').should('exist');
   }
 

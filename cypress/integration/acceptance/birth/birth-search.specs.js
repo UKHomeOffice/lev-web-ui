@@ -15,7 +15,7 @@ describe('Birth search', () => {
       before(() => {
         BirthSearchPage.visit();
         BirthSearchPage.performSearch(searchSingleRecord);
-        BirthDetailsPage.clickNewSearchLink();
+        BirthDetailsPage.clickNewSearchButton();
 
         it('shows the search page', () => {
           BirthSearchPage.shouldBeVisible();
@@ -29,7 +29,7 @@ describe('Birth search', () => {
       before(() => {
         BirthSearchPage.visit();
         BirthSearchPage.performSearch(searchSingleRecord);
-        BirthDetailsPage.clickEditSearchLink();
+        BirthDetailsPage.clickEditSearchButton();
       });
       it('shows the search page', () => {
         BirthSearchPage.shouldBeVisible();

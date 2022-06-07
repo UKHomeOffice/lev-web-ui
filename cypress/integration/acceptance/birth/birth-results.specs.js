@@ -57,13 +57,13 @@ describe('Birth results', () => {
     it('displays message that multiple records found', () => {
       BirthSearchPage.visit();
       BirthSearchPage.performSearch(searchMultipleRecords);
-      BirthResultsPage.editSearchLinkDisplayed();
+      BirthResultsPage.editSearchButtonExists();
     });
     describe('When I select the "Edit search" link on the results page', () => {
       before(() => {
         BirthSearchPage.visit();
         BirthSearchPage.performSearch(searchMultipleRecords);
-        BirthResultsPage.clickEditSearchLink();
+        BirthResultsPage.clickEditSearchButton();
       });
       it('has the correct form values', () => {
         BirthSearchPage.searchFormRetainedValues(searchMultipleRecords);
@@ -73,7 +73,7 @@ describe('Birth results', () => {
       before(() => {
         BirthSearchPage.visit();
         BirthSearchPage.performSearch(searchMultipleRecords);
-        BirthResultsPage.clickNewSearchLink();
+        BirthResultsPage.clickNewSearchButton();
       });
       it('has the correct form values', () => {
         BirthSearchPage.searchFormClear();

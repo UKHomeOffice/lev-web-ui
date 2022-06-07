@@ -1,10 +1,10 @@
 'use strict';
 
+const { DateTime } = require('luxon');
+const searchSingleRecord = require('../../../fixtures/death/expected-death-record');
 const LoginPage = require('../../../pages/LoginPage');
 const DeathSearchPage = require('../../../pages/death/DeathSearchPage');
-const { DateTime } = require('luxon');
 const DeathDetailsPage = require('../../../pages/death/DeathDetailsPage');
-const searchSingleRecord = require('../../../fixtures/death/expected-death-record');
 
 describe('Death search', () => {
   before(() => {

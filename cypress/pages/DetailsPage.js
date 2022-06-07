@@ -14,14 +14,14 @@ class DetailsPage extends BackToSearchPage {
   /**
    * Check the "Back to results" button is visible
    */
-  static backToSearchResultsDisplayed() {
+  static backToResultsButtonExists() {
     cy.get('#backToResults').should('exist');
   }
 
   /**
    * Check the "Back to results" button is NOT visible
    */
-  static backToSearchResultsNotDisplayed() {
+  static backToResultsButtonNotExists() {
     cy.get('#backToResults').should('not.exist');
   }
 
