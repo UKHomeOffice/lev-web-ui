@@ -50,7 +50,7 @@ describe('Death search', () => {
       });
     });
   });
-  describe.only('with a system number', () => {
+  describe('with a system number', () => {
     describe('of an invalid length', () => {
       before(() => {
         DeathSearchPage.visit();
