@@ -10,75 +10,75 @@ describe('Death results', () => {
   before(() => {
     LoginPage.login();
   });
-  describe('that returns no records', () => {
-    it('a record not found message should be displayed', () => {
-      const expected = {
-        search: { surname: 'InvalidRecord', forenames: 'Test', dobd: { day: '01', month: '01', year: '2011' } },
-        results: []
-      };
 
+  describe('When I perform a search that returns no records', () => {
+    const searchNoRecords = {
+      search: { surname: 'InvalidRecord', forenames: 'Test', dobd: { day: '01', month: '01', year: '2011' } },
+      results: []
+    };
+
+    before(() => {
       DeathSearchPage.visit();
-      DeathSearchPage.performSearch(expected.search);
-      DeathResultsPage.hasExpectedTitle(expected);
+      DeathSearchPage.performSearch(searchNoRecords.search);
+    });
+
+    it('a results page should be displayed', () => {
+      DeathResultsPage.shouldBeVisible();
+      DeathResultsPage.hasExpectedTitle(searchNoRecords);
+      DeathResultsPage.newSearchButtonExists();
+      DeathResultsPage.editSearchButtonExists();
     });
   });
-  describe('that returns multiple records', () => {
-    const multipleValidRecords = searchMultipleRecords.results[0];
+
+  describe('When I perform a search that returns multiple records', () => {
     before(() => {
       DeathSearchPage.visit();
       DeathSearchPage.performSearch(searchMultipleRecords.search);
-      DeathResultsPage.multipleRecordsFound();
-      DeathResultsPage.selectFirstRecord();
     });
-    it('single record summary should be displayed', () => {
-      DeathDetailsPage.recordSummaryDisplayed(multipleValidRecords);
-    });
-    it('system number should be displayed', () => {
-      DeathDetailsPage.recordDisplaysSystemNumber(multipleValidRecords);
-    });
-    it('child details should be displayed', () => {
-      DeathDetailsPage.recordDisplaysChildDetails(multipleValidRecords);
-    });
-    it('mother details should be displayed', () => {
-      DeathDetailsPage.recordDisplaysMotherDetails(multipleValidRecords);
-    });
-    it('father details should be displayed', () => {
-      DeathDetailsPage.recordDisplaysFatherDetails(multipleValidRecords);
-    });
-    it('death registration details should be displayed', () => {
-      DeathDetailsPage.recordDisplaysRegistrationDetails(multipleValidRecords);
-    });
-    describe('using a "fast entry" date format', () => {
-      it('completes a search', () => {
-        const displayedDOB = '01/01/2010';
-        DeathSearchPage.visit();
-        DeathSearchPage.performSearch({ ...searchMultipleRecords.search, day: '1', month: '1', year: '10' });
-        DeathResultsPage.multipleRecordsFound(displayedDOB);
-      });
-    });
-    it('displays message that multiple records found', () => {
-      DeathSearchPage.visit();
-      DeathSearchPage.performSearch(searchMultipleRecords.search);
+
+    it('a results page should be displayed', () => {
+      DeathResultsPage.shouldBeVisible();
+      DeathResultsPage.hasExpectedTitle(searchMultipleRecords);
+      DeathResultsPage.hasExpectedResults(searchMultipleRecords.results);
+      DeathResultsPage.newSearchButtonExists();
       DeathResultsPage.editSearchButtonExists();
     });
-    describe('When I select the "Edit search" link on the results page', () => {
+
+    describe('When I select the first record on the results page', () => {
       before(() => {
-        DeathSearchPage.visit();
-        DeathSearchPage.performSearch(searchMultipleRecords.search);
-        DeathResultsPage.clickEditSearchButton();
+        DeathResultsPage.clickFirstRecord();
       });
-      it('has the correct form values', () => {
-        DeathSearchPage.searchFormRetainedValues(searchMultipleRecords.search);
+
+      it('a details page should be displayed', () => {
+        DeathDetailsPage.shouldBeVisible();
+        DeathDetailsPage.hasExpectedTitle(searchMultipleRecords.results[0]);
+        DeathDetailsPage.hasLimitedRecord(searchMultipleRecords.results[0]);
       });
     });
+
     describe('When I select the "New search" link on the results page', () => {
       before(() => {
         DeathSearchPage.visit();
         DeathSearchPage.performSearch(searchMultipleRecords.search);
         DeathResultsPage.clickNewSearchButton();
       });
-      it('has the correct form values', () => {
+
+      it('a search page should be displayed with no values', () => {
+        DeathSearchPage.shouldBeVisible();
         DeathSearchPage.searchFormClear();
+      });
+    });
+
+    describe('When I select the "Edit search" link on the results page', () => {
+      before(() => {
+        DeathSearchPage.visit();
+        DeathSearchPage.performSearch(searchMultipleRecords.search);
+        DeathResultsPage.clickEditSearchButton();
+      });
+
+      it('a search page should be displayed with the correct form values', () => {
+        DeathSearchPage.shouldBeVisible();
+        DeathSearchPage.searchFormRetainedValues(searchMultipleRecords.search);
       });
     });
   });

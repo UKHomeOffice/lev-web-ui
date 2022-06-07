@@ -1,6 +1,7 @@
 'use strict';
 
 const ResultsPage = require('../ResultsPage');
+const {multipleResults: expectedMultipleRec} = require("../../fixtures/birth/birth");
 
 class DeathResultsPage extends ResultsPage {
 
@@ -30,14 +31,15 @@ class DeathResultsPage extends ResultsPage {
    * @param results
    */
   static hasExpectedResults(results) {
-    cy.get('#records li').each((element, index) => {
+    for (let index = 0; index < results.length; index++) {
       const { deceased } = results[index];
+      const offset = index * 4;
 
-      cy.wrap(element).contains('a h2', `${deceased.forenames} ${deceased.surname}`);
-      cy.wrap(element).contains('tr', `Date of birth ${deceased.dateOfBirth}`);
-      cy.wrap(element).contains('tr', `Address ${deceased.address}`);
-      cy.wrap(element).contains('tr', `Date of death ${deceased.dateOfDeath}`);
-    });
+      cy.get('tbody tr').eq(offset + 0).contains(`${deceased.forenames} ${deceased.surname}`);
+      cy.get('tbody tr').eq(offset + 1).contains(`Date of birth ${deceased.dateOfBirth}`);
+      cy.get('tbody tr').eq(offset + 2).contains(`Address ${deceased.address}`);
+      cy.get('tbody tr').eq(offset + 3).contains(`Date of death ${deceased.dateOfDeath}`);
+    }
   }
 }
 
