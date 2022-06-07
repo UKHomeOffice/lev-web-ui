@@ -78,7 +78,7 @@ describe('Birth details', () => {
           BirthSearchPage.performSearch(searchMultipleRecords);
         });
         it('returned me to the results page', () => {
-          BirthResultsPage.selectFirstRecord();
+          BirthResultsPage.clickFirstRecord();
           BirthDetailsPage.clickBackToResultsButton();
           BirthResultsPage.multipleRecordsFound();
         });

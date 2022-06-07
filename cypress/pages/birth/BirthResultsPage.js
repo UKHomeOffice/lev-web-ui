@@ -35,10 +35,6 @@ class BirthResultsPage extends ResultsPage {
     cy.get('tbody tr').eq(11).contains(`Father ${expectedMultipleRec[2].father.forenames} Multiple`);
   }
 
-  static selectFirstRecord() {
-    cy.get('.govuk-table__body a').eq(0).click();
-  }
-
   static flagsVisible() {
     cy.get('.flag').eq(0).contains('Refer to GRO');
     cy.get('.flag').eq(1).contains('Unmarried parents subsequently married');

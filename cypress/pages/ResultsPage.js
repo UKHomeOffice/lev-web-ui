@@ -15,7 +15,7 @@ class ResultsPage extends BackToSearchPage {
    * Click the first record
    */
   static clickFirstRecord() {
-    cy.get('#records a').eq(0).click();
+    cy.get('.govuk-table__body a').eq(0).click();
   }
 }
 

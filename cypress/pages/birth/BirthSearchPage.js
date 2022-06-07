@@ -1,6 +1,7 @@
 'use strict';
 
 const SearchPage = require('../SearchPage');
+
 class BirthSearchPage extends SearchPage {
 
   /**

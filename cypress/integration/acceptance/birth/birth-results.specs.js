@@ -24,7 +24,7 @@ describe('Birth results', () => {
       BirthSearchPage.visit();
       BirthSearchPage.performSearch(searchMultipleRecords);
       BirthResultsPage.multipleRecordsFound();
-      BirthResultsPage.selectFirstRecord();
+      BirthResultsPage.clickFirstRecord();
     });
     it('single record summary should be displayed', () => {
       BirthDetailsPage.recordSummaryDisplayed(multipleValidRecords);
