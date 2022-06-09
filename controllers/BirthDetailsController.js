@@ -42,6 +42,7 @@ class BirthDetailsController extends BaseController {
       if (record) {
         locals.record = record;
         locals.showBackToResults = searchResults.length > 1;
+        locals.showFullDetails = this.hasRole(req, 'full-details');
 
         callback(null, locals);
       } else {
