@@ -19,7 +19,7 @@ class SearchService {
         } else if (err) {
           reject(err);
         } else {
-          resolve(data);
+          resolve(this.processRecord(data));
         }
       });
     });
@@ -38,10 +38,14 @@ class SearchService {
         if (err) {
           reject(err);
         } else {
-          resolve(data);
+          resolve(data.map(record => this.processRecord(record)));
         }
       });
     });
+  }
+
+  static processRecord(record) {
+    return record;
   }
 }
 
