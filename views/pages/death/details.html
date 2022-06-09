@@ -27,7 +27,7 @@
         {{ record.deceased.occupation }} {{ "(retired)" if record.deceased.retired }}
     {% elseif record.partner.occupation %}
         <br/>
-        {{ record.deceased.relationshipToPartner }} {{ record.partner.name }} {{ record.partner.occupation }} {{ "(retired)" if record.partner.retired }}
+        {{ record.deceased.relationshipToPartner }} {{ record.partner.name }}, {{ record.partner.occupation }} {{ "(retired)" if record.partner.retired }}
     {% else %}
         {% if record.father.occupation %}
             <br/> Child of {{ record.father.name }}, {{ record.father.occupation }}
