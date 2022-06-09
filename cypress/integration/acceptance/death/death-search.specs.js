@@ -35,7 +35,7 @@ describe('Death search', () => {
         DeathSearchPage.shouldBeVisible();
       });
       it('has the correct form values', () => {
-        DeathSearchPage.searchFormRetainedValues(searchSingleRecord.search);
+        DeathSearchPage.hasExpectedValues(searchSingleRecord.search);
       });
     });
   });
