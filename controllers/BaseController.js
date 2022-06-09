@@ -28,6 +28,14 @@ class BaseController extends Controller {
           rejectUnauthorized: api.rejectUnauthorized
         }
       };
+    } else {
+      options = {
+        ...options,
+        headers: {
+          ...options.headers,
+          'x-auth-roles': 'full-details'
+        }
+      };
     }
 
     return options;

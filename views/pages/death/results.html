@@ -26,26 +26,14 @@
                         colspan: 2
                     }
                 ],[
-                    {
-                        text: "Date of birth"
-                    },
-                    {
-                        text: record.deceased.dateOfBirth | date("DD/MM/YYYY")
-                    }
+                    { text: "Date of birth" },
+                    { text: record.deceased.dateOfBirth | date("DD/MM/YYYY")}
                 ],[
-                    {
-                        text: "Address"
-                    },
-                    {
-                        text: record.deceased.address
-                    }
+                    { text: "Address" },
+                    { text: record.deceased.address }
                 ],[
-                    {
-                        text: "Date of death"
-                    },
-                    {
-                        text: record.deceased.dateOfDeath | date("DD/MM/YYYY")
-                    }
+                    { text: "Date of death" },
+                    { text: record.deceased.dateOfDeath | date("DD/MM/YYYY") }
                 ]), rowsArray) %}
 
                 {{ govukTable({

@@ -42,6 +42,7 @@ class DeathDetailsController extends BaseController {
       if (record) {
         locals.record = record;
         locals.showBackToResults = searchResults.length > 1;
+        locals.showFullDetails = true;
 
         callback(null, locals);
       } else {

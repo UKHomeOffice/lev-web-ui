@@ -53,49 +53,75 @@
     {% set rowsArray = (rowsArray.push([
         { text: "System number" },
         { text: record.id }
-    ],
-    [
+    ],[
         { text: "Deceased", colspan: 2, classes: "section-head" }
-    ],
-    [
+    ],[
         { text: "Name" },
         { html: deceasedName() }
-    ],
-    [
+    ]), rowsArray) %}
+    {% if showFullDetails %}
+        {% set rowsArray = (rowsArray.push([
+            { text: "Maiden name" },
+            { text: redact(record.deceased.maidenSurname) }
+        ]), rowsArray) %}
+    {% endif %}
+    {% set rowsArray = (rowsArray.push([
         { text: "Date of birth" },
         { text: redact(record.deceased.dateOfBirth | date("DD/MM/YYYY")) }
-    ],
-    [
+    ]), rowsArray) %}
+    {% if showFullDetails %}
+        {% set rowsArray = (rowsArray.push([
+            { text: "Place of birth" },
+            { text: redact(record.deceased.birthplace) }
+        ]), rowsArray) %}
+    {% endif %}
+    {% set rowsArray = (rowsArray.push([
         { text: "Sex" },
         { text: redact(record.deceased.sex) }
-    ],
-    [
+    ],[
         { text: "Address" },
         { text: redact(record.deceased.address) }
-    ],
-    [
+    ],[
         { text: "Date of death" },
         { text: redact([record.deceased.dateOfDeathQualifier, record.deceased.dateOfDeath | date("DD/MM/YYYY")] | filter | join(" ")) }
-    ],
-    [
+    ]), rowsArray) %}
+    {% if showFullDetails %}
+        {% set rowsArray = (rowsArray.push([
+            { text: "Place of death" },
+            { text: redact(record.deceased.deathplace) }
+        ]), rowsArray) %}
+    {% endif %}
+    {% set rowsArray = (rowsArray.push([
         { text: "Registration", colspan: 2, classes: "section-head" }
-    ],
-    [
+    ]), rowsArray) %}
+    {% if showFullDetails %}
+        {% set rowsArray = (rowsArray.push([
+            { text: "Registrar signature" },
+            { text: redact(record.registrar.signature) }
+        ],[
+            { text: "Registrar designation" },
+            { text: redact(record.registrar.designation) }
+        ]), rowsArray) %}
+    {% endif %}
+    {% set rowsArray = (rowsArray.push([
         { text: "Sub-district" },
         { text: redact(record.registrar.subdistrict) }
-    ],
-    [
+    ],[
         { text: "District" },
         { text: redact(record.registrar.district) }
-    ],
-    [
+    ],[
         { text: "Administrative area" },
         { text: redact(record.registrar.administrativeArea) }
-    ],
-    [
+    ],[
         { text: "Date of registration" },
         { text: redact(record.date | date("DD/MM/YYYY")) }
     ]), rowsArray) %}
+    {% if showFullDetails %}
+        {% set rowsArray = (rowsArray.push([
+            { text: "Entry number" },
+            { text: redact(record.entryNumber) }
+        ]), rowsArray) %}
+    {% endif %}
 
     {{ govukTable({
         classes: "details",

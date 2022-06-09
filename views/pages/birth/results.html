@@ -26,26 +26,14 @@
                         colspan: 2
                     }
                 ],[
-                    {
-                        text: "Place of birth"
-                    },
-                    {
-                        text: record.child.birthplace
-                    }
+                    { text: "Place of birth" },
+                    { text: record.child.birthplace }
                 ],[
-                    {
-                        text: "Mother"
-                    },
-                    {
-                        text: record.mother.forenames + " " + record.mother.surname
-                    }
+                    { text: "Mother" },
+                    { text: record.mother.forenames + " " + record.mother.surname }
                 ],[
-                    {
-                        text: "Father"
-                    },
-                    {
-                        text: record.father.forenames + " " + record.father.surname
-                    }
+                    { text: "Father" },
+                    { text: record.father.forenames + " " + record.father.surname }
                 ]), rowsArray) %}
 
                 {{ govukTable({
