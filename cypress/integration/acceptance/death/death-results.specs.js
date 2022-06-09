@@ -82,4 +82,48 @@ describe('Death results', () => {
       });
     });
   });
+
+  describe('When I perform a search that returns flagged records', () => {
+    describe('and there are referred records', () => {
+      const REFERRED = 'Refer to GRO.';
+
+      before(() => {
+        DeathSearchPage.visit();
+        DeathSearchPage.performSearch({ surname: 'Marginal', forenames: 'Tester', dobd: { day: 29, month: 2, year: 1912 } });
+      });
+
+      it('a results page should be displayed', () => {
+        DeathResultsPage.shouldBeVisible();
+        DeathResultsPage.hasExpectedFlags([REFERRED, REFERRED, REFERRED]);
+      });
+    });
+
+    describe('and there are corrected records', () => {
+      const CORRECTED = 'Registration has been updated to correct an error.';
+
+      before(() => {
+        DeathSearchPage.visit();
+        DeathSearchPage.performSearch({ surname: 'Corrected', forenames: 'Tester', dobd: { day: 29, month: 2, year: 1912 } });
+      });
+
+      it('a results page should be displayed', () => {
+        DeathResultsPage.shouldBeVisible();
+        DeathResultsPage.hasExpectedFlags([CORRECTED, CORRECTED, CORRECTED]);
+      });
+    });
+
+    describe('and there are replaced records', () => {
+      const REPLACED = 'Original registration replaced by new registration.';
+
+      before(() => {
+        DeathSearchPage.visit();
+        DeathSearchPage.performSearch({ surname: 'Registration', forenames: 'Tester', dobd: { day: 29, month: 2, year: 1912 } });
+      });
+
+      it('a results page should be displayed', () => {
+        DeathResultsPage.shouldBeVisible();
+        DeathResultsPage.hasExpectedFlags([REPLACED, REPLACED]);
+      });
+    });
+  });
 });

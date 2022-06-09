@@ -40,6 +40,14 @@ class DeathResultsPage extends ResultsPage {
       cy.get('tbody tr').eq(offset + 3).contains(`Date of death ${deceased.dateOfDeath}`);
     }
   }
+
+  static hasExpectedFlags(results) {
+    for (let index = 0; index < results.length; index++) {
+      const flag = results[index];
+
+      cy.get('.flag').eq(index).contains(flag);
+    }
+  }
 }
 
 module.exports = DeathResultsPage;
