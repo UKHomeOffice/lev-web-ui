@@ -1,7 +1,6 @@
 'use strict';
 
 const ResultsPage = require('../ResultsPage');
-const {multipleResults: expectedMultipleRec} = require("../../fixtures/birth/birth");
 
 class DeathResultsPage extends ResultsPage {
 
