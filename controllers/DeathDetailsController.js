@@ -8,6 +8,8 @@ class DeathDetailsController extends BaseController {
     super.locals(req, res, async (error, locals) => {
       if (error) return callback(error);
 
+      req.headers['x-auth-roles'] = 'full-details';
+
       const searchResults = req.sessionModel.get('searchResults') || [];
       let record;
 

@@ -13,13 +13,29 @@
 {% endmacro %}
 
 {% macro deceasedName() %}
-    {{ redact(record.deceased.forenames + " " + record.deceased.surname) }}
+    {{ record.deceased.forenames }} {{ record.deceased.surname }}
     {% for alias in record.deceased.aliases %}
         {% if alias.type %}
             <br/>
-            {{ redact([alias.type, alias.prefix, alias.forenames, alias.surname, alias.suffix] | filter | join(" ")) }}
+            {{ [alias.type, alias.prefix, alias.forenames, alias.surname, alias.suffix] | filter | join(" ") }}
         {% endif %}
     {% endfor %}
+{% endmacro %}
+
+{% macro deceasedOccupation() %}
+    {% if record.deceased.occupation %}
+        {{ record.deceased.occupation }} {{ "(retired)" if record.deceased.retired }}
+    {% elseif record.partner.occupation %}
+        <br/>
+        {{ record.deceased.relationshipToPartner }} {{ record.partner.name }} {{ record.partner.occupation }} {{ "(retired)" if record.partner.retired }}
+    {% else %}
+        {% if record.father.occupation %}
+            <br/> Child of {{ record.father.name }}, {{ record.father.occupation }}
+        {% endif %}
+        {% if record.mother.occupation %}
+            <br/> Child of {{ record.mother.name }}, {{ record.mother.occupation }}
+        {% endif %}
+    {% endif %}
 {% endmacro %}
 
 {% set hmpoTitle -%}
@@ -57,7 +73,7 @@
         { text: "Deceased", colspan: 2, classes: "section-head" }
     ],[
         { text: "Name" },
-        { html: deceasedName() }
+        { html: redact(deceasedName()) }
     ]), rowsArray) %}
     {% if showFullDetails %}
         {% set rowsArray = (rowsArray.push([
@@ -81,7 +97,14 @@
     ],[
         { text: "Address" },
         { text: redact(record.deceased.address) }
-    ],[
+    ]), rowsArray) %}
+    {% if showFullDetails %}
+        {% set rowsArray = (rowsArray.push([
+            { text: "Occupation" },
+            { text: redact(deceasedOccupation()) }
+        ]), rowsArray) %}
+    {% endif %}
+    {% set rowsArray = (rowsArray.push([
         { text: "Date of death" },
         { text: redact([record.deceased.dateOfDeathQualifier, record.deceased.dateOfDeath | date("DD/MM/YYYY")] | filter | join(" ")) }
     ]), rowsArray) %}
@@ -89,6 +112,49 @@
         {% set rowsArray = (rowsArray.push([
             { text: "Place of death" },
             { text: redact(record.deceased.deathplace) }
+        ],[
+            { text: "Age at death" },
+            { text: redact(record.deceased.ageAtDeath) }
+        ],[
+            { text: "Cause of death" },
+            { text: redact(record.deceased.causeOfDeath) }
+        ],[
+            { text: "Death certified by" },
+            { text: redact(record.deceased.certifiedBy) }
+        ],[
+            { text: "Informant", colspan: 2, classes: "section-head" }
+        ],[
+            { text: "Surname" },
+            { text: redact(record.informant.surname) }
+        ],[
+            { text: "Forename(s)" },
+            { text: redact(record.informant.forenames) }
+        ],[
+            { text: "Address" },
+            { text: redact(record.informant.address) }
+        ],[
+            { text: "Qualification" },
+            { text: redact(record.informant.qualification) }
+        ],[
+            { text: "Signature" },
+            { text: redact(record.informant.signature) }
+        ]), rowsArray) %}
+    {% endif %}
+    {% if record.inquestDate and showFullDetails %}
+        {% set rowsArray = (rowsArray.push([
+            { text: "Inquest", colspan: 2, classes: "section-head" }
+        ],[
+            { text: "Date" },
+            { text: redact(record.inquestDate | date("DD/MM/YYYY")) }
+        ],[
+            { text: "Coroner's name" },
+            { text: redact(record.coroner.name) }
+        ],[
+            { text: "Coroner's designation" },
+            { text: redact(record.coroner.designation) }
+        ],[
+            { text: "Area" },
+            { text: redact(record.coroner.area) }
         ]), rowsArray) %}
     {% endif %}
     {% set rowsArray = (rowsArray.push([
