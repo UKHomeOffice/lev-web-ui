@@ -44,6 +44,12 @@ class SearchService {
     });
   }
 
+  /**
+   * Transform/decorate the record with additional properties
+   *
+   * @param record
+   * @returns {record}
+   */
   static processRecord(record) {
     return record;
   }
