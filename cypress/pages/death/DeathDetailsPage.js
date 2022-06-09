@@ -36,7 +36,7 @@ class DeathDetailsPage extends DetailsPage {
     // Refresh with "full-details" role
     cy.visit(`/death/details/${record.id}`, {
       headers: {
-        'X-Auth-Roles': 'full-details'
+        'x-auth-roles': 'full-details'
       },
       qs: multipleResults ? { ...qs, multipleResults } : qs
     });
