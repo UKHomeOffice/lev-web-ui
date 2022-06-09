@@ -22,7 +22,7 @@ describe('Death search', () => {
         });
       });
       it('new search has empty values', () => {
-        DeathSearchPage.searchFormClear();
+        DeathSearchPage.hasExpectedValues({ systemNumber: '', surname: '', forenames: '', dobd: { day: '', month: '', year: '' } });
       });
     });
     describe('When I select the "Edit search" button', () => {

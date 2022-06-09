@@ -65,7 +65,7 @@ describe('Death results', () => {
 
       it('a search page should be displayed with no values', () => {
         DeathSearchPage.shouldBeVisible();
-        DeathSearchPage.searchFormClear();
+        DeathSearchPage.hasExpectedValues({ systemNumber: '', surname: '', forenames: '', dobd: { day: '', month: '', year: '' } });
       });
     });
 
@@ -78,7 +78,7 @@ describe('Death results', () => {
 
       it('a search page should be displayed with the correct form values', () => {
         DeathSearchPage.shouldBeVisible();
-        DeathSearchPage.searchFormRetainedValues(searchMultipleRecords.search);
+        DeathSearchPage.hasExpectedValues(searchMultipleRecords.search);
       });
     });
   });

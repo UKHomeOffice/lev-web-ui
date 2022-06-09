@@ -47,20 +47,6 @@ class DeathSearchPage extends SearchPage {
   }
 
   /**
-   * Check the date of birth/death has focus
-   */
-  static hasDateOfBirthOrDeathFocused() {
-    cy.get('#dobd').should('have.focus');
-  }
-
-  /**
-   * Check the date of birth/death hint is visible
-   */
-  static hasDateOfBirthOrDeathHint() {
-    cy.get('#dobd-extended-hint').should('exist');
-  }
-
-  /**
    * Check the search page has the expected values
    *
    * @param systemNumber
@@ -72,7 +58,9 @@ class DeathSearchPage extends SearchPage {
     cy.get('#system-number').should('have.value', systemNumber);
     cy.get('#surname').should('have.value', surname);
     cy.get('#forenames').should('have.value', forenames);
-    cy.get('#dobd').should('have.value', dobd);
+    cy.get('#dobd-day').should('have.value', dobd.day);
+    cy.get('#dobd-month').should('have.value', dobd.month);
+    cy.get('#dobd-year').should('have.value', dobd.year);
   }
 
   static noSearchCriteria() {
@@ -127,22 +115,6 @@ class DeathSearchPage extends SearchPage {
     cy.get('.error-summary').contains('Fix the following error(s)');
     cy.get('.govuk-error-summary__list > li').contains('Please enter a date of birth or death in the past');
     cy.get('#dobd-error.govuk-error-message').should('exist');
-  }
-
-  static searchFormClear() {
-    cy.get('#system-number').should('have.value', '');
-    cy.get('#surname').should('have.value', '');
-    cy.get('#forenames').should('have.value', '');
-    cy.get('#dobd').should('have.value', '');
-  }
-
-  static searchFormRetainedValues(record) {
-    cy.get('#system-number').should('have.value', '');
-    cy.get('#surname').should('have.value', `${record.surname}`);
-    cy.get('#forenames').should('have.value', `${record.forenames}`);
-    cy.get('#dobd-day').should('have.value', `${record.dobd.day}`);
-    cy.get('#dobd-month').should('have.value', `${record.dobd.month}`);
-    cy.get('#dobd-year').should('have.value', `${record.dobd.year}`);
   }
 }
 
