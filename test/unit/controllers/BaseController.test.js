@@ -28,6 +28,8 @@ describe('BaseController tests', () => {
         // Assert
         expect(received.headers['x-auth-aud']).toBe(expected.headers['x-auth-aud']);
         expect(received.headers['x-auth-username']).toBe(expected.headers['x-auth-username']);
+        expect(received.headers['x-auth-roles']).toBeUndefined();
+        expect(received.headers.Authorization).toBeUndefined();
         expect(received.https.rejectUnauthorized).toBe(expected.https.rejectUnauthorized);
       });
     });
@@ -56,6 +58,7 @@ describe('BaseController tests', () => {
         // Assert
         expect(received.headers['x-auth-aud']).toBe(expected.headers['x-auth-aud']);
         expect(received.headers['x-auth-username']).toBe(expected.headers['x-auth-username']);
+        expect(received.headers['x-auth-roles']).toBeUndefined();
         expect(received.headers.Authorization).toBe(expected.headers.Authorization);
         expect(received.https.rejectUnauthorized).toBe(expected.https.rejectUnauthorized);
       });
@@ -85,6 +88,7 @@ describe('BaseController tests', () => {
         expect(received.headers['x-auth-aud']).toBe(expected.headers['x-auth-aud']);
         expect(received.headers['x-auth-username']).toBe(expected.headers['x-auth-username']);
         expect(received.headers['x-auth-roles']).toBe(expected.headers['x-auth-roles']);
+        expect(received.https.Authorization).toBeUndefined();
         expect(received.https.rejectUnauthorized).toBe(expected.https.rejectUnauthorized);
       });
     });
@@ -132,12 +136,12 @@ describe('BaseController tests', () => {
       };
 
       // Act
-      const err = controller.pageNotFound();
+      const received = controller.pageNotFound();
 
       // Assert
-      expect(err.code).toBe(expected.code);
-      expect(err.status).toBe(expected.status);
-      expect(err.template).toBe(expected.template);
+      expect(received.code).toBe(expected.code);
+      expect(received.status).toBe(expected.status);
+      expect(received.template).toBe(expected.template);
     });
   });
 
@@ -149,10 +153,10 @@ describe('BaseController tests', () => {
       const role = 'full-details';
 
       // Act
-      const result = controller.hasRole(req, role);
+      const received = controller.hasRole(req, role);
 
       // Assert
-      expect(result).toBe(false);
+      expect(received).toBe(false);
     });
 
     it('should return true when the given role is present in the request headers', () => {
@@ -162,10 +166,10 @@ describe('BaseController tests', () => {
       const role = 'full-details';
 
       // Act
-      const result = controller.hasRole(req, role);
+      const received = controller.hasRole(req, role);
 
       // Assert
-      expect(result).toBe(true);
+      expect(received).toBe(true);
     });
   });
 });
