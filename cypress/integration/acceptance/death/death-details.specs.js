@@ -28,7 +28,7 @@ describe('Death details', () => {
     });
   });
 
-  describe('When I perform a search that returns multiple records and I select the first a single record', () => {
+  describe('When I perform a search that returns multiple records and I select the first record', () => {
     before(() => {
       DeathSearchPage.visit();
       DeathSearchPage.performSearch(searchMultipleRecords.search);
@@ -114,6 +114,36 @@ describe('Death details', () => {
         DeathDetailsPage.shouldBeVisible();
         DeathDetailsPage.hasExpectedFlags([REREGISTRATION]);
       });
+    });
+  });
+
+  describe('When I visit the death details page directly', () => {
+    before(() => {
+      DeathDetailsPage.visit(searchSingleRecord.result.id);
+    });
+
+    it('a details page should be displayed', () => {
+      DeathDetailsPage.shouldBeVisible();
+      DeathDetailsPage.hasExpectedTitle(searchSingleRecord.result);
+      DeathDetailsPage.hasLimitedRecord(searchSingleRecord.result);
+      DeathDetailsPage.newSearchButtonExists();
+      DeathDetailsPage.editSearchButtonExists();
+      DeathDetailsPage.backToResultsButtonNotExists();
+    });
+  });
+
+  describe('When I visit the death details page directly with the "full-details" role', () => {
+    before(() => {
+      DeathDetailsPage.visitWithFullDetails(searchSingleRecord.result.id);
+    });
+
+    it('a details page should be displayed', () => {
+      DeathDetailsPage.shouldBeVisible();
+      DeathDetailsPage.hasExpectedTitle(searchSingleRecord.result);
+      DeathDetailsPage.hasCompleteRecord(searchSingleRecord.result);
+      DeathDetailsPage.newSearchButtonExists();
+      DeathDetailsPage.editSearchButtonExists();
+      DeathDetailsPage.backToResultsButtonNotExists();
     });
   });
 });

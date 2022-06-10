@@ -20,25 +20,24 @@ class DeathDetailsPage extends DetailsPage {
   }
 
   /**
-   * Visit the details page with the "full-details" role
+   * Visit the death details page directly
    *
-   * @param search
-   * @param record
-   * @param multipleResults
+   * @param systemNumber
    */
-  static visitWithFullDetails(search, record, multipleResults = false) {
-    const qs = {
-      surname: search.surname,
-      forenames: search.forenames,
-      dobd: search.dobd
-    };
+  static visit(systemNumber) {
+    cy.visit(`/death/details/${systemNumber}`);
+  }
 
-    // Refresh with "full-details" role
-    cy.visit(`/death/details/${record.id}`, {
+  /**
+   * Visit the death details page directly with the "full-details" role
+   *
+   * @param systemNumber
+   */
+  static visitWithFullDetails(systemNumber) {
+    cy.visit(`/death/details/${systemNumber}`, {
       headers: {
         'x-auth-roles': 'full-details'
-      },
-      qs: multipleResults ? { ...qs, multipleResults } : qs
+      }
     });
   }
 
