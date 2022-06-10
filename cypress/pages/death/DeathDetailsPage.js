@@ -108,6 +108,14 @@ class DeathDetailsPage extends DetailsPage {
 
     this.hasExpectedRows(rows);
   }
+
+  static hasExpectedFlags(results) {
+    for (let index = 0; index < results.length; index++) {
+      const flag = results[index];
+
+      cy.get('.flag').eq(index).contains(flag);
+    }
+  }
 }
 
 module.exports = DeathDetailsPage;
