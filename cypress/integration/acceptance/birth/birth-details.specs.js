@@ -35,13 +35,13 @@ describe('Birth details', () => {
         BirthDetailsPage.recordDisplaysRegistrationDetails(validRecordResult);
       });
       it('back to search results link not displayed', () => {
-        BirthDetailsPage.backToSearchResultsNotDisplayed();
+        BirthDetailsPage.backToResultsButtonNotExists();
       });
       describe('When I select the "New search" button', () => {
         before(() => {
           BirthSearchPage.visit();
           BirthSearchPage.performSearch(searchSingleRecord);
-          BirthDetailsPage.clickNewSearchLink();
+          BirthDetailsPage.clickNewSearchButton();
         });
         it('shows the search page', () => {
           BirthSearchPage.shouldBeVisible();
@@ -54,7 +54,7 @@ describe('Birth details', () => {
         before(() => {
           BirthSearchPage.visit();
           BirthSearchPage.performSearch(searchSingleRecord);
-          BirthDetailsPage.clickEditSearchLink();
+          BirthDetailsPage.clickEditSearchButton();
         });
         it('shows the search page', () => {
           BirthSearchPage.shouldBeVisible();
@@ -70,7 +70,7 @@ describe('Birth details', () => {
         BirthSearchPage.performSearch(searchMultipleRecords);
       });
       it('back to search results link not displayed', () => {
-        BirthDetailsPage.backToSearchResultsNotDisplayed();
+        BirthDetailsPage.backToResultsButtonNotExists();
       });
       describe('When I select the "Back to search results link on the details page"', () => {
         before(() => {
@@ -78,8 +78,8 @@ describe('Birth details', () => {
           BirthSearchPage.performSearch(searchMultipleRecords);
         });
         it('returned me to the results page', () => {
-          BirthResultsPage.selectFirstRecord();
-          BirthDetailsPage.clickBackToResultsLink();
+          BirthResultsPage.clickFirstRecord();
+          BirthDetailsPage.clickBackToResultsButton();
           BirthResultsPage.multipleRecordsFound();
         });
       });

@@ -42,30 +42,6 @@ class BirthDetailsPage extends DetailsPage {
     cy.get('.details tr').eq(20).contains(`Date of registration ${record.date}`);
   }
 
-  static clickNewSearchLink() {
-    cy.get('a[href="/birth"]').contains('New search').click();
-  }
-
-  static clickEditSearchLink() {
-    cy.get('a[href="/birth/search"]').contains('Edit search').click();
-  }
-
-  static clickBackToResultsLink() {
-    cy.get('a[href="/birth/results"]').contains('Back to results').click();
-  }
-
-  static editSearchLinkVisible() {
-    cy.get('#editSearchLink').contains('Edit search');
-  }
-
-  static backToSearchResultsDisplayed() {
-    cy.get('#backToSearchResults').should('exist');
-  }
-
-  static backToSearchResultsNotDisplayed() {
-    cy.get('#backToSearchResults').should('not.exist');
-  }
-
   static flagVisible(flag) {
     cy.get('.flag').contains(flag);
   }

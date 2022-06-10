@@ -1,0 +1,210 @@
+{% extends "details-template.njk" %}
+
+{% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+{% from "components/lev-flag.njk" import levFlag %}
+
+{% set hmpoPageKey = "death.detailsPage" %}
+{% set govukServiceNameKey = translate("pages.death.serviceName") %}
+{% set govukServiceUrl = "/death" %}
+
+{% macro redact(value) %}
+    {{ "UNAVAILABLE" if record.status.blocked else value }}
+{% endmacro %}
+
+{% macro deceasedName() %}
+    {{ record.deceased.forenames }} {{ record.deceased.surname }}
+    {% for alias in record.deceased.aliases %}
+        {% if alias.type %}
+            <br/>
+            {{ [alias.type, alias.prefix, alias.forenames, alias.surname, alias.suffix] | filter | join(" ") }}
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+
+{% macro deceasedOccupation() %}
+    {% if record.deceased.occupation %}
+        {{ record.deceased.occupation }} {{ "(retired)" if record.deceased.retired }}
+    {% elseif record.partner.occupation %}
+        <br/>
+        {{ record.deceased.relationshipToPartner }} {{ record.partner.name }}, {{ record.partner.occupation }} {{ "(retired)" if record.partner.retired }}
+    {% else %}
+        {% if record.father.occupation %}
+            <br/> Child of {{ record.father.name }}, {{ record.father.occupation }}
+        {% endif %}
+        {% if record.mother.occupation %}
+            <br/> Child of {{ record.mother.name }}, {{ record.mother.occupation }}
+        {% endif %}
+    {% endif %}
+{% endmacro %}
+
+{% set hmpoTitle -%}
+    {{ redact(record.deceased.forenames) }} {{ redact(record.deceased.surname) }} {{ redact(record.deceased.dateOfBirth | date("DD/MM/YYYY")) }}
+{%- endset %}
+
+{% block mainContent %}
+    {{ super() }}
+
+    {% if record.flags.refer %}
+        {{ levFlag(ctx, {key: "refer", type: "alert"}) }}
+    {% endif %}
+    {% if record.flags.corrected %}
+        {{ levFlag(ctx, {key: "corrected", type: "warning"}) }}
+    {% endif %}
+    {% if record.previousRegistration %}
+        {{ levFlag(ctx, {
+            key: "reRegistrationLabel",
+            html: hmpoSubmit(ctx, {key: "reRegistrationLink", href: "/death/details/" + record.previousRegistration.id})
+        }) }}
+    {% endif %}
+    {% if record.nextRegistration %}
+        {{ levFlag(ctx, {
+            key: "replaced",
+            type: "warning",
+            html: hmpoSubmit(ctx, {key: "reRegisteredLink", href: "/death/details/" + record.nextRegistration.id})
+        }) }}
+    {% endif %}
+
+    {% set rowsArray = [] %}
+    {% set rowsArray = (rowsArray.push([
+        { text: "System number" },
+        { text: record.id }
+    ],[
+        { text: "Deceased", colspan: 2, classes: "section-head" }
+    ],[
+        { text: "Name" },
+        { html: redact(deceasedName()) }
+    ]), rowsArray) %}
+    {% if showFullDetails %}
+        {% set rowsArray = (rowsArray.push([
+            { text: "Maiden name" },
+            { text: redact(record.deceased.maidenSurname) }
+        ]), rowsArray) %}
+    {% endif %}
+    {% set rowsArray = (rowsArray.push([
+        { text: "Date of birth" },
+        { text: redact(record.deceased.dateOfBirth | date("DD/MM/YYYY")) }
+    ]), rowsArray) %}
+    {% if showFullDetails %}
+        {% set rowsArray = (rowsArray.push([
+            { text: "Place of birth" },
+            { text: redact(record.deceased.birthplace) }
+        ]), rowsArray) %}
+    {% endif %}
+    {% set rowsArray = (rowsArray.push([
+        { text: "Sex" },
+        { text: redact(record.deceased.sex) }
+    ],[
+        { text: "Address" },
+        { text: redact(record.deceased.address) }
+    ]), rowsArray) %}
+    {% if showFullDetails %}
+        {% set rowsArray = (rowsArray.push([
+            { text: "Occupation" },
+            { text: redact(deceasedOccupation()) }
+        ]), rowsArray) %}
+    {% endif %}
+    {% set rowsArray = (rowsArray.push([
+        { text: "Date of death" },
+        { text: redact([record.deceased.dateOfDeathQualifier, record.deceased.dateOfDeath | date("DD/MM/YYYY")] | filter | join(" ")) }
+    ]), rowsArray) %}
+    {% if showFullDetails %}
+        {% set rowsArray = (rowsArray.push([
+            { text: "Place of death" },
+            { text: redact(record.deceased.deathplace) }
+        ],[
+            { text: "Age at death" },
+            { text: redact(record.deceased.ageAtDeath) }
+        ],[
+            { text: "Cause of death" },
+            { text: redact(record.deceased.causeOfDeath) }
+        ],[
+            { text: "Death certified by" },
+            { text: redact(record.deceased.certifiedBy) }
+        ],[
+            { text: "Informant", colspan: 2, classes: "section-head" }
+        ],[
+            { text: "Surname" },
+            { text: redact(record.informant.surname) }
+        ],[
+            { text: "Forename(s)" },
+            { text: redact(record.informant.forenames) }
+        ],[
+            { text: "Address" },
+            { text: redact(record.informant.address) }
+        ],[
+            { text: "Qualification" },
+            { text: redact(record.informant.qualification) }
+        ],[
+            { text: "Signature" },
+            { text: redact(record.informant.signature) }
+        ]), rowsArray) %}
+    {% endif %}
+    {% if record.inquestDate and showFullDetails %}
+        {% set rowsArray = (rowsArray.push([
+            { text: "Inquest", colspan: 2, classes: "section-head" }
+        ],[
+            { text: "Date" },
+            { text: redact(record.inquestDate | date("DD/MM/YYYY")) }
+        ],[
+            { text: "Coroner's name" },
+            { text: redact(record.coroner.name) }
+        ],[
+            { text: "Coroner's designation" },
+            { text: redact(record.coroner.designation) }
+        ],[
+            { text: "Area" },
+            { text: redact(record.coroner.area) }
+        ]), rowsArray) %}
+    {% endif %}
+    {% set rowsArray = (rowsArray.push([
+        { text: "Registration", colspan: 2, classes: "section-head" }
+    ]), rowsArray) %}
+    {% if showFullDetails %}
+        {% set rowsArray = (rowsArray.push([
+            { text: "Registrar signature" },
+            { text: redact(record.registrar.signature) }
+        ],[
+            { text: "Registrar designation" },
+            { text: redact(record.registrar.designation) }
+        ]), rowsArray) %}
+    {% endif %}
+    {% set rowsArray = (rowsArray.push([
+        { text: "Sub-district" },
+        { text: redact(record.registrar.subdistrict) }
+    ],[
+        { text: "District" },
+        { text: redact(record.registrar.district) }
+    ],[
+        { text: "Administrative area" },
+        { text: redact(record.registrar.administrativeArea) }
+    ],[
+        { text: "Date of registration" },
+        { text: redact(record.date | date("DD/MM/YYYY")) }
+    ]), rowsArray) %}
+    {% if showFullDetails %}
+        {% set rowsArray = (rowsArray.push([
+            { text: "Entry number" },
+            { text: redact(record.entryNumber) }
+        ]), rowsArray) %}
+    {% endif %}
+
+    {{ govukTable({
+        classes: "details",
+        firstCellIsHeader: true,
+        rows: rowsArray
+    }) }}
+
+    <div class="govuk-button-group">
+        {{ hmpoSubmit(ctx, {id: "newSearch", key: "newSearch", href: "/death"}) }}
+        {{ hmpoSubmit(ctx, {id: "editSearch", key: "editSearch", href: "/death/search", classes: "blue"}) }}
+        {% if showBackToResults %}
+            {{ hmpoSubmit(ctx, {
+                id: "backToResults",
+                key: "backToResults",
+                href: "/death/results",
+                classes: "grey"
+            }) }}
+        {% endif %}
+    </div>
+{% endblock %}

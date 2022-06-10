@@ -1,9 +1,9 @@
 'use strict';
 
 const BaseController = require('./BaseController');
-const BirthSearchService = require('../services/BirthSearchService');
+const DeathSearchService = require('../services/DeathSearchService');
 
-class BirthDetailsController extends BaseController {
+class DeathDetailsController extends BaseController {
   locals(req, res, callback) {
     super.locals(req, res, async (error, locals) => {
       if (error) return callback(error);
@@ -27,9 +27,9 @@ class BirthDetailsController extends BaseController {
         } else {
 
           // Record not found in searchResults, call REST API
-          record = await BirthSearchService.searchById({
+          record = await DeathSearchService.searchById({
             ...this.getOptions(req),
-            url: `/v1/registration/birth/${systemNumber}`
+            url: `/v1/registration/death/${systemNumber}`
           });
         }
       } else {
@@ -52,4 +52,4 @@ class BirthDetailsController extends BaseController {
   }
 }
 
-module.exports = BirthDetailsController;
+module.exports = DeathDetailsController;

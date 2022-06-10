@@ -19,14 +19,14 @@ class SearchPage extends Page {
    * Submit the search
    */
   static submit() {
-    cy.get('input[type="submit"]').click();
+    cy.get('#search').click();
   }
 
   /**
    * Check the expected error title is displayed
    */
   static hasErrorTitle() {
-    cy.get('.validation-summary > h2').contains('Fix the following error');
+    cy.get('.error-summary').contains('Fix the following error');
   }
 
   /**
@@ -34,7 +34,7 @@ class SearchPage extends Page {
    * @param message
    */
   static hasErrorMessage(message) {
-    cy.get('.validation-summary a').contains(message);
+    cy.get('.govuk-error-summary__list > li').contains(message);
   }
 
   /**

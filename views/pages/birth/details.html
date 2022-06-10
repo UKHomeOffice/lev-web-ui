@@ -35,80 +35,60 @@
             [
                 { text: "System number" },
                 { text: record.id }
-            ],
-            [
+            ],[
                 { text: "Child", colspan: 2, classes: "section-head" }
-            ],
-            [
+            ],[
                 { text: "Surname" },
                 { text: redact(record.child.surname) }
-            ],
-            [
+            ],[
                 { text: "Forename(s)" },
                 { text: redact(record.child.forenames) }
-            ],
-            [
+            ],[
                 { text: "Date of birth" },
                 { text: redact(record.child.dateOfBirth | date("DD/MM/YYYY")) }
-            ],
-            [
+            ],[
                 { text: "Sex" },
                 { text: redact(record.child.sex) }
-            ],
-            [
+            ],[
                 { text: "Place of birth" },
                 { text: redact(record.child.birthplace) }
-            ],
-            [
+            ],[
                 { text: "Mother", colspan: 2, classes: "section-head" }
-            ],
-            [
+            ],[
                 { text: "Name" },
                 { text: redact(record.mother.forenames + " " + record.mother.surname) }
-            ],
-            [
+            ],[
                 { text: "Maiden name" },
                 { text: redact(record.mother.maidenSurname) }
-            ],
-            [
+            ],[
                 { html: "Surname at marriage <p class=\"govuk-body-s\">if different from maiden name</p>" },
                 { text: redact(record.mother.marriageSurname) }
-            ],
-            [
+            ],[
                 { text: "Place of birth" },
                 { text: redact(record.mother.birthplace) }
-            ],
-            [
+            ],[
                 { text: "Father / Parent", colspan: 2, classes: "section-head" }
-            ],
-            [
+            ],[
                 { text: "Name" },
                 { text: redact(record.father.forenames + " " + record.father.surname) }
-            ],
-            [
+            ],[
                 { text: "Place of birth" },
                 { text: redact(record.father.birthplace) }
-            ],
-            [
+            ],[
                 { text: "Registration", colspan: 2, classes: "section-head" }
-            ],
-            [
+            ],[
                 { text: "Birth registered by" },
                 { text: redact([record.informant1.qualification, record.informant2.qualification] | filter | join(", ")) }
-            ],
-            [
+            ],[
                 { text: "Registration district" },
                 { text: redact(record.registrar.district) }
-            ],
-            [
+            ],[
                 { text: "Sub-district" },
                 { text: redact(record.registrar.subdistrict) }
-            ],
-            [
+            ],[
                 { text: "Administrative area" },
                 { text: redact(record.registrar.administrativeArea) }
-            ],
-            [
+            ],[
                 { text: "Date of registration" },
                 { text: redact(record.date | date("DD/MM/YYYY")) }
             ]
@@ -116,10 +96,11 @@
     }) }}
 
     <div class="govuk-button-group">
-        {{ hmpoSubmit(ctx, {key: "newSearch", href: "/birth"}) }}
-        {{ hmpoSubmit(ctx, {key: "editSearch", href: "/birth/search", classes: "blue"}) }}
+        {{ hmpoSubmit(ctx, {id: "newSearch", key: "newSearch", href: "/birth"}) }}
+        {{ hmpoSubmit(ctx, {id: "editSearch", key: "editSearch", href: "/birth/search", classes: "blue"}) }}
         {% if showBackToResults %}
             {{ hmpoSubmit(ctx, {
+                id: "backToResults",
                 key: "backToResults",
                 href: "/birth/results",
                 classes: "grey"

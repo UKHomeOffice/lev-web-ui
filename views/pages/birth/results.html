@@ -26,26 +26,14 @@
                         colspan: 2
                     }
                 ],[
-                    {
-                        text: "Place of birth"
-                    },
-                    {
-                        text: record.child.birthplace
-                    }
+                    { text: "Place of birth" },
+                    { text: record.child.birthplace }
                 ],[
-                    {
-                        text: "Mother"
-                    },
-                    {
-                        text: record.mother.forenames + " " + record.mother.surname
-                    }
+                    { text: "Mother" },
+                    { text: record.mother.forenames + " " + record.mother.surname }
                 ],[
-                    {
-                        text: "Father"
-                    },
-                    {
-                        text: record.father.forenames + " " + record.father.surname
-                    }
+                    { text: "Father" },
+                    { text: record.father.forenames + " " + record.father.surname }
                 ]), rowsArray) %}
 
                 {{ govukTable({
@@ -61,7 +49,7 @@
     </ul>
 
     <div class="govuk-button-group">
-        {{ hmpoSubmit(ctx, {key: "newSearch", href: "/birth"}) }}
-        {{ hmpoSubmit(ctx, {key: "editSearch", href: "/birth/search", classes: "blue"}) }}
+        {{ hmpoSubmit(ctx, {id: "newSearch", key: "newSearch", href: "/birth"}) }}
+        {{ hmpoSubmit(ctx, {id: "editSearch", key: "editSearch", href: "/birth/search", classes: "blue"}) }}
     </div>
 {% endblock %}
