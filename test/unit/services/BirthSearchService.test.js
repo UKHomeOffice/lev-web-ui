@@ -19,7 +19,7 @@ describe('BirthSearchService tests', () => {
         const received = BirthSearchService.processRecord(record);
 
         // Assert
-        expect(received.flags.refer).toBe(true);
+        expect(received.flags.refer).toEqual(true);
       });
 
       it('if record cancelled', () => {
@@ -35,7 +35,7 @@ describe('BirthSearchService tests', () => {
         const received = BirthSearchService.processRecord(record);
 
         // Assert
-        expect(received.flags.refer).toBe(true);
+        expect(received.flags.refer).toEqual(true);
       });
 
       it('if record potentially fictitious', () => {
@@ -51,7 +51,7 @@ describe('BirthSearchService tests', () => {
         const received = BirthSearchService.processRecord(record);
 
         // Assert
-        expect(received.flags.refer).toBe(true);
+        expect(received.flags.refer).toEqual(true);
       });
 
       it('if record is a reregistration', () => {
@@ -67,7 +67,7 @@ describe('BirthSearchService tests', () => {
         const received = BirthSearchService.processRecord(record);
 
         // Assert
-        expect(received.flags.refer).toBe(true);
+        expect(received.flags.refer).toEqual(true);
       });
 
       it('if record has a marginal note', () => {
@@ -83,7 +83,7 @@ describe('BirthSearchService tests', () => {
         const received = BirthSearchService.processRecord(record);
 
         // Assert
-        expect(received.flags.refer).toBe(true);
+        expect(received.flags.refer).toEqual(true);
       });
     });
 
@@ -101,7 +101,7 @@ describe('BirthSearchService tests', () => {
         const received = BirthSearchService.processRecord(record);
 
         // Assert
-        expect(received.flags.fatherAdded).toBe(true);
+        expect(received.flags.fatherAdded).toEqual(true);
       });
     });
 
@@ -119,7 +119,7 @@ describe('BirthSearchService tests', () => {
         const received = BirthSearchService.processRecord(record);
 
         // Assert
-        expect(received.flags.subsequentlyMarried).toBe(true);
+        expect(received.flags.subsequentlyMarried).toEqual(true);
       });
     });
 
@@ -137,7 +137,7 @@ describe('BirthSearchService tests', () => {
         const received = BirthSearchService.processRecord(record);
 
         // Assert
-        expect(received.flags.fatherModified).toBe(true);
+        expect(received.flags.fatherModified).toEqual(true);
       });
     });
 
@@ -155,7 +155,7 @@ describe('BirthSearchService tests', () => {
         const received = BirthSearchService.processRecord(record);
 
         // Assert
-        expect(received.flags.replaced).toBe(true);
+        expect(received.flags.replaced).toEqual(true);
       });
     });
 
@@ -173,7 +173,7 @@ describe('BirthSearchService tests', () => {
         const received = BirthSearchService.processRecord(record);
 
         // Assert
-        expect(received.flags.corrected).toBe(true);
+        expect(received.flags.corrected).toEqual(true);
       });
     });
 
@@ -191,7 +191,7 @@ describe('BirthSearchService tests', () => {
         const received = BirthSearchService.processRecord(record);
 
         // Assert
-        expect(received.flags.courtOrderInPlace).toBe(true);
+        expect(received.flags.courtOrderInPlace).toEqual(true);
       });
     });
 
@@ -209,7 +209,7 @@ describe('BirthSearchService tests', () => {
         const received = BirthSearchService.processRecord(record);
 
         // Assert
-        expect(received.flags.courtOrderRevoked).toBe(true);
+        expect(received.flags.courtOrderRevoked).toEqual(true);
       });
     });
   });

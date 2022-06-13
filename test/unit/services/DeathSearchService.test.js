@@ -18,7 +18,7 @@ describe('DeathSearchService tests', () => {
         const received = DeathSearchService.processRecord(record);
 
         // Assert
-        expect(received.flags.refer).toBe(true);
+        expect(received.flags.refer).toEqual(true);
       });
 
       it('if record marginal note is not "None"', () => {
@@ -34,7 +34,7 @@ describe('DeathSearchService tests', () => {
         const received = DeathSearchService.processRecord(record);
 
         // Assert
-        expect(received.flags.refer).toBe(true);
+        expect(received.flags.refer).toEqual(true);
       });
     });
     describe('corrected flag should be true', () => {
@@ -51,7 +51,7 @@ describe('DeathSearchService tests', () => {
         const received = DeathSearchService.processRecord(record);
 
         // Assert
-        expect(received.flags.corrected).toBe(true);
+        expect(received.flags.corrected).toEqual(true);
       });
     });
   });

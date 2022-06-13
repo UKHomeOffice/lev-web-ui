@@ -26,11 +26,7 @@ describe('BaseController tests', () => {
         const received = controller.getOptions(req);
 
         // Assert
-        expect(received.headers['x-auth-aud']).toBe(expected.headers['x-auth-aud']);
-        expect(received.headers['x-auth-username']).toBe(expected.headers['x-auth-username']);
-        expect(received.headers['x-auth-roles']).toBeUndefined();
-        expect(received.headers.Authorization).toBeUndefined();
-        expect(received.https.rejectUnauthorized).toBe(expected.https.rejectUnauthorized);
+        expect(received).toEqual(expected);
       });
     });
 
@@ -56,11 +52,7 @@ describe('BaseController tests', () => {
         const received = controller.getOptions(req);
 
         // Assert
-        expect(received.headers['x-auth-aud']).toBe(expected.headers['x-auth-aud']);
-        expect(received.headers['x-auth-username']).toBe(expected.headers['x-auth-username']);
-        expect(received.headers['x-auth-roles']).toBeUndefined();
-        expect(received.headers.Authorization).toBe(expected.headers.Authorization);
-        expect(received.https.rejectUnauthorized).toBe(expected.https.rejectUnauthorized);
+        expect(received).toEqual(expected);
       });
     });
     describe('When roles exists in the request headers', () => {
@@ -85,11 +77,7 @@ describe('BaseController tests', () => {
         const received = controller.getOptions(req);
 
         // Assert
-        expect(received.headers['x-auth-aud']).toBe(expected.headers['x-auth-aud']);
-        expect(received.headers['x-auth-username']).toBe(expected.headers['x-auth-username']);
-        expect(received.headers['x-auth-roles']).toBe(expected.headers['x-auth-roles']);
-        expect(received.https.Authorization).toBeUndefined();
-        expect(received.https.rejectUnauthorized).toBe(expected.https.rejectUnauthorized);
+        expect(received).toEqual(expected);
       });
     });
     describe('When both token and roles exists in the request headers', () => {
@@ -104,7 +92,6 @@ describe('BaseController tests', () => {
           headers: {
             'x-auth-aud': api.client,
             'x-auth-username': api.username,
-            'x-auth-roles': 'full-details',
             Authorization: 'Bearer xxxxx'
           },
           https: {
@@ -116,11 +103,7 @@ describe('BaseController tests', () => {
         const received = controller.getOptions(req);
 
         // Assert
-        expect(received.headers['x-auth-aud']).toBe(expected.headers['x-auth-aud']);
-        expect(received.headers['x-auth-username']).toBe(expected.headers['x-auth-username']);
-        expect(received.headers['x-auth-roles']).toBeUndefined();
-        expect(received.headers.Authorization).toBe(expected.headers.Authorization);
-        expect(received.https.rejectUnauthorized).toBe(expected.https.rejectUnauthorized);
+        expect(received).toEqual(expected);
       });
     });
   });
@@ -129,19 +112,16 @@ describe('BaseController tests', () => {
     it('should return an error object', () => {
 
       // Arrange
-      const expected = {
-        code: 'PAGE_NOT_FOUND',
-        status: 404,
-        template: 'errors/page-not-found'
-      };
+      const expected = new Error('Page not found');
+      expected.code = 'PAGE_NOT_FOUND';
+      expected.status = 404;
+      expected.template = 'errors/page-not-found';
 
       // Act
       const received = controller.pageNotFound();
 
       // Assert
-      expect(received.code).toBe(expected.code);
-      expect(received.status).toBe(expected.status);
-      expect(received.template).toBe(expected.template);
+      expect(received).toEqual(expected);
     });
   });
 
@@ -156,7 +136,7 @@ describe('BaseController tests', () => {
       const received = controller.hasRole(req, role);
 
       // Assert
-      expect(received).toBe(false);
+      expect(received).toEqual(false);
     });
 
     it('should return true when the given role is present in the request headers', () => {
@@ -169,7 +149,7 @@ describe('BaseController tests', () => {
       const received = controller.hasRole(req, role);
 
       // Assert
-      expect(received).toBe(true);
+      expect(received).toEqual(true);
     });
   });
 });

@@ -37,7 +37,7 @@ describe('RestApiModel tests', () => {
       const received = model.requestConfig({ method: 'GET' }, undefined);
 
       // Assert
-      expect(received.url).toBe(expected.url);
+      expect(received.url).toEqual(expected.url);
     });
 
     it('should return an https object', () => {
@@ -53,7 +53,7 @@ describe('RestApiModel tests', () => {
       const received = model.requestConfig({ method: 'GET' }, undefined);
 
       // Assert
-      expect(received.https.rejectUnauthorized).toBe(expected.https.rejectUnauthorized);
+      expect(received.https.rejectUnauthorized).toEqual(expected.https.rejectUnauthorized);
     });
 
     it('should return a searchParams object', () => {
@@ -67,9 +67,9 @@ describe('RestApiModel tests', () => {
       const received = model.requestConfig({ method: 'GET' }, undefined);
 
       // Assert
-      expect(received.searchParams.surname).toBe(expected.searchParams.surname);
-      expect(received.searchParams.forenames).toBe(expected.searchParams.forenames);
-      expect(received.searchParams.dateOfBirth).toBe(expected.searchParams.dateOfBirth);
+      expect(received.searchParams.surname).toEqual(expected.searchParams.surname);
+      expect(received.searchParams.forenames).toEqual(expected.searchParams.forenames);
+      expect(received.searchParams.dateOfBirth).toEqual(expected.searchParams.dateOfBirth);
     });
   });
 });
