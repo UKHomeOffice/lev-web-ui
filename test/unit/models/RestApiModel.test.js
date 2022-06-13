@@ -1,11 +1,8 @@
 'use strict';
 
-const { config, logger } = require('hmpo-app');
-const { api, options } = require('../../../config');
+require('../logger');
+const { api } = require('../../../config');
 const RestApiModel = require('../../../models/RestApiModel');
-
-config.setup(options.config);
-logger.setup(options.logs);
 
 const baseUrl = `${api.protocol}://${api.host}:${api.port}`;
 
