@@ -132,18 +132,20 @@ describe('Death details', () => {
     });
   });
 
-  describe('When I visit the death details page directly with the "full-details" role', () => {
-    before(() => {
-      DeathDetailsPage.visitWithFullDetails(searchSingleRecord.result.id);
-    });
+  if (!Cypress.env('e2e')) {
+    describe('When I visit the death details page directly with the "full-details" role', () => {
+      before(() => {
+        DeathDetailsPage.visitWithFullDetails(searchSingleRecord.result.id);
+      });
 
-    it('a details page should be displayed', () => {
-      DeathDetailsPage.shouldBeVisible();
-      DeathDetailsPage.hasExpectedTitle(searchSingleRecord.result);
-      DeathDetailsPage.hasCompleteRecord(searchSingleRecord.result);
-      DeathDetailsPage.newSearchButtonExists();
-      DeathDetailsPage.editSearchButtonExists();
-      DeathDetailsPage.backToResultsButtonNotExists();
+      it('a details page should be displayed', () => {
+        DeathDetailsPage.shouldBeVisible();
+        DeathDetailsPage.hasExpectedTitle(searchSingleRecord.result);
+        DeathDetailsPage.hasCompleteRecord(searchSingleRecord.result);
+        DeathDetailsPage.newSearchButtonExists();
+        DeathDetailsPage.editSearchButtonExists();
+        DeathDetailsPage.backToResultsButtonNotExists();
+      });
     });
-  });
+  }
 });
