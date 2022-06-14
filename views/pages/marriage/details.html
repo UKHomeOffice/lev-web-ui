@@ -85,7 +85,7 @@
 {% endmacro %}
 
 {% macro placeOfMarriage() %}
-    {{ record.placeOfMarriage.address }} {{ "in the parish of " + record.placeOfMarriage.parish if placeOfMarriage.parish }}
+    {{ record.placeOfMarriage.address }} {{ "in the parish of " + record.placeOfMarriage.parish if record.placeOfMarriage.parish }}
 {% endmacro %}
 
 {% macro occupation(person) %}
