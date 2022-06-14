@@ -7,6 +7,7 @@
 {% set hmpoPageKey = "marriage.detailsPage" %}
 {% set govukServiceNameKey = translate("pages.marriage.serviceName") %}
 {% set govukServiceUrl = "/marriage" %}
+{% set rowsArray = [] %}
 
 {% macro redact(value) %}
     {{ "UNAVAILABLE" if record.status.blocked else value }}
@@ -15,6 +16,73 @@
 {% set hmpoTitle -%}
     {{ redact(record.bride.forenames) }} {{ redact(record.bride.surname) }} & {{ redact(record.groom.forenames) }} {{ redact(record.groom.surname) }}
 {%- endset %}
+
+{% macro partner(title, partner) %}
+    {% set rowsArray = (rowsArray.push([
+        { text: title, colspan: 2, classes: "section-head" }
+    ],[
+    ],[
+        { text: "Surname" },
+        { html: redact(partner.surname) }
+    ],[
+        { text: "Forename(s)" },
+        { html: redact(partner.forenames) }
+    ]), rowsArray) %}
+    {% if showFullDetails %}
+        {% set rowsArray = (rowsArray.push([
+            { text: "Age" },
+            { text: redact(partner.age) }
+        ],[
+            { text: "Occupation" },
+            { html: redact(occupation(partner)) }
+        ]), rowsArray) %}
+    {% endif %}
+    {% set rowsArray = (rowsArray.push([
+        { text: "Address" },
+        { html: redact(partner.address) }
+    ]), rowsArray) %}
+    {% if showFullDetails %}
+        {% set rowsArray = (rowsArray.push([
+            { text: "Condition" },
+            { text: redact(partner.condition) }
+        ],[
+            { text: "Signature" },
+            { html: redact(partner.signature) }
+        ]), rowsArray) %}
+    {% endif %}
+{% endmacro %}
+
+{% macro father(title, father) %}
+    {% set rowsArray = (rowsArray.push([
+        { text: title, colspan: 2, classes: "section-head" }
+    ],[
+        { text: "Surname" },
+        { html: redact(father.surname) }
+    ],[
+        { text: "Forename(s)" },
+        { html: redact(father.forenames) }
+    ],[
+        { text: "Occupation" },
+        { html: redact(occupation(father)) }
+    ],[
+        { text: "Designation" },
+        { html: redact(father.designation) }
+    ],[
+        { text: "Surname" },
+        { html: redact(yesNo(father.deceased)) }
+    ]), rowsArray) %}
+{% endmacro %}
+
+{% macro witness(title, witness) %}
+    {% if witness.signature %}
+        {% set rowsArray = (rowsArray.push([
+            { text: title, colspan: 2, classes: "section-head" }
+        ],[
+            { text: "Signature" },
+            { html: redact(witness.signature) }
+        ]), rowsArray) %}
+    {% endif %}
+{% endmacro %}
 
 {% macro placeOfMarriage() %}
     {{ record.placeOfMarriage.address }} {{ "in the parish of " + record.placeOfMarriage.parish if placeOfMarriage.parish }}
@@ -51,7 +119,6 @@
         }) }}
     {% endif %}
 
-    {% set rowsArray = [] %}
     {% set rowsArray = (rowsArray.push([
         { text: "System number" },
         { text: record.id }
@@ -61,191 +128,24 @@
     ],[
         { text: "Place of marriage" },
         { html: redact(placeOfMarriage()) }
-    ],[
-        { text: "Partner 1", colspan: 2, classes: "section-head" }
-    ],[
-        { text: "Surname" },
-        { html: redact(record.groom.surname) }
-    ],[
-        { text: "Forename(s)" },
-        { html: redact(record.groom.forenames) }
     ]), rowsArray) %}
+    {{ partner('Partner 1', record.groom) }}
+    {{ partner('Partner 2', record.bride) }}
     {% if showFullDetails %}
-        {% set rowsArray = (rowsArray.push([
-            { text: "Age" },
-            { text: redact(record.groom.age) }
-        ],[
-            { text: "Occupation" },
-            { html: redact(occupation(record.groom)) }
-        ]), rowsArray) %}
-    {% endif %}
-    {% set rowsArray = (rowsArray.push([
-        { text: "Address" },
-        { html: redact(record.groom.address) }
-    ]), rowsArray) %}
-    {% if showFullDetails %}
-        {% set rowsArray = (rowsArray.push([
-            { text: "Condition" },
-            { text: redact(record.groom.condition) }
-        ],[
-            { text: "Signature" },
-            { html: redact(record.groom.signature) }
-        ]), rowsArray) %}
-    {% endif %}
-    {% set rowsArray = (rowsArray.push([
-        { text: "Partner 2", colspan: 2, classes: "section-head" }
-    ],[
-        { text: "Surname" },
-        { html: redact(record.bride.surname) }
-    ],[
-        { text: "Forename(s)" },
-        { html: redact(record.bride.forenames) }
-    ]), rowsArray) %}
-    {% if showFullDetails %}
-        {% set rowsArray = (rowsArray.push([
-            { text: "Age" },
-            { text: redact(record.bride.age) }
-        ],[
-            { text: "Occupation" },
-            { html: redact(occupation(record.bride)) }
-        ]), rowsArray) %}
-    {% endif %}
-    {% set rowsArray = (rowsArray.push([
-        { text: "Address" },
-        { html: redact(record.bride.address) }
-    ]), rowsArray) %}
-    {% if showFullDetails %}
-        {% set rowsArray = (rowsArray.push([
-            { text: "Condition" },
-            { text: redact(record.bride.condition) }
-        ],[
-            { text: "Signature" },
-            { html: redact(record.bride.signature) }
-        ],[
-            { text: "Father of partner 1", colspan: 2, classes: "section-head" }
-        ],[
-            { text: "Surname" },
-            { html: redact(record.fatherOfGroom.surname) }
-        ],[
-            { text: "Forename(s)" },
-            { html: redact(record.fatherOfGroom.forenames) }
-        ],[
-            { text: "Occupation" },
-            { html: redact(occupation(record.fatherOfGroom)) }
-        ],[
-            { text: "Designation" },
-            { html: redact(record.fatherOfGroom.designation) }
-        ],[
-            { text: "Surname" },
-            { html: redact(yesNo(record.fatherOfGroom.deceased)) }
-        ],[
-            { text: "Father of partner 2", colspan: 2, classes: "section-head" }
-        ],[
-            { text: "Surname" },
-            { html: redact(record.fatherOfBride.surname) }
-        ],[
-            { text: "Forename(s)" },
-            { html: redact(record.fatherOfBride.forenames) }
-        ],[
-            { text: "Occupation" },
-            { html: redact(occupation(record.fatherOfBride)) }
-        ],[
-            { text: "Designation" },
-            { html: redact(record.fatherOfBride.designation) }
-        ],[
-            { text: "Surname" },
-            { html: redact(yesNo(record.fatherOfBride.deceased)) }
-        ],[
-            { text: "First witness", colspan: 2, classes: "section-head" }
-        ],[
-            { text: "Signature" },
-            { html: redact(record.witness1.signature) }
-        ],[
-            { text: "Second witness", colspan: 2, classes: "section-head" }
-        ],[
-            { text: "Signature" },
-            { html: redact(record.witness2.signature) }
-        ]), rowsArray) %}
-    {% endif %}
-    {% if showFullDetails and record.witness3.signature %}
-        {% set rowsArray = (rowsArray.push([
-            { text: "Third witness", colspan: 2, classes: "section-head" }
-        ],[
-            { text: "Signature" },
-            { html: redact(record.witness3.signature) }
-        ]), rowsArray) %}
-    {% endif %}
-    {% if showFullDetails and record.witness4.signature %}
-        {% set rowsArray = (rowsArray.push([
-            { text: "Fourth witness", colspan: 2, classes: "section-head" }
-        ],[
-            { text: "Signature" },
-            { html: redact(record.witness4.signature) }
-        ]), rowsArray) %}
-    {% endif %}
-    {% if showFullDetails and record.witness5.signature %}
-        {% set rowsArray = (rowsArray.push([
-            { text: "Fifth", colspan: 2, classes: "section-head" }
-        ],[
-            { text: "Signature" },
-            { html: redact(record.witness5.signature) }
-        ]), rowsArray) %}
-    {% endif %}
-    {% if showFullDetails and record.witness6.signature %}
-        {% set rowsArray = (rowsArray.push([
-            { text: "Sixth witness", colspan: 2, classes: "section-head" }
-        ],[
-            { text: "Signature" },
-            { html: redact(record.witness6.signature) }
-        ]), rowsArray) %}
-    {% endif %}
-    {% if showFullDetails and record.witness7.signature %}
-        {% set rowsArray = (rowsArray.push([
-            { text: "Seventh witness", colspan: 2, classes: "section-head" }
-        ],[
-            { text: "Signature" },
-            { html: redact(record.witness7.signature) }
-        ]), rowsArray) %}
-    {% endif %}
-    {% if showFullDetails and record.witness8.signature %}
-        {% set rowsArray = (rowsArray.push([
-            { text: "Eighth witness", colspan: 2, classes: "section-head" }
-        ],[
-            { text: "Signature" },
-            { html: redact(record.witness8.signature) }
-        ]), rowsArray) %}
-    {% endif %}
-    {% if showFullDetails and record.witness9.signature %}
-        {% set rowsArray = (rowsArray.push([
-            { text: "Ninth witness", colspan: 2, classes: "section-head" }
-        ],[
-            { text: "Signature" },
-            { html: redact(record.witness9.signature) }
-        ]), rowsArray) %}
-    {% endif %}
-    {% if showFullDetails and record.witness10.signature %}
-        {% set rowsArray = (rowsArray.push([
-            { text: "Tenth witness", colspan: 2, classes: "section-head" }
-        ],[
-            { text: "Signature" },
-            { html: redact(record.witness10.signature) }
-        ]), rowsArray) %}
-    {% endif %}
-    {% if showFullDetails and record.witness11.signature %}
-        {% set rowsArray = (rowsArray.push([
-            { text: "Eleventh witness", colspan: 2, classes: "section-head" }
-        ],[
-            { text: "Signature" },
-            { html: redact(record.witness11.signature) }
-        ]), rowsArray) %}
-    {% endif %}
-    {% if showFullDetails and record.witness12.signature %}
-        {% set rowsArray = (rowsArray.push([
-            { text: "Twelth witness", colspan: 2, classes: "section-head" }
-        ],[
-            { text: "Signature" },
-            { html: redact(record.witness12.signature) }
-        ]), rowsArray) %}
+        {{ father('Father of partner 1', record.fatherOfGroom) }}
+        {{ father('Father of partner 2', record.fatherOfBride) }}
+        {{ witness('First witness', record.witness1) }}
+        {{ witness('Second witness', record.witness2) }}
+        {{ witness('Third witness', record.witness3) }}
+        {{ witness('Fourth witness', record.witness4) }}
+        {{ witness('Fifth witness', record.witness5) }}
+        {{ witness('Sixth witness', record.witness6) }}
+        {{ witness('Seventh witness', record.witness7) }}
+        {{ witness('Eighth witness', record.witness8) }}
+        {{ witness('Ninth witness', record.witness9) }}
+        {{ witness('Tenth witness', record.witness10) }}
+        {{ witness('Eleventh witness', record.witness11) }}
+        {{ witness('Twelfth witness', record.witness12) }}
     {% endif %}
     {% set rowsArray = (rowsArray.push([
         { text: "Registration", colspan: 2, classes: "section-head" }
