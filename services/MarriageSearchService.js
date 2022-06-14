@@ -10,8 +10,7 @@ class MarriageSearchService extends SearchService {
     return {
       ...record,
       flags: {
-        refer: record.status.blocked || (record.status.marginalNote && record.status.marginalNote !== 'None'),
-        corrected: record.status.correction && record.status.correction !== 'None'
+        refer: record.status.blocked || (record.status.marginalNote && record.status.marginalNote !== 'None')
       }
     };
   }

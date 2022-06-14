@@ -102,9 +102,6 @@
     {% if record.flags.refer %}
         {{ levFlag(ctx, {key: "refer", type: "alert"}) }}
     {% endif %}
-    {% if record.flags.corrected %}
-        {{ levFlag(ctx, {key: "corrected", type: "warning"}) }}
-    {% endif %}
     {% if record.previousRegistration %}
         {{ levFlag(ctx, {
             key: "reRegistrationLabel",

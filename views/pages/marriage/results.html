@@ -42,9 +42,6 @@
                 {% if record.flags.refer %}
                     {{ levFlag(ctx, {key: "refer", type: "alert"}) }}
                 {% endif %}
-                {% if record.flags.corrected %}
-                    {{ levFlag(ctx, {key: "corrected", type: "warning"}) }}
-                {% endif %}
                 {% if record.nextRegistration %}
                     {{ levFlag(ctx, {key: "replaced", type: "warning"}) }}
                 {% endif %}
