@@ -5,41 +5,39 @@ Life Event Verification User Interface
 
 ### To build the application and run all tests
 ```shell
+nvm use
 make all
 ```
 
-### To start the application locally
+### Local Development
+#### To run the application 
 ```shell
+npm run start:mockapi
 npm start
 ```
 
-### To start the application locally in dev mode
+#### To run the application in development mode
 ```shell
+npm run start:mockapi
 npm run dev
 ```
 
-### To run the application in Docker
-The application can be run locally using Docker containers with a single command:
+#### To run the application & cypress in development mode
 ```shell
-docker-compose up
+npm run start:mockapi
+npm run dev
+npm run cypress
+```
+
+### Docker
+#### To run the application
+```shell
+docker compose up --build
+```
+#### To run the application & cypress:acceptance tests
+```shell
+docker compose -f docker-compose-local.yml up --build
 ```
 
 ### Mock Data
-```text
--- Test data
---
---   123456789: Original testing record
---   999999901: First non-unique record for automated tests
---   999999902: Second non-unique record for automated tests
---   999999903: Third non-unique record for automated tests
---   999999910: Unique record for automated tests
---   999999920: Blocked
---   999999921: Cancelled
---   999999922: Caution mark
---   999999923: Court order
---   999999924: Fictitious birth
---   999999925: Re-registered
---   999999926: All the flags!
---   999999930: Subsequently married
---   999999931: Subsequently married
-```
+Whether running locally, or Docker, mock data is obtained from [lev-api/mock](https://github.com/UKHomeOffice/lev-api/tree/master/mock).

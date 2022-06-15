@@ -19,7 +19,6 @@
     "test": "npm-run-all test:lint test:unit test:coverage",
     "test:lint": "eslint .",
     "test:unit": "jest test/unit",
-    "test:int": "jest test/int",
     "test:coverage": "jest test/unit --coverage",
     "test:ui": "npm-run-all -pr start cypress:all",
     "cypress": "cypress open --config baseUrl=${TEST_URL:-http://localhost:8001}",
