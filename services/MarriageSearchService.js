@@ -5,8 +5,6 @@ const SearchService = require('./SearchService');
 class MarriageSearchService extends SearchService {
 
   static processRecord(record) {
-    console.log(record);
-
     return {
       ...record,
       flags: {
