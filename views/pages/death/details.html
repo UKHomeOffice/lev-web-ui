@@ -7,10 +7,15 @@
 {% set hmpoPageKey = "death.detailsPage" %}
 {% set govukServiceNameKey = translate("pages.death.serviceName") %}
 {% set govukServiceUrl = "/death" %}
+{% set rowsArray = [] %}
 
 {% macro redact(value) %}
     {{ "UNAVAILABLE" if record.status.blocked else value }}
 {% endmacro %}
+
+{% set hmpoTitle -%}
+    {{ redact(record.deceased.forenames) }} {{ redact(record.deceased.surname) }} {{ redact(record.deceased.dateOfBirth | date("DD/MM/YYYY")) }}
+{%- endset %}
 
 {% macro deceasedName() %}
     {{ record.deceased.forenames }} {{ record.deceased.surname }}
@@ -38,10 +43,6 @@
     {% endif %}
 {% endmacro %}
 
-{% set hmpoTitle -%}
-    {{ redact(record.deceased.forenames) }} {{ redact(record.deceased.surname) }} {{ redact(record.deceased.dateOfBirth | date("DD/MM/YYYY")) }}
-{%- endset %}
-
 {% block mainContent %}
     {{ super() }}
 
@@ -65,7 +66,6 @@
         }) }}
     {% endif %}
 
-    {% set rowsArray = [] %}
     {% set rowsArray = (rowsArray.push([
         { text: "System number" },
         { text: record.id }

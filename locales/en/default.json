@@ -41,6 +41,13 @@
       "summaryText": "What is the system number?",
       "html": "<img src=\"/public/images/system-number-hint.png\" alt=\"The system number is a nine digit number located in the bottom left corner of the death certificate\" title=\"Where to find the system number on a death certificate\"/>"
     },
+    "marriage-system-number": {
+      "label": "System number from marriage certificate"
+    },
+    "marriage-system-number-hint": {
+      "summaryText": "What is the system number?",
+      "html": "<img src=\"/public/images/system-number-hint.png\" alt=\"The system number is a nine digit number located in the bottom left corner of the marriage certificate\" title=\"Where to find the system number on a death certificate\"/>"
+    },
     "surname": {
       "label": "Surname"
     },
@@ -52,6 +59,9 @@
     },
     "dobd": {
       "label": "Date of birth or death"
+    },
+    "dom": {
+      "label": "Date of marriage"
     },
     "date-day": {
       "label": "Day"
@@ -76,6 +86,12 @@
         "title": "Applicant's details"
       }
     },
+    "marriage": {
+      "serviceName": "Marriage record check",
+      "searchPage": {
+        "title": "Applicant's details"
+      }
+    },
     "error": {
       "title": "Error"
     },
@@ -92,6 +108,10 @@
       "exactlength": "The system number should be 9 digits"
     },
     "death-system-number": {
+      "numeric": "Please enter a number",
+      "exactlength": "The system number should be 9 digits"
+    },
+    "marriage-system-number": {
       "numeric": "Please enter a number",
       "exactlength": "The system number should be 9 digits"
     },
@@ -120,6 +140,23 @@
       "after": "Please enter a date after our records began (1 July 2009)"
     },
     "dobd": {
+      "required": "Please enter a {{name}}",
+      "required-day": "Enter a complete {{name}}",
+      "required-month": "Enter a complete {{name}}",
+      "required-year": "Enter a complete {{name}}",
+
+      "date": "Enter a complete {{name}}",
+      "date-year": "Enter a valid year",
+      "date-month": "Enter a valid month",
+      "date-day": "Enter a valid day",
+
+      "numeric-year": "Enter a year using numbers only",
+      "numeric-month": "Enter a month using numbers only",
+      "numeric-day": "Enter a day using numbers only",
+
+      "before": "Please enter a {{name}} in the past"
+    },
+    "dom": {
       "required": "Please enter a {{name}}",
       "required-day": "Enter a complete {{name}}",
       "required-month": "Enter a complete {{name}}",
