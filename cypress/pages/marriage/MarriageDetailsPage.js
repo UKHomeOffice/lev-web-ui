@@ -26,21 +26,11 @@ class MarriageDetailsPage extends DetailsPage {
    * @param record
    * @param multipleResults
    */
-  static visitWithFullDetails(search, record, multipleResults = false) {
-    const qs = {
-      surname: search.surname,
-      forenames: search.forenames,
-      day: search.day,
-      month: search.month,
-      year: search.year
-    };
-
-    // Refresh with "full-details" role
+  static visitWithFullDetails(record) {
     cy.visit(`/marriage/details/${record.id}`, {
       headers: {
         'X-Auth-Roles': 'full-details'
-      },
-      qs: multipleResults ? { ...qs, multipleResults } : qs
+      }
     });
   }
 
@@ -141,7 +131,7 @@ class MarriageDetailsPage extends DetailsPage {
     cy.get('#backToSearchResults').should('not.exist');
   }
 
-    static backToSearchResultsLinkDisplayed() {
+  static backToSearchResultsLinkDisplayed() {
     cy.get('.govuk-back-link').should('exist');
   }
 }
