@@ -64,9 +64,7 @@ describe('RestApiModel tests', () => {
       const received = model.requestConfig({ method: 'GET' }, undefined);
 
       // Assert
-      expect(received.searchParams.surname).toEqual(expected.searchParams.surname);
-      expect(received.searchParams.forenames).toEqual(expected.searchParams.forenames);
-      expect(received.searchParams.dateOfBirth).toEqual(expected.searchParams.dateOfBirth);
+      expect(received.searchParams).toEqual(expected.searchParams);
     });
   });
 });
