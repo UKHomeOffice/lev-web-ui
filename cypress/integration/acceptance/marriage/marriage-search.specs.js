@@ -1,128 +1,221 @@
 'use strict';
 
-const { DateTime } = require('luxon');
-const searchSingleRecord = require('../../../fixtures/death/expected-death-record');
+const expectedNoRecords = require('../../../fixtures/marriage/expected-no-records');
+const expectedSingleRecord = require('../../../fixtures/marriage/expected-marriage-record');
+const expectedMultipleRecords = require('../../../fixtures/marriage/expected-marriage-records');
+const MarriageDetailsPage = require('../../../pages/marriage/MarriageDetailsPage');
+const MarriageResultsPage = require('../../../pages/marriage/MarriageResultsPage');
+const MarriageSearchPage = require('../../../pages/marriage/MarriageSearchPage');
 const LoginPage = require('../../../pages/LoginPage');
-const DeathSearchPage = require('../../../pages/death/DeathSearchPage');
-const DeathDetailsPage = require('../../../pages/death/DeathDetailsPage');
+const {DateTime} = require('luxon');
 
-describe('Death search', () => {
+describe('Marriage search', () => {
   before(() => {
     LoginPage.login();
   });
-  describe('after submitting a valid query', () => {
-    describe('When I select the "New search" button', () => {
-      before(() => {
-        DeathSearchPage.visit();
-        DeathSearchPage.performSearch(searchSingleRecord.search);
-        DeathDetailsPage.clickNewSearchButton();
 
-        it('shows the search page', () => {
-          DeathSearchPage.shouldBeVisible();
-        });
+  it('returns the search page', () => {
+    MarriageSearchPage.visit();
+    MarriageSearchPage.shouldBeVisible();
+  });
+
+  describe('submitting a valid query', () => {
+    describe('that returns no records', () => {
+      const { search } = expectedNoRecords;
+
+      before(() => {
+        MarriageSearchPage.visit();
+        MarriageSearchPage.performSearch(search);
       });
-      it('new search has empty values', () => {
-        DeathSearchPage.hasExpectedValues({ systemNumber: '', surname: '', forenames: '', dobd: { day: '', month: '', year: '' } });
+
+      it('returns a results page', () => {
+        MarriageResultsPage.shouldBeVisible();
+      });
+
+      it('displays an appropriate message', () => {
+        MarriageResultsPage.hasExpectedTitle(expectedNoRecords);
       });
     });
-    describe('When I select the "Edit search" button', () => {
+
+    describe('that returns 1 record', () => {
+      const { search, result } = expectedSingleRecord;
+
       before(() => {
-        DeathSearchPage.visit();
-        DeathSearchPage.performSearch(searchSingleRecord.search);
-        DeathDetailsPage.clickEditSearchButton();
+        MarriageSearchPage.visit();
+        MarriageSearchPage.performSearch(search);
       });
-      it('shows the search page', () => {
-        DeathSearchPage.shouldBeVisible();
+
+      it('redirects to a details page', () => {
+        MarriageDetailsPage.shouldBeVisible();
+        MarriageDetailsPage.hasExpectedTitle(result);
       });
-      it('has the correct form values', () => {
-        DeathSearchPage.hasExpectedValues(searchSingleRecord.search);
+    });
+
+    describe('that returns more than 1 record', () => {
+      const { search, results } = expectedMultipleRecords;
+
+      before(() => {
+        MarriageSearchPage.visit();
+        MarriageSearchPage.performSearch(search);
+      });
+
+      it('returns a results page', () => {
+        MarriageResultsPage.shouldBeVisible();
+      });
+
+      it('displays an appropriate message', () => {
+        MarriageResultsPage.hasExpectedTitle(expectedMultipleRecords);
+      });
+
+      it('displays a subset of each record in a list', () => {
+        MarriageResultsPage.hasExpectedResults(results);
+      });
+
+      it('contains a link back to the search screen', () => {
+        MarriageResultsPage.hasNewSearchButton();
+        MarriageResultsPage.hasEditSearchButton();
       });
     });
   });
+
   describe('submitting an invalid query', () => {
     describe('with all fields empty', () => {
       before(() => {
-        DeathSearchPage.visit();
-        DeathSearchPage.performSearch({ surname: '', forenames: '', dobd: { day: '', month: '', year: '' } });
-      });
-      it('displays appropriate error messages', () => {
-        DeathSearchPage.noSearchCriteria();
-      });
-    });
-  });
-  describe('with a system number', () => {
-    describe('of an invalid length', () => {
-      before(() => {
-        DeathSearchPage.visit();
-        DeathSearchPage.performSearch({ systemNumber: 12345678, surname: '', forenames: '', dobd: { day: '', month: '', year: '' } });
+        MarriageSearchPage.visit();
+        MarriageSearchPage.performSearch({});
       });
 
-      it('displays an error message, requests a 9 digit number and shows hint image', () => {
-        DeathSearchPage.invalidLengthSystemNumber();
+      it('displays an error message', () => {
+        MarriageSearchPage.hasErrorTitle();
+      });
+
+      it('requests a surname', () => {
+        MarriageSearchPage.hasErrorMessage('Please enter a surname');
+      });
+
+      it('requests a forename', () => {
+        MarriageSearchPage.hasErrorMessage('Please enter at least one forename');
+      });
+
+      it('requests a date of marriage', () => {
+        MarriageSearchPage.hasErrorMessage('Please enter a date of marriage');
       });
     });
-  });
-  describe('with a missing first name', () => {
-    before(() => {
-      DeathSearchPage.visit();
-      DeathSearchPage.performSearch({ surname: 'Surname', forenames: '', dobd: { day: '01', month: '10', year: '2010' } });
-    });
-    it('displays an error message, requests a forename', () => {
-      DeathSearchPage.noForenames();
-    });
-  });
-  describe('and a missing surname', () => {
-    before(() => {
-      DeathSearchPage.visit();
-      DeathSearchPage.performSearch({ surname: '', forenames: '', dobd: { day: '01', month: '10', year: '2010' } });
-    });
-    it('displays an error message, requests a surname, forename', () => {
-      DeathSearchPage.noSurname();
-    });
-  });
-  describe('with an invalid date of birth or death that has an', () => {
-    describe('invalid day', () => {
-      before(() => {
-        DeathSearchPage.visit();
-        DeathSearchPage.shouldBeVisible();
-        DeathSearchPage.performSearch({
-          surname: 'TEST', forenames: 'TEST', dobd: { day: 'XX', month: '10', year: '2010' }
+
+    describe('with a system number', () => {
+      describe('of an invalid length', () => {
+        before(() => {
+          MarriageSearchPage.visit();
+          MarriageSearchPage.performSearch({
+            systemNumber: '12345678'
+          });
+        });
+
+        it('displays an error message', () => {
+          MarriageSearchPage.hasErrorTitle();
+        });
+
+        it('requests a system number of the valid length', () => {
+          MarriageSearchPage.hasErrorMessage('The system number should be 9 digits');
+        });
+
+        it('shows the system number details hint', () => {
+          MarriageSearchPage.hasSystemNumberHint();
         });
       });
-      it('displays an error message, requests a valid dob and focuses on dob field', () => {
-        DeathSearchPage.invalidDay();
-      });
     });
-    describe('invalid month', () => {
+
+    describe('with a missing first name', () => {
       before(() => {
-        DeathSearchPage.visit();
-        DeathSearchPage.shouldBeVisible();
-        DeathSearchPage.performSearch({
-          surname: 'TEST', forenames: 'TEST', dobd: { day: '01', month: 'XX', year: '2010' }
+        MarriageSearchPage.visit();
+        MarriageSearchPage.performSearch({
+          surname: 'Surname',
+          day: 5,
+          month: 6,
+          year: 2010
         });
       });
-      it('displays an error message, requests a valid dob and focuses on dob field', () => {
-        DeathSearchPage.invalidMonth();
+
+      it('displays an error message', () => {
+        MarriageSearchPage.hasErrorTitle();
+      });
+
+      it('requests a forename', () => {
+        MarriageSearchPage.hasErrorMessage('Please enter at least one forename');
+      });
+
+      describe('and a missing surname', () => {
+        before(() => {
+          MarriageSearchPage.visit();
+          MarriageSearchPage.performSearch({
+            day: 5,
+            month: 6,
+            year: 2010
+          });
+        });
+
+        it('displays an error message', () => {
+          MarriageSearchPage.hasErrorTitle();
+        });
+
+        it('requests a surname', () => {
+          MarriageSearchPage.hasErrorMessage('Please enter a surname');
+        });
+
+        it('requests a forename', () => {
+          MarriageSearchPage.hasErrorMessage('Please enter at least one forename');
+        });
       });
     });
-    describe('invalid year', () => {
-      before(() => {
-        DeathSearchPage.visit();
-        DeathSearchPage.shouldBeVisible();
-        DeathSearchPage.performSearch({ surname: 'TEST', forenames: 'TEST', dobd: { day: '01', month: '01', year: 'XXXX' } });
+    describe('with an invalid date of marriage that has an', () => {
+      describe('invalid day', () => {
+        before(() => {
+          MarriageSearchPage.visit();
+          MarriageSearchPage.shouldBeVisible();
+          MarriageSearchPage.performSearch({
+            surname: 'TEST', forenames: 'TEST', day: 'XX', month: '10', year: '2010'
+          });
+        });
+        it('displays an error message, requests a valid dom', () => {
+          MarriageSearchPage.invalidDOMDay();
+        });
       });
-      it('displays an error message, requests a valid dob and focuses on dob field', () => {
-        DeathSearchPage.invalidYear();
+      describe('invalid month', () => {
+        before(() => {
+          MarriageSearchPage.visit();
+          MarriageSearchPage.shouldBeVisible();
+          MarriageSearchPage.performSearch({
+            surname: 'TEST', forenames: 'TEST', day: '01', month: 'XX', year: '2010'
+          });
+        });
+        it('displays an error message, requests a valid dom', () => {
+          MarriageSearchPage.invalidDOMMonth();
+        });
       });
-    });
-    describe('a date in the future', () => {
-      const dateToday = DateTime.now().plus({ days: 1 });
-      before(() => {
-        DeathSearchPage.visit();
-        DeathSearchPage.performSearch({ surname: 'McFly', forenames: 'Marty Jr', dobd: { day: dateToday.day, month: dateToday.month, year: dateToday.year } });
+      describe('invalid year', () => {
+        before(() => {
+          MarriageSearchPage.visit();
+          MarriageSearchPage.shouldBeVisible();
+          MarriageSearchPage.performSearch({
+            surname: 'TEST', forenames: 'TEST', day: '01', month: '01', year: 'XXXX'
+          });
+        });
+        it('displays an error message, requests a valid dom', () => {
+          MarriageSearchPage.invalidDOMYear();
+        });
       });
-      it('displays an error message, requests a past date and shows the dob hint', () => {
-        DeathSearchPage.dateInFuture();
+      describe('a date in the future', () => {
+        const dateToday = DateTime.now().plus({ days: 1 });
+        before(() => {
+          MarriageSearchPage.visit();
+          MarriageSearchPage.performSearch({
+            surname: 'McFly', forenames: 'Marty Jr',
+            day: dateToday.day, month: dateToday.month, year: dateToday.year
+          });
+        });
+        it('displays an error message, requests a past date and shows the dom hint', () => {
+          MarriageSearchPage.domInFuture();
+        });
       });
     });
   });

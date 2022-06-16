@@ -2,17 +2,17 @@
 
 const SearchPage = require('../SearchPage');
 
-class DeathSearchPage extends SearchPage {
+class MarriageSearchPage extends SearchPage {
 
   /**
-   * Navigate to death registration search page
+   * Navigate to marriage registration search page
    */
   static visit() {
-    cy.visit('/death');
+    cy.visit('/marriage');
   }
 
   /**
-   * Check death registrations search page is visible
+   * Check marriage registrations search page is visible
    */
   static shouldBeVisible() {
 
@@ -20,30 +20,44 @@ class DeathSearchPage extends SearchPage {
     cy.get('h1').contains('Applicant\'s details');
 
     // Has labels
-    cy.get('label[for=system-number]').contains('System number from death certificate');
+    cy.get('label[for=system-number]').contains('System number from marriage certificate');
     cy.get('label[for=surname]').contains('Surname');
     cy.get('label[for=forenames]').contains('Forename(s)');
-    cy.get('label[for=dobd-day]').contains('Day');
-    cy.get('label[for=dobd-month]').contains('Month');
-    cy.get('label[for=dobd-year]').contains('Year');
+    cy.get('label[for=dom-day]').contains('Day');
+    cy.get('label[for=dom-month]').contains('Month');
+    cy.get('label[for=dom-year]').contains('Year');
   }
 
   /**
-   * Perform a death registration search with the given params
+   * Perform a marriage registration search with the given params
    *
    * @param systemNumber
    * @param surname
    * @param forenames
-   * @param dobd
+   * @param dom
    */
-  static performSearch({ systemNumber, surname, forenames, dobd }) {
+  static performSearch({
+    systemNumber,
+    surname,
+    forenames,
+    day,
+    month,
+    year
+  }) {
     this.setText('#system-number', systemNumber);
     this.setText('#surname', surname);
     this.setText('#forenames', forenames);
-    this.setText('#dobd-day', dobd && dobd.day);
-    this.setText('#dobd-month', dobd && dobd.month);
-    this.setText('#dobd-year', dobd && dobd.year);
+    this.setText('#dom-day', day);
+    this.setText('#dom-month', month);
+    this.setText('#dom-year', year);
     this.submit();
+  }
+
+  /**
+   * Check the date of marriage hint is visible
+   */
+  static hasDateOfMarriageHint() {
+    cy.get('#dom-extended-hint').should('exist');
   }
 
   /**
@@ -52,70 +66,50 @@ class DeathSearchPage extends SearchPage {
    * @param systemNumber
    * @param surname
    * @param forenames
-   * @param dobd
+   * @param dom
    */
-  static hasExpectedValues({ systemNumber, surname, forenames, dobd }) {
+  static hasExpectedValues({
+    systemNumber,
+    surname,
+    forenames,
+  }) {
     cy.get('#system-number').should('have.value', systemNumber);
     cy.get('#surname').should('have.value', surname);
     cy.get('#forenames').should('have.value', forenames);
-    cy.get('#dobd-day').should('have.value', dobd.day);
-    cy.get('#dobd-month').should('have.value', dobd.month);
-    cy.get('#dobd-year').should('have.value', dobd.year);
+    cy.get('label[for=dom-day]').contains('Day');
+    cy.get('label[for=dom-month]').contains('Month');
+    cy.get('label[for=dom-year]').contains('Year');
   }
 
-  static noSearchCriteria() {
-    cy.get('.error-summary').contains('Fix the following error(s)');
-    cy.get('.govuk-error-summary__list > li').contains('Please enter a surname');
-    cy.get('.govuk-error-summary__list > li').contains('Please enter at least one forename');
-    cy.get('.govuk-error-summary__list > li').contains('Please enter a date of birth or death');
-  }
-
-  static noSystemNumber() {
-    cy.get('.error-summary').contains('Fix the following error(s)');
-    cy.get('.govuk-error-summary__list > li').contains('Please enter a number');
-    cy.get('#system-number-hint').should('exist');
-  }
-
-  static invalidLengthSystemNumber() {
-    cy.get('.error-summary').contains('Fix the following error(s)');
-    cy.get('.govuk-error-summary__list > li').contains('The system number should be 9 digits');
-    cy.get('#system-number-hint').should('exist');
-  }
-
-  static noForenames() {
-    cy.get('.error-summary').contains('Fix the following error(s)');
-    cy.get('.govuk-error-summary__list > li').contains('Please enter at least one forename');
-  }
-
-  static noSurname() {
-    cy.get('.error-summary').contains('Fix the following error(s)');
-    cy.get('.govuk-error-summary__list > li').contains('Please enter a surname');
-    cy.get('.govuk-error-summary__list > li').contains('Please enter at least one forename');
-  }
-
-  static invalidDay() {
+  static invalidDOMDay() {
     cy.get('.error-summary').contains('Fix the following error(s)');
     cy.get('.govuk-error-summary__list > li').contains('Enter a day using numbers only');
-    cy.get('#dobd-error.govuk-error-message').should('exist');
+    cy.get('#dom-error.govuk-error-message').should('exist');
   }
 
-  static invalidMonth() {
+  static invalidDOMMonth() {
     cy.get('.error-summary').contains('Fix the following error(s)');
     cy.get('.govuk-error-summary__list > li').contains('Enter a month using numbers only');
-    cy.get('#dobd-error.govuk-error-message').should('exist');
+    cy.get('#dom-error.govuk-error-message').should('exist');
   }
 
-  static invalidYear() {
+  static invalidDOMYear() {
     cy.get('.error-summary').contains('Fix the following error(s)');
     cy.get('.govuk-error-summary__list > li').contains('Enter a year using numbers only');
-    cy.get('#dobd-error.govuk-error-message').should('exist');
+    cy.get('#dom-error.govuk-error-message').should('exist');
   }
 
-  static dateInFuture() {
+  static domInFuture() {
     cy.get('.error-summary').contains('Fix the following error(s)');
-    cy.get('.govuk-error-summary__list > li').contains('Please enter a date of birth or death in the past');
-    cy.get('#dobd-error.govuk-error-message').should('exist');
+    cy.get('.govuk-error-summary__list > li').contains('Please enter a date of marriage in the past');
+    cy.get('#dom-error.govuk-error-message').should('exist');
+  }
+
+  static domBeforeRecordsBegan() {
+    cy.get('.error-summary').contains('Fix the following error(s)');
+    cy.get('.govuk-error-summary__list > li').contains('Please enter a date after our records began (1 July 2009)');
+    cy.get('#dom-error.govuk-error-message').should('exist');
   }
 }
 
-module.exports = DeathSearchPage;
+module.exports = MarriageSearchPage;
