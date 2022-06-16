@@ -1,0 +1,57 @@
+{% extends "results-template.njk" %}
+
+{% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+{% from "components/lev-flag.njk" import levFlag %}
+
+{% set hmpoPageKey = "partnership.resultsPage" %}
+{% set govukServiceNameKey = translate("pages.partnership.serviceName") %}
+{% set govukServiceUrl = "/partnership" %}
+
+{% set hmpoTitle -%}
+    {{- "No" if results.length === 0 else results.length }} records found for {{ values['system-number']}} {{ values.forenames }} {{ values.surname }} {{ values.dop | date("DD/MM/YYYY")}}
+{%- endset %}
+
+{% block mainContent %}
+    {{ super() }}
+
+    <ul id="records">
+        {% for record in results %}
+        <li>
+            <article>
+                {% set rowsArray = [] %}
+                {% set rowsArray = (rowsArray.push([
+                    {
+                        html: "<a href=\"/partnership/details/" + record.id + "\">" + record.partner1.forenames + " " + record.partner1.surname + " & " + record.partner2.forenames + " " + record.partner2.surname + "</a>",
+                        colspan: 2
+                    }
+                ],[
+                    { text: "Date of civil partnership" },
+                    { text: record.dateOfPartnership | date("DD/MM/YYYY")}
+                ],[
+                    { text: "Place of civil partnership" },
+                    { text: record.placeOfPartnership.short }
+                ]), rowsArray) %}
+
+                {{ govukTable({
+                    classes: "results",
+                    firstCellIsHeader: true,
+                    rows: rowsArray
+                }) }}
+
+                {% if record.flags.refer %}
+                    {{ levFlag(ctx, {key: "refer", type: "alert"}) }}
+                {% endif %}
+                {% if record.nextRegistration %}
+                    {{ levFlag(ctx, {key: "replaced", type: "warning"}) }}
+                {% endif %}
+            </article>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <div class="govuk-button-group">
+        {{ hmpoSubmit(ctx, {id: "newSearch", key: "newSearch", href: "/partnership"}) }}
+        {{ hmpoSubmit(ctx, {id: "editSearch", key: "editSearch", href: "/partnership/search", classes: "blue"}) }}
+    </div>
+{% endblock %}
