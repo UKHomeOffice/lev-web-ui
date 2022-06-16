@@ -4,7 +4,9 @@ const search = {
   systemNumber: '',
   forenames: 'Winston',
   surname: 'Churchil',
-  dom: '30/11/2011'
+  day: '30',
+  month: '11',
+  year: '2011'
 };
 
 module.exports = {

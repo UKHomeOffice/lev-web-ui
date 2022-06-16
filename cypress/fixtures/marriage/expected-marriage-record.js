@@ -4,7 +4,9 @@ const search = {
   systemNumber: '',
   forenames: 'Tester',
   surname: 'SOLO',
-  dom: '29/02/2012',
+  day: '29',
+  month: '02',
+  year: '2012'
 };
 
 // Used for test where only one record should be returned
