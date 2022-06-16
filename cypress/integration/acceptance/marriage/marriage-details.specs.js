@@ -1,151 +1,194 @@
 'use strict';
 
-const searchSingleRecord = require('../../../fixtures/death/expected-death-record');
-const searchMultipleRecords = require('../../../fixtures/death/expected-death-records');
+const expectedSingleRecord = require('../../../fixtures/marriage/expected-marriage-record');
+const expectedMultipleRecords = require('../../../fixtures/marriage/expected-marriage-records');
 const LoginPage = require('../../../pages/LoginPage');
-const DeathDetailsPage = require('../../../pages/death/DeathDetailsPage');
-const DeathResultsPage = require('../../../pages/death/DeathResultsPage');
-const DeathSearchPage = require('../../../pages/death/DeathSearchPage');
+const MarriageDetailsPage = require('../../../pages/marriage/MarriageDetailsPage');
+const MarriageResultsPage = require('../../../pages/marriage/MarriageResultsPage');
+const MarriageSearchPage = require('../../../pages/marriage/MarriageSearchPage');
 
-describe('Death details', () => {
+describe('Marriage details page', () => {
   before(() => {
     LoginPage.login();
   });
 
-  describe('When I perform a search that returns a single record', () => {
+  describe('When there is one result', () => {
+    const { search, result } = expectedSingleRecord;
+
     before(() => {
-      DeathSearchPage.visit();
-      DeathSearchPage.performSearch(searchSingleRecord.search);
+      MarriageSearchPage.visit();
+      MarriageSearchPage.performSearch(search);
     });
 
-    it('a details page should be displayed', () => {
-      DeathDetailsPage.shouldBeVisible();
-      DeathDetailsPage.hasExpectedTitle(searchSingleRecord.result);
-      DeathDetailsPage.hasLimitedRecord(searchSingleRecord.result);
-      DeathDetailsPage.newSearchButtonExists();
-      DeathDetailsPage.editSearchButtonExists();
-      DeathDetailsPage.backToResultsButtonNotExists();
+    it('returns a details page', () => {
+      MarriageDetailsPage.shouldBeVisible();
     });
+
+    it('an appropriate message is displayed', () => {
+      MarriageDetailsPage.hasExpectedTitle(result);
+    });
+
+    it('a limited version is displayed in a table', () => {
+      MarriageDetailsPage.hasLimitedRecord(result);
+    });
+
+    it('contains a link back to the search screen', () => {
+      MarriageResultsPage.hasEditSearchButton();
+    });
+
+    it('does not contain a link back to the search results screen', () => {
+      MarriageResultsPage.backToSearchResultsNotDisplayed();
+    });
+
+    if (!Cypress.env('e2e')) {
+      describe('which shows the full details to select users', () => {
+        before(() => {
+          MarriageDetailsPage.visitWithFullDetails(search, result);
+        });
+
+        it('returns a details page', () => {
+          MarriageDetailsPage.shouldBeVisible();
+        });
+
+        it('an appropriate message is displayed', () => {
+          MarriageDetailsPage.hasExpectedTitle(result);
+        });
+
+        it('the complete record is displayed in a table', () => {
+          MarriageDetailsPage.hasCompleteRecord(result);
+        });
+
+        it('contains a link back to the search screen', () => {
+          MarriageResultsPage.hasEditSearchButton();
+        });
+
+        it('does not contain a link back to the search results screen', () => {
+          MarriageResultsPage.backToSearchResultsNotDisplayed();
+        });
+      });
+    }
   });
 
-  describe('When I perform a search that returns multiple records and I select the first record', () => {
+  describe('When I select the "New search" button', () => {
+    const { search } = expectedSingleRecord;
+
     before(() => {
-      DeathSearchPage.visit();
-      DeathSearchPage.performSearch(searchMultipleRecords.search);
-      DeathResultsPage.clickFirstRecord();
+      MarriageSearchPage.visit();
+      MarriageSearchPage.performSearch(search);
+      MarriageDetailsPage.shouldBeVisible();
+      MarriageDetailsPage.clickNewSearchButton();
     });
 
-    it('a details page should be displayed', () => {
-      DeathDetailsPage.shouldBeVisible();
-      DeathDetailsPage.hasExpectedTitle(searchMultipleRecords.results[0]);
-      DeathDetailsPage.hasLimitedRecord(searchMultipleRecords.results[0]);
-      DeathDetailsPage.newSearchButtonExists();
-      DeathDetailsPage.editSearchButtonExists();
-      DeathDetailsPage.backToResultsButtonExists();
+    it('returns me to the search page', () => {
+      MarriageSearchPage.shouldBeVisible();
     });
 
-    describe('When I click the "Back to results" button', () => {
-      before(() => {
-        DeathSearchPage.visit();
-        DeathSearchPage.performSearch(searchMultipleRecords.search);
-        DeathResultsPage.clickFirstRecord();
-        DeathDetailsPage.clickBackToResultsButton();
-      });
+    it('has empty form values', () => {
+      MarriageSearchPage.hasExpectedValues({
+        systemNumber: '',
+        surname: '',
+        forenames: '',
+        'dom-day': '',
+        'dom-month': '',
+        'dom-year': '',
 
-      it('it should display the results page', () => {
-        DeathResultsPage.shouldBeVisible();
-        DeathResultsPage.hasExpectedResults(searchMultipleRecords.results);
       });
     });
   });
 
-  describe('When I perform a search that returns flagged records', () => {
-    describe('and the record is blocked', () => {
-      const REFERRED = 'Refer to GRO.';
+  describe('When I select the "Edit search" link on the results page', () => {
+    const search = {
+      systemNumber: '',
+      surname: 'NotRealPersonSurname',
+      forenames: 'NotRealPersonForename',
+      day: 1,
+      month: 1,
+      year: 2010
+    };
 
-      before(() => {
-        DeathSearchPage.visit();
-        DeathSearchPage.performSearch({ systemNumber: 999999920 });
-      });
-
-      it(`should display the "${REFERRED}" flag`, () => {
-        DeathDetailsPage.shouldBeVisible();
-        DeathDetailsPage.hasExpectedFlags([REFERRED]);
-      });
-    });
-
-    describe('and the record is corrected', () => {
-      const CORRECTED = 'Registration has been updated to correct an error.';
-
-      before(() => {
-        DeathSearchPage.visit();
-        DeathSearchPage.performSearch({ systemNumber: 999999930 });
-      });
-
-      it(`should display the "${CORRECTED}" flag`, () => {
-        DeathDetailsPage.shouldBeVisible();
-        DeathDetailsPage.hasExpectedFlags([CORRECTED]);
-      });
-    });
-
-    describe('and the record has a next registration', () => {
-      const REPLACED = 'Original registration replaced by new registration.';
-
-      before(() => {
-        DeathSearchPage.visit();
-        DeathSearchPage.performSearch({ systemNumber: 999999960 });
-      });
-
-      it(`should display the "${REPLACED}" flag`, () => {
-        DeathDetailsPage.shouldBeVisible();
-        DeathDetailsPage.hasExpectedFlags([REPLACED]);
-      });
-    });
-
-    describe('and the record has a previous registration', () => {
-      const REREGISTRATION = 'This is a reregistration.';
-
-      before(() => {
-        DeathSearchPage.visit();
-        DeathSearchPage.performSearch({ systemNumber: 999999962 });
-      });
-
-      it(`should display the "${REREGISTRATION}" flag`, () => {
-        DeathDetailsPage.shouldBeVisible();
-        DeathDetailsPage.hasExpectedFlags([REREGISTRATION]);
-      });
-    });
-  });
-
-  describe('When I visit the death details page directly', () => {
     before(() => {
-      DeathDetailsPage.visit(searchSingleRecord.result.id);
+      MarriageSearchPage.visit();
+      MarriageSearchPage.performSearch(search);
+      MarriageResultsPage.shouldBeVisible();
+      MarriageResultsPage.clickEditSearchButton();
     });
 
-    it('a details page should be displayed', () => {
-      DeathDetailsPage.shouldBeVisible();
-      DeathDetailsPage.hasExpectedTitle(searchSingleRecord.result);
-      DeathDetailsPage.hasLimitedRecord(searchSingleRecord.result);
-      DeathDetailsPage.newSearchButtonExists();
-      DeathDetailsPage.editSearchButtonExists();
-      DeathDetailsPage.backToResultsButtonNotExists();
+    it('returns me to the search page', () => {
+      MarriageSearchPage.shouldBeVisible();
+    });
+
+    it('has the correct form values', () => {
+      MarriageSearchPage.hasExpectedValues(search);
     });
   });
 
-  if (!Cypress.env('e2e')) {
-    describe('When I visit the death details page directly with the "full-details" role', () => {
-      before(() => {
-        DeathDetailsPage.visitWithFullDetails(searchSingleRecord.result.id);
-      });
+  describe('When I select the "Edit search" link on the details page', () => {
+    const { search } = expectedSingleRecord;
 
-      it('a details page should be displayed', () => {
-        DeathDetailsPage.shouldBeVisible();
-        DeathDetailsPage.hasExpectedTitle(searchSingleRecord.result);
-        DeathDetailsPage.hasCompleteRecord(searchSingleRecord.result);
-        DeathDetailsPage.newSearchButtonExists();
-        DeathDetailsPage.editSearchButtonExists();
-        DeathDetailsPage.backToResultsButtonNotExists();
-      });
+    before(() => {
+      MarriageSearchPage.visit();
+      MarriageSearchPage.performSearch(search);
+      MarriageDetailsPage.shouldBeVisible();
+      MarriageDetailsPage.clickEditSearchButton();
     });
-  }
+
+    it('returns me to the search page', () => {
+      MarriageSearchPage.shouldBeVisible();
+    });
+
+    it('has the correct form values', () => {
+      MarriageSearchPage.hasExpectedValues(search);
+    });
+  });
+
+  describe('When I select the "Back to search results link on the details page"', () => {
+    const { search, results } = expectedMultipleRecords;
+
+    before(() => {
+      MarriageSearchPage.visit();
+      MarriageSearchPage.performSearch(search);
+      MarriageResultsPage.shouldBeVisible();
+      MarriageResultsPage.clickFirstRecord();
+      MarriageDetailsPage.shouldBeVisible();
+      MarriageDetailsPage.clickBackToResultsButton();
+    });
+
+    it('returns me to the results page', () => {
+      MarriageResultsPage.shouldBeVisible();
+    });
+
+    it('has the correct rows', () => {
+      MarriageResultsPage.hasExpectedTitle(expectedMultipleRecords);
+      MarriageResultsPage.hasExpectedResults(results);
+    });
+  });
+  //
+  //
+  // if (!Cypress.env('e2e')) {
+  //   describe('which shows the full details to select users', () => {
+  //     before(() => {
+  //       MarriageDetailsPage.visitWithFullDetails(search, result, true);
+  //     });
+  //
+  //     it('returns a details page', () => {
+  //       MarriageDetailsPage.shouldBeVisible();
+  //     });
+  //
+  //     it('an appropriate message is displayed', () => {
+  //       MarriageDetailsPage.hasExpectedTitle(result);
+  //     });
+  //
+  //     it('the complete record is displayed in a table', () => {
+  //       MarriageDetailsPage.hasCompleteRecord(result);
+  //     });
+  //
+  //     it('contains a link back to the search screen', () => {
+  //       MarriageResultsPage.hasEditSearchButton();
+  //     });
+  //
+  //     it('contains a link back to the search results screen', () => {
+  //       MarriageDetailsPage.backToSearchResultsLinkDisplayed();
+  //     });
+  //   });
+  // }
 });
