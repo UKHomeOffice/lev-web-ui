@@ -1,128 +1,118 @@
 'use strict';
 
-const searchMultipleRecords = require('../../../fixtures/death/expected-death-records');
+const searchMultipleRecords = require('../../../fixtures/marriage/expected-marriage-records');
 const LoginPage = require('../../../pages/LoginPage');
-const DeathSearchPage = require('../../../pages/death/DeathSearchPage');
-const DeathResultsPage = require('../../../pages/death/DeathResultsPage');
-const DeathDetailsPage = require('../../../pages/death/DeathDetailsPage');
+const MarriageSearchPage = require('../../../pages/marriage/MarriageSearchPage');
+const MarriageResultsPage = require('../../../pages/marriage/MarriageResultsPage');
+const MarriageDetailsPage = require('../../../pages/marriage/MarriageDetailsPage');
+const expectedMultipleRecords = require('../../../fixtures/marriage/expected-marriage-records');
 
-describe('Death results', () => {
+describe('Marriage results', () => {
   before(() => {
     LoginPage.login();
   });
 
   describe('When I perform a search that returns no records', () => {
     const searchNoRecords = {
-      search: { surname: 'InvalidRecord', forenames: 'Test', dobd: { day: '01', month: '01', year: '2011' } },
+      search: { surname: 'InvalidRecord', forenames: 'Test', day: '01', month: '01', year: '2011' },
       results: []
     };
 
     before(() => {
-      DeathSearchPage.visit();
-      DeathSearchPage.performSearch(searchNoRecords.search);
+      MarriageSearchPage.visit();
+      MarriageSearchPage.performSearch(searchNoRecords.search);
     });
 
     it('a results page should be displayed', () => {
-      DeathResultsPage.shouldBeVisible();
-      DeathResultsPage.hasExpectedTitle(searchNoRecords);
-      DeathResultsPage.newSearchButtonExists();
-      DeathResultsPage.editSearchButtonExists();
+      MarriageResultsPage.shouldBeVisible();
+      MarriageResultsPage.hasExpectedTitle(searchNoRecords);
+      MarriageResultsPage.newSearchButtonExists();
+      MarriageResultsPage.editSearchButtonExists();
+    });
+  });
+
+
+  describe('When there is more than one result', () => {
+    const { search, results } = expectedMultipleRecords;
+    const result = results[0];
+
+    before(() => {
+      MarriageSearchPage.visit();
+      MarriageSearchPage.performSearch(search);
+      MarriageResultsPage.shouldBeVisible();
+      MarriageResultsPage.clickFirstRecord();
+    });
+
+    it('returns a details page', () => {
+      MarriageDetailsPage.shouldBeVisible();
+    });
+
+    it('an appropriate message is displayed', () => {
+      MarriageDetailsPage.hasExpectedTitle(result);
+    });
+
+    it('a limited version is displayed in a table', () => {
+      MarriageDetailsPage.hasLimitedRecord(result);
+    });
+
+    it('contains a link back to the search screen', () => {
+      MarriageDetailsPage.hasEditSearchButton();
+    });
+
+    it('contains a link back to the search results screen', () => {
+      MarriageDetailsPage.backToSearchResultsLinkDisplayed();
     });
   });
 
   describe('When I perform a search that returns multiple records', () => {
     before(() => {
-      DeathSearchPage.visit();
-      DeathSearchPage.performSearch(searchMultipleRecords.search);
+      MarriageSearchPage.visit();
+      MarriageSearchPage.performSearch(searchMultipleRecords.search);
     });
 
     it('a results page should be displayed', () => {
-      DeathResultsPage.shouldBeVisible();
-      DeathResultsPage.hasExpectedTitle(searchMultipleRecords);
-      DeathResultsPage.hasExpectedResults(searchMultipleRecords.results);
-      DeathResultsPage.newSearchButtonExists();
-      DeathResultsPage.editSearchButtonExists();
+      MarriageResultsPage.shouldBeVisible();
+      MarriageResultsPage.hasExpectedTitle(searchMultipleRecords);
+      MarriageResultsPage.hasExpectedResults(searchMultipleRecords.results);
+      MarriageResultsPage.newSearchButtonExists();
+      MarriageResultsPage.editSearchButtonExists();
     });
 
     describe('When I select the first record on the results page', () => {
       before(() => {
-        DeathResultsPage.clickFirstRecord();
+        MarriageResultsPage.clickFirstRecord();
       });
 
       it('a details page should be displayed', () => {
-        DeathDetailsPage.shouldBeVisible();
-        DeathDetailsPage.hasExpectedTitle(searchMultipleRecords.results[0]);
-        DeathDetailsPage.hasLimitedRecord(searchMultipleRecords.results[0]);
+        MarriageDetailsPage.shouldBeVisible();
+        MarriageDetailsPage.hasExpectedTitle(searchMultipleRecords.results[0]);
+        MarriageDetailsPage.hasLimitedRecord(searchMultipleRecords.results[0]);
       });
     });
 
     describe('When I select the "New search" link on the results page', () => {
       before(() => {
-        DeathSearchPage.visit();
-        DeathSearchPage.performSearch(searchMultipleRecords.search);
-        DeathResultsPage.clickNewSearchButton();
+        MarriageSearchPage.visit();
+        MarriageSearchPage.performSearch(searchMultipleRecords.search);
+        MarriageResultsPage.clickNewSearchButton();
       });
 
       it('a search page should be displayed with no values', () => {
-        DeathSearchPage.shouldBeVisible();
-        DeathSearchPage.hasExpectedValues({ systemNumber: '', surname: '', forenames: '', dobd: { day: '', month: '', year: '' } });
+        MarriageSearchPage.shouldBeVisible();
+        MarriageSearchPage.hasExpectedValues({ systemNumber: '', surname: '', forenames: '', dobd: { day: '', month: '', year: '' } });
       });
     });
 
     describe('When I select the "Edit search" link on the results page', () => {
       before(() => {
-        DeathSearchPage.visit();
-        DeathSearchPage.performSearch(searchMultipleRecords.search);
-        DeathResultsPage.clickEditSearchButton();
+        MarriageSearchPage.visit();
+        MarriageSearchPage.performSearch(searchMultipleRecords.search);
+        MarriageResultsPage.clickEditSearchButton();
       });
 
       it('a search page should be displayed with the correct form values', () => {
-        DeathSearchPage.shouldBeVisible();
-        DeathSearchPage.hasExpectedValues(searchMultipleRecords.search);
-      });
-    });
-  });
-
-  describe('When I perform a search that returns flagged records', () => {
-    describe('and there are referred records', () => {
-      const REFERRED = 'Refer to GRO.';
-
-      before(() => {
-        DeathSearchPage.visit();
-        DeathSearchPage.performSearch({ surname: 'Marginal', forenames: 'Tester', dobd: { day: 29, month: 2, year: 1912 } });
-      });
-
-      it('a results page should be displayed', () => {
-        DeathResultsPage.shouldBeVisible();
-        DeathResultsPage.hasExpectedFlags([REFERRED, REFERRED, REFERRED]);
-      });
-    });
-
-    describe('and there are corrected records', () => {
-      const CORRECTED = 'Registration has been updated to correct an error.';
-
-      before(() => {
-        DeathSearchPage.visit();
-        DeathSearchPage.performSearch({ surname: 'Corrected', forenames: 'Tester', dobd: { day: 29, month: 2, year: 1912 } });
-      });
-
-      it('a results page should be displayed', () => {
-        DeathResultsPage.shouldBeVisible();
-        DeathResultsPage.hasExpectedFlags([CORRECTED, CORRECTED, CORRECTED]);
-      });
-    });
-
-    describe('and there are replaced records', () => {
-      const REPLACED = 'Original registration replaced by new registration.';
-
-      before(() => {
-        DeathSearchPage.visit();
-        DeathSearchPage.performSearch({ surname: 'Registration', forenames: 'Tester', dobd: { day: 29, month: 2, year: 1912 } });
-      });
-
-      it('a results page should be displayed', () => {
-        DeathResultsPage.shouldBeVisible();
-        DeathResultsPage.hasExpectedFlags([REPLACED, REPLACED]);
+        MarriageSearchPage.shouldBeVisible();
+        MarriageSearchPage.hasExpectedValues(searchMultipleRecords.search);
       });
     });
   });
