@@ -67,6 +67,34 @@ describe('Marriage details page', () => {
         });
       });
     }
+
+    if (!Cypress.env('e2e')) {
+      describe('which shows the full details to select users', () => {
+        before(() => {
+          MarriageDetailsPage.visitWithFullDetails(search, result, true);
+        });
+
+        it('returns a details page', () => {
+          MarriageDetailsPage.shouldBeVisible();
+        });
+
+        it('an appropriate message is displayed', () => {
+          MarriageDetailsPage.hasExpectedTitle(result);
+        });
+
+        it('the complete record is displayed in a table', () => {
+          MarriageDetailsPage.hasCompleteRecord(result);
+        });
+
+        it('contains a link back to the search screen', () => {
+          MarriageResultsPage.hasEditSearchButton();
+        });
+
+        it('contains a link back to the search results screen', () => {
+          MarriageDetailsPage.backToSearchResultsLinkDisplayed();
+        });
+      });
+    }
   });
 
   describe('When I select the "New search" button', () => {
@@ -162,33 +190,4 @@ describe('Marriage details page', () => {
       MarriageResultsPage.hasExpectedResults(results);
     });
   });
-  //
-  //
-  // if (!Cypress.env('e2e')) {
-  //   describe('which shows the full details to select users', () => {
-  //     before(() => {
-  //       MarriageDetailsPage.visitWithFullDetails(search, result, true);
-  //     });
-  //
-  //     it('returns a details page', () => {
-  //       MarriageDetailsPage.shouldBeVisible();
-  //     });
-  //
-  //     it('an appropriate message is displayed', () => {
-  //       MarriageDetailsPage.hasExpectedTitle(result);
-  //     });
-  //
-  //     it('the complete record is displayed in a table', () => {
-  //       MarriageDetailsPage.hasCompleteRecord(result);
-  //     });
-  //
-  //     it('contains a link back to the search screen', () => {
-  //       MarriageResultsPage.hasEditSearchButton();
-  //     });
-  //
-  //     it('contains a link back to the search results screen', () => {
-  //       MarriageDetailsPage.backToSearchResultsLinkDisplayed();
-  //     });
-  //   });
-  // }
 });
