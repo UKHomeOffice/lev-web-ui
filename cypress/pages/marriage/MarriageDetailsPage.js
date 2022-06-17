@@ -42,7 +42,7 @@ class MarriageDetailsPage extends DetailsPage {
     const rows = [
       `System number ${record.id}`,
       `Date of marriage ${record.dateOfMarriage}`,
-      `Place of marriage ${record.placeOfMarriage.address}`,
+      `Place of marriage ${record.placeOfMarriage.address} ${record.placeOfMarriage.parish}`,
 
       'Partner 1',
       `Surname ${groom.surname}`,
@@ -70,7 +70,7 @@ class MarriageDetailsPage extends DetailsPage {
     const rows = [
       `System number ${record.id}`,
       `Date of marriage ${record.dateOfMarriage}`,
-      `Place of marriage ${record.placeOfMarriage.address}`,
+      `Place of marriage ${record.placeOfMarriage.address} ${record.placeOfMarriage.parish}`,
 
       'Partner 1',
       `Surname ${groom.surname}`,

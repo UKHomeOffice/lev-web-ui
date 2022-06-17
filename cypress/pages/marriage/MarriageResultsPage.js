@@ -19,7 +19,7 @@ class MarriageResultsPage extends ResultsPage {
    */
   static hasExpectedTitle(expected) {
     const { search, results } = expected;
-    const title = `${results.length === 0 ? 'No' : results.length} records found for ${search.forenames} ${search.surname} ${search.day}/${search.month}/${search.year}`;
+    const title = `${results.length === 0 ? 'No' : results.length} records found for ${search.forenames} ${search.surname} ${search.dom.day}/${search.dom.month}/${search.dom.year}`;
 
     cy.get('h1').contains(title);
   }

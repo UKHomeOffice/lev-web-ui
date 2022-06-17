@@ -4,9 +4,11 @@ const search = {
   systemNumber: '',
   forenames: 'Tester',
   surname: 'MULTIPLE',
-  day: '29',
-  month: '02',
-  year: '2012'
+  dom: {
+    day: '29',
+    month: '02',
+    year: '2012'
+  }
 };
 
 // Used for tests where multiple records are returned
@@ -17,6 +19,7 @@ const result1 = {
   dateOfMarriage: '29/02/2012',
   placeOfMarriage: {
     address: 'Test place',
+    parish: '',
     short: 'Test place'
   },
   registrar: {

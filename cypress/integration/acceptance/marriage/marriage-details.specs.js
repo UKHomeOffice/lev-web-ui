@@ -88,10 +88,11 @@ describe('Marriage details page', () => {
         systemNumber: '',
         surname: '',
         forenames: '',
-        'dom-day': '',
-        'dom-month': '',
-        'dom-year': '',
-
+        dom: {
+          day: '',
+          month: '',
+          year: ''
+        }
       });
     });
   });
@@ -101,9 +102,11 @@ describe('Marriage details page', () => {
       systemNumber: '',
       surname: 'NotRealPersonSurname',
       forenames: 'NotRealPersonForename',
-      day: 1,
-      month: 1,
-      year: 2010
+      dom: {
+        day: '01',
+        month: '01',
+        year: '2010'
+      }
     };
 
     before(() => {

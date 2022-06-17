@@ -40,24 +40,15 @@ class MarriageSearchPage extends SearchPage {
     systemNumber,
     surname,
     forenames,
-    day,
-    month,
-    year
+    dom
   }) {
     this.setText('#system-number', systemNumber);
     this.setText('#surname', surname);
     this.setText('#forenames', forenames);
-    this.setText('#dom-day', day);
-    this.setText('#dom-month', month);
-    this.setText('#dom-year', year);
+    this.setText('#dom-day', dom && dom.day);
+    this.setText('#dom-month', dom && dom.month);
+    this.setText('#dom-year', dom && dom.year);
     this.submit();
-  }
-
-  /**
-   * Check the date of marriage hint is visible
-   */
-  static hasDateOfMarriageHint() {
-    cy.get('#dom-extended-hint').should('exist');
   }
 
   /**
@@ -72,13 +63,14 @@ class MarriageSearchPage extends SearchPage {
     systemNumber,
     surname,
     forenames,
+    dom
   }) {
     cy.get('#system-number').should('have.value', systemNumber);
     cy.get('#surname').should('have.value', surname);
     cy.get('#forenames').should('have.value', forenames);
-    cy.get('label[for=dom-day]').contains('Day');
-    cy.get('label[for=dom-month]').contains('Month');
-    cy.get('label[for=dom-year]').contains('Year');
+    cy.get('#dom-day').should('have.value', dom.day);
+    cy.get('#dom-month').should('have.value', dom.month);
+    cy.get('#dom-year').should('have.value', dom.year);
   }
 
   static invalidDOMDay() {

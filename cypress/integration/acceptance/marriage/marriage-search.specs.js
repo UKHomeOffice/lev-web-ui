@@ -130,9 +130,11 @@ describe('Marriage search', () => {
         MarriageSearchPage.visit();
         MarriageSearchPage.performSearch({
           surname: 'Surname',
-          day: 5,
-          month: 6,
-          year: 2010
+          dom: {
+            day: '5',
+            month: '6',
+            year: '2010'
+          }
         });
       });
 
@@ -148,9 +150,11 @@ describe('Marriage search', () => {
         before(() => {
           MarriageSearchPage.visit();
           MarriageSearchPage.performSearch({
-            day: 5,
-            month: 6,
-            year: 2010
+            dom: {
+              day: '5',
+              month: '6',
+              year: '2010'
+            }
           });
         });
 
@@ -173,7 +177,7 @@ describe('Marriage search', () => {
           MarriageSearchPage.visit();
           MarriageSearchPage.shouldBeVisible();
           MarriageSearchPage.performSearch({
-            surname: 'TEST', forenames: 'TEST', day: 'XX', month: '10', year: '2010'
+            surname: 'TEST', forenames: 'TEST', dom: { day: 'XX', month: '10', year: '2010' }
           });
         });
         it('displays an error message, requests a valid dom', () => {
@@ -185,7 +189,7 @@ describe('Marriage search', () => {
           MarriageSearchPage.visit();
           MarriageSearchPage.shouldBeVisible();
           MarriageSearchPage.performSearch({
-            surname: 'TEST', forenames: 'TEST', day: '01', month: 'XX', year: '2010'
+            surname: 'TEST', forenames: 'TEST', dom: { day: '01', month: 'XX', year: '2010' }
           });
         });
         it('displays an error message, requests a valid dom', () => {
@@ -197,7 +201,7 @@ describe('Marriage search', () => {
           MarriageSearchPage.visit();
           MarriageSearchPage.shouldBeVisible();
           MarriageSearchPage.performSearch({
-            surname: 'TEST', forenames: 'TEST', day: '01', month: '01', year: 'XXXX'
+            surname: 'TEST', forenames: 'TEST', dom: { day: '01', month: '01', year: 'XXXX' }
           });
         });
         it('displays an error message, requests a valid dom', () => {
@@ -210,7 +214,7 @@ describe('Marriage search', () => {
           MarriageSearchPage.visit();
           MarriageSearchPage.performSearch({
             surname: 'McFly', forenames: 'Marty Jr',
-            day: dateToday.day, month: dateToday.month, year: dateToday.year
+            dom: { day: dateToday.day, month: dateToday.month, year: dateToday.year }
           });
         });
         it('displays an error message, requests a past date and shows the dom hint', () => {

@@ -14,7 +14,7 @@ describe('Marriage results', () => {
 
   describe('When I perform a search that returns no records', () => {
     const searchNoRecords = {
-      search: { surname: 'InvalidRecord', forenames: 'Test', day: '01', month: '01', year: '2011' },
+      search: { surname: 'InvalidRecord', forenames: 'Test', dom: { day: '01', month: '01', year: '2011' }},
       results: []
     };
 
@@ -99,7 +99,7 @@ describe('Marriage results', () => {
 
       it('a search page should be displayed with no values', () => {
         MarriageSearchPage.shouldBeVisible();
-        MarriageSearchPage.hasExpectedValues({ systemNumber: '', surname: '', forenames: '', dobd: { day: '', month: '', year: '' } });
+        MarriageSearchPage.hasExpectedValues({ systemNumber: '', surname: '', forenames: '', dom: { day: '', month: '', year: '' } });
       });
     });
 

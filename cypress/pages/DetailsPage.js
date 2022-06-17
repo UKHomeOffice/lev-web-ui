@@ -37,7 +37,7 @@ class DetailsPage extends BackToSearchPage {
    * @param rows
    */
   static hasExpectedRows(rows) {
-    cy.get('table.details').each((element, index) => {
+    cy.get('table.details tr').each((element, index) => {
       cy.wrap(element).contains(rows[index]);
     });
   }
