@@ -1,0 +1,22 @@
+{% extends "app-template.njk" %}
+
+{% from "hmpo-field/macro.njk" import hmpoField %}
+{% from "hmpo-form/macro.njk" import hmpoForm %}
+{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+{% from "components/lev-system-number.njk" import levSystemNumber %}
+
+{% set hmpoPageKey = "partnership.searchPage" %}
+{% set govukServiceNameKey = translate("pages.partnership.serviceName") %}
+{% set govukServiceUrl = "/partnership" %}
+
+{% block mainContent %}
+    {{ super() }}
+
+    {% call hmpoForm(ctx) %}
+        {{ levSystemNumber(ctx, "system-number", "partnership-system-number-hint") }}
+        {{ hmpoField(ctx, "surname") }}
+        {{ hmpoField(ctx, "forenames") }}
+        {{ hmpoField(ctx, "dop") }}
+        {{ hmpoSubmit(ctx, {id: "search", key: "search"}) }}
+    {% endcall %}
+{% endblock %}

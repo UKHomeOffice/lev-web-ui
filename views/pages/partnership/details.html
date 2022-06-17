@@ -4,9 +4,9 @@
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
 {% from "components/lev-flag.njk" import levFlag %}
 
-{% set hmpoPageKey = "marriage.detailsPage" %}
-{% set govukServiceNameKey = translate("pages.marriage.serviceName") %}
-{% set govukServiceUrl = "/marriage" %}
+{% set hmpoPageKey = "partnership.detailsPage" %}
+{% set govukServiceNameKey = translate("pages.partnership.serviceName") %}
+{% set govukServiceUrl = "/partnership" %}
 {% set rowsArray = [] %}
 
 {% macro redact(value) %}
@@ -14,7 +14,7 @@
 {% endmacro %}
 
 {% set hmpoTitle -%}
-    {{ redact(record.bride.forenames) }} {{ redact(record.bride.surname) }} & {{ redact(record.groom.forenames) }} {{ redact(record.groom.surname) }}
+    {{ redact(record.partner2.forenames) }} {{ redact(record.partner2.surname) }} & {{ redact(record.partner1.forenames) }} {{ redact(record.partner1.surname) }}
 {%- endset %}
 
 {% macro partner(title, partner) %}
@@ -30,8 +30,8 @@
     ]), rowsArray) %}
     {% if showFullDetails %}
         {% set rowsArray = (rowsArray.push([
-            { text: "Age" },
-            { text: redact(partner.age) }
+            { text: "Date of birth" },
+            { text: redact(partner.dob | date('DD/MM/YYYY')) }
         ],[
             { text: "Occupation" },
             { html: redact(occupation(partner)) }
@@ -74,18 +74,12 @@
 {% endmacro %}
 
 {% macro witness(title, witness) %}
-    {% if witness.signature %}
-        {% set rowsArray = (rowsArray.push([
-            { text: title, colspan: 2, classes: "section-head" }
-        ],[
-            { text: "Signature" },
-            { html: redact(witness.signature) }
-        ]), rowsArray) %}
-    {% endif %}
-{% endmacro %}
-
-{% macro placeOfMarriage() %}
-    {{ record.placeOfMarriage.address }} {{ "in the parish of " + record.placeOfMarriage.parish if record.placeOfMarriage.parish }}
+    {% set rowsArray = (rowsArray.push([
+        { text: title, colspan: 2, classes: "section-head" }
+    ],[
+        { text: "Signature" },
+        { html: redact(witness.forename + " " + witness.surname) }
+    ]), rowsArray) %}
 {% endmacro %}
 
 {% macro occupation(person) %}
@@ -105,14 +99,14 @@
     {% if record.previousRegistration %}
         {{ levFlag(ctx, {
             key: "reRegistrationLabel",
-            html: hmpoSubmit(ctx, {key: "reRegistrationLink", href: "/marriage/details/" + record.previousRegistration.id})
+            html: hmpoSubmit(ctx, {key: "reRegistrationLink", href: "/partnership/details/" + record.previousRegistration.id})
         }) }}
     {% endif %}
     {% if record.nextRegistration %}
         {{ levFlag(ctx, {
             key: "replaced",
             type: "warning",
-            html: hmpoSubmit(ctx, {key: "reRegisteredLink", href: "/marriage/details/" + record.nextRegistration.id})
+            html: hmpoSubmit(ctx, {key: "reRegisteredLink", href: "/partnership/details/" + record.nextRegistration.id})
         }) }}
     {% endif %}
 
@@ -120,59 +114,28 @@
         { text: "System number" },
         { text: record.id }
     ],[
-        { text: "Date of marriage" },
-        { text: redact(record.dateOfMarriage | date("DD/MM/YYYY")) }
+        { text: "Date of civil partnership" },
+        { text: redact(record.dateOfPartnership | date("DD/MM/YYYY")) }
     ],[
-        { text: "Place of marriage" },
-        { html: redact(placeOfMarriage()) }
+        { text: "Place of civil partnership" },
+        { html: redact(record.placeOfPartnership.address) }
     ]), rowsArray) %}
-    {{ partner('Partner 1', record.groom) }}
-    {{ partner('Partner 2', record.bride) }}
+    {{ partner('Partner 1', record.partner1) }}
+    {{ partner('Partner 2', record.partner2) }}
     {% if showFullDetails %}
-        {{ parent('Father of partner 1', record.fatherOfGroom) }}
-        {{ parent('Father of partner 2', record.fatherOfBride) }}
+        {{ parent('Father of partner 1', record.fatherOfPartner1) }}
+        {{ parent('Mother of partner 1', record.motherOfPartner1) }}
+        {{ parent('Father of partner 2', record.fatherOfPartner2) }}
+        {{ parent('Mother of partner 2', record.motherOfPartner2) }}
         {{ witness('First witness', record.witness1) }}
         {{ witness('Second witness', record.witness2) }}
-        {{ witness('Third witness', record.witness3) }}
-        {{ witness('Fourth witness', record.witness4) }}
-        {{ witness('Fifth witness', record.witness5) }}
-        {{ witness('Sixth witness', record.witness6) }}
-        {{ witness('Seventh witness', record.witness7) }}
-        {{ witness('Eighth witness', record.witness8) }}
-        {{ witness('Ninth witness', record.witness9) }}
-        {{ witness('Tenth witness', record.witness10) }}
-        {{ witness('Eleventh witness', record.witness11) }}
-        {{ witness('Twelfth witness', record.witness12) }}
     {% endif %}
-    {% set rowsArray = (rowsArray.push([
-        { text: "Registration", colspan: 2, classes: "section-head" }
-    ]), rowsArray) %}
     {% if showFullDetails %}
         {% set rowsArray = (rowsArray.push([
+            { text: "Registration", colspan: 2, classes: "section-head" }
+        ],[
             { text: "Registrar signature" },
             { text: redact(record.registrar.signature) }
-        ],[
-            { text: "Registrar designation" },
-            { html: redact(record.registrar.designation) }
-        ],[
-            { text: "Superintendent registrar signature" },
-            { html: redact(record.registrar.superintendentSignature) }
-        ],[
-            { text: "Superintendent registrar designation" },
-            { html: redact(record.registrar.superintendentDesignation) }
-        ]), rowsArray) %}
-    {% endif %}
-    {% set rowsArray = (rowsArray.push([
-        { text: "District" },
-        { html: redact(record.registrar.district) }
-    ],[
-        { text: "Administrative area" },
-        { html: redact(record.registrar.administrativeArea) }
-    ]), rowsArray) %}
-    {% if showFullDetails %}
-        {% set rowsArray = (rowsArray.push([
-            { text: "Entry number" },
-            { text: redact(record.entryNumber) }
         ]), rowsArray) %}
     {% endif %}
 
@@ -183,13 +146,13 @@
     }) }}
 
     <div class="govuk-button-group">
-        {{ hmpoSubmit(ctx, {id: "newSearch", key: "newSearch", href: "/marriage"}) }}
-        {{ hmpoSubmit(ctx, {id: "editSearch", key: "editSearch", href: "/marriage/search", classes: "blue"}) }}
+        {{ hmpoSubmit(ctx, {id: "newSearch", key: "newSearch", href: "/partnership"}) }}
+        {{ hmpoSubmit(ctx, {id: "editSearch", key: "editSearch", href: "/partnership/search", classes: "blue"}) }}
         {% if showBackToResults %}
             {{ hmpoSubmit(ctx, {
                 id: "backToResults",
                 key: "backToResults",
-                href: "/marriage/results",
+                href: "/partnership/results",
                 classes: "grey"
             }) }}
         {% endif %}
