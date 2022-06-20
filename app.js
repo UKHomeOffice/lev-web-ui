@@ -5,6 +5,7 @@ const { options } = require('./config');
 const birthRoute = require('./routes/birth');
 const deathRoute = require('./routes/death');
 const marriageRoute = require('./routes/marriage');
+const partnershipRoute = require('./routes/partnership');
 
 const { router } = setup(options);
 
@@ -12,4 +13,5 @@ const { router } = setup(options);
 router.use('/birth', birthRoute);
 router.use('/death', deathRoute);
 router.use('/marriage', marriageRoute);
+router.use('/partnership', partnershipRoute);
 router.use('/', (req, res) => res.redirect('/birth'));

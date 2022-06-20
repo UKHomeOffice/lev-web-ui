@@ -46,7 +46,14 @@
     },
     "marriage-system-number-hint": {
       "summaryText": "What is the system number?",
-      "html": "<img src=\"/public/images/system-number-hint.png\" alt=\"The system number is a nine digit number located in the bottom left corner of the marriage certificate\" title=\"Where to find the system number on a death certificate\"/>"
+      "html": "<img src=\"/public/images/system-number-hint.png\" alt=\"The system number is a nine digit number located in the bottom left corner of the marriage certificate\" title=\"Where to find the system number on a marriage certificate\"/>"
+    },
+    "partnership-system-number": {
+      "label": "System number from civil partnership certificate"
+    },
+    "partnership-system-number-hint": {
+      "summaryText": "What is the system number?",
+      "html": "<img src=\"/public/images/system-number-hint.png\" alt=\"The system number is a nine digit number located in the bottom left corner of the civil partnership certificate\" title=\"Where to find the system number on a civil partnership certificate\"/>"
     },
     "surname": {
       "label": "Surname"
@@ -62,6 +69,9 @@
     },
     "dom": {
       "label": "Date of marriage"
+    },
+    "dop": {
+      "label": "Date of civil partnership"
     },
     "date-day": {
       "label": "Day"
@@ -92,6 +102,12 @@
         "title": "Applicant's details"
       }
     },
+    "partnership": {
+      "serviceName": "Civil partnership record check",
+      "searchPage": {
+        "title": "Applicant's details"
+      }
+    },
     "error": {
       "title": "Error"
     },
@@ -112,6 +128,10 @@
       "exactlength": "The system number should be 9 digits"
     },
     "marriage-system-number": {
+      "numeric": "Please enter a number",
+      "exactlength": "The system number should be 9 digits"
+    },
+    "partnership-system-number": {
       "numeric": "Please enter a number",
       "exactlength": "The system number should be 9 digits"
     },
@@ -172,6 +192,24 @@
       "numeric-day": "Enter a day using numbers only",
 
       "before": "Please enter a {{name}} in the past"
+    },
+    "dop": {
+      "required": "Please enter a {{name}}",
+      "required-day": "Enter a complete {{name}}",
+      "required-month": "Enter a complete {{name}}",
+      "required-year": "Enter a complete {{name}}",
+
+      "date": "Enter a complete {{name}}",
+      "date-year": "Enter a valid year",
+      "date-month": "Enter a valid month",
+      "date-day": "Enter a valid day",
+
+      "numeric-year": "Enter a year using numbers only",
+      "numeric-month": "Enter a month using numbers only",
+      "numeric-day": "Enter a day using numbers only",
+
+      "before": "Please enter a {{name}} in the past",
+      "after": "Please enter a date after our records began (1 December 2005)"
     }
   },
   "footer": "Your feedback will help us improve this service. Email us <a href=\"mailto:ITnowServiceDesk@homeoffice.gov.uk?subject=LEV%20Feedback\">ITnowServiceDesk@homeoffice.gov.uk</a>"
