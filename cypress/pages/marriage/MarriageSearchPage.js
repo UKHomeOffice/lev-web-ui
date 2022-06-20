@@ -96,12 +96,6 @@ class MarriageSearchPage extends SearchPage {
     cy.get('.govuk-error-summary__list > li').contains('Please enter a date of marriage in the past');
     cy.get('#dom-error.govuk-error-message').should('exist');
   }
-
-  static domBeforeRecordsBegan() {
-    cy.get('.error-summary').contains('Fix the following error(s)');
-    cy.get('.govuk-error-summary__list > li').contains('Please enter a date after our records began (1 July 2009)');
-    cy.get('#dom-error.govuk-error-message').should('exist');
-  }
 }
 
 module.exports = MarriageSearchPage;
