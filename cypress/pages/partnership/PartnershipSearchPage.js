@@ -2,17 +2,17 @@
 
 const SearchPage = require('../SearchPage');
 
-class MarriageSearchPage extends SearchPage {
+class PartnershipSearchPage extends SearchPage {
 
   /**
-   * Navigate to marriage registration search page
+   * Navigate to civil partnership registration search page
    */
   static visit() {
-    cy.visit('/marriage');
+    cy.visit('/partnership');
   }
 
   /**
-   * Check marriage registrations search page is visible
+   * Check civil partnership registrations search page is visible
    */
   static shouldBeVisible() {
 
@@ -20,34 +20,34 @@ class MarriageSearchPage extends SearchPage {
     cy.get('h1').contains('Applicant\'s details');
 
     // Has labels
-    cy.get('label[for=system-number]').contains('System number from marriage certificate');
+    cy.get('label[for=system-number]').contains('System number from civil partnership certificate');
     cy.get('label[for=surname]').contains('Surname');
     cy.get('label[for=forenames]').contains('Forename(s)');
-    cy.get('label[for=dom-day]').contains('Day');
-    cy.get('label[for=dom-month]').contains('Month');
-    cy.get('label[for=dom-year]').contains('Year');
+    cy.get('label[for=dop-day]').contains('Day');
+    cy.get('label[for=dop-month]').contains('Month');
+    cy.get('label[for=dop-year]').contains('Year');
   }
 
   /**
-   * Perform a marriage registration search with the given params
+   * Perform a civil partnership registration search with the given params
    *
    * @param systemNumber
    * @param surname
    * @param forenames
-   * @param dom
+   * @param dop
    */
   static performSearch({
     systemNumber,
     surname,
     forenames,
-    dom
+    dop
   }) {
     this.setText('#system-number', systemNumber);
     this.setText('#surname', surname);
     this.setText('#forenames', forenames);
-    this.setText('#dom-day', dom && dom.day);
-    this.setText('#dom-month', dom && dom.month);
-    this.setText('#dom-year', dom && dom.year);
+    this.setText('#dop-day', dop && dop.day);
+    this.setText('#dop-month', dop && dop.month);
+    this.setText('#dop-year', dop && dop.year);
     this.submit();
   }
 
@@ -57,45 +57,45 @@ class MarriageSearchPage extends SearchPage {
    * @param systemNumber
    * @param surname
    * @param forenames
-   * @param dom
+   * @param dop
    */
   static hasExpectedValues({
     systemNumber,
     surname,
     forenames,
-    dom
+    dop
   }) {
     cy.get('#system-number').should('have.value', systemNumber);
     cy.get('#surname').should('have.value', surname);
     cy.get('#forenames').should('have.value', forenames);
-    cy.get('#dom-day').should('have.value', dom.day);
-    cy.get('#dom-month').should('have.value', dom.month);
-    cy.get('#dom-year').should('have.value', dom.year);
+    cy.get('#dop-day').should('have.value', dop.day);
+    cy.get('#dop-month').should('have.value', dop.month);
+    cy.get('#dop-year').should('have.value', dop.year);
   }
 
-  static invalidDOMDay() {
+  static invalidDOPDay() {
     cy.get('.error-summary').contains('Fix the following error(s)');
     cy.get('.govuk-error-summary__list > li').contains('Enter a day using numbers only');
-    cy.get('#dom-error.govuk-error-message').should('exist');
+    cy.get('#dop-error.govuk-error-message').should('exist');
   }
 
-  static invalidDOMMonth() {
+  static invalidDOPMonth() {
     cy.get('.error-summary').contains('Fix the following error(s)');
     cy.get('.govuk-error-summary__list > li').contains('Enter a month using numbers only');
-    cy.get('#dom-error.govuk-error-message').should('exist');
+    cy.get('#dop-error.govuk-error-message').should('exist');
   }
 
-  static invalidDOMYear() {
+  static invalidDOPYear() {
     cy.get('.error-summary').contains('Fix the following error(s)');
     cy.get('.govuk-error-summary__list > li').contains('Enter a year using numbers only');
-    cy.get('#dom-error.govuk-error-message').should('exist');
+    cy.get('#dop-error.govuk-error-message').should('exist');
   }
 
-  static domInFuture() {
+  static dopInFuture() {
     cy.get('.error-summary').contains('Fix the following error(s)');
-    cy.get('.govuk-error-summary__list > li').contains('Please enter a date of marriage in the past');
-    cy.get('#dom-error.govuk-error-message').should('exist');
+    cy.get('.govuk-error-summary__list > li').contains('Please enter a date of civil partnership in the past');
+    cy.get('#dop-error.govuk-error-message').should('exist');
   }
 }
 
-module.exports = MarriageSearchPage;
+module.exports = PartnershipSearchPage;
