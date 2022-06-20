@@ -42,6 +42,7 @@ describe('Marriage details page', () => {
   });
 
   if (!Cypress.env('e2e')) {
+    const { result } = expectedSingleRecord;
     describe('which shows the full details to select users', () => {
       before(() => {
         MarriageDetailsPage.visitWithFullDetails(result);
