@@ -45,7 +45,6 @@ steps:
     branch:
     - master
     event:
-    - pull_request
     - push
 
 - name: push_e2e_to_quay
@@ -67,7 +66,6 @@ steps:
     branch:
     - master
     event:
-    - pull_request
     - push
 
 - name: deploy_image_to_dev
@@ -116,7 +114,6 @@ steps:
     branch:
     - master
     event:
-    - pull_request
     - push
 
 - name: notify_slack_success
