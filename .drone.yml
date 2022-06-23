@@ -107,7 +107,7 @@ steps:
       from_secret: DEV_PASSWORD
   commands:
   - sleep 20
-  - docker run --rm --name lev-web-ui-e2e -e "ENV=dev" -e "KEYCLOAK_URL=$${DEV_KEYCLOAK_URL}" -e "TEST_URL=$${DEV_URL}" -e "TEST_USERNAME=$${DEV_USERNAME}" -e "TEST_PASSWORD=$${DEV_PASSWORD}" quay.io/ukhomeofficedigital/lev-web-ui-e2e | tee 'test.log'
+  - docker run --rm --name lev-web-ui-e2e -e "SMOKE_TEST=true" -e "ENV=dev" -e "KEYCLOAK_URL=$${DEV_KEYCLOAK_URL}" -e "TEST_URL=$${DEV_URL}" -e "TEST_USERNAME=$${DEV_USERNAME}" -e "TEST_PASSWORD=$${DEV_PASSWORD}" quay.io/ukhomeofficedigital/lev-web-ui-e2e | tee 'test.log'
   when:
     branch:
     - master
