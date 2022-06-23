@@ -39,35 +39,36 @@ describe('Marriage details page', () => {
     it('does not contain a link back to the search results screen', () => {
       MarriageResultsPage.backToSearchResultsNotDisplayed();
     });
-
-    if (!Cypress.env('e2e')) {
-      describe('which shows the full details to select users', () => {
-        before(() => {
-          MarriageDetailsPage.visitWithFullDetails(result);
-        });
-
-        it('returns a details page', () => {
-          MarriageDetailsPage.shouldBeVisible();
-        });
-
-        it('an appropriate message is displayed', () => {
-          MarriageDetailsPage.hasExpectedTitle(result);
-        });
-
-        it('the complete record is displayed in a table', () => {
-          MarriageDetailsPage.hasCompleteRecord(result);
-        });
-
-        it('contains a link back to the search screen', () => {
-          MarriageResultsPage.hasEditSearchButton();
-        });
-
-        it('does not contain a link back to the search results screen', () => {
-          MarriageResultsPage.backToSearchResultsNotDisplayed();
-        });
-      });
-    }
   });
+
+  if (!Cypress.env('e2e')) {
+    const { result } = expectedSingleRecord;
+    describe('which shows the full details to select users', () => {
+      before(() => {
+        MarriageDetailsPage.visitWithFullDetails(result);
+      });
+
+      it('returns a details page', () => {
+        MarriageDetailsPage.shouldBeVisible();
+      });
+
+      it('an appropriate message is displayed', () => {
+        MarriageDetailsPage.hasExpectedTitle(result);
+      });
+
+      it('the complete record is displayed in a table', () => {
+        MarriageDetailsPage.hasCompleteRecord(result);
+      });
+
+      it('contains a link back to the search screen', () => {
+        MarriageResultsPage.hasEditSearchButton();
+      });
+
+      it('does not contain a link back to the search results screen', () => {
+        MarriageResultsPage.backToSearchResultsNotDisplayed();
+      });
+    });
+  }
 
   describe('When I select the "New search" button', () => {
     const { search } = expectedSingleRecord;
