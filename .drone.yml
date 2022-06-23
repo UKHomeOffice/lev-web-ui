@@ -105,11 +105,9 @@ steps:
       from_secret: DEV_USERNAME
     DEV_PASSWORD:
       from_secret: DEV_PASSWORD
-    DOCKER_BASEDIR: /ukhomeofficedigital/
-    DOCKER_REPO: quay.io
   commands:
   - sleep 20
-  - docker run --rm --name lev-web-ui-e2e -e "ENV=dev" -e "KEYCLOAK_URL=$${DEV_KEYCLOAK_URL}" -e "TEST_URL=$${DEV_URL}" -e "TEST_USERNAME=$${DEV_USERNAME}" -e "TEST_PASSWORD=$${DEV_PASSWORD}" lev-web-ui-e2e | tee 'test.log'
+  - docker run --rm --name lev-web-ui-e2e -e "ENV=dev" -e "KEYCLOAK_URL=$${DEV_KEYCLOAK_URL}" -e "TEST_URL=$${DEV_URL}" -e "TEST_USERNAME=$${DEV_USERNAME}" -e "TEST_PASSWORD=$${DEV_PASSWORD}" quay.io/ukhomeofficedigital/lev-web-ui-e2e | tee 'test.log'
   when:
     branch:
     - master
