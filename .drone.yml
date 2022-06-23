@@ -8,24 +8,24 @@ platform:
   arch: amd64
 
 steps:
-- name: cypress-tests
+- name: cypress-acceptance-tests
   image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
   environment:
     DOCKER_HOST: tcp://127.0.0.1:2375
   commands:
-    - sleep 20
-    - docker build -t "lev-web-ui-image" .
-    - docker build -t "cypress-image" -f Dockerfile-cypress .
-    - docker run -d --name "lev-web-ui" lev-web-ui-image
-    - docker run -d --name lev-api-mock --net "container:lev-web-ui" --env 'MOCK=true' quay.io/ukhomeofficedigital/lev-api:0.18
-    - docker run --net "container:lev-web-ui" cypress-image
-    - docker rm -vf "lev-web-ui" "lev-api-mock"
+  - sleep 20
+  - docker build -t "lev-web-ui-image" .
+  - docker build -t "cypress-image" -f Dockerfile-cypress .
+  - docker run -d --name "lev-web-ui" lev-web-ui-image
+  - docker run -d --name lev-api-mock --net "container:lev-web-ui" --env 'MOCK=true' quay.io/ukhomeofficedigital/lev-api:0.18
+  - docker run --net "container:lev-web-ui" cypress-image
+  - docker rm -vf "lev-web-ui" "lev-api-mock"
   when:
     branch:
-      - master
+    - master
     event:
-      - pull_request
-      - push
+    - pull_request
+    - push
 
 - name: push_to_quay
   image: plugins/docker
@@ -33,28 +33,50 @@ steps:
     registry: quay.io
     repo: quay.io/ukhomeofficedigital/lev-web-ui
     tags:
-      - "1.0.0-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT:0:10}"
-      - "1.0.0"
-      - "1.0"
-      - latest
+    - "1.0.0-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT:0:10}"
+    - "1.0.0"
+    - "1.0"
+    - latest
   environment:
     DOCKER_PASSWORD:
       from_secret: QUAY_PASSWORD
     DOCKER_USERNAME: ukhomeofficedigital+lev_web_ui
   when:
     branch:
-      - master
+    - master
     event:
-      - push
+    - push
+
+- name: push_e2e_to_quay
+  image: plugins/docker
+  settings:
+    registry: quay.io
+    repo: quay.io/ukhomeofficedigital/lev-web-ui-e2e
+    dockerfile: Dockerfile-cypress
+    tags:
+    - "1.0.0-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT:0:10}"
+    - "1.0.0"
+    - "1.0"
+    - latest
+  environment:
+    DOCKER_PASSWORD:
+      from_secret: QUAY_PASSWORD
+    DOCKER_USERNAME: ukhomeofficedigital+lev_web_ui
+  when:
+    branch:
+    - master
+    event:
+    - pull_request
+    - push
 
 - name: deploy_image_to_dev
   pull: if-not-exists
   image: quay.io/ukhomeofficedigital/lev-ci
   commands:
-    - source get-package-details
-    - kubectl="kubectl --insecure-skip-tls-verify --server=$${KUBE_SERVER} --namespace=$${KUBE_NAMESPACE} --token=$${KUBE_TOKEN}"
-    - $${kubectl} set image deployment/$${KUBE_DEPLOYMENT} "$${KUBE_CONTAINER}=quay.io/ukhomeofficedigital/lev-web-ui:$${FULL_VERSION}"
-    - $${kubectl} rollout status deployment/$${KUBE_DEPLOYMENT}
+  - source get-package-details
+  - kubectl="kubectl --insecure-skip-tls-verify --server=$${KUBE_SERVER} --namespace=$${KUBE_NAMESPACE} --token=$${KUBE_TOKEN}"
+  - $${kubectl} set image deployment/$${KUBE_DEPLOYMENT} "$${KUBE_CONTAINER}=quay.io/ukhomeofficedigital/lev-web-ui:$${FULL_VERSION}"
+  - $${kubectl} rollout status deployment/$${KUBE_DEPLOYMENT}
   environment:
     KUBE_CONTAINER:
       from_secret: KUBE_CONTAINER
@@ -68,9 +90,33 @@ steps:
       from_secret: KUBE_TOKEN
   when:
     branch:
-      - master
+    - master
     event:
-      - push
+    - push
+
+- name: cypress-smoke-tests
+  image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
+  environment:
+    DOCKER_HOST: tcp://127.0.0.1:2375
+    DEV_KEYCLOAK_URL:
+      from_secret: DEV_KEYCLOAK_URL
+    DEV_URL:
+      from_secret: DEV_URL
+    DEV_USERNAME:
+      from_secret: DEV_USERNAME
+    DEV_PASSWORD:
+      from_secret: DEV_PASSWORD
+    DOCKER_BASEDIR: /ukhomeofficedigital/
+    DOCKER_REPO: quay.io
+  commands:
+  - sleep 20
+  - docker run --rm --name lev-web-ui-e2e -e "ENV=dev" -e "KEYCLOAK_URL=$${DEV_KEYCLOAK_URL}" -e "TEST_URL=$${DEV_URL}" -e "TEST_USERNAME=$${DEV_USERNAME}" -e "TEST_PASSWORD=$${DEV_PASSWORD}" lev-web-ui-e2e | tee 'test.log'
+  when:
+    branch:
+    - master
+    event:
+    - pull_request
+    - push
 
 - name: notify_slack_success
   pull: if-not-exists
@@ -84,11 +130,11 @@ steps:
       from_secret: SLACK_WEBHOOK
   when:
     branch:
-      - master
+    - master
     event:
-      - push
+    - push
     status:
-      - success
+    - success
 
 - name: notify_slack_failure
   pull: if-not-exists
@@ -102,12 +148,12 @@ steps:
       from_secret: SLACK_WEBHOOK
   when:
     branch:
-      - master
+    - master
     event:
-      - push
+    - push
     status:
-      - failure
+    - failure
 
 services:
-  - name: docker
-    image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
+- name: docker
+  image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
