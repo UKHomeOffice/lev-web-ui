@@ -15,10 +15,16 @@ build:
 dev:
 	npm run dev
 
-docker:
+start-docker:
 	docker compose up --build
 
-docker-local:
+stop-docker:
+	docker compose down
+
+start-docker-local:
 	docker compose -f docker-compose-local.yml up --build
+
+stop-docker-local:
+	docker compose -f docker-compose-local.yml down
 
 all: clean install test

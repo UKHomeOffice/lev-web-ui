@@ -5,4 +5,4 @@ COPY ./ /app
 
 RUN npm i -D
 
-CMD [ "npm", "run", "cypress:acceptance" ]
+CMD [ "npm", "run", "test:ui" ]
