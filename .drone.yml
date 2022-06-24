@@ -114,6 +114,27 @@ steps:
     event:
     - push
 
+- name: save_test_logs
+  pull: if-not-exists
+  image: quay.io/ukhomeofficedigital/kd:latest
+  commands:
+  - kubectl="kubectl --insecure-skip-tls-verify --server=$${KUBE_SERVER} --namespace=$${KUBE_NAMESPACE} --token=$${KUBE_TOKEN}"
+  - $${kubectl} annotate --overwrite deployment $${KUBE_DEPLOYMENT} lev-web-ui-test-log="`cat test.log`"
+  environment:
+    KUBE_DEPLOYMENT:
+      from_secret: KUBE_DEPLOYMENT
+    KUBE_NAMESPACE:
+      from_secret: KUBE_NAMESPACE
+    KUBE_SERVER:
+      from_secret: KUBE_SERVER
+    KUBE_TOKEN:
+      from_secret: KUBE_TOKEN
+  when:
+    branch:
+    - master
+    event:
+    - push
+
 - name: notify_slack_success
   pull: if-not-exists
   image: plugins/slack
