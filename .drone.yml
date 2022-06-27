@@ -8,6 +8,17 @@ platform:
   arch: amd64
 
 steps:
+- name: scan-image
+  image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/anchore-submission:latest
+  pull: always
+  environment:
+    IMAGE_NAME: lev-web-ui:latest
+  when:
+    branch:
+    - master
+    event:
+    - pull_request
+
 - name: cypress-acceptance-tests
   image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
   environment:
@@ -174,3 +185,9 @@ steps:
 services:
 - name: docker
   image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
+
+- name: anchore-submission-server
+  image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/anchore-submission:latest
+  pull: always
+  commands:
+  - /run.sh server
