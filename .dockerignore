@@ -4,6 +4,7 @@
 node_modules/
 .git/
 coverage
+owasp
 public
 *.log
 .DS_Store

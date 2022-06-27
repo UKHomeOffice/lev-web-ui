@@ -108,3 +108,6 @@ public
 
 # Cypress
 cypress/screenshots
+
+# OWASP
+owasp
