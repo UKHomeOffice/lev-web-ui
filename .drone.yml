@@ -12,7 +12,7 @@ steps:
   image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/anchore-submission:latest
   pull: always
   environment:
-    IMAGE_NAME: quay.io/ukhomeofficedigital/lev-web-ui:latest
+    IMAGE_NAME: lev-web-ui:latest
   when:
     branch:
     - master
