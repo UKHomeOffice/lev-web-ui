@@ -7,7 +7,7 @@
     "start": "node .",
     "dev": "npm-run-all -pr watch:dev watch:sass",
     "postinstall": "npm run build",
-    "build": "rm -rf public/; npm-run-all build:sass build:js test",
+    "build": "rm -rf public/; npm-run-all build:sass build:js",
     "build:sass": "mkdir -p public/stylesheets; sass --load-path=. --quiet-deps --style=compressed assets/stylesheets/app.scss public/stylesheets/application.css",
     "build:js": "mkdir -p public/javascripts; cat node_modules/govuk-frontend/govuk/all.js node_modules/hmpo-components/all.js assets/javascripts/*.js > public/javascripts/application.js",
     "watch:dev": "nodemon .",

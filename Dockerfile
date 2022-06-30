@@ -12,6 +12,11 @@ WORKDIR /app
 COPY --chown=app:app package.json package-lock.json /app/
 COPY --chown=app:app assets/ /app/assets/
 
+FROM base as test
+RUN npm ci
+COPY --chown=app:app . /app
+RUN npm run test
+
 FROM base as prod
 
 ENV NODE_ENV production
