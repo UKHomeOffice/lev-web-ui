@@ -24,13 +24,10 @@
     "cypress": "cypress open --config baseUrl=${TEST_URL:-http://localhost:8001}",
     "cypress:all": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001} --headless --browser chrome",
     "cypress:acceptance": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001},testFiles=**/acceptance/**/*.js --headless --browser chrome",
-    "cypress:smoke": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001},testFiles=**/smoke/**/*.js --headless --browser chrome",
-    "prepare": "npm run snyk-protect",
-    "snyk-protect": "snyk-protect"
+    "cypress:smoke": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001},testFiles=**/smoke/**/*.js --headless --browser chrome"
   },
   "author": "HMPO",
   "dependencies": {
-    "@snyk/protect": "^1.961.0",
     "express": "^4.18.1",
     "govuk-frontend": "^4.2.0",
     "hmpo-app": "^2.3.0",
