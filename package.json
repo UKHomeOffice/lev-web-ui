@@ -7,7 +7,7 @@
     "start": "node .",
     "dev": "npm-run-all -pr watch:dev watch:sass",
     "postinstall": "npm run build",
-    "build": "rm -rf public/; npm-run-all build:sass build:js",
+    "build": "rm -rf public/; npm-run-all build:sass build:js test",
     "build:sass": "mkdir -p public/stylesheets; sass --load-path=. --quiet-deps --style=compressed assets/stylesheets/app.scss public/stylesheets/application.css",
     "build:js": "mkdir -p public/javascripts; cat node_modules/govuk-frontend/govuk/all.js node_modules/hmpo-components/all.js assets/javascripts/*.js > public/javascripts/application.js",
     "watch:dev": "nodemon .",
@@ -24,13 +24,10 @@
     "cypress": "cypress open --config baseUrl=${TEST_URL:-http://localhost:8001}",
     "cypress:all": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001} --headless --browser chrome",
     "cypress:acceptance": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001},testFiles=**/acceptance/**/*.js --headless --browser chrome",
-    "cypress:smoke": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001},testFiles=**/smoke/**/*.js --headless --browser chrome",
-    "prepare": "npm run snyk-protect",
-    "snyk-protect": "snyk-protect"
+    "cypress:smoke": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001},testFiles=**/smoke/**/*.js --headless --browser chrome"
   },
   "author": "HMPO",
   "dependencies": {
-    "@snyk/protect": "^1.961.0",
     "express": "^4.18.1",
     "govuk-frontend": "^4.2.0",
     "hmpo-app": "^2.3.0",

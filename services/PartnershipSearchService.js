@@ -5,8 +5,6 @@ const SearchService = require('./SearchService');
 class PartnershipSearchService extends SearchService {
 
   static processRecord(record) {
-    console.log(record);
-
     return {
       ...record,
       flags: {
