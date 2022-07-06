@@ -7,8 +7,7 @@ let register = new client.Registry();
 
 // Set default labels for all metrics
 register.setDefaultLabels({
-  component: packageJson.name,
-  NODE_APP_INSTANCE: process.env.NODE_APP_INSTANCE
+  component: packageJson.name
 });
 
 client.collectDefaultMetrics({ register });
