@@ -4,6 +4,7 @@ $govuk-assets-path: "/public/";
 @import "node_modules/hmpo-components/all";
 @import "./details";
 @import "./flags";
+@import "./audit";
 @import "./results";
 
 $blue-button-colour: #005ea5;
@@ -12,7 +13,7 @@ $blue-button-hover-colour: govuk-shade($blue-button-colour, 20%);
 $grey-button-colour: #52585a;
 $grey-button-hover-colour: govuk-shade($grey-button-colour, 20%);
 
-a {
+a, button {
   &.blue {
     background-color: $blue-button-colour;
 
