@@ -15,7 +15,7 @@ steps:
   commands:
   - sleep 20
   - docker build -t "lev-web-ui-image" .
-  - docker build -t "cypress-image" -f Dockerfile-cypress .
+  - docker build -t "cypress-image" -f Dockerfile-e2e .
   - docker run -d --name "lev-web-ui" lev-web-ui-image
   - docker run -d --name lev-api-mock --net "container:lev-web-ui" --env 'MOCK=true' quay.io/ukhomeofficedigital/lev-api:0.18
   - docker run --net "container:lev-web-ui" cypress-image
@@ -52,7 +52,7 @@ steps:
   settings:
     registry: quay.io
     repo: quay.io/ukhomeofficedigital/lev-web-ui-e2e
-    dockerfile: Dockerfile-cypress
+    dockerfile: Dockerfile-e2e
     tags:
     - "1.0.0-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT:0:10}"
     - "1.0.0"
