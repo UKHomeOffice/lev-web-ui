@@ -39,7 +39,7 @@ class UserActivityService {
     // create array of dates between to and from user input and whether the date is a weekend
     let dateArr = Array(diff).fill(undefined).map((i, index) => {
       const day = from.plus({ days: index });
-      return { data: day.toFormat('dd-MM-yyyy'), isWeekend: day.toFormat('cccc') === 'Saturday' || day.toFormat('cccc') === 'Sunday' };
+      return { data: day.toFormat('dd-MM-yyyy'), isWeekend: day.weekdayShort === 'Sat' || day.weekdayShort === 'Sun' };
     });
 
     // filter out weekends if required

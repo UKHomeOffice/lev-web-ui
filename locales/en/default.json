@@ -261,8 +261,7 @@
       "numeric-day": "Enter a day using numbers only",
 
       "afterField": "Please enter a date after the before date",
-      "before": "Please enter a date in the past",
-      "after": "please enter a date after search from"
+      "before": "Please enter a date in the past"
     }
   },
   "footer": "Your feedback will help us improve this service. Email us <a href=\"mailto:ITnowServiceDesk@homeoffice.gov.uk?subject=LEV%20Feedback\">ITnowServiceDesk@homeoffice.gov.uk</a>"
