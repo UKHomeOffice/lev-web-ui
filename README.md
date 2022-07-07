@@ -36,7 +36,7 @@ docker compose up --build
 ```
 #### To run the application & cypress:acceptance tests
 ```shell
-docker compose -f docker-compose-local.yml up --build
+docker compose -f docker-compose-e2e.yml up --build
 ```
 
 ### Mock Data

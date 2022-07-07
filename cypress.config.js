@@ -1,0 +1,27 @@
+const { defineConfig } = require('cypress');
+
+module.exports = defineConfig({
+  chromeWebSecurity: false,
+  video: false,
+  e2e: {
+    setupNodeEvents(on, config) {
+
+      // Populate the environment from process.env
+      config.env.env = process.env.ENV || 'local';
+      config.env.e2e = config.env.env !== 'local';
+      config.env.keycloak = {
+        root: process.env.KEYCLOAK_URL,
+        realm: 'lev',
+        username: process.env.TEST_USERNAME,
+        password: process.env.TEST_PASSWORD,
+        // eslint-disable-next-line camelcase
+        client_id: 'lev-web-ui',
+        // eslint-disable-next-line camelcase
+        redirect_uri: process.env.TEST_URL
+      };
+
+      return config;
+    },
+    baseUrl: 'http://localhost:8001',
+  }
+});

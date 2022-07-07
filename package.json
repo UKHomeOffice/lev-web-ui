@@ -21,10 +21,10 @@
     "test:unit": "jest test/unit",
     "test:coverage": "jest test/unit --coverage",
     "test:ui": "npm run $([ -n \"${SMOKE_TEST}\" ] && echo cypress:smoke || echo cypress:acceptance)",
-    "cypress": "cypress open --config baseUrl=${TEST_URL:-http://localhost:8001}",
-    "cypress:all": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001} --headless --browser chrome",
-    "cypress:acceptance": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001},testFiles=**/acceptance/**/*.js --headless --browser chrome",
-    "cypress:smoke": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001},testFiles=**/smoke/**/*.js --headless --browser chrome"
+    "cypress": "cypress open --config baseUrl=${TEST_URL:-http://localhost:8001} --browser chrome --e2e",
+    "cypress:all": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001} --headless --browser chrome --e2e",
+    "cypress:acceptance": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001} --headless --browser chrome --e2e --spec **/acceptance/**/*.cy.js",
+    "cypress:smoke": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001} --headless --browser chrome --e2e --spec **/smoke/**/*.cy.js"
   },
   "author": "HMPO",
   "dependencies": {
@@ -44,7 +44,7 @@
     "sass": "^1.53.0"
   },
   "devDependencies": {
-    "cypress": "^9.7.0",
+    "cypress": "^10.3.0",
     "cypress-keycloak": "^1.9.0",
     "eslint": "^8.19.0",
     "eslint-plugin-cypress": "^2.12.1",
