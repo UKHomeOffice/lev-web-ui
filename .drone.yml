@@ -17,7 +17,7 @@ steps:
   - docker build -t "lev-web-ui-image" .
   - docker build -t "cypress-image" -f Dockerfile-cypress .
   - docker run -d --name "lev-web-ui" lev-web-ui-image
-  - sleep 20
+  - sleep 60
   - docker run -d --name lev-api-mock --net "container:lev-web-ui" --env 'MOCK=true' quay.io/ukhomeofficedigital/lev-api:0.18
   - sleep 20
   - docker run --net "container:lev-web-ui" cypress-image
