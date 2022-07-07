@@ -22,9 +22,9 @@ stop-docker:
 	docker compose down
 
 start-docker-local:
-	docker compose -f docker-compose-local.yml up --build
+	docker compose -f docker-compose-e2e.yml up --build
 
 stop-docker-local:
-	docker compose -f docker-compose-local.yml down
+	docker compose -f docker-compose-e2e.yml down
 
 all: clean install test

@@ -25,7 +25,7 @@ services:
   acceptance:
     build:
       context: .
-      dockerfile: Dockerfile-cypress
+      dockerfile: Dockerfile-e2e
     depends_on:
       - lev-web-ui
       - mock-api
