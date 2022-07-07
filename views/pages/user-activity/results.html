@@ -1,0 +1,88 @@
+{% extends "details-template.njk" %}
+
+{% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+
+{% set hmpoPageKey = "user-activity.searchPage" %}
+{% set govukServiceNameKey = translate("pages.user-activity.serviceName") %}
+{% set govukServiceUrl = "/audit/user-activity" %}
+
+{% set headerArray = [] %}
+{% set resultsArray = [] %}
+
+{% set hmpoTitle -%}
+    {{- "No usage data found" if results | length === 0 else "Showing audit data" }}
+      {{ "for {{ values.userFilter }}" if values.userFilter }} from
+      {{ values.dateFrom | date("DD/MM/YYYY") }} to {{ values.dateTo | date("DD/MM/YYYY") }}
+{%- endset %}
+
+{% block mainContent %}
+{{ super() }}
+
+{% for item in results.header %}
+{% set headerArray = (headerArray.push( { text: item.data, format: "numeric" }), headerArray) %}
+{% endfor %}
+
+{% for row in results.rows %}
+      {% set rowArray = [] %}
+            {% for item in row %}
+                  {% set rowArray = (rowArray.push( { text: item.data, format: "numeric" } ), rowArray) %}
+            {% endfor %}
+      {% set resultsArray = (resultsArray.push(rowArray), resultsArray) %}
+{% endfor %}
+
+<div class="table-horizontal-scrolling">
+  {{ govukTable({
+  classes: "audit",
+  firstCellIsHeader: true,
+  head: headerArray,
+  rows: resultsArray
+  }) }}
+</div>
+
+<div class="govuk-button-group">
+  {{ hmpoSubmit(ctx, {id: "newSearch", key: "newSearch", href: "/audit/user-activity"}) }}
+  {{ hmpoSubmit(ctx, {id: "editSearch", key: "editSearch", href: "/audit/user-activity/search", classes: "blue"}) }}
+  {% if results | length %}
+    {{ hmpoSubmit(ctx, {id: "exportToCSV", key: "exportToCSV", classes: "grey"}) }}
+  {% endif %}
+</div>
+
+<script type="application/javascript">
+
+const downloadCSVFile = (csv, filename) => {
+      let csv_file, download_link;
+      csv_file = new Blob([csv], {type: "text/csv"});
+      download_link = document.createElement("a");
+      download_link.download = filename;
+      download_link.href = window.URL.createObjectURL(csv_file);
+      download_link.style.display = "none";
+      document.body.appendChild(download_link);
+      download_link.click();
+}
+
+const htmlToCSV = (html, filename) => {
+  let data = [];
+  const rows = document.querySelectorAll("table tr");
+
+  for (let i = 0; i < rows.length; i++) {
+  let row = [], cols = rows[i].querySelectorAll("td, th");
+
+  for (let j = 0; j < cols.length; j++) {
+  row.push(cols[j].innerText);
+  }
+
+  data.push(row.join(","));
+  }
+
+  downloadCSVFile(data.join("\n"), filename);
+}
+
+document.getElementById("exportToCSV").addEventListener("click", function () {
+  let html = document.querySelector("table").outerHTML;
+  htmlToCSV(html, "user-activity.csv");
+  });
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,41 @@
+$govuk-assets-path: "/public/";
+
+@import "node_modules/govuk-frontend/govuk/all";
+@import "node_modules/hmpo-components/all";
+
+$section-head-colour: #f2f3f3;
+
+.table-horizontal-scrolling {
+  overflow-x: auto;
+}
+
+table {
+  &.audit {
+    border-top: 1px solid $govuk-border-colour;
+
+    tbody {
+      th {
+        width: 12em;
+      }
+    }
+
+    thead {
+      th {
+        min-width: 6em;
+        width: 12em;
+      }
+    }
+
+    tbody tr th {
+      position: sticky;
+      left: 0;
+      background-color: #ffffff;
+    }
+
+    tr th:first-child {
+      position: sticky;
+      left: 0;
+      background-color: #ffffff;
+    }
+  }
+}

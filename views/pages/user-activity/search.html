@@ -1,0 +1,23 @@
+{% extends "app-template.njk" %}
+
+{% from "hmpo-field/macro.njk" import hmpoField %}
+{% from "hmpo-form/macro.njk" import hmpoForm %}
+{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+
+{% set hmpoPageKey = "user-activity.searchPage" %}
+{% set govukServiceNameKey = translate("pages.user-activity.serviceName") %}
+{% set govukServiceUrl = "/audit/user-activity" %}
+
+{% block mainContent %}
+{{ super() }}
+
+  {% call hmpoForm(ctx) %}
+  {{ hmpoField(ctx, "dateFrom") }}
+  {{ hmpoField(ctx, "dateTo") }}
+  {{ hmpoField(ctx, "weekendCheckbox") }}
+  {{ hmpoField(ctx, "userFilter") }}
+
+  {{ hmpoSubmit(ctx, {id: "search", key: "search"}) }}
+  {% endcall %}
+{% endblock %}
+
