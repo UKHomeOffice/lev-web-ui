@@ -57,7 +57,7 @@ class UserActivityService {
         });
 
         // if record contains searches, the count is added else count is set as 0
-        const data = Array.isArray(dateCount) ? dateCount[1] : 0;
+        const data = Array.isArray(dateCount) ? parseInt(dateCount[1]) : 0;
         return [...acc, { data, isWeekend: cur.isWeekend }];
 
       }, []);
