@@ -65,7 +65,7 @@ describe('Death details', () => {
 
       before(() => {
         DeathSearchPage.visit();
-        DeathSearchPage.performSearch({ systemNumber: 999999920 });
+        DeathSearchPage.performSearch({ systemNumber: 999999971 });
       });
 
       it(`should display the "${REFERRED}" flag`, () => {
@@ -74,8 +74,6 @@ describe('Death details', () => {
       });
 
       it('should not display any linked records', () => {
-        DeathDetailsPage.shouldBeVisible();
-        DeathDetailsPage.hasExpectedFlags([REFERRED]);
         DeathDetailsPage.previousRegistrationButtonNotExists();
         DeathDetailsPage.nextRegistrationButtonNotExists();
       });
