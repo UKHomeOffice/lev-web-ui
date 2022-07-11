@@ -72,6 +72,13 @@ describe('Death details', () => {
         DeathDetailsPage.shouldBeVisible();
         DeathDetailsPage.hasExpectedFlags([REFERRED]);
       });
+
+      it('should not display any linked records', () => {
+        DeathDetailsPage.shouldBeVisible();
+        DeathDetailsPage.hasExpectedFlags([REFERRED]);
+        DeathDetailsPage.previousRegistrationButtonNotExists();
+        DeathDetailsPage.nextRegistrationButtonNotExists();
+      });
     });
 
     describe('and the record is corrected', () => {

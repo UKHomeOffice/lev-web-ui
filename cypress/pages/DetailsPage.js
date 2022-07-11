@@ -41,6 +41,14 @@ class DetailsPage extends BackToSearchPage {
       cy.wrap(element).contains(rows[index]);
     });
   }
+
+  static previousRegistrationButtonNotExists() {
+    cy.get('#previousRegistration').should('not.exist');
+  }
+
+  static nextRegistrationButtonNotExists() {
+    cy.get('#nextRegistration').should('not.exist');
+  }
 }
 
 module.exports = DetailsPage;
