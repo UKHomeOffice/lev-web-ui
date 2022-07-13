@@ -159,5 +159,5 @@ module.exports = {
     result2,
     result3,
     result4
-  ].sort((a, b) => Cypress.env('e2e') ? `${a.partner1.surname} ${a.partner1.forenames}`.localeCompare(`${b.partner1.surname} ${b.partner1.forenames}`) : 0)
+  ]
 };
