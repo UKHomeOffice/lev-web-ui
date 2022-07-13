@@ -52,19 +52,8 @@
     {% if record.flags.corrected %}
         {{ levFlag(ctx, {key: "corrected", type: "warning"}) }}
     {% endif %}
-    {% if record.previousRegistration %}
-        {{ levFlag(ctx, {
-            key: "reRegistrationLabel",
-            html: hmpoSubmit(ctx, {key: "reRegistrationLink", href: "/death/details/" + record.previousRegistration.id})
-        }) }}
-    {% endif %}
-    {% if record.nextRegistration %}
-        {{ levFlag(ctx, {
-            key: "replaced",
-            type: "warning",
-            html: hmpoSubmit(ctx, {key: "reRegisteredLink", href: "/death/details/" + record.nextRegistration.id})
-        }) }}
-    {% endif %}
+
+    {% include "../links.html" %}
 
     {% set rowsArray = (rowsArray.push([
         { text: "System number" },
