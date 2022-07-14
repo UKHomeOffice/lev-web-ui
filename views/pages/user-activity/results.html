@@ -78,7 +78,7 @@ const htmlToCSV = (html, filename) => {
   downloadCSVFile(data.join("\n"), filename);
 }
 
-document.getElementById("exportToCSV").addEventListener("click", function () {
+document.getElementById("exportToCSV")?.addEventListener("click", function () {
   let html = document.querySelector("table").outerHTML;
   htmlToCSV(html, "user-activity.csv");
   });
