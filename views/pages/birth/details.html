@@ -20,13 +20,7 @@
     {{ super() }}
 
     {% include "./flags.html" %}
-
-    {% if record.previousRegistration %}
-        {{ levFlag(ctx, {
-            key: "reRegistrationLabel",
-            html: hmpoSubmit(ctx, {key: "reRegistrationLink", href: "/birth/details/" + record.previousRegistration.id})
-        }) }}
-    {% endif %}
+    {% include "../links.html" %}
 
     {{ govukTable({
         classes: "details",

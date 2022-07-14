@@ -166,4 +166,25 @@ describe('Marriage details page', () => {
       MarriageResultsPage.hasExpectedResults(results);
     });
   });
+
+  describe('When I perform a search that returns flagged records', () => {
+    describe('and the record is blocked', () => {
+      const REFERRED = 'Refer to GRO.';
+
+      before(() => {
+        MarriageSearchPage.visit();
+        MarriageSearchPage.performSearch({ systemNumber: 999999971 });
+      });
+
+      it(`should display the "${REFERRED}" flag`, () => {
+        MarriageDetailsPage.shouldBeVisible();
+        MarriageDetailsPage.hasExpectedFlags([REFERRED]);
+      });
+
+      it('should not display any linked records', () => {
+        MarriageDetailsPage.previousRegistrationButtonNotExists();
+        MarriageDetailsPage.nextRegistrationButtonNotExists();
+      });
+    });
+  });
 });

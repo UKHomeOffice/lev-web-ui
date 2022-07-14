@@ -166,4 +166,25 @@ describe('Partnership details page', () => {
       PartnershipResultsPage.hasExpectedResults(results);
     });
   });
+
+  describe('When I perform a search that returns flagged records', () => {
+    describe('and the record is blocked', () => {
+      const REFERRED = 'Refer to GRO.';
+
+      before(() => {
+        PartnershipSearchPage.visit();
+        PartnershipSearchPage.performSearch({ systemNumber: 999999971 });
+      });
+
+      it(`should display the "${REFERRED}" flag`, () => {
+        PartnershipDetailsPage.shouldBeVisible();
+        PartnershipDetailsPage.hasExpectedFlags([REFERRED]);
+      });
+
+      it('should not display any linked records', () => {
+        PartnershipDetailsPage.previousRegistrationButtonNotExists();
+        PartnershipDetailsPage.nextRegistrationButtonNotExists();
+      });
+    });
+  });
 });

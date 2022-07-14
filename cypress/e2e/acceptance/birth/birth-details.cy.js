@@ -87,45 +87,40 @@ describe('Birth details', () => {
     describe('Records with flags', () => {
       it('blocked Record shows Refer to GRO banner ', () => {
         BirthSearchPage.visit();
-        BirthSearchPage.performSearch({
-          systemNumber: recordsWithFlags.blocked, surname: '', forenames: '', day: '', month: '', year: ''
-        });
+        BirthSearchPage.performSearch({ systemNumber: recordsWithFlags.blocked });
         BirthDetailsPage.flagVisible('Refer to GRO');
+      });
+      it('blocked Record with links shows Refer to GRO banner and does not show links ', () => {
+        BirthSearchPage.visit();
+        BirthSearchPage.performSearch({ systemNumber: recordsWithFlags.all });
+        BirthDetailsPage.flagVisible('Refer to GRO');
+        BirthDetailsPage.previousRegistrationButtonNotExists();
+        BirthDetailsPage.nextRegistrationButtonNotExists();
       });
       it('cancelled Record shows Refer to GRO banner ', () => {
         BirthSearchPage.visit();
-        BirthSearchPage.performSearch({
-          systemNumber: recordsWithFlags.cancelled, surname: '', forenames: '', day: '', month: '', year: ''
-        });
+        BirthSearchPage.performSearch({ systemNumber: recordsWithFlags.cancelled });
         BirthDetailsPage.flagVisible('Refer to GRO');
       });
       it('court order Record shows a court order is in place ', () => {
         BirthSearchPage.visit();
-        BirthSearchPage.performSearch({
-          systemNumber: recordsWithFlags.courtOrder, surname: '', forenames: '', day: '', month: '', year: ''
-        });
+        BirthSearchPage.performSearch({ systemNumber: recordsWithFlags.courtOrder });
         BirthDetailsPage.flagVisible('This record has an adoption / court order in place.');
       });
       it('fictitious birth Record shows Refer to GRO banner ', () => {
         BirthSearchPage.visit();
-        BirthSearchPage.performSearch({
-          systemNumber: recordsWithFlags.fictitious, surname: '', forenames: '', day: '', month: '', year: ''
-        });
+        BirthSearchPage.performSearch({ systemNumber: recordsWithFlags.fictitious });
         BirthDetailsPage.flagVisible('Refer to GRO');
       });
       it('re-registered birth Record shows unmarried parents subsequently married and contains link to new record', () => {
         BirthSearchPage.visit();
-        BirthSearchPage.performSearch({
-          systemNumber: recordsWithFlags.reRegistered, surname: '', forenames: '', day: '', month: '', year: ''
-        });
+        BirthSearchPage.performSearch({ systemNumber: recordsWithFlags.reRegistered });
         BirthDetailsPage.flagVisible('Unmarried parents subsequently married.');
         BirthDetailsPage.previousRegistrationDetails(recordsWithFlags.caution);
       });
       it('subsequently married birth Record shows refer to GRO banner ', () => {
         BirthSearchPage.visit();
-        BirthSearchPage.performSearch({
-          systemNumber: recordsWithFlags.subsequentlyMarried, surname: '', forenames: '', day: '', month: '', year: ''
-        });
+        BirthSearchPage.performSearch({ systemNumber: recordsWithFlags.subsequentlyMarried });
         BirthDetailsPage.flagVisible('Refer to GRO');
       });
     });
