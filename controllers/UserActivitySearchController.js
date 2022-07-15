@@ -2,6 +2,7 @@
 
 const DateController = require('./DateController');
 const UserActivityService = require('../services/UserActivityService');
+const { DateTime } = require('luxon');
 
 class UserActivitySearchController extends DateController {
 
@@ -20,12 +21,15 @@ class UserActivitySearchController extends DateController {
     const user = req.form.values['userFilter'] || undefined;
     const includeWeekends = req.form.values['weekendCheckbox'] || false;
 
+    // api only returns up to the 'to' date, so an extra day required to include the given day
+    const toPlusOneDay = DateTime.fromISO(to).plus({ day: 1 }).toISODate();
+
     try {
 
       const records = await UserActivityService.searchByParams({
         ...this.getOptions(req),
         url: '/api/v0/audit/user-activity',
-        searchParams: { from, to, user },
+        searchParams: { from, to: toPlusOneDay, user },
         includeWeekends
       });
       req.sessionModel.set('searchResults', records);
