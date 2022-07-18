@@ -4,11 +4,10 @@ const AuditSearchPage = require('../../../pages/user-activity/UserActivitySearch
 const AuditResultsPage = require('../../../pages/user-activity/UserActivityResultsPage');
 const LoginPage = require('../../../pages/LoginPage');
 const { DateTime } = require('luxon');
-const env = Cypress.env('env');
 const { searchMultipleRecords, searchNoRecord, expectedSearchResult } = require('../../../fixtures/user-activity');
 
 describe('User Activity', () => {
-  const searchUser = env !== 'local' ? expectedSearchResult.e2e_user : 'lev-e2e-tests';
+  const searchUser = Cypress.env('e2e') ? expectedSearchResult.e2e_user : 'lev-e2e-tests';
   before(() => {
     LoginPage.login();
   });
@@ -34,14 +33,14 @@ describe('User Activity', () => {
     describe('returning audit data', () => {
       // sets a 7-day report for testing
       const days = 7;
-      const dateInPast = DateTime.now().minus({ days: (days + 1) });
-      const from = env !== 'local' ? { day: dateInPast.day, month: dateInPast.month, year: dateInPast.year } : {
-        day: '23',
-        month: '12',
-        year: '2016'
-      };
+      const dateInPast = DateTime.now().minus({ days });
+      const from = Cypress.env('e2e') ? {
+        day: dateInPast.day,
+        month: dateInPast.month,
+        year: dateInPast.year
+      } : { day: '23', month: '12', year: '2016' };
       const searchToDate = DateTime.now().minus({ days: 1 });
-      const to = env !== 'local' ? {
+      const to = Cypress.env('e2e') ? {
         day: searchToDate.day,
         month: searchToDate.month,
         year: searchToDate.year
@@ -83,10 +82,10 @@ describe('User Activity', () => {
           AuditResultsPage.userDisplayed(searchUser);
         });
         it('each row should have a column for each day plus a search count', () => {
-          AuditResultsPage.columnForEachDayWithCount();
+          AuditResultsPage.columnForEachDayWithCount(days + 1);
         });
         describe('the last row of the table shows the daily total count for all users', () => {
-          const search = env !== 'local' ? { dateFrom: from, dateTo: to } : searchMultipleRecords;
+          const search = Cypress.env('e2e') ? { dateFrom: from, dateTo: to } : searchMultipleRecords;
 
           before(() => {
             AuditSearchPage.visit();
@@ -122,17 +121,17 @@ describe('User Activity', () => {
   });
   describe('returning audit data', () => {
     const dateInPast = DateTime.now().minus({ days: 3 });
-    const from = env !== 'local' ? { day: dateInPast.day, month: dateInPast.month, year: dateInPast.year } : {
-      day: '24',
-      month: '12',
-      year: '2016'
-    };
+    const from = Cypress.env('e2e') ? {
+      day: dateInPast.day,
+      month: dateInPast.month,
+      year: dateInPast.year
+    } : { day: '24', month: '12', year: '2016' };
     const dateToday = DateTime.now();
-    const to = env !== 'local' ? { day: dateToday.day, month: dateToday.month, year: dateToday.year } : {
-      day: '30',
-      month: '12',
-      year: '2016'
-    };
+    const to = Cypress.env('e2e') ? {
+      day: dateToday.day,
+      month: dateToday.month,
+      year: dateToday.year
+    } : { day: '30', month: '12', year: '2016' };
 
     before(() => {
       AuditSearchPage.visit();
