@@ -34,8 +34,8 @@ class UserActivityResultsPage extends ResultsPage {
     cy.get('table.audit > tbody > tr > th').contains(String(user));
   }
 
-  static columnForEachDayWithCount() {
-    cy.get('table.audit > tbody > tr:first > th ~ td').should('have.length', 8);
+  static columnForEachDayWithCount(columns) {
+    cy.get('table.audit > tbody > tr:first > th ~ td').should('have.length', columns);
   }
 
   static lastRowDayTotals() {
