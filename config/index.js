@@ -11,7 +11,7 @@ module.exports = {
       error: false
     },
     redis: {
-      connectionString: process.env.REDIS_CONNECTION_STRING ? `redis://${process.env.REDIS_CONNECTION_STRING}` : undefined,
+      connectionString: process.env.REDIS_CONNECTION_STRING || undefined,
       host: process.env.REDIS_HOST || undefined,
       port: process.env.REDIS_PORT || undefined
     },
