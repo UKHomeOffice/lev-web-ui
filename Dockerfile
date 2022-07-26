@@ -1,6 +1,6 @@
 FROM node:16-alpine3.15 as base
 
-RUN apk add --no-cache ca-certificates redis curl \
+RUN apk add --no-cache ca-certificates \
  && apk upgrade --no-cache
 
 RUN addgroup -S app \
