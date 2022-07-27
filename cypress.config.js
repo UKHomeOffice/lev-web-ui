@@ -9,6 +9,8 @@ module.exports = defineConfig({
       // Populate the environment from process.env
       config.env.env = process.env.ENV || 'local';
       config.env.e2e = config.env.env !== 'local';
+
+      // configure cypress-keycloak
       config.env.keycloak = {
         root: process.env.KEYCLOAK_URL,
         realm: 'lev',
@@ -19,6 +21,20 @@ module.exports = defineConfig({
         // eslint-disable-next-line camelcase
         redirect_uri: process.env.TEST_URL
       };
+
+      // configure cypress-axe
+      on('task', {
+        log(message) {
+          console.log(message);
+
+          return null;
+        },
+        table(message) {
+          console.table(message);
+
+          return null;
+        }
+      });
 
       return config;
     },

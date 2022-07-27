@@ -23,6 +23,7 @@
     "test:ui": "npm run $([ -n \"${SMOKE_TEST}\" ] && echo cypress:smoke || echo cypress:acceptance)",
     "cypress": "cypress open --config baseUrl=${TEST_URL:-http://localhost:8001} --browser chrome --e2e",
     "cypress:all": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001} --headless --browser chrome --e2e",
+    "cypress:a11y": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001} --headless --browser chrome --e2e --spec **/acceptance/**/*-a11y.cy.js",
     "cypress:acceptance": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001} --headless --browser chrome --e2e --spec **/acceptance/**/*.cy.js",
     "cypress:smoke": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001} --headless --browser chrome --e2e --spec **/smoke/**/*.cy.js"
   },
@@ -41,10 +42,12 @@
     "npm-run-all": "^4.1.5",
     "nunjucks": "^3.2.3",
     "prom-client": "^14.0.1",
-    "sass": "^1.53.0"
+    "sass": "^1.54.0"
   },
   "devDependencies": {
-    "cypress": "^10.3.0",
+    "axe-core": "^4.4.3",
+    "cypress": "^10.3.1",
+    "cypress-axe": "^1.0.0",
     "cypress-keycloak": "^1.9.0",
     "eslint": "^8.20.0",
     "eslint-plugin-cypress": "^2.12.1",
