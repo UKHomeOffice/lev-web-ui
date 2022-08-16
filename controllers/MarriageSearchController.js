@@ -26,7 +26,7 @@ class MarriageSearchController extends DateController {
       try {
 
         // searchById
-        const record = await MarriageSearchService.searchById({
+        const record = await MarriageSearchService.lookup({
           ...this.getOptions(req),
           url: `/v1/registration/marriage/${systemNumber}`
         });
@@ -42,7 +42,7 @@ class MarriageSearchController extends DateController {
 
       // searchByName
       try {
-        const searchResults = await MarriageSearchService.searchByName({
+        const searchResults = await MarriageSearchService.search({
           ...this.getOptions(req),
           url: '/v1/registration/marriage',
           searchParams: { forenames, surname, dateOfMarriage }

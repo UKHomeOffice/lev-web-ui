@@ -26,7 +26,7 @@ class DeathSearchController extends DateController {
       try {
 
         // searchById
-        const record = await DeathSearchService.searchById({
+        const record = await DeathSearchService.lookup({
           ...this.getOptions(req),
           url: `/v1/registration/death/${systemNumber}`
         });
@@ -42,7 +42,7 @@ class DeathSearchController extends DateController {
 
       // searchByName
       try {
-        const searchResults = await DeathSearchService.searchByName({
+        const searchResults = await DeathSearchService.search({
           ...this.getOptions(req),
           url: '/v1/registration/death',
           searchParams: { forenames, surname, date }

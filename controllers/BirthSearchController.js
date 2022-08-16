@@ -26,7 +26,7 @@ class BirthSearchController extends DateController {
       try {
 
         // searchById
-        const record = await BirthSearchService.searchById({
+        const record = await BirthSearchService.lookup({
           ...this.getOptions(req),
           url: `/v1/registration/birth/${systemNumber}`
         });
@@ -42,7 +42,7 @@ class BirthSearchController extends DateController {
 
       // searchByName
       try {
-        const searchResults = await BirthSearchService.searchByName({
+        const searchResults = await BirthSearchService.search({
           ...this.getOptions(req),
           url: '/v1/registration/birth',
           searchParams: { forenames, surname, dateOfBirth }

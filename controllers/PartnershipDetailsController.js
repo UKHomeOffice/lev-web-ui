@@ -27,7 +27,7 @@ class PartnershipDetailsController extends BaseController {
         } else {
 
           // Record not found in searchResults, call REST API
-          record = await PartnershipSearchService.searchById({
+          record = await PartnershipSearchService.lookup({
             ...this.getOptions(req),
             url: `/v1/registration/partnership/${systemNumber}`
           });

@@ -41,7 +41,7 @@ describe('SearchService tests', () => {
           });
 
         // Act
-        const received = await SearchService.searchById(options);
+        const received = await SearchService.lookup(options);
 
         // Assert
         expect(received).toEqual({ id: 123456789 });
@@ -67,7 +67,7 @@ describe('SearchService tests', () => {
           });
 
         // Act
-        const received = await SearchService.searchById(options);
+        const received = await SearchService.lookup(options);
 
         // Assert
         expect(received).toBeUndefined();
@@ -92,7 +92,7 @@ describe('SearchService tests', () => {
           });
 
         // Act & Assert
-        await expect(SearchService.searchById(options)).rejects.toEqual(err);
+        await expect(SearchService.lookup(options)).rejects.toEqual(err);
         expect(mockApi).toHaveBeenCalledTimes(1);
       });
     });
@@ -115,7 +115,7 @@ describe('SearchService tests', () => {
           });
 
         // Act
-        const received = await SearchService.searchByName(options);
+        const received = await SearchService.search(options);
 
         // Assert
         expect(received).toEqual([{ id: 999999901 }, { id: 999999902 }, { id: 999999903 }]);
@@ -141,7 +141,7 @@ describe('SearchService tests', () => {
           });
 
         // Act & Assert
-        await expect(SearchService.searchByName(options)).rejects.toEqual(err);
+        await expect(SearchService.search(options)).rejects.toEqual(err);
         expect(mockApi).toHaveBeenCalledTimes(1);
       });
     });

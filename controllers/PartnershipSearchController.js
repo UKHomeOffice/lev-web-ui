@@ -26,7 +26,7 @@ class PartnershipSearchController extends DateController {
       try {
 
         // searchById
-        const record = await PartnershipSearchService.searchById({
+        const record = await PartnershipSearchService.lookup({
           ...this.getOptions(req),
           url: `/v1/registration/partnership/${systemNumber}`
         });
@@ -42,7 +42,7 @@ class PartnershipSearchController extends DateController {
 
       // searchByName
       try {
-        const searchResults = await PartnershipSearchService.searchByName({
+        const searchResults = await PartnershipSearchService.search({
           ...this.getOptions(req),
           url: '/v1/registration/partnership',
           searchParams: { forenames, surname, dateOfPartnership }
