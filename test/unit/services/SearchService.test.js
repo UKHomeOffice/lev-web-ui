@@ -25,7 +25,7 @@ describe('SearchService tests', () => {
     });
   });
 
-  describe('searchById()', () => {
+  describe('lookup()', () => {
     describe('When I search for a valid systemNumber', () => {
       it('should return a record', async () => {
 
@@ -98,7 +98,7 @@ describe('SearchService tests', () => {
     });
   });
 
-  describe('searchByName()', () => {
+  describe('search()', () => {
     describe('When I search for criteria', () => {
       it('should return an array of records', async () => {
 

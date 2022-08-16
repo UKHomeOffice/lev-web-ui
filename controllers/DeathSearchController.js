@@ -20,12 +20,12 @@ class DeathSearchController extends DateController {
     const forenames = req.form.values['forenames'];
     const date = req.form.values['dobd'];
 
-    // If systemNumber exists, perform searchById otherwise perform searchByName
+    // If systemNumber exists, perform lookup otherwise perform search
     if (systemNumber && systemNumber !== '') {
 
       try {
 
-        // searchById
+        // lookup
         const record = await DeathSearchService.lookup({
           ...this.getOptions(req),
           url: `/v1/registration/death/${systemNumber}`
@@ -40,7 +40,7 @@ class DeathSearchController extends DateController {
       }
     } else {
 
-      // searchByName
+      // search
       try {
         const searchResults = await DeathSearchService.search({
           ...this.getOptions(req),

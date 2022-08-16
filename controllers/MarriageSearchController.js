@@ -20,12 +20,12 @@ class MarriageSearchController extends DateController {
     const forenames = req.form.values['forenames'];
     const dateOfMarriage = req.form.values['dom'];
 
-    // If systemNumber exists, perform searchById otherwise perform searchByName
+    // If systemNumber exists, perform lookup otherwise perform search
     if (systemNumber && systemNumber !== '') {
 
       try {
 
-        // searchById
+        // lookup
         const record = await MarriageSearchService.lookup({
           ...this.getOptions(req),
           url: `/v1/registration/marriage/${systemNumber}`
@@ -40,7 +40,7 @@ class MarriageSearchController extends DateController {
       }
     } else {
 
-      // searchByName
+      // search
       try {
         const searchResults = await MarriageSearchService.search({
           ...this.getOptions(req),

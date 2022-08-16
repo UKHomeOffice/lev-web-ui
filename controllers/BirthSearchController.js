@@ -20,12 +20,12 @@ class BirthSearchController extends DateController {
     const forenames = req.form.values['forenames'];
     const dateOfBirth = req.form.values['dob'];
 
-    // If systemNumber exists, perform searchById otherwise perform searchByName
+    // If systemNumber exists, perform lookup otherwise perform search
     if (systemNumber && systemNumber !== '') {
 
       try {
 
-        // searchById
+        // lookup
         const record = await BirthSearchService.lookup({
           ...this.getOptions(req),
           url: `/v1/registration/birth/${systemNumber}`
@@ -40,7 +40,7 @@ class BirthSearchController extends DateController {
       }
     } else {
 
-      // searchByName
+      // search
       try {
         const searchResults = await BirthSearchService.search({
           ...this.getOptions(req),
