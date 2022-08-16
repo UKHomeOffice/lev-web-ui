@@ -1,20 +1,91 @@
 'use strict';
 
-const client = require('prom-client');
+const promClient = require('prom-client');
 const packageJson = require('../../package.json');
 
-let register = new client.Registry();
+let register = new promClient.Registry();
 
 // Set default labels for all metrics
 register.setDefaultLabels({
   component: packageJson.name
 });
 
-client.collectDefaultMetrics({ register });
+const promPrefix = 'lev_web_ui';
+const promMetrics = {};
+
+const initialiseMetrics = () => {
+
+  const dataSets = ['birth', 'death', 'marriage', 'partnership'];
+  const reqTypes = ['lookup', 'search'];
+
+  // All requests
+  promMetrics.req = new promClient.Counter({
+    registers: [register],
+    name: `${promPrefix}_req`,
+    help: 'Number of requests'
+  });
+
+  // Request types
+  reqTypes.forEach(reqType => {
+    promMetrics.req[reqType] = new promClient.Counter({
+      registers: [register],
+      name: `${promPrefix}_req_${reqType}`,
+      help: `Number of ${reqType} requests`
+    });
+  });
+
+  // Datasets
+  dataSets.forEach(dataSet => {
+    promMetrics.req[dataSet] = new promClient.Counter({
+      registers: [register],
+      name: `${promPrefix}_req_${dataSet}`,
+      help: `Number of ${dataSet} requests`
+    });
+
+    // Request types per dataset
+    reqTypes.forEach(reqType => {
+      promMetrics.req[dataSet][reqType] = new promClient.Counter({
+        registers: [register],
+        name: `${promPrefix}_req_${dataSet}_${reqType}`,
+        help: `Number of ${dataSet} ${reqType} requests`
+      });
+    });
+  });
+
+  promClient.collectDefaultMetrics({ register });
+};
+
+initialiseMetrics();
 
 const metricsRoute = async (req, res) => {
   res.setHeader('Content-type', register.contentType);
   res.end(await register.metrics());
 };
 
-module.exports = metricsRoute;
+const incrementRequestMetrics = (reqType, dataSet, groups = []) => {
+
+  // Initialise metrics for groups
+  const escape = value => value.replace(/[ -/]/g, '');
+
+  groups.forEach(group => {
+    promMetrics.req[group] = promMetrics.req[group] || new promClient.Counter({
+      registers: [register],
+      name: `${promPrefix}_req_group_${escape(group)}`,
+      help: `Number of ${escape(group)} requests`
+    });
+  });
+
+  // Increment metrics
+  promMetrics.req.inc();
+  promMetrics.req[reqType].inc();
+  promMetrics.req[dataSet].inc();
+  promMetrics.req[dataSet][reqType].inc();
+  groups.forEach(group => {
+    promMetrics.req[group].inc();
+  });
+};
+
+module.exports = {
+  metricsRoute,
+  incrementRequestMetrics
+};

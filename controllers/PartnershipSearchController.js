@@ -1,6 +1,7 @@
 'use strict';
 
 const DateController = require('./DateController');
+const { incrementRequestMetrics } = require('../routes/metrics');
 const PartnershipSearchService = require('../services/PartnershipSearchService');
 
 class PartnershipSearchController extends DateController {
@@ -34,6 +35,7 @@ class PartnershipSearchController extends DateController {
         req.sessionModel.set('searchResults', record ? [record] : []);
         req.sessionModel.set('currentRecord', record ? 0 : -1);
 
+        incrementRequestMetrics('lookup', 'partnership', this.getGroups(req));
         next();
       } catch (err) {
         next(err);
@@ -51,6 +53,7 @@ class PartnershipSearchController extends DateController {
         req.sessionModel.set('searchResults', searchResults);
         req.sessionModel.set('currentRecord', searchResults.length === 0 ? -1 : 0);
 
+        incrementRequestMetrics('search', 'partnership', this.getGroups(req));
         next();
       } catch (err) {
         next(err);
