@@ -8,6 +8,13 @@ class BaseController extends Controller {
   getOptions(req) {
     const token = req.headers['x-auth-token'];
     const roles = req.headers['x-auth-roles'];
+    const groups = req.headers['x-auth-groups'];
+
+    console.log('GROUPS-----------------------------------------------------');
+    console.log(groups);
+
+    console.log('TOKEN-----------------------------------------------------');
+    console.log(token);
 
     let options = {
       headers: {
