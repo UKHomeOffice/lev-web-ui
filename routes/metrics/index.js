@@ -18,6 +18,8 @@ const initialiseMetrics = () => {
   const dataSets = ['birth', 'death', 'marriage', 'partnership'];
   const reqTypes = ['lookup', 'search'];
 
+  // Counters
+
   // All requests
   promMetrics.req = new promClient.Counter({
     registers: [register],
@@ -52,6 +54,14 @@ const initialiseMetrics = () => {
     });
   });
 
+  // Histograms
+  promMetrics.req.time = new promClient.Histogram({
+    registers: [register],
+    name: `${promPrefix}_req_time`,
+    help: 'Request time'
+  });
+
+  // Default Metrics
   promClient.collectDefaultMetrics({ register });
 };
 
@@ -62,7 +72,7 @@ const metricsRoute = async (req, res) => {
   res.end(await register.metrics());
 };
 
-const incrementRequestMetrics = (reqType, dataSet, groups = []) => {
+const incrementRequestMetrics = (reqType, dataSet, groups, startTime = 0, endTime = 0) => {
 
   // Initialise metrics for groups
   const escape = value => value.replace(/[ -/]/g, '');
@@ -75,7 +85,7 @@ const incrementRequestMetrics = (reqType, dataSet, groups = []) => {
     });
   });
 
-  // Increment metrics
+  // Increment counters
   promMetrics.req.inc();
   promMetrics.req[reqType].inc();
   promMetrics.req[dataSet].inc();
@@ -83,6 +93,9 @@ const incrementRequestMetrics = (reqType, dataSet, groups = []) => {
   groups.forEach(group => {
     promMetrics.req[group].inc();
   });
+
+  // Observe histograms
+  promMetrics.req.time.observe(endTime - startTime);
 };
 
 module.exports = {

@@ -1,5 +1,6 @@
 'use strict';
 
+const { DateTime } = require('luxon');
 const DateController = require('./DateController');
 const { incrementRequestMetrics } = require('../routes/metrics');
 const BirthSearchService = require('../services/BirthSearchService');
@@ -24,6 +25,8 @@ class BirthSearchController extends DateController {
     // If systemNumber exists, perform lookup otherwise perform search
     if (systemNumber && systemNumber !== '') {
 
+      const startTime = DateTime.now().toMillis();
+
       try {
 
         // lookup
@@ -31,13 +34,17 @@ class BirthSearchController extends DateController {
           ...this.getOptions(req),
           url: `/v1/registration/birth/${systemNumber}`
         });
+        const endTime = DateTime.now().toMillis();
 
         req.sessionModel.set('searchResults', record ? [record] : []);
         req.sessionModel.set('currentRecord', record ? 0 : -1);
 
-        incrementRequestMetrics('lookup', 'birth', this.getGroups(req));
+        incrementRequestMetrics('lookup', 'birth', this.getGroups(req), startTime, endTime);
         next();
       } catch (err) {
+
+        // const endTime = DateTime.now().toMillis();
+        // incrementErrorMetrics('lookup', 'birth', this.getGroups(req));
         next(err);
       }
     } else {
