@@ -1,7 +1,7 @@
 'use strict';
 
 const DateController = require('./DateController');
-const { incrementRequestMetrics } = require('../routes/metrics');
+const { getCurrentTimeInMillis, incrementErrorMetrics, incrementRequestMetrics } = require('../routes/metrics');
 const DeathSearchService = require('../services/DeathSearchService');
 
 class DeathSearchController extends DateController {
@@ -24,9 +24,10 @@ class DeathSearchController extends DateController {
     // If systemNumber exists, perform lookup otherwise perform search
     if (systemNumber && systemNumber !== '') {
 
-      try {
+      // lookup
+      const startTime = getCurrentTimeInMillis();
 
-        // lookup
+      try {
         const record = await DeathSearchService.lookup({
           ...this.getOptions(req),
           url: `/v1/registration/death/${systemNumber}`
@@ -35,14 +36,19 @@ class DeathSearchController extends DateController {
         req.sessionModel.set('searchResults', record ? [record] : []);
         req.sessionModel.set('currentRecord', record ? 0 : -1);
 
-        incrementRequestMetrics('lookup', 'death', this.getGroups(req));
+        const endTime = getCurrentTimeInMillis();
+        incrementRequestMetrics('lookup', 'death', this.getGroups(req), endTime - startTime);
         next();
       } catch (err) {
+        const endTime = getCurrentTimeInMillis();
+        incrementErrorMetrics('lookup', 'death', this.getGroups(req), endTime - startTime);
         next(err);
       }
     } else {
 
       // search
+      const startTime = getCurrentTimeInMillis();
+
       try {
         const searchResults = await DeathSearchService.search({
           ...this.getOptions(req),
@@ -53,9 +59,12 @@ class DeathSearchController extends DateController {
         req.sessionModel.set('searchResults', searchResults);
         req.sessionModel.set('currentRecord', searchResults.length === 0 ? -1 : 0);
 
-        incrementRequestMetrics('search', 'death', this.getGroups(req));
+        const endTime = getCurrentTimeInMillis();
+        incrementRequestMetrics('search', 'death', this.getGroups(req), endTime - startTime);
         next();
       } catch (err) {
+        const endTime = getCurrentTimeInMillis();
+        incrementErrorMetrics('search', 'death', this.getGroups(req), endTime - startTime);
         next(err);
       }
     }

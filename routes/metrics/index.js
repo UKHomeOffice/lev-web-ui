@@ -1,5 +1,6 @@
 'use strict';
 
+const { DateTime } = require('luxon');
 const promClient = require('prom-client');
 const register = promClient.register;
 const packageJson = require('../../package.json');
@@ -217,8 +218,13 @@ const incrementErrorMetrics = (reqType, dataSet, groups, duration) => {
 
 initialiseMetrics();
 
+const getCurrentTimeInMillis = () => {
+  return DateTime.now().toMillis();
+};
+
 module.exports = {
-  metricsRoute,
+  getCurrentTimeInMillis,
+  incrementErrorMetrics,
   incrementRequestMetrics,
-  incrementErrorMetrics
+  metricsRoute
 };

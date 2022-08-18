@@ -1,8 +1,7 @@
 'use strict';
 
-const { DateTime } = require('luxon');
 const DateController = require('./DateController');
-const { incrementErrorMetrics, incrementRequestMetrics } = require('../routes/metrics');
+const { getCurrentTimeInMillis, incrementErrorMetrics, incrementRequestMetrics } = require('../routes/metrics');
 const BirthSearchService = require('../services/BirthSearchService');
 
 class BirthSearchController extends DateController {
@@ -26,7 +25,7 @@ class BirthSearchController extends DateController {
     if (systemNumber && systemNumber !== '') {
 
       // lookup
-      const startTime = DateTime.now().toMillis();
+      const startTime = getCurrentTimeInMillis();
 
       try {
         const record = await BirthSearchService.lookup({
@@ -37,18 +36,18 @@ class BirthSearchController extends DateController {
         req.sessionModel.set('searchResults', record ? [record] : []);
         req.sessionModel.set('currentRecord', record ? 0 : -1);
 
-        const endTime = DateTime.now().toMillis();
+        const endTime = getCurrentTimeInMillis();
         incrementRequestMetrics('lookup', 'birth', this.getGroups(req), endTime - startTime);
         next();
       } catch (err) {
-        const endTime = DateTime.now().toMillis();
+        const endTime = getCurrentTimeInMillis();
         incrementErrorMetrics('lookup', 'birth', this.getGroups(req), endTime - startTime);
         next(err);
       }
     } else {
 
       // search
-      const startTime = DateTime.now().toMillis();
+      const startTime = getCurrentTimeInMillis();
 
       try {
         const searchResults = await BirthSearchService.search({
@@ -60,11 +59,11 @@ class BirthSearchController extends DateController {
         req.sessionModel.set('searchResults', searchResults);
         req.sessionModel.set('currentRecord', searchResults.length === 0 ? -1 : 0);
 
-        const endTime = DateTime.now().toMillis();
+        const endTime = getCurrentTimeInMillis();
         incrementRequestMetrics('search', 'birth', this.getGroups(req), endTime - startTime);
         next();
       } catch (err) {
-        const endTime = DateTime.now().toMillis();
+        const endTime = getCurrentTimeInMillis();
         incrementErrorMetrics('search', 'birth', this.getGroups(req), endTime - startTime);
         next(err);
       }
