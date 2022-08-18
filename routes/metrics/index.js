@@ -196,6 +196,8 @@ const incrementMetrics = (type, reqType, dataSet, groups, duration) => {
   });
 
   // Observe histograms
+  duration /= 1000; // convert milliseconds to seconds
+
   promMetrics[type].time.observe(duration);
   promMetrics[type][reqType].time.observe(duration);
   promMetrics[type][dataSet].time.observe(duration);
