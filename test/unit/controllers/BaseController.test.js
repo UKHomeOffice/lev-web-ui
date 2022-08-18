@@ -152,4 +152,35 @@ describe('BaseController tests', () => {
       expect(received).toEqual(true);
     });
   });
+
+  describe('getGroups()', () => {
+    describe('When no groups exists in the request headers', () => {
+      it('should return an empty array', () => {
+
+        // Arrange
+        const req = { headers: {} };
+
+        // Act
+        const received = controller.getGroups(req);
+
+        // Assert
+        expect(received).toEqual([]);
+      });
+    });
+    describe('When groups exist in the request headers', () => {
+      it('should return an array of groups', () => {
+
+        // Arrange
+        const req = { headers: {
+          'x-auth-groups': 'RealmAdministrators,HMPO/LEV'
+        }};
+
+        // Act
+        const received = controller.getGroups(req);
+
+        // Assert
+        expect(received).toEqual(['RealmAdministrators', 'HMPO/LEV']);
+      });
+    });
+  });
 });
