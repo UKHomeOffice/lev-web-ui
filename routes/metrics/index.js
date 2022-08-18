@@ -58,6 +58,10 @@ const initialiseMetrics = () => {
   });
 
   // Histograms
+  promMetrics.req.time = new promClient.Histogram({
+    name: `${promPrefix}_req_time`,
+    help: 'Request time of requests'
+  });
 
   // Request types
   reqTypes.forEach(reqType => {
@@ -116,6 +120,10 @@ const initialiseMetrics = () => {
   });
 
   // Histograms
+  promMetrics.err.time = new promClient.Histogram({
+    name: `${promPrefix}_err_time`,
+    help: 'Request time of errors'
+  });
 
   // Request types
   reqTypes.forEach(reqType => {
@@ -188,6 +196,7 @@ const incrementMetrics = (type, reqType, dataSet, groups, duration) => {
   });
 
   // Observe histograms
+  promMetrics[type].time.observe(duration);
   promMetrics[type][reqType].time.observe(duration);
   promMetrics[type][dataSet].time.observe(duration);
   promMetrics[type][dataSet][reqType].time.observe(duration);
