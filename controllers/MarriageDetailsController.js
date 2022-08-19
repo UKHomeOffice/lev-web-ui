@@ -27,7 +27,7 @@ class MarriageDetailsController extends BaseController {
         } else {
 
           // Record not found in searchResults, call REST API
-          record = await MarriageSearchService.searchById({
+          record = await MarriageSearchService.lookup({
             ...this.getOptions(req),
             url: `/v1/registration/marriage/${systemNumber}`
           });

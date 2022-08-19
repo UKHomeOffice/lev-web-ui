@@ -27,7 +27,7 @@ class DeathDetailsController extends BaseController {
         } else {
 
           // Record not found in searchResults, call REST API
-          record = await DeathSearchService.searchById({
+          record = await DeathSearchService.lookup({
             ...this.getOptions(req),
             url: `/v1/registration/death/${systemNumber}`
           });

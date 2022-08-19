@@ -10,7 +10,7 @@ class SearchService {
    * @param options
    * @returns {Promise<record>}
    */
-  static async searchById(options) {
+  static async lookup(options) {
     return await new Promise((resolve, reject) => {
       const model = new RestApiModel({}, options);
       model.fetch((err, data, _responseTime) => {
@@ -31,7 +31,7 @@ class SearchService {
    * @param options
    * @returns {Promise<[record]>}
    */
-  static async searchByName(options) {
+  static async search(options) {
     return await new Promise((resolve, reject) => {
       const model = new RestApiModel({}, options);
       model.fetch((err, data, _responseTime) => {

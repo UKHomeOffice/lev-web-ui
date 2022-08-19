@@ -1,6 +1,7 @@
 'use strict';
 
 const DateController = require('./DateController');
+const { getCurrentTimeInMillis, incrementErrorMetrics, incrementRequestMetrics } = require('../lib/metrics');
 const PartnershipSearchService = require('../services/PartnershipSearchService');
 
 class PartnershipSearchController extends DateController {
@@ -20,13 +21,14 @@ class PartnershipSearchController extends DateController {
     const forenames = req.form.values['forenames'];
     const dateOfPartnership = req.form.values['dop'];
 
-    // If systemNumber exists, perform searchById otherwise perform searchByName
+    // If systemNumber exists, perform lookup otherwise perform search
     if (systemNumber && systemNumber !== '') {
 
-      try {
+      // lookup
+      const startTime = getCurrentTimeInMillis();
 
-        // searchById
-        const record = await PartnershipSearchService.searchById({
+      try {
+        const record = await PartnershipSearchService.lookup({
           ...this.getOptions(req),
           url: `/v1/registration/partnership/${systemNumber}`
         });
@@ -34,15 +36,19 @@ class PartnershipSearchController extends DateController {
         req.sessionModel.set('searchResults', record ? [record] : []);
         req.sessionModel.set('currentRecord', record ? 0 : -1);
 
+        const endTime = getCurrentTimeInMillis();
+        incrementRequestMetrics('lookup', 'partnership', this.getGroups(req), endTime - startTime);
         next();
       } catch (err) {
         next(err);
       }
     } else {
 
-      // searchByName
+      // search
+      const startTime = getCurrentTimeInMillis();
+
       try {
-        const searchResults = await PartnershipSearchService.searchByName({
+        const searchResults = await PartnershipSearchService.search({
           ...this.getOptions(req),
           url: '/v1/registration/partnership',
           searchParams: { forenames, surname, dateOfPartnership }
@@ -51,8 +57,12 @@ class PartnershipSearchController extends DateController {
         req.sessionModel.set('searchResults', searchResults);
         req.sessionModel.set('currentRecord', searchResults.length === 0 ? -1 : 0);
 
+        const endTime = getCurrentTimeInMillis();
+        incrementRequestMetrics('search', 'partnership', this.getGroups(req), endTime - startTime);
         next();
       } catch (err) {
+        const endTime = getCurrentTimeInMillis();
+        incrementErrorMetrics('search', 'partnership', this.getGroups(req), endTime - startTime);
         next(err);
       }
     }

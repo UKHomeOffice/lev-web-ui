@@ -27,7 +27,7 @@ class BirthDetailsController extends BaseController {
         } else {
 
           // Record not found in searchResults, call REST API
-          record = await BirthSearchService.searchById({
+          record = await BirthSearchService.lookup({
             ...this.getOptions(req),
             url: `/v1/registration/birth/${systemNumber}`
           });
