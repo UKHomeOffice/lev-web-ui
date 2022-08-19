@@ -1,7 +1,7 @@
 'use strict';
 
 const DateController = require('./DateController');
-const { getCurrentTimeInMillis, incrementErrorMetrics, incrementRequestMetrics } = require('../routes/metrics');
+const { getCurrentTimeInMillis, incrementErrorMetrics, incrementRequestMetrics } = require('../lib/metrics');
 const PartnershipSearchService = require('../services/PartnershipSearchService');
 
 class PartnershipSearchController extends DateController {
