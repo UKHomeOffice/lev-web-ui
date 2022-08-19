@@ -7,6 +7,4 @@ const metricsRoute = async (req, res) => {
   res.end(await register.metrics());
 };
 
-module.exports = {
-  metricsRoute
-};
+module.exports = metricsRoute;

@@ -6,7 +6,7 @@ const birthRoute = require('./routes/birth');
 const deathRoute = require('./routes/death');
 const marriageRoute = require('./routes/marriage');
 const partnershipRoute = require('./routes/partnership');
-const { metricsRoute } = require('./routes/metrics');
+const metricsRoute = require('./routes/metrics');
 const userActivityRoute = require('./routes/user-activity');
 
 const { router } = setup(options);
