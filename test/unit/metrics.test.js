@@ -14,27 +14,37 @@ describe('metric tests', () => {
     const searchCounter = jest.spyOn(promMetrics.req.search, 'inc');
 
     describe('lookups', () => {
-      dataSets.forEach((dataSet) => {
+      dataSets.forEach(dataSet => {
         test(`${dataSet} dataset counter incremented`, () => {
 
+          // Arrange
           const datasetCounter = jest.spyOn(promMetrics.req[dataSet], 'inc');
+
+          // Act
           incrementRequestMetrics('lookup', dataSet, ['test-group'], 1);
 
-          expect(datasetCounter).toHaveBeenCalled();
-          expect(reqCounter).toHaveBeenCalled();
-          expect(lookUpCounter).toHaveBeenCalled();
+          // Assert
+          expect(datasetCounter).toHaveBeenCalledTimes(1);
+          expect(reqCounter).toHaveBeenCalledTimes(1);
+          expect(lookUpCounter).toHaveBeenCalledTimes(1);
         });
       });
     });
+
     describe('searches', () => {
-      dataSets.forEach((dataSet) => {
+      dataSets.forEach(dataSet => {
         test(`${dataSet} dataset counter incremented`, () => {
 
+          // Arrange
           const datasetCounter = jest.spyOn(promMetrics.req[dataSet], 'inc');
+
+          // Act
           incrementRequestMetrics('search', dataSet, ['test-group'], 1);
-          expect(datasetCounter).toHaveBeenCalled();
-          expect(reqCounter).toHaveBeenCalled();
-          expect(searchCounter).toHaveBeenCalled();
+
+          // Assert
+          expect(datasetCounter).toHaveBeenCalledTimes(1);
+          expect(reqCounter).toHaveBeenCalledTimes(1);
+          expect(searchCounter).toHaveBeenCalledTimes(1);
         });
       });
     });
@@ -46,26 +56,37 @@ describe('metric tests', () => {
     const searchCounter = jest.spyOn(promMetrics.err.search, 'inc');
 
     describe('lookups', () => {
-      dataSets.forEach((dataSet) => {
+      dataSets.forEach(dataSet => {
         test(`${dataSet} dataset counter incremented`, () => {
 
-          const datasetCounter = jest.spyOn(promMetrics.req[dataSet], 'inc');
+          // Arrange
+          const datasetCounter = jest.spyOn(promMetrics.err[dataSet], 'inc');
+
+          // Act
           incrementErrorMetrics('lookup', dataSet, ['test-group'], 1);
-          expect(datasetCounter).toHaveBeenCalled();
-          expect(reqCounter).toHaveBeenCalled();
-          expect(lookUpCounter).toHaveBeenCalled();
+
+          // Assert
+          expect(datasetCounter).toHaveBeenCalledTimes(1);
+          expect(reqCounter).toHaveBeenCalledTimes(1);
+          expect(lookUpCounter).toHaveBeenCalledTimes(1);
         });
       });
     });
+
     describe('searches', () => {
-      dataSets.forEach((dataSet) => {
+      dataSets.forEach(dataSet => {
         test(`${dataSet} dataset counter incremented`, () => {
 
-          const datasetCounter = jest.spyOn(promMetrics.req[dataSet], 'inc');
+          // Arrange
+          const datasetCounter = jest.spyOn(promMetrics.err[dataSet], 'inc');
+
+          // Act
           incrementErrorMetrics('search', dataSet, ['test-group'], 1);
-          expect(datasetCounter).toHaveBeenCalled();
-          expect(reqCounter).toHaveBeenCalled();
-          expect(searchCounter).toHaveBeenCalled();
+
+          // Assert
+          expect(datasetCounter).toHaveBeenCalledTimes(1);
+          expect(reqCounter).toHaveBeenCalledTimes(1);
+          expect(searchCounter).toHaveBeenCalledTimes(1);
         });
       });
     });
@@ -73,6 +94,8 @@ describe('metric tests', () => {
 
   describe('get time function', () => {
     test('date/time is represented as a number', () => {
+
+      // Assert
       expect(typeof getCurrentTimeInMillis()).toBe('number');
     });
   });
