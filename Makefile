@@ -1,7 +1,7 @@
 .PHONY: all test clean
 
 clean:
-	rm -rf node_modules/ public/
+	rm -rf node_modules/ package-lock.json
 
 install:
 	npm install
