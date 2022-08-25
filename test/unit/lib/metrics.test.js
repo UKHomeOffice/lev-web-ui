@@ -1,4 +1,4 @@
-const { incrementRequestMetrics, incrementErrorMetrics, promMetrics, initialiseGroupMetrics} = require('../../lib/metrics');
+const { incrementRequestMetrics, incrementErrorMetrics, promMetrics, initialiseGroupMetrics} = require('../../../lib/metrics');
 
 describe('metric tests', () => {
   const reqTypes = ['lookup', 'search'];
