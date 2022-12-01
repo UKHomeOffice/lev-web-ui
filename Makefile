@@ -21,10 +21,10 @@ start-docker:
 stop-docker:
 	docker compose down
 
-start-docker-local:
+start-docker-e2e:
 	docker compose -f docker-compose-e2e.yml up --build
 
-stop-docker-local:
+stop-docker-e2e:
 	docker compose -f docker-compose-e2e.yml down
 
 all: clean install test
