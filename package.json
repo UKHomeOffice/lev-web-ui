@@ -45,7 +45,7 @@
     "sass": "^1.56.1"
   },
   "devDependencies": {
-    "axe-core": "^4.5.2",
+    "axe-core": "^4.7.0",
     "cypress": "^10.11.0",
     "cypress-axe": "^1.0.0",
     "cypress-keycloak": "^2.0.0",
