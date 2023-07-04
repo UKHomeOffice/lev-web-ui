@@ -1,0 +1,15 @@
+library(
+        identifier: 'jenkins-shared@master',
+        retriever: modernSCM([$class       : 'GitSCMSource',
+                              remote       : 'ssh://git@bitbucket.ipttools.info/lev/jenkins-shared.git',
+                              credentialsId: 'git'])
+)
+
+pipelineDeployment {
+    environments = ['dev1']
+    application = 'lev-web-ui'
+    service = 'fro'
+    zone = 'i'
+    cluster = 'np-i-docker-env1'
+    dockerImagePath = 'ho/hmpo/lev/fro/lev-web-ui'
+}
