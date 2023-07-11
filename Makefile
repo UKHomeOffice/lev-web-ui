@@ -7,7 +7,7 @@ install:
 	npm install
 
 test:
-	sleep 20
+	sleep 21
 	docker build -t "lev-web-ui-image" .
 	docker build -t "cypress-image" -f Dockerfile-e2e .
 	docker run -d --name "lev-web-ui" lev-web-ui-image
