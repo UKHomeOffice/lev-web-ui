@@ -1,4 +1,4 @@
-FROM cypress/browsers:node18.12.0-chrome107
+FROM 113355358853.dkr.ecr.eu-west-1.amazonaws.com/ho/hmpo/lev/fro/cypress-testing:abeda9a0033970f2dcfecd8c4f41bed6d0363343
 
 ENV HTTP_PROXY='http://proxy.local:8080'
 ENV HTTPS_PROXY='http://proxy.local:8080'
