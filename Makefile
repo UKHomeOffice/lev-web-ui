@@ -6,13 +6,7 @@ clean:
 install:
 	npm install
 
-test:
-	docker build -t "lev-web-ui-image" .
-	docker build -t "cypress-image" -f Dockerfile-e2e .
-	docker run -d --name "lev-web-ui" lev-web-ui-image
-	docker run -d --name lev-api-mock --net "container:lev-web-ui" --env 'MOCK=true' quay.io/ukhomeofficedigital/lev-api:0.18
-	docker run --net "container:lev-web-ui" cypress-image
-	docker rm -vf "lev-web-ui" "lev-api-mock"
+test: start-docker-e2e stop-docker-e2e
 
 build:
 	npm run build
@@ -21,15 +15,15 @@ dev:
 	npm run dev
 
 start-docker:
-	docker compose up --build
+	docker-compose up --build
 
 stop-docker:
-	docker compose down
+	docker-compose down
 
 start-docker-e2e:
-	docker compose -f docker-compose-e2e.yml up --build
+	docker-compose -f docker-compose-e2e.yml up --build
 
 stop-docker-e2e:
-	docker compose -f docker-compose-e2e.yml down
+	docker-compose -f docker-compose-e2e.yml down
 
 all: clean install test
