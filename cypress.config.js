@@ -38,6 +38,7 @@ module.exports = defineConfig({
 
       return config;
     },
+    testIsolation: false,
     baseUrl: 'http://localhost:8001',
   }
 });
