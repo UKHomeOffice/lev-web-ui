@@ -1,15 +1,36 @@
-FROM 113355358853.dkr.ecr.eu-west-1.amazonaws.com/ho/hmpo/lev/fro/cypress-testing:abeda9a0033970f2dcfecd8c4f41bed6d0363343
-#FROM cypress/included:cypress-12.17.1-node-18.16.0-chrome-114.0.5735.133-1-ff-114.0.2-edge-114.0.1823.51-1
+FROM 113355358853.dkr.ecr.eu-west-1.amazonaws.com/ho/hmpo/lev/fro/cypress-testing:8c64f6e43a7e98ec1a25a1bf2bf7d830ef151e56
+# FROM cypress/included:cypress-12.17.1-node-18.16.0-chrome-114.0.5735.133-1-ff-114.0.2-edge-114.0.1823.51-1
+RUN ls -la /root/.cache/
+RUN ls -la /root/.cache/Cypress
 
 ENV HTTP_PROXY='http://proxy.local:8080'
 ENV HTTPS_PROXY='http://proxy.local:8080'
 
-USER root
-#WORKDIR /app
-COPY ./ ./
+RUN ls -la /root/.cache/
+RUN ls -la /root/.cache/Cypress
+
+RUN chmod 755 /root
+
+ENV CYPRESS_CACHE_FOLDER=/root/.cache/Cypress
+
+RUN ls -la /root/.cache/
+RUN ls -la /root/.cache/Cypress
+
+
+
+WORKDIR /app
+COPY . /app
+
+RUN ls -la /root/.cache/
+RUN ls -la /root/.cache/Cypress
 
 #ENV CYPRESS_INSTALL_BINARY=../root/.cache/Cypress/12.17.1/Cypress/Cypress
 
 RUN npm ci -D
+
+RUN ls -la /root/.cache/
+RUN ls -la /root/.cache/Cypress
+
+RUN npx cypress install
 
 CMD [ "npm", "run", "test:ui" ]
