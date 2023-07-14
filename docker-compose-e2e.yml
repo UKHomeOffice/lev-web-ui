@@ -32,7 +32,7 @@ services:
       - mock-api
     environment:
       - CYPRESS_baseUrl=http://lev-web-ui:8001
-    command: npx cypress run
+    command: npx cypress run --headless --browser chrome
     volumes:
       - ./cypress:/cypress
       - ./cypress.config.js:/cypress.config.js
