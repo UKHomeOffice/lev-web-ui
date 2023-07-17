@@ -1,8 +1,5 @@
 FROM node:18-alpine3.15 as base
 
-ENV HTTP_PROXY='http://proxy.local:8080'
-ENV HTTPS_PROXY='http://proxy.local:8080'
-
 RUN apk add --no-cache ca-certificates \
  && apk upgrade --no-cache
 
