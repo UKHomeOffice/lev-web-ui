@@ -13,5 +13,6 @@ RUN npm install cypress
 
 ENV HTTP_PROXY=''
 ENV HTTPS_PROXY=''
+ENV NO_COLOR=1
 
 CMD [ "npm", "run", "test:ui" ]
