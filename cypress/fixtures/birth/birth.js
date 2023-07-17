@@ -3,7 +3,7 @@
 
 // Search criteria for a record that returns single result
 const searchSingleRecord = {
-  surname: 'Sol',
+  surname: 'Solo',
   forenames: 'Tester',
   day: '29',
   month: '02',
