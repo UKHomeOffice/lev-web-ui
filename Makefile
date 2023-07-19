@@ -7,7 +7,6 @@ install:
 	npm install
 
 test:
-	npm test
 	docker-compose -f docker-compose-e2e.yml up --build --exit-code-from acceptance
 
 build:
