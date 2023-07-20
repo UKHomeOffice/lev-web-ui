@@ -1,6 +1,6 @@
 {
   "name": "lev-web-ui",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Life Event Verification User Interface",
   "main": "app.js",
   "scripts": {
@@ -12,7 +12,7 @@
     "build:js": "mkdir -p public/javascripts; cat node_modules/govuk-frontend/govuk/all.js node_modules/hmpo-components/all.js assets/javascripts/*.js > public/javascripts/application.js",
     "watch:dev": "nodemon .",
     "watch:sass": "sass --watch --load-path=. --quiet-deps --style=compressed assets/stylesheets/app.scss public/stylesheets/application.css",
-    "start:mockapi": "docker run -d -p 8080:8080 --name lev-api-mock --env 'MOCK=true' quay.io/ukhomeofficedigital/lev-api:0.18 > /dev/null 2>&1;true",
+    "start:mockapi": "docker run -d -p 8080:8080 --name lev-api-mock --env 'MOCK=true' quay.io/ukhomeofficedigital/lev-api:0.18.1 > /dev/null 2>&1;true",
     "stop:mockapi": "npm-run-all -s -c --silent stop:mockapi:kill stop:mockapi:rm > /dev/null 2>&1;true",
     "stop:mockapi:kill": "docker kill lev-api-mock > /dev/null 2>&1;true",
     "stop:mockapi:rm": "docker rm lev-api-mock > /dev/null 2>&1;true",
