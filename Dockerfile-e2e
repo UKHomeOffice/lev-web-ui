@@ -6,7 +6,7 @@ ENV HTTP_PROXY='http://proxy.local:8080'
 ENV HTTPS_PROXY='http://proxy.local:8080'
 
 WORKDIR /app
-COPY . /app
+COPY ./ /app
 
 RUN npm ci -D
 RUN npm install cypress
