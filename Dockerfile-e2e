@@ -9,7 +9,7 @@ WORKDIR /app
 COPY ./ /app
 
 RUN npm ci -D
-RUN npm install cypress
+#RUN npm install cypress
 
 ENV HTTP_PROXY=''
 ENV HTTPS_PROXY=''
