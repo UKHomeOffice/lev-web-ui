@@ -15,4 +15,5 @@ ENV HTTP_PROXY=''
 ENV HTTPS_PROXY=''
 ENV NO_COLOR=1
 
+ENTRYPOINT []
 CMD [ "npm", "run", "test:ui" ]
