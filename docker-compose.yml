@@ -14,7 +14,8 @@ services:
     - redis-service
     - mock-api
   mock-api:
-    image: quay.io/ukhomeofficedigital/lev-api:0.18
+    image: 113355358853.dkr.ecr.eu-west-1.amazonaws.com/ho/hmpo/lev/api/lev-api:13f6c8908b156ab91537671146b3f179ff4a2b01
+#    image: quay.io/ukhomeofficedigital/lev-api:0.18.1
     environment:
       MOCK: "true"
     ports:

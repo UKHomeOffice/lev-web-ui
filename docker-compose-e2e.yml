@@ -14,7 +14,8 @@ services:
     - redis-service
     - mock-api
   mock-api:
-    image: quay.io/ukhomeofficedigital/lev-api:0.18
+    image: 113355358853.dkr.ecr.eu-west-1.amazonaws.com/ho/hmpo/lev/api/lev-api:13f6c8908b156ab91537671146b3f179ff4a2b01
+#    image: quay.io/ukhomeofficedigital/lev-api:0.18.1
     environment:
       MOCK: "true"
     ports:
@@ -32,7 +33,7 @@ services:
       - mock-api
     environment:
       - CYPRESS_baseUrl=http://lev-web-ui:8001
-    command: npx cypress run
+    command: npm cypress run --headless --browser chrome --config-file ./cypress.config.js
     volumes:
       - ./cypress:/cypress
       - ./cypress.config.js:/cypress.config.js

@@ -27,6 +27,9 @@ class PartnershipDetailsPage extends DetailsPage {
    * @param multipleResults
    */
   static visitWithFullDetails(record) {
+    cy.clearAllCookies();
+    cy.clearAllLocalStorage();
+    cy.clearAllSessionStorage();
     cy.visit(`/partnership/details/${record.id}`, {
       headers: {
         'X-Auth-Roles': 'full-details'
