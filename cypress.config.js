@@ -13,7 +13,7 @@ module.exports = defineConfig({
       // configure cypress-keycloak
       config.env.keycloak = {
         root: process.env.KEYCLOAK_URL,
-        realm: 'lev',
+        realm: 'lev_dev',
         username: process.env.TEST_USERNAME,
         password: process.env.TEST_PASSWORD,
         // eslint-disable-next-line camelcase
