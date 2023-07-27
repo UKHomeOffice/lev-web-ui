@@ -16,12 +16,10 @@ module.exports = defineConfig({
         realm: 'lev_dev',
         username: process.env.TEST_USERNAME,
         password: process.env.TEST_PASSWORD,
-        // eslint-disable-next-line camelcase
         client_id: 'lev-web-ui',
-        // eslint-disable-next-line camelcase
-        redirect_uri: process.env.TEST_URL
+        post_logout_redirect_uri: process.env.TEST_URL,
+        path_prefix: ''
       };
-
       // configure cypress-axe
       on('task', {
         log(message) {
