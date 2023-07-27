@@ -33,6 +33,9 @@ if (Cypress.env('e2e')) {
 
     describe('Birth registrations', () => {
       describe('Searching for a record', () => {
+        before(() => {
+          LoginPage.login();
+        });
         it('presents me with the results page', () => {
           BirthSearchPage.visit();
           BirthSearchPage.shouldBeVisible();
@@ -50,6 +53,9 @@ if (Cypress.env('e2e')) {
     });
 
     describe('Death registrations', () => {
+      before(() => {
+        LoginPage.login();
+      });
       describe('Searching for a record', () => {
         it('presents me with the details page', () => {
           DeathSearchPage.visit();
@@ -68,6 +74,9 @@ if (Cypress.env('e2e')) {
     });
 
     describe('Marriage registrations', () => {
+      before(() => {
+        LoginPage.login();
+      });
       describe('Searching for a record', () => {
         it('presents me with the details page', () => {
           MarriageSearchPage.visit();
@@ -86,6 +95,9 @@ if (Cypress.env('e2e')) {
     });
 
     describe('Partnership registrations', () => {
+      before(() => {
+        LoginPage.login();
+      });
       describe('Searching for a record', () => {
         it('presents me with the details page', () => {
           PartnershipSearchPage.visit();
