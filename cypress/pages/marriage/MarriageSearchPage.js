@@ -8,7 +8,7 @@ class MarriageSearchPage extends SearchPage {
    * Navigate to marriage registration search page
    */
   static visit() {
-    cy.visit('/marriage/search');
+    cy.visit('/marriage');
   }
 
   /**
