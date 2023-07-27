@@ -16,15 +16,13 @@ if (Cypress.env('e2e')) {
   describe('Smoke Tests', () => {
     describe('Accessing the UI', () => {
       it('presents me with the login prompt', () => {
+        HomePage.visit();
         LoginPage.shouldBeVisible();
       });
 
       describe('allows me to login to LEV', () => {
-        before(() => {
-          LoginPage.login();
-        });
-
         it('presents me with a search form for births', () => {
+          LoginPage.login();
           HomePage.visit();
           HomePage.shouldBeVisible();
         });
@@ -33,14 +31,13 @@ if (Cypress.env('e2e')) {
 
     describe('Birth registrations', () => {
       describe('Searching for a record', () => {
-        before(() => {
-          LoginPage.login();
-        });
         it('presents me with the results page', () => {
+          LoginPage.login();
           BirthSearchPage.visit();
           BirthSearchPage.shouldBeVisible();
           BirthSearchPage.performSearch({systemNumber: '123456789'});
           BirthDetailsPage.shouldBeVisible();
+          LoginPage.logout();
         });
       });
 
@@ -53,11 +50,9 @@ if (Cypress.env('e2e')) {
     });
 
     describe('Death registrations', () => {
-      before(() => {
-        LoginPage.login();
-      });
       describe('Searching for a record', () => {
         it('presents me with the details page', () => {
+          LoginPage.login();
           DeathSearchPage.visit();
           DeathSearchPage.shouldBeVisible();
           DeathSearchPage.performSearch({systemNumber: '999999910'});
@@ -74,11 +69,9 @@ if (Cypress.env('e2e')) {
     });
 
     describe('Marriage registrations', () => {
-      before(() => {
-        LoginPage.login();
-      });
       describe('Searching for a record', () => {
         it('presents me with the details page', () => {
+          LoginPage.login();
           MarriageSearchPage.visit();
           MarriageSearchPage.shouldBeVisible();
           MarriageSearchPage.performSearch({systemNumber: '999999910'});
@@ -95,11 +88,9 @@ if (Cypress.env('e2e')) {
     });
 
     describe('Partnership registrations', () => {
-      before(() => {
-        LoginPage.login();
-      });
       describe('Searching for a record', () => {
         it('presents me with the details page', () => {
+          LoginPage.login();
           PartnershipSearchPage.visit();
           PartnershipSearchPage.shouldBeVisible();
           PartnershipSearchPage.performSearch({systemNumber: '999999910'});
