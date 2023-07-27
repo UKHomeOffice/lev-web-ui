@@ -16,7 +16,6 @@ if (Cypress.env('e2e')) {
   describe('Smoke Tests', () => {
     describe('Accessing the UI', () => {
       it('presents me with the login prompt', () => {
-        HomePage.visit();
         LoginPage.shouldBeVisible();
       });
 

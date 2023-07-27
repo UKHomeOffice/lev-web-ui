@@ -8,7 +8,7 @@ class DeathSearchPage extends SearchPage {
    * Navigate to death registration search page
    */
   static visit() {
-    cy.visit('/death');
+    cy.visit('/death/search');
   }
 
   /**
