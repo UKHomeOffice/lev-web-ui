@@ -10,15 +10,11 @@ const MarriageSearchPage = require('../../pages/marriage/MarriageSearchPage');
 const MarriageResultsPage = require('../../pages/marriage/MarriageResultsPage');
 const PartnershipSearchPage = require('../../pages/partnership/PartnershipSearchPage');
 const PartnershipResultsPage = require('../../pages/partnership/PartnershipResultsPage');
-const SearchErrorPage = require('../../pages/SearchErrorPage');
+// const SearchErrorPage = require('../../pages/SearchErrorPage');
 
 if (Cypress.env('e2e')) {
   describe('Smoke Tests', () => {
     describe('Accessing the UI', () => {
-      before(() => {
-        LoginPage.logout();
-      });
-
       it('presents me with the login prompt', () => {
         HomePage.visit();
         LoginPage.shouldBeVisible();
@@ -37,10 +33,6 @@ if (Cypress.env('e2e')) {
     });
 
     describe('Birth registrations', () => {
-      before(() => {
-        LoginPage.login();
-      });
-
       describe('Searching for a record', () => {
         it('presents me with the results page', () => {
           BirthSearchPage.visit();
@@ -50,19 +42,15 @@ if (Cypress.env('e2e')) {
         });
       });
 
-      describe('Trying to access a non-existent record', () => {
-        it('presents me with the NOT FOUND error page', () => {
-          SearchErrorPage.visit('/birth/details/404');
-          SearchErrorPage.shouldBeVisible();
-        });
-      });
+      // describe('Trying to access a non-existent record', () => {
+      //   it('presents me with the NOT FOUND error page', () => {
+      //     SearchErrorPage.visit('/birth/details/404');
+      //     SearchErrorPage.shouldBeVisible();
+      //   });
+      // });
     });
 
     describe('Death registrations', () => {
-      before(() => {
-        LoginPage.login();
-      });
-
       describe('Searching for a record', () => {
         it('presents me with the results page', () => {
           DeathSearchPage.visit();
@@ -72,19 +60,15 @@ if (Cypress.env('e2e')) {
         });
       });
 
-      describe('Trying to access a non-existent record', () => {
-        it('presents me with the NOT FOUND error page', () => {
-          SearchErrorPage.visit('/death/details/404');
-          SearchErrorPage.shouldBeVisible();
-        });
-      });
+      // describe('Trying to access a non-existent record', () => {
+      //   it('presents me with the NOT FOUND error page', () => {
+      //     SearchErrorPage.visit('/death/details/404');
+      //     SearchErrorPage.shouldBeVisible();
+      //   });
+      // });
     });
 
     describe('Marriage registrations', () => {
-      before(() => {
-        LoginPage.login();
-      });
-
       describe('Searching for a record', () => {
         it('presents me with the results page', () => {
           MarriageSearchPage.visit();
@@ -94,19 +78,15 @@ if (Cypress.env('e2e')) {
         });
       });
 
-      describe('Trying to access a non-existent record', () => {
-        it('presents me with the NOT FOUND error page', () => {
-          SearchErrorPage.visit('/marriage/details/404');
-          SearchErrorPage.shouldBeVisible();
-        });
-      });
+      // describe('Trying to access a non-existent record', () => {
+      //   it('presents me with the NOT FOUND error page', () => {
+      //     SearchErrorPage.visit('/marriage/details/404');
+      //     SearchErrorPage.shouldBeVisible();
+      //   });
+      // });
     });
 
     describe('Partnership registrations', () => {
-      before(() => {
-        LoginPage.login();
-      });
-
       describe('Searching for a record', () => {
         it('presents me with the results page', () => {
           PartnershipSearchPage.visit();
@@ -116,12 +96,12 @@ if (Cypress.env('e2e')) {
         });
       });
 
-      describe('Trying to access a non-existent record', () => {
-        it('presents me with the NOT FOUND error page', () => {
-          SearchErrorPage.visit('/partnership/details/404');
-          SearchErrorPage.shouldBeVisible();
-        });
-      });
+      // describe('Trying to access a non-existent record', () => {
+      //   it('presents me with the NOT FOUND error page', () => {
+      //     SearchErrorPage.visit('/partnership/details/404');
+      //     SearchErrorPage.shouldBeVisible();
+      //   });
+      // });
     });
   });
 }

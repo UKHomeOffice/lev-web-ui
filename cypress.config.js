@@ -5,7 +5,6 @@ module.exports = defineConfig({
   video: false,
   e2e: {
     setupNodeEvents(on, config) {
-
       // Populate the environment from process.env
       config.env.env = process.env.ENV || 'local';
       config.env.e2e = config.env.env !== 'local';
@@ -16,10 +15,13 @@ module.exports = defineConfig({
         realm: 'lev_dev',
         username: process.env.TEST_USERNAME,
         password: process.env.TEST_PASSWORD,
+        // eslint-disable-next-line camelcase
         client_id: 'lev-web-ui',
-        post_logout_redirect_uri: process.env.TEST_URL,
+        // eslint-disable-next-line camelcase
+        redirect_uri: process.env.TEST_URL,
         path_prefix: ''
       };
+
       // configure cypress-axe
       on('task', {
         log(message) {
