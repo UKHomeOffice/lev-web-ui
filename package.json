@@ -1,6 +1,6 @@
 {
   "name": "lev-web-ui",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Life Event Verification User Interface",
   "main": "app.js",
   "scripts": {
@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "axe-core": "^4.5.2",
-    "cypress": "^12.17.1 ",
+    "cypress": "^12.17.1",
     "cypress-axe": "^1.0.0",
     "cypress-keycloak": "^2.0.0",
     "eslint": "^8.28.0",
