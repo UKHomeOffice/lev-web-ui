@@ -24,7 +24,8 @@ if (Cypress.env('e2e')) {
         it('presents me with a search form for births', () => {
           HomePage.visit();
           LoginPage.login();
-          HomePage.shouldBeVisible();
+          BirthSearchPage.visit();
+          BirthSearchPage.shouldBeVisible();
         });
       });
     });
