@@ -16,16 +16,12 @@ class LoginPage {
    */
   static login() {
     if (Cypress.env('e2e')) {
-      cy.login(Cypress.env('keycloak'));
-
-      // const {username, password} = Cypress.env('keycloak');
-      // console.log(username);
-      // console.log(password);
-      //
-      // cy.get('input[name=username]').type(username);
-      // cy.get('input[name=password]').type(password);
-      // cy.get('input[name=login]').click();
       // cy.login(Cypress.env('keycloak'));
+
+      const {username, password} = Cypress.env('keycloak');
+      cy.get('input[name=username]').type(username);
+      cy.get('input[name=password]').type(password);
+      cy.get('input[name=login]').click();
     }
   }
 
