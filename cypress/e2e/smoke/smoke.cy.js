@@ -23,7 +23,7 @@ if (Cypress.env('e2e')) {
         it('presents me with a search form for births', () => {
           HomePage.visit();
           LoginPage.login();
-          BirthSearchPage.visit();
+          // BirthSearchPage.visit();
           BirthSearchPage.shouldBeVisible();
         });
       });
