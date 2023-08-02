@@ -14,14 +14,14 @@ module.exports = defineConfig({
       // configure cypress-keycloak
       config.env.keycloak = {
         root: process.env.KEYCLOAK_URL,
-        realm: 'lev',
+        realm: 'lev_dev',
         username: process.env.TEST_USERNAME,
         password: process.env.TEST_PASSWORD,
         // eslint-disable-next-line camelcase
         client_id: 'lev-web-ui',
         // eslint-disable-next-line camelcase
-        redirect_uri: process.env.TEST_URL,
-        path_prefix: 'auth'
+        redirect_uri: 'http://lev-web-ui.ho-hmpo-dev1-i-lev-fro.svc.cluster.local:8081',
+        path_prefix: ''
       };
 
       // configure cypress-axe
