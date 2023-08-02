@@ -1,5 +1,7 @@
 'use strict';
 
+const HomePage = require('./HomePage');
+
 class LoginPage {
 
   /**
@@ -16,12 +18,13 @@ class LoginPage {
    */
   static login() {
     if (Cypress.env('e2e')) {
-      // cy.login(Cypress.env('keycloak'));
+      cy.login(Cypress.env('keycloak'));
+      HomePage.visit();
 
-      const {username, password} = Cypress.env('keycloak');
-      cy.get('input[name=username]').type(username);
-      cy.get('input[name=password]').type(password);
-      cy.get('input[name=login]').click();
+      // const {username, password} = Cypress.env('keycloak');
+      // cy.get('input[name=username]').type(username);
+      // cy.get('input[name=password]').type(password);
+      // cy.get('input[name=login]').click();
     }
   }
 
