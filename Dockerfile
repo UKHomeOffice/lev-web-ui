@@ -1,4 +1,4 @@
-FROM node:20-alpine as base
+FROM node:20-alpine3.18 as base
 
 ENV HTTP_PROXY='http://proxy.local:8080'
 ENV HTTPS_PROXY='http://proxy.local:8080'
