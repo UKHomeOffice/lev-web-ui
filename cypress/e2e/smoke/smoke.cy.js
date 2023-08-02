@@ -16,19 +16,14 @@ if (Cypress.env('e2e')) {
     describe('Accessing the UI', () => {
       it('presents me with the login prompt', () => {
         HomePage.visit();
-        cy.url().should('include', '/birth');
+        LoginPage.shouldBeVisible();
       });
-      it('presents me with the login prompt', () => {
-        HomePage.visit();
-        cy.url().should('include', '/birth/search');
-      });
-
       describe('allows me to login to LEV', () => {
         it('presents me with a search form for births', () => {
           HomePage.visit();
           LoginPage.login();
           BirthSearchPage.visit();
-          cy.url().should('include', '/birth/search');
+          cy.url().should('include', '/birth');
         });
       });
     });

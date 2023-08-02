@@ -19,7 +19,6 @@ class LoginPage {
   static login() {
     if (Cypress.env('e2e')) {
       cy.login(Cypress.env('keycloak'));
-      HomePage.visit();
 
       // const {username, password} = Cypress.env('keycloak');
       // cy.get('input[name=username]').type(username);
