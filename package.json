@@ -1,6 +1,6 @@
 {
   "name": "lev-web-ui",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Life Event Verification User Interface",
   "main": "app.js",
   "scripts": {
@@ -21,11 +21,11 @@
     "test:unit": "jest test/unit",
     "test:coverage": "jest test/unit --coverage",
     "test:ui": "npm run $([ -n \"${SMOKE_TEST}\" ] && echo cypress:smoke || echo cypress:acceptance)",
-    "cypress": "cypress open --config baseUrl=${TEST_URL:-http://localhost:8001} --browser chrome --e2e",
-    "cypress:all": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001} --headless --browser chrome --e2e",
-    "cypress:a11y": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001} --headless --browser chrome --e2e --spec **/acceptance/**/*-a11y.cy.js",
-    "cypress:acceptance": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001} --headless --browser chrome --e2e --spec **/acceptance/**/*.cy.js",
-    "cypress:smoke": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001} --headless --browser chrome --e2e --spec **/smoke/**/*.cy.js"
+    "cypress": "cypress open --config baseUrl=${TEST_URL:-http://localhost:8001} --e2e",
+    "cypress:all": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001} --headless --e2e",
+    "cypress:a11y": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001} --headless --e2e --spec **/acceptance/**/*-a11y.cy.js",
+    "cypress:acceptance": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001} --headless --e2e --spec **/acceptance/**/*.cy.js",
+    "cypress:smoke": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001} --headless --e2e --spec **/smoke/**/*.cy.js"
   },
   "author": "HMPO",
   "dependencies": {
@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "axe-core": "^4.5.2",
-    "cypress": "^12.17.1 ",
+    "cypress": "12.17.1",
     "cypress-axe": "^1.0.0",
     "cypress-keycloak": "^2.0.0",
     "eslint": "^8.28.0",
