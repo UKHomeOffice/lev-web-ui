@@ -23,7 +23,7 @@ if (Cypress.env('e2e')) {
           HomePage.visit();
           LoginPage.login();
           BirthSearchPage.visit();
-          cy.url().should('include', '/birth');
+          BirthSearchPage.shouldBeVisible();
         });
       });
     });
@@ -36,29 +36,17 @@ if (Cypress.env('e2e')) {
           BirthSearchPage.visit();
           BirthSearchPage.shouldBeVisible();
           BirthSearchPage.performSearch({systemNumber: '123456789'});
-          cy.url().should('include', '/birth/details');
+          BirthDetailsPage.shouldBeVisible();
         });
       });
     });
-    // TEST TO BE DELETED
-    describe('Birth registrations', () => {
-      describe('Searching for a record', () => {
-        it('presents me with the results page', () => {
-          BirthSearchPage.visit();
-          BirthSearchPage.shouldBeVisible();
-          BirthSearchPage.performSearch({systemNumber: '123456789'});
-          cy.url().should('include', '/birth/details');
-        });
-      });
-    });
-
     describe('Death registrations', () => {
       describe('Searching for a record', () => {
         it('presents me with the details page', () => {
           DeathSearchPage.visit();
           DeathSearchPage.shouldBeVisible();
           DeathSearchPage.performSearch({systemNumber: '999999910'});
-          cy.url().should('include', '/death/details');
+          DeathDetailsPage.shouldBeVisible();
         });
       });
     });
