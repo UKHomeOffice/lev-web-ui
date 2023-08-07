@@ -25,7 +25,7 @@
     "cypress:all": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001} --headless --e2e",
     "cypress:a11y": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001} --headless --e2e --spec **/acceptance/**/*-a11y.cy.js",
     "cypress:acceptance": "cypress run --config baseUrl=${TEST_URL:-http://localhost:8001} --headless --e2e --spec **/acceptance/**/*.cy.js",
-    "cypress:smoke": "cypress run --config baseUrl=http://localhost:8001 --headless --e2e --spec **/smoke/**/*.cy.js"
+    "cypress:smoke": "DEBUG=cypress:cli cypress run --config baseUrl=${TEST_URL:-http://localhost:8001} --headless --e2e --spec **/smoke/**/*.cy.js"
   },
   "author": "HMPO",
   "dependencies": {
