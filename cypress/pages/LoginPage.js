@@ -1,7 +1,5 @@
 'use strict';
 
-const HomePage = require('./HomePage');
-
 class LoginPage {
 
   /**
