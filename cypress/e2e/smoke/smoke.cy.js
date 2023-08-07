@@ -31,8 +31,6 @@ if (Cypress.env('e2e')) {
     describe('Birth registrations', () => {
       describe('Searching for a record', () => {
         it('presents me with the results page', () => {
-          HomePage.visit();
-          LoginPage.login();
           BirthSearchPage.visit();
           BirthSearchPage.shouldBeVisible();
           BirthSearchPage.performSearch({systemNumber: '123456789'});
