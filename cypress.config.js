@@ -20,7 +20,7 @@ module.exports = defineConfig({
         // eslint-disable-next-line camelcase
         client_id: 'lev-web-ui',
         // eslint-disable-next-line camelcase
-        redirect_uri: 'http://lev-web-ui.ho-hmpo-dev1-i-lev-fro.svc.cluster.local:8081',
+        redirect_uri: process.env.TEST_URL,
         path_prefix: ''
       };
 
