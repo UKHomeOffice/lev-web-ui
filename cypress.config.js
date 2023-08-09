@@ -5,6 +5,7 @@ module.exports = defineConfig({
   video: false,
   e2e: {
     setupNodeEvents(on, config) {
+      require('cypress-mochawesome-reporter/plugin')(on);
 
       // Populate the environment from process.env
       config.env.env = process.env.ENV || 'local';
@@ -13,13 +14,14 @@ module.exports = defineConfig({
       // configure cypress-keycloak
       config.env.keycloak = {
         root: process.env.KEYCLOAK_URL,
-        realm: 'lev',
+        realm: 'lev_dev',
         username: process.env.TEST_USERNAME,
         password: process.env.TEST_PASSWORD,
         // eslint-disable-next-line camelcase
         client_id: 'lev-web-ui',
         // eslint-disable-next-line camelcase
-        redirect_uri: process.env.TEST_URL
+        redirect_uri: process.env.TEST_URL,
+        path_prefix: ''
       };
 
       // configure cypress-axe
@@ -37,6 +39,15 @@ module.exports = defineConfig({
       });
 
       return config;
+    },
+    reporter: 'cypress-mochawesome-reporter',
+    reporterOptions: {
+      reportDir: 'cypress/reports',
+      json: false,
+      charts: true,
+      reportFilename: 'Cypress Test Report',
+      embeddedScreenshots: true,
+      inlineAssets: true
     },
     testIsolation: false,
     baseUrl: 'http://localhost:8001',

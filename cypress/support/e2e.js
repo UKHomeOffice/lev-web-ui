@@ -16,3 +16,5 @@
 require('cypress-axe');
 require('cypress-keycloak');
 require('luxon');
+require('cypress-mochawesome-reporter/register');
+

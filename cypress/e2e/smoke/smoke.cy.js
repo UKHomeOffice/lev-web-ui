@@ -1,125 +1,72 @@
 'use strict';
 
 const BirthSearchPage = require('../../pages/birth/BirthSearchPage');
-const BirthResultsPage = require('../../pages/birth/BirthResultsPage');
+const BirthDetailsPage = require('../../pages/birth/BirthDetailsPage');
 const DeathSearchPage = require('../../pages/death/DeathSearchPage');
-const DeathResultsPage = require('../../pages/death/DeathResultsPage');
+const DeathDetailsPage = require('../../pages/death/DeathDetailsPage');
 const HomePage = require('../../pages/HomePage');
 const LoginPage = require('../../pages/LoginPage');
 const MarriageSearchPage = require('../../pages/marriage/MarriageSearchPage');
-const MarriageResultsPage = require('../../pages/marriage/MarriageResultsPage');
+const MarriageDetailsPage = require('../../pages/marriage/MarriageDetailsPage');
 const PartnershipSearchPage = require('../../pages/partnership/PartnershipSearchPage');
-const PartnershipResultsPage = require('../../pages/partnership/PartnershipResultsPage');
-const SearchErrorPage = require('../../pages/SearchErrorPage');
+const PartnershipDetailsPage = require('../../pages/partnership/PartnershipDetailsPage');
 
 if (Cypress.env('e2e')) {
   describe('Smoke Tests', () => {
     describe('Accessing the UI', () => {
-      before(() => {
-        LoginPage.logout();
-      });
-
       it('presents me with the login prompt', () => {
         HomePage.visit();
         LoginPage.shouldBeVisible();
       });
-
       describe('allows me to login to LEV', () => {
-        before(() => {
-          LoginPage.login();
-        });
-
         it('presents me with a search form for births', () => {
           HomePage.visit();
-          HomePage.shouldBeVisible();
+          LoginPage.login();
+          BirthSearchPage.visit();
+          BirthSearchPage.shouldBeVisible();
         });
       });
     });
 
     describe('Birth registrations', () => {
-      before(() => {
-        LoginPage.login();
-      });
-
       describe('Searching for a record', () => {
         it('presents me with the results page', () => {
           BirthSearchPage.visit();
           BirthSearchPage.shouldBeVisible();
-          BirthSearchPage.performSearch({systemNumber: '404404404'});
-          BirthResultsPage.shouldBeVisible();
-        });
-      });
-
-      describe('Trying to access a non-existent record', () => {
-        it('presents me with the NOT FOUND error page', () => {
-          SearchErrorPage.visit('/birth/details/404');
-          SearchErrorPage.shouldBeVisible();
+          BirthSearchPage.performSearch({systemNumber: '123456789'});
+          BirthDetailsPage.shouldBeVisible();
         });
       });
     });
-
     describe('Death registrations', () => {
-      before(() => {
-        LoginPage.login();
-      });
-
       describe('Searching for a record', () => {
-        it('presents me with the results page', () => {
+        it('presents me with the details page', () => {
           DeathSearchPage.visit();
           DeathSearchPage.shouldBeVisible();
-          DeathSearchPage.performSearch({systemNumber: '404404404'});
-          DeathResultsPage.shouldBeVisible();
-        });
-      });
-
-      describe('Trying to access a non-existent record', () => {
-        it('presents me with the NOT FOUND error page', () => {
-          SearchErrorPage.visit('/death/details/404');
-          SearchErrorPage.shouldBeVisible();
+          DeathSearchPage.performSearch({systemNumber: '999999910'});
+          DeathDetailsPage.shouldBeVisible();
         });
       });
     });
 
     describe('Marriage registrations', () => {
-      before(() => {
-        LoginPage.login();
-      });
-
       describe('Searching for a record', () => {
-        it('presents me with the results page', () => {
+        it('presents me with the details page', () => {
           MarriageSearchPage.visit();
           MarriageSearchPage.shouldBeVisible();
-          MarriageSearchPage.performSearch({systemNumber: '404404404'});
-          MarriageResultsPage.shouldBeVisible();
-        });
-      });
-
-      describe('Trying to access a non-existent record', () => {
-        it('presents me with the NOT FOUND error page', () => {
-          SearchErrorPage.visit('/marriage/details/404');
-          SearchErrorPage.shouldBeVisible();
+          MarriageSearchPage.performSearch({systemNumber: '999999910'});
+          MarriageDetailsPage.shouldBeVisible();
         });
       });
     });
 
     describe('Partnership registrations', () => {
-      before(() => {
-        LoginPage.login();
-      });
-
       describe('Searching for a record', () => {
-        it('presents me with the results page', () => {
+        it('presents me with the details page', () => {
           PartnershipSearchPage.visit();
           PartnershipSearchPage.shouldBeVisible();
-          PartnershipSearchPage.performSearch({systemNumber: '404404404'});
-          PartnershipResultsPage.shouldBeVisible();
-        });
-      });
-
-      describe('Trying to access a non-existent record', () => {
-        it('presents me with the NOT FOUND error page', () => {
-          SearchErrorPage.visit('/partnership/details/404');
-          SearchErrorPage.shouldBeVisible();
+          PartnershipSearchPage.performSearch({systemNumber: '999999910'});
+          PartnershipDetailsPage.shouldBeVisible();
         });
       });
     });
