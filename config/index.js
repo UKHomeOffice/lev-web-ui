@@ -7,8 +7,10 @@ module.exports = {
     port: process.env.PORT || 8001,
     logs: {
       console: true,
-      app: false,
-      error: false
+      app: 'logs/lev-web-ui.log',
+      error: false,
+      dateRotate: false,
+      maxFiles: 7,
     },
     redis: {
       connectionString: process.env.REDIS_CONNECTION_STRING || undefined,

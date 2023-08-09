@@ -14,6 +14,7 @@ WORKDIR /app
 
 COPY --chown=app:app package.json package-lock.json /app/
 COPY --chown=app:app assets/ /app/assets/
+RUN mkdir "logs"
 
 FROM base as test
 RUN npm ci
