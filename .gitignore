@@ -109,3 +109,5 @@ public
 # Cypress
 cypress/screenshots
 cypress/reports
+
+logs/

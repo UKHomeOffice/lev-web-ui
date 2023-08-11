@@ -1,8 +1,5 @@
 FROM node:20-alpine3.16 as base
 
-ARG HTTP_PROXY=''
-ARG HTTPS_PROXY=''
-
 RUN apk add --no-cache ca-certificates \
  && apk upgrade --no-cache
 
