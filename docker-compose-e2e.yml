@@ -1,7 +1,11 @@
 version: "3"
 services:
   lev-web-ui:
-    build: .
+    build:
+      context: .
+      args:
+        HTTP_PROXY: ''
+        HTTPS_PROXY: ''
     ports:
     - "8001:8001"
     environment:
@@ -27,6 +31,9 @@ services:
   acceptance:
     build:
       context: .
+      args:
+        HTTP_PROXY: ''
+        HTTPS_PROXY: ''
       dockerfile: Dockerfile-e2e
     depends_on:
       - lev-web-ui

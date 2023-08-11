@@ -1,3 +1,6 @@
+HTTP_PROXY := ""
+HTTPS_PROXY := ""
+
 .PHONY: all test clean
 
 clean:
@@ -7,7 +10,8 @@ install:
 	npm install
 
 test:
-	docker-compose -f docker-compose-e2e.yml up --build --exit-code-from acceptance
+	docker-compose -f docker-compose-e2e.yml build --build-arg HTTP_PROXY=$(HTTP_PROXY) --build-arg HTTPS_PROXY=$(HTTPS_PROXY)
+	docker-compose -f docker-compose-e2e.yml up --exit-code-from acceptance
 
 build:
 	npm run build
