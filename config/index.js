@@ -9,7 +9,7 @@ module.exports = {
       console: true,
       app: 'logs/lev-web-ui.log',
       error: false,
-      dateRotate: false,
+      dateRotate: true,
       maxFiles: 7,
     },
     redis: {
