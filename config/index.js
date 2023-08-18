@@ -10,7 +10,7 @@ module.exports = {
       app: 'logs/lev-web-ui.log',
       error: false,
       dateRotate: true,
-      maxFiles: 0,
+      maxFiles: 1,
     },
     redis: {
       connectionString: process.env.REDIS_CONNECTION_STRING || undefined,
