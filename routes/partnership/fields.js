@@ -17,7 +17,8 @@ module.exports = {
       value: ''
     },
     validate: [
-      'required'
+      'required',
+      { type: 'maximumlength', fn: (e) => e.length <= 30 }
     ]
   },
   'forenames': {
@@ -27,7 +28,8 @@ module.exports = {
       value: ''
     },
     validate: [
-      'required'
+      'required',
+      { type: 'maximumlength', fn: (e) => e.length <= 30 }
     ]
   },
   'dop': {

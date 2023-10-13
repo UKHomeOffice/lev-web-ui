@@ -71,6 +71,17 @@ describe('Death search', () => {
       DeathSearchPage.noForenames();
     });
   });
+  describe('with a first name more than 30 character length', () => {
+    before(() => {
+      DeathSearchPage.visit();
+      DeathSearchPage.performSearch({
+        surname: 'Surname', forenames: 'forenamemorethanthirtycharacter', dobd: { day: '01', month: '10', year: '2010' }
+      });
+    });
+    it('displays an error message, requests a forename within 30 character limit', () => {
+      DeathSearchPage.invalidForenames();
+    });
+  });
   describe('and a missing surname', () => {
     before(() => {
       DeathSearchPage.visit();
@@ -78,6 +89,17 @@ describe('Death search', () => {
     });
     it('displays an error message, requests a surname, forename', () => {
       DeathSearchPage.noSurname();
+    });
+  });
+  describe('with a surname more than 30 character length', () => {
+    before(() => {
+      DeathSearchPage.visit();
+      DeathSearchPage.performSearch({
+        surname: 'surnamemorethanthirtycharacterlimit', forenames: 'forenamemorethanthirtycharacter', dobd: { day: '01', month: '10', year: '2010' }
+      });
+    });
+    it('displays an error message, requests a surname, forename within 30 character limit', () => {
+      DeathSearchPage.invalidSurname();
     });
   });
   describe('with an invalid date of birth or death that has an', () => {
