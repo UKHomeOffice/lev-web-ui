@@ -176,7 +176,7 @@ describe('Partnership search', () => {
         PartnershipSearchPage.visit();
         PartnershipSearchPage.performSearch({
           surname: 'Surname',
-          forenames: 'forenamemorethanthirtycharacter',
+          forenames: 'ForenameMoreThanThirtyCharacter',
           dop: {
             day: '5',
             month: '6',
@@ -197,8 +197,8 @@ describe('Partnership search', () => {
         before(() => {
           PartnershipSearchPage.visit();
           PartnershipSearchPage.performSearch({
-            surname: 'surnamemorethanthirtycharacterlimit',
-            forenames: 'forenamemorethanthirtycharacter',
+            surname: 'SurnameMoreThanThirtyCharacterLimit',
+            forenames: 'ForenameMoreThanThirtyCharacter',
             dop: {
               day: '5',
               month: '6',

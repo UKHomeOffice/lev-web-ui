@@ -80,7 +80,7 @@ describe('Birth search', () => {
     before(() => {
       BirthSearchPage.visit();
       BirthSearchPage.performSearch({
-        surname: 'Surname', forenames: 'forenamemorethanthirtycharacter', day: '01', month: '10', year: '2010'
+        surname: 'Surname', forenames: 'ForenameMoreThanThirtyCharacter', day: '01', month: '10', year: '2010'
       });
     });
     it('displays an error message, requests a forename within 30 character limit', () => {
@@ -102,7 +102,7 @@ describe('Birth search', () => {
     before(() => {
       BirthSearchPage.visit();
       BirthSearchPage.performSearch({
-        surname: 'surnamemorethanthirtycharacterlimit', forenames: 'forenamemorethanthirtycharacter', day: '01', month: '10', year: '2010'
+        surname: 'SurnameMoreThanThirtyCharacterLimit', forenames: 'ForenameMoreThanThirtyCharacter', day: '01', month: '10', year: '2010'
       });
     });
     it('displays an error message, requests a surname, forename within 30 character limit', () => {

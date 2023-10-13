@@ -75,7 +75,7 @@ describe('Death search', () => {
     before(() => {
       DeathSearchPage.visit();
       DeathSearchPage.performSearch({
-        surname: 'Surname', forenames: 'forenamemorethanthirtycharacter', dobd: { day: '01', month: '10', year: '2010' }
+        surname: 'Surname', forenames: 'ForenameMoreThanThirtyCharacter', dobd: { day: '01', month: '10', year: '2010' }
       });
     });
     it('displays an error message, requests a forename within 30 character limit', () => {
@@ -95,7 +95,7 @@ describe('Death search', () => {
     before(() => {
       DeathSearchPage.visit();
       DeathSearchPage.performSearch({
-        surname: 'surnamemorethanthirtycharacterlimit', forenames: 'forenamemorethanthirtycharacter', dobd: { day: '01', month: '10', year: '2010' }
+        surname: 'SurnameMoreThanThirtyCharacterLimit', forenames: 'ForenameMoreThanThirtyCharacter', dobd: { day: '01', month: '10', year: '2010' }
       });
     });
     it('displays an error message, requests a surname, forename within 30 character limit', () => {

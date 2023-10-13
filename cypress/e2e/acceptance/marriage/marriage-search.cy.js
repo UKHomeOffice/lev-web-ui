@@ -176,7 +176,7 @@ describe('Marriage search', () => {
         MarriageSearchPage.visit();
         MarriageSearchPage.performSearch({
           surname: 'Surname',
-          forenames: 'forenamemorethanthirtycharacter',
+          forenames: 'ForenameMoreThanThirtyCharacter',
           dom: {
             day: '5',
             month: '6',
@@ -197,8 +197,8 @@ describe('Marriage search', () => {
         before(() => {
           MarriageSearchPage.visit();
           MarriageSearchPage.performSearch({
-            surname: 'surnamemorethanthirtycharacterlimit',
-            forenames: 'forenamemorethanthirtycharacter',
+            surname: 'SurnameMoreThanThirtyCharacterLimit',
+            forenames: 'ForenameMoreThanThirtyCharacter',
             dom: {
               day: '5',
               month: '6',
