@@ -69,10 +69,24 @@ class BirthSearchPage extends SearchPage {
     cy.get('.govuk-error-summary__list > li').contains('Please enter at least one forename');
   }
 
+  static invalidForenames() {
+    cy.get('.error-summary').contains('Fix the following error(s)');
+    cy.get('.govuk-error-summary__list > li').contains('Forename(s): Your entry cannot exceed 30 characters');
+    cy.get('.govuk-error-message').contains('Forename(s): Your entry cannot exceed 30 characters');
+  }
+
   static noSurname() {
     cy.get('.error-summary').contains('Fix the following error(s)');
     cy.get('.govuk-error-summary__list > li').contains('Please enter a surname');
     cy.get('.govuk-error-summary__list > li').contains('Please enter at least one forename');
+  }
+
+  static invalidSurname() {
+    cy.get('.error-summary').contains('Fix the following error(s)');
+    cy.get('.govuk-error-summary__list > li').contains('Surname: Your entry cannot exceed 30 characters');
+    cy.get('.govuk-error-summary__list > li').contains('Forename(s): Your entry cannot exceed 30 characters');
+    cy.get('.govuk-error-message').contains('Surname: Your entry cannot exceed 30 characters');
+    cy.get('.govuk-error-message').contains('Forename(s): Your entry cannot exceed 30 characters');
   }
 
   static invalidDOBDay() {

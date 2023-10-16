@@ -171,6 +171,55 @@ describe('Marriage search', () => {
         });
       });
     });
+    describe('with a first name more than 30 character length', () => {
+      before(() => {
+        MarriageSearchPage.visit();
+        MarriageSearchPage.performSearch({
+          surname: 'Surname',
+          forenames: 'ForenameMoreThanThirtyCharacter',
+          dom: {
+            day: '5',
+            month: '6',
+            year: '2010'
+          }
+        });
+      });
+
+      it('displays an error message', () => {
+        MarriageSearchPage.hasErrorTitle();
+      });
+
+      it('requests a forename within 30 character limit', () => {
+        MarriageSearchPage.hasErrorMessage('Forename(s): Your entry cannot exceed 30 characters');
+      });
+
+      describe('and a surname more than 30 character length', () => {
+        before(() => {
+          MarriageSearchPage.visit();
+          MarriageSearchPage.performSearch({
+            surname: 'SurnameMoreThanThirtyCharacterLimit',
+            forenames: 'ForenameMoreThanThirtyCharacter',
+            dom: {
+              day: '5',
+              month: '6',
+              year: '2010'
+            }
+          });
+        });
+
+        it('displays an error message', () => {
+          MarriageSearchPage.hasErrorTitle();
+        });
+
+        it('requests a surname within 30 character limit', () => {
+          MarriageSearchPage.hasErrorMessage('Surname: Your entry cannot exceed 30 characters');
+        });
+
+        it('requests a forename within 30 character limit', () => {
+          MarriageSearchPage.hasErrorMessage('Forename(s): Your entry cannot exceed 30 characters');
+        });
+      });
+    });
     describe('with an invalid date of marriage that has an', () => {
       describe('invalid day', () => {
         before(() => {

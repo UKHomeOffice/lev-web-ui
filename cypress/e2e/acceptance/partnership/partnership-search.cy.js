@@ -171,6 +171,55 @@ describe('Partnership search', () => {
         });
       });
     });
+    describe('with a first name more than 30 character length', () => {
+      before(() => {
+        PartnershipSearchPage.visit();
+        PartnershipSearchPage.performSearch({
+          surname: 'Surname',
+          forenames: 'ForenameMoreThanThirtyCharacter',
+          dop: {
+            day: '5',
+            month: '6',
+            year: '2010'
+          }
+        });
+      });
+
+      it('displays an error message', () => {
+        PartnershipSearchPage.hasErrorTitle();
+      });
+
+      it('requests a forename within 30 character limit', () => {
+        PartnershipSearchPage.hasErrorMessage('Forename(s): Your entry cannot exceed 30 characters');
+      });
+
+      describe('and a surname more than 30 character length ', () => {
+        before(() => {
+          PartnershipSearchPage.visit();
+          PartnershipSearchPage.performSearch({
+            surname: 'SurnameMoreThanThirtyCharacterLimit',
+            forenames: 'ForenameMoreThanThirtyCharacter',
+            dop: {
+              day: '5',
+              month: '6',
+              year: '2010'
+            }
+          });
+        });
+
+        it('displays an error message', () => {
+          PartnershipSearchPage.hasErrorTitle();
+        });
+
+        it('requests a surname within 30 character limit', () => {
+          PartnershipSearchPage.hasErrorMessage('Surname: Your entry cannot exceed 30 characters');
+        });
+
+        it('requests a forename within 30 character limit', () => {
+          PartnershipSearchPage.hasErrorMessage('Forename(s): Your entry cannot exceed 30 characters');
+        });
+      });
+    });
     describe('with an invalid date of partnership that has an', () => {
       describe('invalid day', () => {
         before(() => {

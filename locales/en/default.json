@@ -155,10 +155,12 @@
       "exactlength": "The system number should be 9 digits"
     },
     "surname": {
-      "required": "Please enter a surname"
+      "required": "Please enter a surname",
+      "maximumlength": "Surname: Your entry cannot exceed 30 characters"
     },
     "forenames": {
-      "required": "Please enter at least one forename"
+      "required": "Please enter at least one forename",
+      "maximumlength": "Forename(s): Your entry cannot exceed 30 characters"
     },
     "dob": {
       "required": "Please enter a {{name}}",

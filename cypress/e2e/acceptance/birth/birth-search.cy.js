@@ -76,6 +76,17 @@ describe('Birth search', () => {
       BirthSearchPage.noForenames();
     });
   });
+  describe('with a first name more than 30 character length', () => {
+    before(() => {
+      BirthSearchPage.visit();
+      BirthSearchPage.performSearch({
+        surname: 'Surname', forenames: 'ForenameMoreThanThirtyCharacter', day: '01', month: '10', year: '2010'
+      });
+    });
+    it('displays an error message, requests a forename within 30 character limit', () => {
+      BirthSearchPage.invalidForenames();
+    });
+  });
   describe('and a missing surname', () => {
     before(() => {
       BirthSearchPage.visit();
@@ -85,6 +96,17 @@ describe('Birth search', () => {
     });
     it('displays an error message, requests a surname, forename', () => {
       BirthSearchPage.noSurname();
+    });
+  });
+  describe('with a surname more than 30 character length', () => {
+    before(() => {
+      BirthSearchPage.visit();
+      BirthSearchPage.performSearch({
+        surname: 'SurnameMoreThanThirtyCharacterLimit', forenames: 'ForenameMoreThanThirtyCharacter', day: '01', month: '10', year: '2010'
+      });
+    });
+    it('displays an error message, requests a surname, forename within 30 character limit', () => {
+      BirthSearchPage.invalidSurname();
     });
   });
   describe('with an invalid date of birth that has an', () => {
