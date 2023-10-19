@@ -22,7 +22,7 @@
                 {% set rowsArray = [] %}
                 {% set rowsArray = (rowsArray.push([
                     {
-                        html: "<a href=\"/death/details/" + record.id + "\">" + record.deceased.forenames + " " + record.deceased.surname + "</a>",
+                        html: "<h2><a href=\"/death/details/" + record.id + "\">" + record.deceased.forenames + " " + record.deceased.surname + "</a></h2>",
                         colspan: 2
                     }
                 ],[
