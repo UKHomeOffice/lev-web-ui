@@ -59,7 +59,7 @@
         { text: "System number" },
         { text: record.id }
     ],[
-        { text: "Deceased", colspan: 2, classes: "section-head" }
+        { html: "<h2>Deceased</h2>", colspan: 2, classes: "section-head" }
     ],[
         { text: "Name" },
         { html: redact(deceasedName()) }
@@ -111,7 +111,7 @@
             { text: "Death certified by" },
             { text: redact(record.deceased.certifiedBy) }
         ],[
-            { text: "Informant", colspan: 2, classes: "section-head" }
+            { html: "<h2>Informant<h2>", colspan: 2, classes: "section-head" }
         ],[
             { text: "Surname" },
             { text: redact(record.informant.surname) }
@@ -131,7 +131,7 @@
     {% endif %}
     {% if record.inquestDate and showFullDetails %}
         {% set rowsArray = (rowsArray.push([
-            { text: "Inquest", colspan: 2, classes: "section-head" }
+            { html: "<h2>Inquest</h2>", colspan: 2, classes: "section-head" }
         ],[
             { text: "Date" },
             { text: redact(record.inquestDate | date("DD/MM/YYYY")) }
@@ -147,7 +147,7 @@
         ]), rowsArray) %}
     {% endif %}
     {% set rowsArray = (rowsArray.push([
-        { text: "Registration", colspan: 2, classes: "section-head" }
+        { html: "<h2>Registration</h2>", colspan: 2, classes: "section-head" }
     ]), rowsArray) %}
     {% if showFullDetails %}
         {% set rowsArray = (rowsArray.push([

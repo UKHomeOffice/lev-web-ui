@@ -30,7 +30,7 @@
                 { text: "System number" },
                 { text: record.id }
             ],[
-                { text: "Child", colspan: 2, classes: "section-head" }
+                { html: "<h2>Child</h2>", colspan: 2, classes: "section-head" }
             ],[
                 { text: "Surname" },
                 { text: redact(record.child.surname) }
@@ -47,7 +47,7 @@
                 { text: "Place of birth" },
                 { text: redact(record.child.birthplace) }
             ],[
-                { text: "Mother", colspan: 2, classes: "section-head" }
+                { html: "<h2>Mother</h2>", colspan: 2, classes: "section-head" }
             ],[
                 { text: "Name" },
                 { text: redact(record.mother.forenames + " " + record.mother.surname) }
@@ -61,7 +61,7 @@
                 { text: "Place of birth" },
                 { text: redact(record.mother.birthplace) }
             ],[
-                { text: "Father / Parent", colspan: 2, classes: "section-head" }
+                { html: "<h2>Father / Parent</h2>", colspan: 2, classes: "section-head" }
             ],[
                 { text: "Name" },
                 { text: redact(record.father.forenames + " " + record.father.surname) }
@@ -69,7 +69,7 @@
                 { text: "Place of birth" },
                 { text: redact(record.father.birthplace) }
             ],[
-                { text: "Registration", colspan: 2, classes: "section-head" }
+                { html: "<h2>Registration</h2>", colspan: 2, classes: "section-head" }
             ],[
                 { text: "Birth registered by" },
                 { text: redact([record.informant1.qualification, record.informant2.qualification] | filter | join(", ")) }

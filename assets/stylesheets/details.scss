@@ -16,6 +16,10 @@ table {
         &.section-head {
           background-color: $section-head-colour;
         }
+
+        h2 {
+          margin-bottom: 0;
+        }
       }
     }
   }
