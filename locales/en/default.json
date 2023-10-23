@@ -100,31 +100,63 @@
     "birth": {
       "serviceName": "Birth record check",
       "searchPage": {
-        "title": "Applicant's details"
+        "title": "Applicant's details",
+        "pageTitle": "Birth record search"
+      },
+      "resultPage": {
+        "pageTitle": "Birth record results list"
+      },
+      "detailPage": {
+        "pageTitle": "Birth record result"
       }
     },
     "death": {
       "serviceName": "Death record check",
       "searchPage": {
-        "title": "Applicant's details"
+        "title": "Applicant's details",
+        "pageTitle": "Death record search"
+      },
+      "resultPage": {
+        "pageTitle": "Death record results list"
+      },
+      "detailPage": {
+        "pageTitle": "Death record result"
       }
     },
     "marriage": {
       "serviceName": "Marriage record check",
       "searchPage": {
-        "title": "Applicant's details"
+        "title": "Applicant's details",
+        "pageTitle": "Marriage record search"
+      },
+      "resultPage": {
+        "pageTitle": "Marriage record results list"
+      },
+      "detailPage": {
+        "pageTitle": "Marriage record result"
       }
     },
     "partnership": {
       "serviceName": "Civil partnership record check",
       "searchPage": {
-        "title": "Applicant's details"
+        "title": "Applicant's details",
+        "pageTitle": "Civil partnership record search"
+      },
+      "resultPage": {
+        "pageTitle": "Civil partnership record results list"
+      },
+      "detailPage": {
+        "pageTitle": "Civil partnership record result"
       }
     },
     "user-activity": {
       "serviceName": "User Activity Report",
       "searchPage": {
-        "title": "Audit information"
+        "title": "Audit information",
+        "pageTitle": "User Activity Report search"
+      },
+      "resultPage": {
+        "pageTitle": "User Activity Report results"
       }
     },
     "error": {
