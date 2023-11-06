@@ -50,3 +50,11 @@ docker compose -f docker-compose-e2e.yml up --build
 
 ### Mock Data
 Whether running locally, or Docker, mock data is obtained from [lev-api/mock](https://github.com/UKHomeOffice/lev-api/tree/master/mock).
+
+### Testing Against Environment
+
+Tests can be run locally against an environment. Note that the user used must have the no-mfa role and you must be connected to the EBSA VPN.
+
+`docker build -t lev-web-ui-e2e -f Dockerfile-e2e .`
+
+`docker run --name lev-web-ui-e2e -e 'SMOKE_TEST=true' -e 'ENV=ENVIROMENT' -e 'KEYCLOAK_URL=KC_ENV_URL' -e 'TEST_URL=SERVICE_URL'  -e 'TEST_USERNAME=USERNAME' -e 'TEST_PASSWORD=PASSWORD' --net host lev-web-ui-e2e`
