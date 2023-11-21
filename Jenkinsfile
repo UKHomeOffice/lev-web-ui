@@ -8,6 +8,6 @@ library(
 pipelineNodeJSApp {
     dockerApplicationService = 'fro'
     dockerImage = 'lev-web-ui'
-    zone = 'i'
-    dev1k8sCluster = 'np-i-docker-env1'
+    zone = 'e'
+    dev1k8sCluster = 'np-e-docker-env1'
 }

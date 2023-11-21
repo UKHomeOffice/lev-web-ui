@@ -9,7 +9,7 @@ pipelineDeployment {
     environments = ['dev1']
     application = 'lev-web-ui'
     service = 'fro'
-    zone = 'i'
-    cluster = 'np-i-docker-env1'
+    zone = 'e'
+    cluster = 'np-e-docker-env1'
     dockerImagePath = 'ho/hmpo/lev/fro/lev-web-ui'
 }
