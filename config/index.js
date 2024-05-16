@@ -25,15 +25,15 @@ module.exports = {
     protocol: process.env.API_PROTOCOL || 'http',
     host: process.env.API_HOST || 'localhost',
     port: process.env.API_PORT || 8080,
-    client: packageJson.name,
-    username: process.env.USER || packageJson.name,
+    client: process.env.API_KC_CLIENT || packageJson.name,
+    username: process.env.API_USER || packageJson.name,
     rejectUnauthorized: process.env.LEV_TLS_VERIFY !== 'false'
   },
   iamApi: {
     protocol: process.env.IAM_API_PROTOCOL || 'http',
     host: process.env.IAM_API_HOST || 'localhost',
     port: process.env.IAM_API_PORT || 8000,
-    client: packageJson.name,
+    client: process.env.IAM_API_KC_CLIENT || packageJson.name,
     username: process.env.IAM_USER || packageJson.name,
     rejectUnauthorized: process.env.LEV_TLS_VERIFY !== 'false'
   }
