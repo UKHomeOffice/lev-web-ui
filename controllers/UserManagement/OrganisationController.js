@@ -1,7 +1,7 @@
-const BaseController = require('./BaseController');
-const { orgLookup } = require('../services/OrganisationSearchService');
+const BaseController = require('../BaseController');
+const { orgLookup } = require('../../services/UserManagement/OrganisationSearchService');
 
-class OrganisationsController extends BaseController {
+class OrganisationController extends BaseController {
   async getValues(req, _res, next) {
     try {
       console.log(req);
@@ -25,4 +25,4 @@ class OrganisationsController extends BaseController {
   }
 }
 
-module.exports = OrganisationsController;
+module.exports = OrganisationController;

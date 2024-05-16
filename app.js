@@ -8,7 +8,7 @@ const marriageRoute = require('./routes/marriage');
 const partnershipRoute = require('./routes/partnership');
 const metricsRoute = require('./routes/metrics');
 const userActivityRoute = require('./routes/user-activity');
-const organisationsRoute = require('./routes/organisations');
+const organisationsRoute = require('./routes/organisation');
 
 const { router } = setup(options);
 

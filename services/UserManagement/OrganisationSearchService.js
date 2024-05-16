@@ -1,6 +1,6 @@
 'use strict';
 
-const OrganisationRestApiModel = require('../models/OrganisationRestApiModel');
+const OrganisationRestApiModel = require('../../models/OrganisationRestApiModel');
 
 class OrganisationSearchService {
 

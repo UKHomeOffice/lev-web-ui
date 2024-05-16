@@ -161,9 +161,9 @@
     },
     "user-management": {
       "serviceName": "Administration",
-      "organisationsPage": {
-        "title": "Manage organisations",
-        "pageTitle": "Organisations"
+      "organisationPage": {
+        "title": "Manage organisation",
+        "pageTitle": "Organisation"
       }
     },
     "error": {

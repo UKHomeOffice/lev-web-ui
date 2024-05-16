@@ -1,6 +1,6 @@
 'use strict';
 
-const OrganisationsController = require('../../controllers/OrganisationsController');
+const OrganisationController = require('../../controllers/UserManagement/OrganisationController');
 
 module.exports = {
   '/': {
@@ -10,7 +10,7 @@ module.exports = {
     next: '/:id'
   },
   '/:id': {
-    controller: OrganisationsController,
+    controller: OrganisationController,
     entryPoint: true,
     template: '/index.html'
   }
