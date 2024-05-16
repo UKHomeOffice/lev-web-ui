@@ -28,5 +28,13 @@ module.exports = {
     client: packageJson.name,
     username: process.env.USER || packageJson.name,
     rejectUnauthorized: process.env.LEV_TLS_VERIFY !== 'false'
+  },
+  iamApi: {
+    protocol: process.env.IAM_API_PROTOCOL || 'http',
+    host: process.env.IAM_API_HOST || 'localhost',
+    port: process.env.IAM_API_PORT || 8000,
+    client: packageJson.name,
+    username: process.env.IAM_USER || packageJson.name,
+    rejectUnauthorized: process.env.LEV_TLS_VERIFY !== 'false'
   }
 };
