@@ -159,6 +159,13 @@
         "pageTitle": "User Activity Report results"
       }
     },
+    "user-management": {
+      "serviceName": "Administration",
+      "organisationPage": {
+        "title": "Manage organisation",
+        "pageTitle": "Organisation"
+      }
+    },
     "error": {
       "title": "Error"
     },

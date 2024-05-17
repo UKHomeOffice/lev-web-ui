@@ -2,7 +2,6 @@
 
 const HmpoModel = require('hmpo-model');
 const { api } = require('../config');
-const baseUrl = `${api.protocol}://${api.host}:${api.port}`;
 
 class RestApiModel extends HmpoModel {
 
@@ -10,7 +9,7 @@ class RestApiModel extends HmpoModel {
     const retConfig = Object.assign({}, config);
 
     // url
-    retConfig.url = `${baseUrl}${this.options.url}`;
+    retConfig.url = `${api.baseUrl}${this.options.url}`;
 
     // searchParams
     const searchParams = Object.assign({}, this.options.searchParams, retConfig.searchParams);
