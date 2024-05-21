@@ -14,9 +14,7 @@ class OrganisationSearchService {
     return await new Promise((resolve, reject) => {
       const model = new OrganisationRestApiModel({}, options);
       model.fetch((err, data, _responseTime) => {
-        if (err && (err.status === 404 || err.status === 400)) {
-          resolve(undefined);
-        } else if (err) {
+        if (err) {
           reject(err);
         } else {
           resolve(data);
