@@ -12,7 +12,8 @@ class OrganisationController extends BaseController {
       req.sessionModel.set('orgResults', searchResults);
       next();
     } catch (err) {
-      console.log(err);
+      err.template = 'errors/organisation-error';
+      next(err);
     }
   }
 

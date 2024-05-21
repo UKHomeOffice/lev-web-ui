@@ -1,6 +1,7 @@
-{% extends "app-template.njk" %}
+{% extends "../app-template.njk" %}
 
-{% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+{% set hmpoPageKey = "pageNotFound" %}
 
 {% set govukServiceNameKey = translate("pages.user-management.serviceName") %}
 {% set hmpoPageKey = "user-management.organisationPage" %}
@@ -10,9 +11,11 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
         {% block mainContent %}
-                <h1 id="header" data-page="{{hmpoPageKey}}">{{ translate("pages." + hmpoPageKey + ".h1", { default: hmpoTitle }) | safe }}: {{orgInfo.name}}</h1>
+            <h1>{{error.error}}</h1>
+            <div class="govuk-button-group">
+                {{ hmpoSubmit(ctx, {id: "startAgain", key: "startAgain", href: "/"}) }}
+            </div>
         {% endblock %}
     </div>
 </div>
-
 {% endblock %}
