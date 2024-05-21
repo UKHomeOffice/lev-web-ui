@@ -4,7 +4,6 @@ const { orgLookup } = require('../../services/UserManagement/OrganisationSearchS
 class OrganisationController extends BaseController {
   async getValues(req, _res, next) {
     try {
-      console.log(req);
       const searchResults = await orgLookup({
         ...this.getOptions(req),
         url: `/admin/organisations/${req.params.id}`
