@@ -11,6 +11,29 @@
     <div class="govuk-grid-column-full">
         {% block mainContent %}
                 <h1 id="header" data-page="{{hmpoPageKey}}">{{ translate("pages." + hmpoPageKey + ".h1", { default: hmpoTitle }) | safe }}: {{orgInfo.name}}</h1>
+                <h3>Organisation Team(s)</h3>
+                {% set teamHeaderArray = [] %}
+                {% set teamsArray = [] %}
+                {% for item in ["Team", "Users"] %}
+                    {% set teamHeaderArray = (teamHeaderArray.push( { text: item }), teamHeaderArray) %}
+                {% endfor %}
+
+                {% for team in teams | sort('team.name') %}
+                    {% set rowArray = [] %}
+                    {% set teamLink = "/admin/organisations/" + orgInfo.id + "/teams/" + team.id %}
+                    {% set rowArray = (rowArray.push( { html: "<a href=" + teamLink +">" + team.name + "</a>" } ), rowArray) %}
+                    {% set rowArray = (rowArray.push( { text: team.users } ), rowArray) %}
+                    {% set teamsArray = (teamsArray.push(rowArray), teamsArray) %}
+                {% endfor %}
+
+                <div class="table-horizontal-scrolling">
+                    {{ govukTable({
+                    classes: "audit",
+                    firstCellIsHeader: true,
+                    head: teamHeaderArray,
+                    rows: teamsArray
+                    }) }}
+                </div>
         {% endblock %}
     </div>
 </div>
