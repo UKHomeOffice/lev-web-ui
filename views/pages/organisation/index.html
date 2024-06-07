@@ -1,7 +1,8 @@
 {% extends "app-template.njk" %}
 
 {% from "govuk/components/table/macro.njk" import govukTable %}
-{% from "govuk/components/pagination/macro.njk" import govukPagination %}
+{% from "components/pagination.njk" import pagination %}
+{% from "components/users-table.njk" import usersTable %}
 
 {% set govukServiceNameKey = translate("pages.user-management.serviceName") %}
 {% set hmpoPageKey = "user-management.organisationPage" %}
@@ -41,49 +42,11 @@
       {% if users.length == 0 %}
         <p>There are no users in this organisation.</p>
       {% else %}
-        {% set usersArray = [] %}
-        {% set usersHeaderArray = [ { text: "User" }, { text: "Email address" }, { text: "Team" } ] %}
-
-        {% for user in users | sort(attribute='username') %}
-          {% set rowArray = [] %}
-          {% set rowArray = [ { text: (user.firstName + " " + user.lastName) | title }, { text: user.email }, { text: user.team } ] %}
-          {% set usersArray = (usersArray.push(rowArray), usersArray) %}
-        {% endfor %}
-          {{ govukTable({
-          classes: "details",
-          firstCellIsHeader: false,
-          head: usersHeaderArray,
-          rows: usersArray
-          }) }}
+        {{ usersTable(users, usersMetaData) }}
+        {{ pagination(usersMetaData) }}
       {% endif %}
 
-    {% set usersPerPage = 5 %}
-
-    {% set startIndex = ((usersMetaData.currentPage - 1) * usersPerPage) + 1 %}
-    {% set endIndex = usersMetaData.currentPage * usersPerPage %}
-    {% if endIndex > usersMetaData.userCount %}
-      {% set endIndex = usersMetaData.userCount %}
-    {% endif %}
-
-    <h4>Showing {{ startIndex }}-{{ endIndex }} of {{ usersMetaData.userCount }} records</h4>
-
-
-    {% set usersPerPage = 5 %}
-    {% set pages = usersMetaData.userCount / usersPerPage %}
-
-    {% set paginationArray = [] %}
-    {% for i in range(1, pages + 1) -%}
-      {% set rowArray = [] %}
-      {% set rowArray = { number: i, href: "?page=" + i, attributes: { "onclick": "setCurrentPage()"} } %}
-      {% set paginationArray = (paginationArray.push(rowArray), paginationArray) %}
-    {%- endfor %}
-
-    {{ govukPagination({
-      items: paginationArray
-    }) }}
     {% endblock %}
-
   </div>
 </div>
-
 {% endblock %}

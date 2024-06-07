@@ -1,0 +1,32 @@
+{% macro pagination(usersMetaData) %}
+	{% from "govuk/components/pagination/macro.njk" import govukPagination %}
+
+	{% set usersPerPage = 20 %}
+	{% set pages = usersMetaData.userCount / usersPerPage %}
+
+	{% if pages > 1 %}
+
+		{% set paginationArray = [] %}
+
+		{% for i in range(1, pages + 1) -%}
+			{% set rowArray = [] %}
+			{% set isCurrent = (usersMetaData.currentPage == i) %}
+			{% set rowArray = { number: i, href: "?page=" + i, current: isCurrent } %}
+			{% set paginationArray = (paginationArray.push(rowArray), paginationArray) %}
+		{%- endfor %}
+
+		{% if usersMetaData.currentPage < pages %}
+				{% set nextHref = "?page=" + (usersMetaData.currentPage + 1) %}
+		{% else %}
+				{% set nextHref = "" %}
+		{% endif %}
+
+		{{ govukPagination({
+			next: {
+			href: nextHref
+			},
+			items: paginationArray
+		}) }}
+
+	{% endif %}
+{% endmacro %}
