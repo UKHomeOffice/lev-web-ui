@@ -14,15 +14,7 @@ class OrganisationController extends BaseController {
       });
       const userResults = await orgLookup({
         ...this.getOptions(req),
-        url: `/admin/organisations/${req.params.id}/users?page=${req.query.page}`
-      });
-
-      teamResults.sort((t1, t2) => {
-        const team1 = t1.name.toLowerCase();
-        const team2 = t2.name.toLowerCase();
-        if (team1 > team2) { return 1; }
-        if (team1 < team2) { return -1; }
-        return 0;
+        url: `/admin/organisations/${req.params.id}/users?page=${req.query.page}&order=${req.query.order}&direction=${req.query.direction}`
       });
 
       req.sessionModel.set('orgResults', searchResults);
