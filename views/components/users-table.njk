@@ -1,0 +1,33 @@
+{% macro usersTable(users, usersMetaData) %}
+  {% from "govuk/components/table/macro.njk" import govukTable %}
+
+  {% set usersPerPage = 20 %}
+  {% set startIndex = ((usersMetaData.currentPage - 1) * usersPerPage) + 1 %}
+  {% set endIndex = usersMetaData.currentPage * usersPerPage %}
+
+  {% if endIndex > usersMetaData.userCount %}
+    {% set endIndex = usersMetaData.userCount %}
+  {% endif %}
+
+  {% set userInfo = "Showing <b>" + startIndex + "</b>-<b>" + endIndex + "</b> of <b>" + usersMetaData.userCount + "</b> records" %}
+  <p>{{ userInfo | safe }}</p>
+
+  {% set usersArray = [] %}
+  {% set usersHeaderArray = [ { text: "User" }, { text: "Team" }, { text: "Email address" } ] %}
+
+  {% for user in users | sort(attribute='username') %}
+    {% set rowArray = [] %}
+    {% set rowArray = [ { text: (user.firstName + " " + user.lastName) | title }, { text: user.teamName }, { text: user.email } ] %}
+    {% set usersArray = (usersArray.push(rowArray), usersArray) %}
+  {% endfor %}
+
+  {{ govukTable({
+  classes: "details",
+  firstCellIsHeader: false,
+  head: usersHeaderArray,
+  rows: usersArray
+  }) }}
+
+  <p align="right">{{ userInfo | safe }}</p>
+
+{% endmacro %}
