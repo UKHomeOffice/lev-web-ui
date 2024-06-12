@@ -1,12 +1,14 @@
 'use strict';
 
 const OrganisationController = require('../../controllers/UserManagement/OrganisationController');
+const ManageOrgsController = require('../../controllers/UserManagement/ManageOrgsController');
 
 module.exports = {
   '/': {
+    controller: ManageOrgsController,
     entryPoint: true,
     resetJourney: true,
-    skip: true,
+    template: '/manage.html',
     next: '/:id'
   },
   '/:id': {
