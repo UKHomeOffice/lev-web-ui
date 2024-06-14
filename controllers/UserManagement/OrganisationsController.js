@@ -1,7 +1,7 @@
 const BaseController = require('../BaseController');
 const { orgLookup } = require('../../services/UserManagement/OrganisationSearchService');
 
-class ManageOrgsController extends BaseController {
+class OrganisationsController extends BaseController {
   async getValues(req, _res, next) {
     try {
       const orgsResult = await orgLookup({
@@ -13,10 +13,11 @@ class ManageOrgsController extends BaseController {
 
       if (orgs.length == 1) {
         return _res.redirect(`/admin/organisations/${orgs[0].id}`);
-      } else {
-        req.sessionModel.set('orgsResult', orgs);
-        next();
       }
+
+      req.sessionModel.set('orgsResult', orgs);
+      next();
+
     } catch (err) {
       err.template = 'errors/organisation-error';
       next(err);
@@ -32,4 +33,4 @@ class ManageOrgsController extends BaseController {
   }
 }
 
-module.exports = ManageOrgsController;
+module.exports = OrganisationsController;
