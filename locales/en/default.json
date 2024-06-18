@@ -164,6 +164,10 @@
       "organisationPage": {
         "title": "Manage organisation",
         "pageTitle": "Organisation"
+      },
+      "organisationsPage": {
+        "title": "Manage organisations",
+        "pageTitle": "Manage organisations"
       }
     },
     "error": {
