@@ -168,6 +168,10 @@
       "organisationsPage": {
         "title": "Manage organisations",
         "pageTitle": "Manage organisations"
+      },
+      "teamPage": {
+        "title": "Manage team",
+        "pageTitle": "Manage team"
       }
     },
     "error": {

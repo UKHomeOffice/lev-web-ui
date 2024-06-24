@@ -6,15 +6,15 @@ class OrganisationController extends BaseController {
     try {
       const searchResults = await orgLookup({
         ...this.getOptions(req),
-        url: `/admin/organisations/${req.params.id}`,
+        url: `/admin/organisations/${req.params.orgId}`,
       });
       const teamResults = await orgLookup({
         ...this.getOptions(req),
-        url: `/admin/organisations/${req.params.id}/teams`
+        url: `/admin/organisations/${req.params.orgId}/teams`
       });
       const userResults = await orgLookup({
         ...this.getOptions(req),
-        url: `/admin/organisations/${req.params.id}/users?page=${req.query.page}&order=${req.query.order}&direction=${req.query.direction}`
+        url: `/admin/organisations/${req.params.orgId}/users?page=${req.query.page}&order=${req.query.order}&direction=${req.query.direction}`
       });
 
       req.sessionModel.set('orgResults', searchResults);
