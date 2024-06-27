@@ -9,8 +9,14 @@ nvm use
 make all
 ```
 
+### Linting
+To execute the linter run:
+```shell
+npm run lint
+```
+
 ### Local Development
-#### To run the application 
+#### To run the application
 ```shell
 npm run start:mockapi
 npm start
@@ -35,9 +41,9 @@ Due to a re-platforming of the service, the location of Docker images has change
 
 For local development, images that can be used locally have been left in the codebase but commented out. To run, they will need to temporarily replace the ERC images during testing.
 
-Note that images like lev-api will not be up-to-date in quay. For running ui tests this should be fine but be aware that the current api behaviour may be different. 
+Note that images like lev-api will not be up-to-date in quay. For running ui tests this should be fine but be aware that the current api behaviour may be different.
 
-The docker images also have some proxies that are used in the CI/CD pipeline - these will also need to be removed for local building of images. 
+The docker images also have some proxies that are used in the CI/CD pipeline - these will also need to be removed for local building of images.
 
 #### To run the application
 ```shell
