@@ -10,7 +10,7 @@ install:
 	npm install
 
 lint:
-	npm install && npx eslint . --max-warnings=0 || exit 0
+	npm install && npm run lint . --max-warnings=0 || exit 0
 
 test:
 	npm install && npm run test
