@@ -11,7 +11,6 @@ class TeamController extends BaseController {
       });
 
       req.sessionModel.set('teamResults', teamResults);
-
       next();
     } catch (err) {
       err.template = 'errors/organisation-error';
