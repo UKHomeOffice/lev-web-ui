@@ -1,15 +1,14 @@
 {% macro usersTable(users, usersMetaData) %}
   {% from "govuk/components/table/macro.njk" import govukTable %}
 
-  {% set usersPerPage = 20 %}
-  {% set startIndex = ((usersMetaData.currentPage - 1) * usersPerPage) + 1 %}
-  {% set endIndex = usersMetaData.currentPage * usersPerPage %}
+  {% set startIndex = ((usersMetaData.currentPage - 1) * usersMetaData.perPage) + 1 %}
+  {% set endIndex = usersMetaData.currentPage * usersMetaData.perPage %}
 
-  {% if endIndex > usersMetaData.userCount %}
-    {% set endIndex = usersMetaData.userCount %}
+  {% if endIndex > usersMetaData.total %}
+    {% set endIndex = usersMetaData.total %}
   {% endif %}
 
-  {% set userInfo = "Showing <b>" + startIndex + "</b>-<b>" + endIndex + "</b> of <b>" + usersMetaData.userCount + "</b> records" %}
+  {% set userInfo = "Showing <b>" + startIndex + "</b>-<b>" + endIndex + "</b> of <b>" + usersMetaData.total + "</b> records" %}
   <p>{{ userInfo | safe }}</p>
 
   {% set usersArray = [] %}
