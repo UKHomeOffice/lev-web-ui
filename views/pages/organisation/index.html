@@ -43,10 +43,8 @@
       {% if users.length == 0 %}
         <p>There are no users in this organisation.</p>
       {% else %}
-        {% set usersPerPage = 20 %}
-
         {{ usersTable(users, usersMetaData) }}
-        {{ pagination(usersMetaData.userCount, usersPerPage, usersMetaData.currentPage) }}
+        {{ pagination(usersMetaData.total, usersMetaData.perPage, usersMetaData.currentPage) }}
       {% endif %}
 
     {% endblock %}

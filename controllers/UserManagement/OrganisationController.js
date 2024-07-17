@@ -12,9 +12,17 @@ class OrganisationController extends BaseController {
         ...this.getOptions(req),
         url: `/admin/organisations/${req.params.orgId}/teams`
       });
+
+      const params = ['page', 'perPage', 'sort', 'order']
+        .filter(param => req.query[param])
+        .map(param => `${param}=${req.query[param]}`)
+        .join('&');
+
+      const queryParamString = params ? `?${params}` : '';
+
       const userResults = await orgLookup({
         ...this.getOptions(req),
-        url: `/admin/organisations/${req.params.orgId}/users?page=${req.query.page}&order=${req.query.order}&direction=${req.query.direction}`
+        url: `/admin/organisations/${req.params.id}/users${queryParamString}`
       });
 
       req.sessionModel.set('orgResults', searchResults);
@@ -35,7 +43,7 @@ class OrganisationController extends BaseController {
       locals.orgInfo = req.sessionModel.get('orgResults') || [];
       locals.teams = req.sessionModel.get('teamResults') || [];
       locals.users = req.sessionModel.get('userResults') || [];
-      locals.usersMetaData = req.sessionModel.get('usersMetaData') || { userCount: 0, currentPage: 1};
+      locals.usersMetaData = req.sessionModel.get('usersMetaData') || { total: 0, currentPage: 1, perPage: 20};
       callback(null, locals);
     });
   }
