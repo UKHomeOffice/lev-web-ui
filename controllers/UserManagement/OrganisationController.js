@@ -22,7 +22,7 @@ class OrganisationController extends BaseController {
 
       const userResults = await orgLookup({
         ...this.getOptions(req),
-        url: `/admin/organisations/${req.params.id}/users${queryParamString}`
+        url: `/admin/organisations/${req.params.orgId}/users${queryParamString}`
       });
 
       req.sessionModel.set('orgResults', searchResults);

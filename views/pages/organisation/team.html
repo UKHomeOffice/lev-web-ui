@@ -3,6 +3,8 @@
 {% from "govuk/components/table/macro.njk" import govukTable %}
 {% from "components/pagination.njk" import pagination %}
 {% from "components/users-table.njk" import usersTable %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/tag/macro.njk" import govukTag %}
 
 {% set govukServiceNameKey = translate("pages.user-management.serviceName") %}
 {% set govukServiceTitleKey = translate("pages.user-management.teamPage.pageTitle") %}
@@ -14,25 +16,32 @@
   <div class="govuk-grid-column-full">
     {% block mainContent %}
 
-    <span class="govuk-caption-m">{{teamInfo.team.organisation.organisationName}}</span>
-    <h1>{{teamInfo.team.teamName}}</h1>
-    <h2>Search permissions</h2>
+    <span class="govuk-caption-m">{{teamInfo.organisation.organisationName}}</span>
+    <h1>{{teamInfo.teamName}}</h1>
+    <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-summary-card__title-wrapper govuk-!-margin-0 govuk-!-width-full">Search permissions</h2>
 
     {% set teamsArray = [] %}
 
-    {% for key, value in teamInfo.roles %}
+    {% for key, value in teamInfo.permissions %}
       {% set rowArray = [] %}
-      {% set rowArray = (rowArray.push( { text: key | title }, { text: value } ), rowArray) %}
+      {% set yesNoTag = govukTag({ text: "Yes" if value else "No", classes: "govuk-tag--turquoise" if value else "govuk-tag--red"  }) %}
+      {% set rowArray = (rowArray.push( { text: key | title }, { html: yesNoTag } ), rowArray) %}
       {% set teamsArray = (teamsArray.push(rowArray), teamsArray) %}
     {% endfor %}
 
-    <div>
+
       {{ govukTable({
-      classes: "audit",
+      classes: "govuk-!-margin-left-4",
       firstCellIsHeader: false,
       head: [{ text: "Search type" }, { text: "Permission" }],
       rows: teamsArray
       }) }}
+
+    {{ govukButton({
+    text: "Add new user",
+    classes: "govuk-button--secondary"
+    }) }}
     </div>
 
     {% endblock %}
