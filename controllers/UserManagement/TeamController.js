@@ -1,23 +1,17 @@
 const BaseController = require('../BaseController');
 const { orgLookup } = require('../../services/UserManagement/OrganisationSearchService');
 
-class OrganisationsController extends BaseController {
+
+class TeamController extends BaseController {
   async getValues(req, _res, next) {
     try {
-      const orgsResult = await orgLookup({
+      const teamResults = await orgLookup({
         ...this.getOptions(req),
-        url: '/admin/organisations'
+        url: `/admin/organisations/${req.params.orgId}/teams/${req.params.teamId}`
       });
 
-      const orgs = orgsResult.organisations;
-
-      if (orgs.length == 1) {
-        return _res.redirect(`/admin/organisations/${orgs[0].id}`);
-      }
-
-      req.sessionModel.set('orgsResult', orgs);
+      req.sessionModel.set('teamResults', teamResults);
       next();
-
     } catch (err) {
       err.template = 'errors/organisation-error';
       next(err);
@@ -27,10 +21,10 @@ class OrganisationsController extends BaseController {
   locals(req, res, callback) {
     super.locals(req, res, (error, locals) => {
       if (error) return callback(error);
-      locals.orgsInfo = req.sessionModel.get('orgsResult') || [];
+      locals.teamInfo = req.sessionModel.get('teamResults') || {};
       callback(null, locals);
     });
   }
 }
 
-module.exports = OrganisationsController;
+module.exports = TeamController;

@@ -1,0 +1,51 @@
+{% extends "app-template.njk" %}
+
+{% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "components/pagination.njk" import pagination %}
+{% from "components/users-table.njk" import usersTable %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/tag/macro.njk" import govukTag %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+{% set govukServiceNameKey = translate("pages.user-management.serviceName") %}
+{% set govukServiceTitleKey = translate("pages.user-management.teamPage.pageTitle") %}
+{% set hmpoPageKey = "user-management.teamPage" %}
+{% set govukServiceUrl = "/admin/organisations" %}
+
+{% block hmpoContent %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      {% block mainContent %}
+
+        <span class="govuk-caption-m">{{teamInfo.organisation.organisationName}}</span>
+        <h1>{{teamInfo.teamName}}</h1>
+
+        <div class="govuk-grid-column-two-thirds">
+
+        {% set rowArray = [{ key: { text: "Search type", classes: "govuk-!-font-weight-bold text-color-black" }, value: { text: "Permission", classes: "govuk-!-font-weight-bold text-color-black" } }] %}
+
+          {% for key, value in teamInfo.permissions %}
+            {% set yesNoTag = govukTag({ text: "Yes" if value else "No", classes: "govuk-tag--turquoise" if value else "govuk-tag--red"  }) %}
+            {% set rowArray = (rowArray.push( { key: { text: key | title }, value: { text: yesNoTag } }), rowArray) %}
+          {% endfor %}
+
+          {{ govukSummaryList({
+          classes: "govuk-summary-list--wide",
+            card: {
+              title: {
+                text: "Search permissions"
+              }
+            },
+            rows: rowArray
+          }) }}
+
+          {{ govukButton({
+            text: "Add new user",
+            classes: "govuk-button--secondary"
+          }) }}
+        </div>
+
+      {% endblock %}
+    </div>
+  </div>
+{% endblock %}
