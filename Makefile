@@ -13,6 +13,7 @@ lint:
 	npm install && npm run lint . --max-warnings=0 || exit 0
 
 test:
+	npm install && npm run test
 	docker-compose -f docker-compose-e2e.yml build --build-arg HTTP_PROXY=$(HTTP_PROXY) --build-arg HTTPS_PROXY=$(HTTPS_PROXY)
 	docker-compose -f docker-compose-e2e.yml up --exit-code-from acceptance
 

@@ -12,7 +12,7 @@ class OrganisationsController extends BaseController {
       const orgs = orgsResult.organisations;
 
       if (orgs.length == 1) {
-        return _res.redirect(`/admin/organisations/${orgs[0].orgId}`);
+        return _res.redirect(`/admin/organisations/${orgs[0].id}`);
       }
 
       req.sessionModel.set('orgsResult', orgs);
