@@ -1,4 +1,4 @@
-{% macro usersTable(users, usersMetaData) %}
+{% macro usersTable(users, usersMetaData, fieldsToDisplay) %}
   {% from "govuk/components/table/macro.njk" import govukTable %}
 
   {% set startIndex = ((usersMetaData.currentPage - 1) * usersMetaData.perPage) + 1 %}
@@ -11,13 +11,38 @@
   {% set userInfo = "Showing <b>" + startIndex + "</b>-<b>" + endIndex + "</b> of <b>" + usersMetaData.total + "</b> records" %}
   <p>{{ userInfo | safe }}</p>
 
+  {% set usersHeaderArray = [] %}
   {% set usersArray = [] %}
-  {% set usersHeaderArray = [ { text: "User" }, { text: "Team" }, { text: "Email address" } ] %}
 
+  {# Build headers dynamically #}
+  {% for field in fieldsToDisplay %}
+    {% set headerItem = { text: field } %}
+    {% if usersHeaderArray %}
+      {% set usersHeaderArray = usersHeaderArray | push(headerItem) %}
+    {% else %}
+      {% set usersHeaderArray = [ headerItem ] %}
+    {% endif %}
+  {% endfor %}
+
+  {# Build rows dynamically #}
   {% for user in users | sort(attribute='username') %}
     {% set rowArray = [] %}
-    {% set rowArray = [ { text: (user.firstName + " " + user.lastName) | title }, { text: user.teamName }, { text: user.email } ] %}
-    {% set usersArray = (usersArray.push(rowArray), usersArray) %}
+    {% for field in fieldsToDisplay %}
+      {% if field == 'User' %}
+        {% set value = (user.firstName + " " + user.lastName) | title %}
+      {% elif field == 'Team' %}
+        {% set value = user.teamName %}
+      {% elif field == 'Email address' %}
+        {% set value = user.email %}
+      {% endif %}
+      {% set cellItem = { text: value } %}
+      {% if rowArray %}
+        {% set rowArray = rowArray | push(cellItem) %}
+      {% else %}
+        {% set rowArray = [ cellItem ] %}
+      {% endif %}
+    {% endfor %}
+    {% set usersArray = usersArray | push(rowArray) %}
   {% endfor %}
 
   {{ govukTable({
@@ -26,7 +51,4 @@
   head: usersHeaderArray,
   rows: usersArray
   }) }}
-
-  <p align="right">{{ userInfo | safe }}</p>
-
 {% endmacro %}

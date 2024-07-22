@@ -1,5 +1,8 @@
 const BaseController = require('../BaseController');
 const { orgLookup } = require('../../services/UserManagement/OrganisationSearchService');
+const queryParamsBuilder = require("../../helpers/queryParamsBuilder");
+
+
 
 class OrganisationController extends BaseController {
   async getValues(req, _res, next) {
@@ -13,16 +16,9 @@ class OrganisationController extends BaseController {
         url: `/admin/organisations/${req.params.orgId}/teams`
       });
 
-      const params = ['page', 'perPage', 'sort', 'order']
-        .filter(param => req.query[param])
-        .map(param => `${param}=${req.query[param]}`)
-        .join('&');
-
-      const queryParamString = params ? `?${params}` : '';
-
       const userResults = await orgLookup({
         ...this.getOptions(req),
-        url: `/admin/organisations/${req.params.orgId}/users${queryParamString}`
+        url: `/admin/organisations/${req.params.orgId}/users${queryParamsBuilder(req)}`
       });
 
       req.sessionModel.set('orgResults', searchResults);

@@ -11,7 +11,7 @@ class OrganisationsController extends BaseController {
 
       const orgs = orgsResult.organisations;
 
-      if (orgs.length == 1) {
+      if (orgs.length === 1) {
         return _res.redirect(`/admin/organisations/${orgs[0].id}`);
       }
 
