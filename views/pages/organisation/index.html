@@ -43,7 +43,7 @@
       {% if users.length == 0 %}
         <p>There are no users in this organisation.</p>
       {% else %}
-        {{ usersTable(users, usersMetaData) }}
+        {{ usersTable(users, usersMetaData, ["User", "Team", "Email address"]) }}
         {{ pagination(usersMetaData.total, usersMetaData.perPage, usersMetaData.currentPage) }}
       {% endif %}
 
