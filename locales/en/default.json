@@ -9,6 +9,9 @@
     "search": "Search",
     "newSearch": "New search",
     "editSearch": "Edit search",
+    "editUser": "Edit user",
+    "resetPass": "Reset password",
+    "deleteUser": "Delete user",
     "backToResults": "Back to results",
     "startAgain": "Start again",
     "logout": "Sign out",
@@ -172,6 +175,10 @@
       "teamPage": {
         "title": "Manage team",
         "pageTitle": "Manage team"
+      },
+      "userPage": {
+        "title": "Manage user",
+        "pageTitle": "Manage user"
       }
     },
     "error": {
