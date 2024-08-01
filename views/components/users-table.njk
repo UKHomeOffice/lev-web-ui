@@ -29,13 +29,12 @@
     {% set rowArray = [] %}
     {% for field in fieldsToDisplay %}
       {% if field == 'User' %}
-        {% set value = (user.firstName + " " + user.lastName) | title %}
+        {% set cellItem = { html: '<a href=/admin/organisations/'+ user.orgID +'/team/' + user.teamID + '/user/' + user.email + '>' + (user.firstName + " " + user.lastName) | title + '</a>' } %}
       {% elif field == 'Team' %}
-        {% set value = user.teamName %}
+        {% set cellItem = { text: user.teamName } %}
       {% elif field == 'Email address' %}
-        {% set value = user.email %}
+        {% set cellItem = { text: user.email } %}
       {% endif %}
-      {% set cellItem = { text: value } %}
       {% if rowArray %}
         {% set rowArray = rowArray | push(cellItem) %}
       {% else %}
