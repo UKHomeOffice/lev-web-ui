@@ -1,14 +1,15 @@
 {% extends "app-template.njk" %}
 
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
-{% from "govuk/components/table/macro.njk" import govukTable %}
 {% from "components/pagination.njk" import pagination %}
-{% from "components/users-table.njk" import usersTable %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 
 {% set govukServiceNameKey = translate("pages.user-management.serviceName") %}
 {% set govukServiceTitleKey = translate("pages.user-management.userPage.pageTitle") %}
 {% set hmpoPageKey = "user-management.userPage" %}
 {% set govukServiceUrl = "/admin/organisations" %}
+{% set orgLink = "/admin/organisations/" + userInfo.orgID %}
+{% set teamLink = orgLink + "/team/" + userInfo.teamID %}
 
 {% block hmpoContent %}
 <div class="govuk-grid-row">
@@ -21,27 +22,24 @@
             </div>
             <div class="govuk-grid-column-one-half">
                 <div class="govuk-button-group">
-                    {{ hmpoSubmit(ctx, {id: "editUser", key: "editUser", href: "/user/" +userInfo.username+ "/edit"}) }}
-                    {{ hmpoSubmit(ctx, {id: "resetPass", key: "resetPass", href: "/user/" +userInfo.username+ "/reset", classes: "govuk-button--secondary"}) }}
-                    {{ hmpoSubmit(ctx, {id: "deleteUser", key: "deleteUser", href: "/user/" +userInfo.username+ "/delete", classes: "govuk-button--warning"}) }}
+                    {{ hmpoSubmit(ctx, {id: "editUser", key: "editUser", href: "/user/" +userInfo.email+ "/edit"}) }}
+                    {{ hmpoSubmit(ctx, {id: "resetPass", key: "resetPass", href: "/user/" +userInfo.email+ "/reset", classes: "govuk-button--secondary"}) }}
+                    {{ hmpoSubmit(ctx, {id: "deleteUser", key: "deleteUser", href: teamLink + "/user/" +userInfo.email+ "/delete/confirm", classes: "govuk-button--warning"}) }}
                 </div>
             </div>
         </div>
 
-        {% set orgLink = "/admin/organisations/" + userInfo.orgID %}
-        {% set teamLink = orgLink + "/team/" + userInfo.teamID %}
         {% set userInfoArray = [
-        [{text: "First name"}, { text: userInfo.firstName }],
-        [{text: "Last name"}, { text: userInfo.lastName }],
-        [{text: "Email address"}, { text: userInfo.email }],
-        [{text: "Organisation"}, { html: "<a href=" + orgLink +">" + userInfo.organisationName + "</a>" }],
-        [{text: "Team"}, { html: "<a href=" + teamLink +">" + userInfo.teamName + "</a>" }]
+          { key: { text: "First name" }, value: { text: userInfo.firstName } },
+          { key: { text: "Last name" }, value: { text: userInfo.lastName } },
+          { key: { text: "Email address" }, value: { text: userInfo.email } },
+          { key: { text: "Organisation" }, value: { html:  "<a href=" + orgLink +">" + userInfo.organisationName + "</a>" } },
+          { key: { text: "Team" }, value: { html: "<a href=" + teamLink +">" + userInfo.teamName + "</a>"  } }
         ] %}
 
-        <div class="table-horizontal-scrolling govuk-!-width-two-thirds">
-            {{ govukTable({
+        <div class="govuk-!-width-two-thirds">
+            {{ govukSummaryList({
             classes: "detail",
-            firstCellIsHeader: true,
             rows: userInfoArray
             }) }}
         </div>

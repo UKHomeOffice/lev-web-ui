@@ -2,7 +2,6 @@ const BaseController = require('../BaseController');
 const { orgLookup } = require('../../services/UserManagement/OrganisationSearchService');
 const queryParamsBuilder = require("../../helpers/queryParamsBuilder");
 
-
 class TeamController extends BaseController {
   async getValues(req, _res, next) {
     try {
@@ -33,7 +32,7 @@ class TeamController extends BaseController {
       locals.teamInfo = req.sessionModel.get('teamResults') || {};
       locals.users = req.sessionModel.get('userResults') || {};
       locals.usersMetaData = req.sessionModel.get('usersMetaData') || { total: 0, currentPage: 1, perPage: 20};
-
+      locals.deletedUser = req.sessionModel.get('deletedUser') || "";
       callback(null, locals);
     });
   }
