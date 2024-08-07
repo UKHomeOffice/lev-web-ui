@@ -6,7 +6,7 @@ class DeleteUserController extends BaseController {
       try {
         await userDelete({
           ...this.getOptions(req),
-          url: `/admin/organisations/${req.params.orgId}/user/${req.params.username}/delete`
+          url: `/admin/organisations/${req.params.orgId}/user/${req.params.username}`
         });
 
       req.sessionModel.set('deletedUser', req.params.username);
