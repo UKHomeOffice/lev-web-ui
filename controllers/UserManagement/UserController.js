@@ -13,13 +13,11 @@ class UserController extends BaseController {
       req.sessionModel.set('userResults', userResults);
 
       next();
-
     } catch (err) {
       err.template = 'errors/organisation-error';
       next(err);
     }
   }
-
 
   locals(req, res, callback) {
     super.locals(req, res, (error, locals) => {

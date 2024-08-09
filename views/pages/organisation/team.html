@@ -6,6 +6,7 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/tag/macro.njk" import govukTag %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 
 {% set govukServiceNameKey = translate("pages.user-management.serviceName") %}
 {% set govukServiceTitleKey = translate("pages.user-management.teamPage.pageTitle") %}
@@ -17,44 +18,57 @@
     <div class="govuk-grid-column-full">
       {% block mainContent %}
 
-        <span class="govuk-caption-m">{{teamInfo.organisation.organisationName}}</span>
-        <h1>{{teamInfo.teamName}}</h1>
+      <div class="govuk-grid-column-two-thirds">
 
-        <div class="govuk-grid-column-two-thirds">
+        {% if deletedUser %}
+
+          {% set html %}
+            <h2>You have successfully deleted {{ deletedUser }}'s account.</h2>
+          {% endset %}
+
+          {{ govukNotificationBanner({
+            html: html,
+            type: "success"
+          }) }}
+
+        {% endif %}
+
+        <span class="govuk-caption-m">{{ teamInfo.organisation.organisationName }}</span>
+        <h1>{{ teamInfo.teamName }}</h1>
 
         {% set rowArray = [{ key: { text: "Search type", classes: "govuk-!-font-weight-bold text-color-black" }, value: { text: "Permission", classes: "govuk-!-font-weight-bold text-color-black" } }] %}
 
-          {% for key, value in teamInfo.permissions %}
-            {% set yesNoTag = govukTag({ text: "Yes" if value else "No", classes: "govuk-tag--turquoise" if value else "govuk-tag--red"  }) %}
-            {% set rowArray = (rowArray.push( { key: { text: key | title }, value: { text: yesNoTag } }), rowArray) %}
-          {% endfor %}
+        {% for key, value in teamInfo.permissions %}
+          {% set yesNoTag = govukTag({ text: "Yes" if value else "No", classes: "govuk-tag--turquoise" if value else "govuk-tag--red"  }) %}
+          {% set rowArray = (rowArray.push( { key: { text: key | title }, value: { text: yesNoTag } }), rowArray) %}
+        {% endfor %}
 
-          {{ govukSummaryList({
+        {{ govukSummaryList({
           classes: "govuk-summary-list--wide",
-            card: {
-              title: {
-                text: "Search permissions"
-              }
-            },
-            rows: rowArray
-          }) }}
+          card: {
+            title: {
+              text: "Search permissions"
+            }
+          },
+          rows: rowArray
+        }) }}
 
-          {{ govukButton({
-            text: "Add new user",
-            classes: "govuk-button--secondary"
-          }) }}
-        </div>
+        {{ govukButton({
+          text: "Add new user",
+          classes: "govuk-button--secondary"
+        }) }}
+      </div>
     </div>
 
-          <h2>Users</h2>
-          {% if users.length == 0 %}
-              <p>There are no users in this team.</p>
-          {% else %}
-              {{ usersTable(users, usersMetaData, ["User", "Email address"]) }}
-              {{ pagination(usersMetaData.total, usersMetaData.perPage, usersMetaData.currentPage) }}
-          {% endif %}
+    <h2>Users</h2>
+    {% if users.length == 0 %}
+      <p>There are no users in this team.</p>
+    {% else %}
+      {{ usersTable(users, usersMetaData, ["User", "Email address"]) }}
+      {{ pagination(usersMetaData.total, usersMetaData.perPage, usersMetaData.currentPage) }}
+    {% endif %}
 
-      {% endblock %}
+    {% endblock %}
 
   </div>
 {% endblock %}
