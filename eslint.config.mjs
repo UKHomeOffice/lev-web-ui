@@ -20,9 +20,6 @@ export default [
         before: 'readonly',
         }
     },
-    rules: {
-      'no-unused-vars': ['error', { 'argsIgnorePattern': '^_' }]
-    },
   },
   pluginJs.configs.recommended,
 ];
