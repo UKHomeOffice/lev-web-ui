@@ -23,6 +23,7 @@ class UserController extends BaseController {
     super.locals(req, res, (error, locals) => {
       if (error) return callback(error);
       locals.userInfo = req.sessionModel.get('userResults') || [];
+      locals.updatedUser = req.sessionModel.get('updatedUser') || '';
       callback(null, locals);
     });
   }

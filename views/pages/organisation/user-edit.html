@@ -1,0 +1,73 @@
+{% extends "app-template.njk" %}
+
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/select/macro.njk" import govukSelect %}
+{% from "hmpo-field/macro.njk" import hmpoField %}
+{% from "hmpo-select/macro.njk" import hmpoSelect %}
+{% from "hmpo-form/macro.njk" import hmpoForm %}
+{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+
+{% set govukServiceNameKey = translate("pages.user-management.serviceName") %}
+{% set govukServiceTitleKey = translate("pages.user-management.userEditPage.pageTitle") %}
+{% set hmpoPageKey = "user-management.userEditPage" %}
+{% set govukServiceUrl = "/admin/organisations" %}
+{% set orgLink = "/admin/organisations/" + userInfo.orgID %}
+{% set teamLink = orgLink + "/team/" + userInfo.teamID %}
+
+{% block hmpoContent %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        {% block mainContent %}
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-three-quarters">
+                <h1>{{ translate("pages." + hmpoPageKey + ".h1", { default: hmpoTitle }) | safe }}</h1>
+                <h2 id="header">{{ userInfo.firstName }} {{ userInfo.lastName }}</h2>
+            </div>
+            <div class="govuk-grid-column-one-quarter">
+                <div class="govuk-button-group">
+                    {{ hmpoSubmit(ctx, {id: "deleteUser", key: "deleteUser", href: teamLink + "/user/" +userInfo.email+ "/delete/confirm", classes: "govuk-button--warning"}) }}
+                </div>
+            </div>
+        </div>
+
+        {% set userInfoArray = [
+            { key: { text: "Email address" }, value: { text: userInfo.email } },
+            { key: { text: "Organisation" }, value: { html:  "<a href=" + orgLink +">" + userInfo.organisationName + "</a>" } }
+        ]%}
+        <div class="govuk-!-width-two-thirds">
+            {{ govukSummaryList({
+            classes: "detail",
+            rows: userInfoArray
+            }) }}
+        </div>
+
+        {% set teamsToShow = [] %}
+        {% for team in orgTeams  %}
+          {% set itemInSelect = { text: team.name, value: team.id } %}
+          {% if team.id == userInfo.teamID %}
+            {% set itemInSelect = { text: team.name, value: team.id, selected: true } %}
+          {% endif %}
+          {% set teamsToShow = (teamsToShow.push( itemInSelect ), teamsToShow) %}
+        {% endfor %}
+
+        {% call hmpoForm(ctx) %}
+        {{ hmpoField(ctx, "firstname") }}
+        {{ hmpoField(ctx, "lastname") }}
+        {{ hmpoSelect(ctx, {
+            id: "teamSelect",
+            key: "teamSelect",
+            label: translate("fields.teamSelect.label"),
+            classes: "govuk-!-width-one-half",
+            items: teamsToShow })
+        }}
+
+        <div class="govuk-button-group">
+            {{ hmpoSubmit(ctx, {id: "save", key: "save"}) }}
+            {{ hmpoSubmit(ctx, {id: "back", key: "back", href: teamLink + "/user/" +userInfo.email, classes: "govuk-button--secondary"}) }}
+        </div>
+        {% endcall %}
+
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

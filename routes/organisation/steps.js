@@ -4,7 +4,8 @@ const OrganisationController = require('../../controllers/UserManagement/Organis
 const OrganisationsController = require('../../controllers/UserManagement/OrganisationsController');
 const TeamController = require('../../controllers/UserManagement/TeamController');
 const UserController = require('../../controllers/UserManagement/UserController');
-const DeleteUserController = require("../../controllers/UserManagement/DeleteUserController");
+const DeleteUserController = require('../../controllers/UserManagement/DeleteUserController');
+const UserEditController = require('../../controllers/UserManagement/UserEditController');
 
 module.exports = {
   '/': {
@@ -38,5 +39,11 @@ module.exports = {
     controller: DeleteUserController,
     entryPoint: true,
     skip: true
+  },
+  '/:orgId/team/:teamId/user/:username/modify': {
+    fields: ['firstname', 'lastname', 'teamSelect'],
+    controller: UserEditController,
+    entryPoint: true,
+    template: '/user-edit.html'
   }
 };
