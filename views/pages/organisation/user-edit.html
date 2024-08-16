@@ -23,11 +23,6 @@
                 <h1>{{ translate("pages." + hmpoPageKey + ".h1", { default: hmpoTitle }) | safe }}</h1>
                 <h2 id="header">{{ userInfo.firstName }} {{ userInfo.lastName }}</h2>
             </div>
-            <div class="govuk-grid-column-one-quarter">
-                <div class="govuk-button-group">
-                    {{ hmpoSubmit(ctx, {id: "deleteUser", key: "deleteUser", href: teamLink + "/user/" +userInfo.email+ "/delete/confirm", classes: "govuk-button--warning"}) }}
-                </div>
-            </div>
         </div>
 
         {% set userInfoArray = [
