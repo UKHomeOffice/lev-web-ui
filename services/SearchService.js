@@ -13,7 +13,7 @@ class SearchService {
   static async lookup(options) {
     return await new Promise((resolve, reject) => {
       const model = new RestApiModel({}, options);
-      model.fetch((err, data, _responseTime) => {
+      model.fetch((err, data) => {
         if (err && err.status === 404) {
           resolve(undefined);
         } else if (err) {
@@ -34,7 +34,7 @@ class SearchService {
   static async search(options) {
     return await new Promise((resolve, reject) => {
       const model = new RestApiModel({}, options);
-      model.fetch((err, data, _responseTime) => {
+      model.fetch((err, data) => {
         if (err) {
           reject(err);
         } else {
