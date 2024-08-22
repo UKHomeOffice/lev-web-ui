@@ -1,0 +1,50 @@
+{% extends "app-template.njk" %}
+
+{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+{% set govukServiceNameKey = translate("pages.user-management.serviceName") %}
+{% set govukServiceTitleKey = translate("pages.user-management.userPage.pageTitle") %}
+{% set hmpoPageKey = "user-management.userPage" %}
+{% set govukServiceUrl = "/admin/organisations" %}
+{% set orgLink = "/admin/organisations/" + userInfo.orgID %}
+{% set teamLink = orgLink + "/team/" + userInfo.teamID %}
+
+{% block hmpoContent %}
+  <h1>Are you sure you want to delete this user?</h1>
+
+  <div class="govuk-!-width-two-thirds">
+
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: { text: "First Name" },
+          value: { text: userInfo.firstName }
+        },
+        {
+          key: { text: "Last Name" },
+          value: { html: userInfo.lastName }
+        },
+        {
+          key: { text: "Email address" },
+          value: { text: userInfo.email }
+        },
+        {
+          key: { text: "Organisation" },
+          value: { html: '<a href="' + orgLink + '" class="govuk-link">' + userInfo.organisationName + '</a>' }
+        },
+        {
+          key: { text: "Team" },
+          value: { html: '<a href="' + teamLink + '" class="govuk-link">' + userInfo.teamName + '</a>' }
+        }
+      ]
+    }) }}
+
+    <div class="govuk-button-group">
+      {{ hmpoSubmit(ctx, {id: "deleteAccount", key: "deleteAccount", href: teamLink + "/user/" +userInfo.email + "/delete", classes: "govuk-button--warning"}) }}
+      {{ hmpoSubmit(ctx, {id: "back", key: "back", href: teamLink + "/user/" +userInfo.email, classes: "govuk-button--secondary"}) }}
+    </div>
+
+  </div>
+
+{% endblock %}

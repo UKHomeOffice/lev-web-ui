@@ -33,11 +33,11 @@ class UserActivitySearchPage extends SearchPage {
   }
 
   static performSearch({
-    dateFrom,
-    dateTo,
-    weekendCheckbox,
-    userFilter
-  }) {
+                         dateFrom,
+                         dateTo,
+                         weekendCheckbox,
+                         userFilter
+                       }) {
     this.setText('#dateFrom-day', dateFrom && dateFrom.day);
     this.setText('#dateFrom-month', dateFrom && dateFrom.month);
     this.setText('#dateFrom-year', dateFrom && dateFrom.year);

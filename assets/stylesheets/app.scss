@@ -37,3 +37,20 @@ a, button {
     font-size: 1.1875rem;
   }
 }
+
+.text-color-black {
+  color: black !important;
+}
+
+.govuk-summary-list__key {
+  @extend .text-color-black;
+  font-weight: bold !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+
+.govuk-summary-list__value {
+  @extend .text-color-black;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}

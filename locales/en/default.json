@@ -9,6 +9,11 @@
     "search": "Search",
     "newSearch": "New search",
     "editSearch": "Edit search",
+    "editUser": "Edit user",
+    "resetPass": "Reset password",
+    "deleteAccount": "Delete Account",
+    "deleteUser": "Delete user",
+    "back": "Back",
     "backToResults": "Back to results",
     "startAgain": "Start again",
     "logout": "Sign out",
@@ -168,6 +173,14 @@
       "organisationsPage": {
         "title": "Manage organisations",
         "pageTitle": "Manage organisations"
+      },
+      "teamPage": {
+        "title": "Manage team",
+        "pageTitle": "Manage team"
+      },
+      "userPage": {
+        "title": "Manage user",
+        "pageTitle": "Manage user"
       }
     },
     "error": {

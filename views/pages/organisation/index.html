@@ -24,7 +24,7 @@
 
     {% for team in teams | sort('team.name') %}
       {% set rowArray = [] %}
-      {% set teamLink = "/admin/organisations/" + orgInfo.id + "/teams/" + team.id %}
+      {% set teamLink = "/admin/organisations/" + orgInfo.id + "/team/" + team.id %}
       {% set rowArray = (rowArray.push( { html: "<a href=" + teamLink +">" + team.name + "</a>" } ), rowArray) %}
       {% set rowArray = (rowArray.push( { text: team.users } ), rowArray) %}
       {% set teamsArray = (teamsArray.push(rowArray), teamsArray) %}
@@ -39,11 +39,11 @@
       }) }}
     </div>
 
-      <h3>Organisation Users</h3>
+      <h2>Organisation Users</h2>
       {% if users.length == 0 %}
         <p>There are no users in this organisation.</p>
       {% else %}
-        {{ usersTable(users, usersMetaData) }}
+        {{ usersTable(users, usersMetaData, ["User", "Team", "Email address"]) }}
         {{ pagination(usersMetaData.total, usersMetaData.perPage, usersMetaData.currentPage) }}
       {% endif %}
 

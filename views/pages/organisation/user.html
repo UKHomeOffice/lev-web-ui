@@ -1,0 +1,50 @@
+{% extends "app-template.njk" %}
+
+{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+{% from "components/pagination.njk" import pagination %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+{% set govukServiceNameKey = translate("pages.user-management.serviceName") %}
+{% set govukServiceTitleKey = translate("pages.user-management.userPage.pageTitle") %}
+{% set hmpoPageKey = "user-management.userPage" %}
+{% set govukServiceUrl = "/admin/organisations" %}
+{% set orgLink = "/admin/organisations/" + userInfo.orgID %}
+{% set teamLink = orgLink + "/team/" + userInfo.teamID %}
+
+{% block hmpoContent %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        {% block mainContent %}
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-half">
+                <span class="govuk-caption-m">{{ translate("pages." + hmpoPageKey + ".h1", { default: hmpoTitle }) | safe }}</span>
+                <h1 id="header" data-page="{{hmpoPageKey}}">{{ userInfo.firstName }} {{ userInfo.lastName }}</h1>
+            </div>
+            <div class="govuk-grid-column-one-half">
+                <div class="govuk-button-group">
+                    {{ hmpoSubmit(ctx, {id: "editUser", key: "editUser", href: "/user/" +userInfo.email+ "/edit"}) }}
+                    {{ hmpoSubmit(ctx, {id: "resetPass", key: "resetPass", href: "/user/" +userInfo.email+ "/reset", classes: "govuk-button--secondary"}) }}
+                    {{ hmpoSubmit(ctx, {id: "deleteUser", key: "deleteUser", href: teamLink + "/user/" +userInfo.email+ "/delete/confirm", classes: "govuk-button--warning"}) }}
+                </div>
+            </div>
+        </div>
+
+        {% set userInfoArray = [
+          { key: { text: "First name" }, value: { text: userInfo.firstName } },
+          { key: { text: "Last name" }, value: { text: userInfo.lastName } },
+          { key: { text: "Email address" }, value: { text: userInfo.email } },
+          { key: { text: "Organisation" }, value: { html:  "<a href=" + orgLink +">" + userInfo.organisationName + "</a>" } },
+          { key: { text: "Team" }, value: { html: "<a href=" + teamLink +">" + userInfo.teamName + "</a>"  } }
+        ] %}
+
+        <div class="govuk-!-width-two-thirds">
+            {{ govukSummaryList({
+            classes: "detail",
+            rows: userInfoArray
+            }) }}
+        </div>
+
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}
