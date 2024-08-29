@@ -5,6 +5,7 @@ const OrganisationsController = require('../../controllers/UserManagement/Organi
 const TeamController = require('../../controllers/UserManagement/TeamController');
 const UserController = require('../../controllers/UserManagement/UserController');
 const DeleteUserController = require("../../controllers/UserManagement/DeleteUserController");
+const ResetUserPasswordController = require("../../controllers/UserManagement/ResetUserPasswordController");
 
 module.exports = {
   '/': {
@@ -36,6 +37,11 @@ module.exports = {
   },
   '/:orgId/team/:teamId/user/:username/delete': {
     controller: DeleteUserController,
+    entryPoint: true,
+    skip: true
+  },
+  '/:orgId/team/:teamId/user/:username/reset-password': {
+    controller: ResetUserPasswordController,
     entryPoint: true,
     skip: true
   }

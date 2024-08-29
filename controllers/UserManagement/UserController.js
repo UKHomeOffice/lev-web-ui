@@ -23,9 +23,15 @@ class UserController extends BaseController {
     super.locals(req, res, (error, locals) => {
       if (error) return callback(error);
       locals.userInfo = req.sessionModel.get('userResults') || [];
+      locals.passwordResetAttempted = req.sessionModel.get('passwordResetAttempted') || false;
+      locals.passwordResetSuccess = req.sessionModel.get('passwordResetSuccess') || false;
+      req.sessionModel.unset('passwordResetAttempted');
+      req.sessionModel.unset('passwordResetSuccess');
       callback(null, locals);
     });
   }
+
+
 }
 
 module.exports = UserController;
