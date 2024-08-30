@@ -1,6 +1,7 @@
 const BaseController = require('../BaseController');
 const { orgLookup } = require('../../services/UserManagement/OrganisationSearchService');
 const { userEdit } = require('../../services/UserManagement/UserActionsService');
+const {request} = require("express");
 class UserEditController extends BaseController {
 
   async getValues(req, res, next) {
@@ -29,6 +30,7 @@ class UserEditController extends BaseController {
 
   async process(req, res, next) {
     // using it for pre-populating fields and remain the user edited values on the error screen
+    req.sessionModel.set('username', req.params.username);
     req.sessionModel.set('firstNameFromForm', req.form.values['firstName']);
     req.sessionModel.set('lastNameFromForm', req.form.values['lastName']);
 
@@ -66,13 +68,16 @@ class UserEditController extends BaseController {
       const firstNameFromPreviousSubmittedForm = req.sessionModel.get('firstNameFromForm');
       const lastNameFromPreviousSubmittedForm = req.sessionModel.get('lastNameFromForm');
 
-      if (firstNameFromPreviousSubmittedForm || firstNameFromPreviousSubmittedForm === '') {
-        locals.values.firstName = firstNameFromPreviousSubmittedForm;
-        req.sessionModel.unset('firstNameFromForm');
-      }
-      if (lastNameFromPreviousSubmittedForm || lastNameFromPreviousSubmittedForm === '') {
-        locals.values.lastName = lastNameFromPreviousSubmittedForm;
-        req.sessionModel.unset('lastNameFromForm');
+      if (req.sessionModel.get('username') === locals.userInfo.username) {
+        if (firstNameFromPreviousSubmittedForm || firstNameFromPreviousSubmittedForm === '') {
+          locals.values.firstName = firstNameFromPreviousSubmittedForm;
+          req.sessionModel.unset('firstNameFromForm');
+        }
+        if (lastNameFromPreviousSubmittedForm || lastNameFromPreviousSubmittedForm === '') {
+          locals.values.lastName = lastNameFromPreviousSubmittedForm;
+          req.sessionModel.unset('lastNameFromForm');
+        }
+        req.sessionModel.unset('username');
       }
       callback(null, locals);
     });
