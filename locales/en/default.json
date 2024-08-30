@@ -101,10 +101,10 @@
     "weekendCheckbox": {
       "label": "Include weekends?"
     },
-    "firstname": {
+    "firstName": {
         "label": "First name"
     },
-    "lastname": {
+    "lastName": {
       "label": "Last name"
     },
     "teamSelect": {
@@ -338,16 +338,16 @@
       "afterField": "Please enter a date after the before date",
       "before": "Please enter a date in the past"
     },
-    "firstname": {
-      "required": "Please enter a First name",
-      "maximumlength": "First name: Your entry cannot exceed 30 characters"
+    "firstName": {
+      "required": "Enter first name",
+      "length": "First name must be between 1 and 30 Characters"
     },
-    "lastname": {
-      "required": "Please enter a Last name",
-      "maximumlength": "Last name: Your entry cannot exceed 30 characters"
+    "lastName": {
+      "required": "Enter last name",
+      "length": "Last name must be between 1 and 30 Characters"
     },
     "teamSelect": {
-      "required": "Please select a Team"
+      "required": "Select a team"
     }
   },
   "footer": "Your feedback will help us improve this service. Email us <a href=\"mailto:ITnowServiceDesk@homeoffice.gov.uk?subject=LEV%20Feedback\">ITnowServiceDesk@homeoffice.gov.uk</a>"

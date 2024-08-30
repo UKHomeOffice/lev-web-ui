@@ -17,16 +17,25 @@
     <div class="govuk-grid-column-full">
         {% block mainContent %}
         <div class="govuk-grid-row">
-            {% if updatedUser %}
-                {% set html %}
-                <h2>You have successfully edited {{ updatedUser }}'s details</h2>
-                {% endset %}
+            <div class="govuk-!-width-two-thirds">
+                {% set status = '' %}
+                {% set html = `` %}
 
-                {{ govukNotificationBanner({
-                   html: html,
-                   type: "success"})
-                }}
-            {% endif %}
+                {% if updatingUser %}
+                    {% if updatedUser %}
+                        {% set status = "success" %}
+                        {% set html = "<h2>You have successfully updated " + updatedUser + "'s details</h2>" %}
+                    {% else %}
+                        {% set status = "failure" %}
+                        {% set html="<h2>There was a problem updating user</h2>" %}
+                    {% endif %}
+
+                    {{ govukNotificationBanner({
+                        html: html,
+                        type: status
+                    }) }}
+                {% endif %}
+            </div>
             <div class="govuk-grid-column-one-half">
                 <span class="govuk-caption-m">{{ translate("pages." + hmpoPageKey + ".h1", { default: hmpoTitle }) | safe }}</span>
                 <h1 id="header" data-page="{{hmpoPageKey}}">{{ userInfo.firstName }} {{ userInfo.lastName }}</h1>

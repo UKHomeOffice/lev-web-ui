@@ -41,7 +41,7 @@ module.exports = {
     skip: true
   },
   '/:orgId/team/:teamId/user/:username/modify': {
-    fields: ['firstname', 'lastname', 'teamSelect'],
+    fields: ['firstName', 'lastName', 'teamSelect'],
     controller: UserEditController,
     entryPoint: true,
     template: '/user-edit.html'

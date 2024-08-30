@@ -3,6 +3,7 @@
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "govuk/components/select/macro.njk" import govukSelect %}
 {% from "hmpo-field/macro.njk" import hmpoField %}
+{% from "hmpo-text/macro.njk" import hmpoText %}
 {% from "hmpo-select/macro.njk" import hmpoSelect %}
 {% from "hmpo-form/macro.njk" import hmpoForm %}
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
@@ -46,8 +47,20 @@
         {% endfor %}
 
         {% call hmpoForm(ctx) %}
-        {{ hmpoField(ctx, "firstname") }}
-        {{ hmpoField(ctx, "lastname") }}
+        {{ hmpoText(ctx, {
+            id: "firstName",
+            label: {
+                text: translate("fields.firstName.label"),
+                classes: "govuk-label--s"
+            }
+        }) }}
+        {{ hmpoText(ctx, {
+            id: "lastName",
+            label: {
+                text: translate("fields.lastName.label"),
+                classes: "govuk-label--s"
+            }
+        }) }}
         {{ hmpoSelect(ctx, {
             id: "teamSelect",
             key: "teamSelect",
