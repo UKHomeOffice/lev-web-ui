@@ -22,6 +22,20 @@ class UserActionsService {
       });
     });
   }
+
+  static async userEdit(options, postData) {
+    return await new Promise((resolve, reject) => {
+      const model = new OrganisationRestApiModel({}, options);
+      model.set(postData);
+      model.save((err, data, _responseTime) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(data);
+        }
+      });
+    });
+  }
 }
 
 module.exports = UserActionsService;
