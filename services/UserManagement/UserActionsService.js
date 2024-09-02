@@ -10,7 +10,7 @@ class UserActionsService {
    // * @returns {Promise<string>}
    */
 
-  static async userDelete(options) {
+  static async deleteRequest(options) {
     return await new Promise((resolve, reject) => {
       const model = new OrganisationRestApiModel({}, options);
       model.delete((err, data) => {
@@ -28,6 +28,18 @@ class UserActionsService {
       const model = new OrganisationRestApiModel({}, options);
       model.set(postData);
       model.save((err, data) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(data);
+        }
+      });
+    });
+  }
+  static async postRequest(options) {
+    return await new Promise((resolve, reject) => {
+      const model = new OrganisationRestApiModel({}, options);
+      model.save((err, data, _responseTime) => {
         if (err) {
           reject(err);
         } else {

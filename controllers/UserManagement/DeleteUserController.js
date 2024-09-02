@@ -1,10 +1,10 @@
 const BaseController = require('../BaseController');
-const { userDelete } = require('../../services/UserManagement/UserActionsService');
+const { deleteRequest } = require('../../services/UserManagement/UserActionsService');
 
 class DeleteUserController extends BaseController {
     async saveValues(req, res, next) {
       try {
-        await userDelete({
+        await deleteRequest({
           ...this.getOptions(req),
           url: `/admin/organisations/${req.params.orgId}/teams/${req.params.teamId}/users/${req.params.username}`
         });

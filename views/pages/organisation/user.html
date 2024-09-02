@@ -5,6 +5,7 @@
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 
+
 {% set govukServiceNameKey = translate("pages.user-management.serviceName") %}
 {% set govukServiceTitleKey = translate("pages.user-management.userPage.pageTitle") %}
 {% set hmpoPageKey = "user-management.userPage" %}
@@ -16,7 +17,28 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
         {% block mainContent %}
+
         <div class="govuk-grid-row">
+            <div class="govuk-!-width-two-thirds">
+
+                {% set status = '' %}
+                {% set html = '' %}
+
+                {% if passwordResetAttempted %}
+                    {% if passwordResetSuccess %}
+                        {% set status = "success" %}
+                        {% set html = "<h2>You have successfully sent a 'Password reset' email to the user</h2><p>This password is valid for the next 72 hours</p>" %}
+                    {% else %}
+                        {% set status = "failure" %}
+                        {% set html = "<h2>There is a problem - Unable to reset user account</h2>" %}
+                    {% endif %}
+
+                    {{ govukNotificationBanner({
+                        html: html,
+                        type: status
+                    }) }}
+                {% endif %}
+            </div>
             <div class="govuk-!-width-two-thirds">
                 {% set status = '' %}
                 {% set html = '' %}
@@ -42,8 +64,8 @@
             </div>
             <div class="govuk-grid-column-one-half">
                 <div class="govuk-button-group">
-                    {{ hmpoSubmit(ctx, {id: "editUser", key: "editUser", href: teamLink + "/user/" +userInfo.email+ "/modify"}) }}
-                    {{ hmpoSubmit(ctx, {id: "resetPass", key: "resetPass", href: "/user/" +userInfo.email+ "/reset", classes: "govuk-button--secondary"}) }}
+                  {{ hmpoSubmit(ctx, {id: "editUser", key: "editUser", href: teamLink + "/user/" +userInfo.email+ "/modify"}) }}
+                    {{ hmpoSubmit(ctx, {id: "resetPass", key: "resetPass", href: teamLink + "/user/" +userInfo.email + "/reset-password", classes: "govuk-button--secondary"}) }}
                     {{ hmpoSubmit(ctx, {id: "deleteUser", key: "deleteUser", href: teamLink + "/user/" +userInfo.email+ "/delete/confirm", classes: "govuk-button--warning"}) }}
                 </div>
             </div>
