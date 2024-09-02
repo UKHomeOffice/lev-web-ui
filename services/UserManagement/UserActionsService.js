@@ -39,7 +39,7 @@ class UserActionsService {
   static async postRequest(options) {
     return await new Promise((resolve, reject) => {
       const model = new OrganisationRestApiModel({}, options);
-      model.save((err, data, _responseTime) => {
+      model.save((err, data) => {
         if (err) {
           reject(err);
         } else {
