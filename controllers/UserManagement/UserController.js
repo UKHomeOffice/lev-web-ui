@@ -25,10 +25,10 @@ class UserController extends BaseController {
       locals.userInfo = req.sessionModel.get('userResults') || [];
       locals.passwordResetAttempted = req.sessionModel.get('passwordResetAttempted') || false;
       locals.passwordResetSuccess = req.sessionModel.get('passwordResetSuccess') || false;
-      req.sessionModel.unset('passwordResetAttempted');
-      req.sessionModel.unset('passwordResetSuccess');
       locals.updatingUser = req.sessionModel.get('updatingUser') || false;
       locals.updatedUser = req.sessionModel.get('updatedUser') || false;
+      req.sessionModel.unset('passwordResetAttempted');
+      req.sessionModel.unset('passwordResetSuccess');
       req.sessionModel.unset('updatingUser');
       req.sessionModel.unset('updatedUser');
       callback(null, locals);
