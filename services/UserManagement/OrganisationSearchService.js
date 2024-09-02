@@ -13,7 +13,7 @@ class OrganisationSearchService {
   static async orgLookup(options) {
     return await new Promise((resolve, reject) => {
       const model = new OrganisationRestApiModel({}, options);
-      model.fetch((err, data, _responseTime) => {
+      model.fetch((err, data) => {
         if (err) {
           reject(err);
         } else {

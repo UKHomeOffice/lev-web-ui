@@ -13,7 +13,21 @@ class UserActionsService {
   static async deleteRequest(options) {
     return await new Promise((resolve, reject) => {
       const model = new OrganisationRestApiModel({}, options);
-      model.delete((err, data, _responseTime) => {
+      model.delete((err, data) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(data);
+        }
+      });
+    });
+  }
+
+  static async userEdit(options, postData) {
+    return await new Promise((resolve, reject) => {
+      const model = new OrganisationRestApiModel({}, options);
+      model.set(postData);
+      model.save((err, data) => {
         if (err) {
           reject(err);
         } else {

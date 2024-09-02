@@ -13,7 +13,7 @@ class UserActivityService {
   static async searchByParams(options) {
     return await new Promise((resolve, reject) => {
       const model = new RestApiModel({}, options);
-      model.fetch((err, data, _responseTime) => {
+      model.fetch((err, data) => {
         if (err) {
           reject(err);
         } else {
