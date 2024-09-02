@@ -13,7 +13,7 @@ class UserActionsService {
   static async userDelete(options) {
     return await new Promise((resolve, reject) => {
       const model = new OrganisationRestApiModel({}, options);
-      model.delete((err, data, _responseTime) => {
+      model.delete((err, data) => {
         if (err) {
           reject(err);
         } else {

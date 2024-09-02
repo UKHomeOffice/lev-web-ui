@@ -73,11 +73,9 @@ class BirthSearchController extends DateController {
   /**
    * Returns true if we only have 1 result, otherwise false
    * @param req
-   * @param _res
-   * @param _con
    * @returns {*|boolean}
    */
-  isSingleResult(req, _res, _con) {
+  isSingleResult(req) {
     const searchResults = req.sessionModel.get('searchResults') || [];
 
     return searchResults && searchResults.length === 1;
