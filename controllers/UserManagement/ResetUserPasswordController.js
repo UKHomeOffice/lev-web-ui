@@ -2,7 +2,7 @@ const BaseController = require('../BaseController');
 const { postRequest } = require('../../services/UserManagement/UserActionsService');
 
 class ResetUserPasswordController extends BaseController {
-  async saveValues(req, res, next) {
+  async saveValues(req, res) {
     try {
       req.sessionModel.set('passwordResetAttempted', true);
       await postRequest({
