@@ -1,7 +1,6 @@
 const BaseController = require('../BaseController');
 const { orgLookup } = require('../../services/UserManagement/OrganisationSearchService');
 const { userEdit } = require('../../services/UserManagement/UserActionsService');
-const {request} = require("express");
 class UserEditController extends BaseController {
 
   async getValues(req, res, next) {
@@ -68,7 +67,7 @@ class UserEditController extends BaseController {
       const firstNameFromPreviousSubmittedForm = req.sessionModel.get('firstNameFromForm');
       const lastNameFromPreviousSubmittedForm = req.sessionModel.get('lastNameFromForm');
 
-      if (req.sessionModel.get('username') === locals.userInfo.username) {
+      if (req.sessionModel.get('username') === locals.userInfo.email) {
         if (firstNameFromPreviousSubmittedForm || firstNameFromPreviousSubmittedForm === '') {
           locals.values.firstName = firstNameFromPreviousSubmittedForm;
           req.sessionModel.unset('firstNameFromForm');
