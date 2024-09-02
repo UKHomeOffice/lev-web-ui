@@ -27,7 +27,7 @@ class UserActionsService {
     return await new Promise((resolve, reject) => {
       const model = new OrganisationRestApiModel({}, options);
       model.set(postData);
-      model.save((err, data, _responseTime) => {
+      model.save((err, data) => {
         if (err) {
           reject(err);
         } else {
