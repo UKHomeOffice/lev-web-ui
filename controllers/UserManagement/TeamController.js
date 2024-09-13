@@ -33,6 +33,11 @@ class TeamController extends BaseController {
       locals.users = req.sessionModel.get('userResults') || {};
       locals.usersMetaData = req.sessionModel.get('usersMetaData') || { total: 0, currentPage: 1, perPage: 20};
       locals.deletedUser = req.sessionModel.get('deletedUser') || '';
+      locals.addedUser = req.sessionModel.get('addedUser') || false;
+      locals.userFullName = req.sessionModel.get('userFullName') || '';
+      req.sessionModel.unset('deletedUser');
+      req.sessionModel.unset('addedUser');
+      req.sessionModel.unset('userFullName');
       callback(null, locals);
     });
   }

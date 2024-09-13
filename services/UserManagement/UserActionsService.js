@@ -22,23 +22,10 @@ class UserActionsService {
       });
     });
   }
-
-  static async userEdit(options, postData) {
+  static async postRequest(options, postData) {
     return await new Promise((resolve, reject) => {
       const model = new OrganisationRestApiModel({}, options);
       model.set(postData);
-      model.save((err, data) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(data);
-        }
-      });
-    });
-  }
-  static async postRequest(options) {
-    return await new Promise((resolve, reject) => {
-      const model = new OrganisationRestApiModel({}, options);
       model.save((err, data) => {
         if (err) {
           reject(err);

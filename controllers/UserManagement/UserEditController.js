@@ -1,6 +1,6 @@
 const BaseController = require('../BaseController');
 const { orgLookup } = require('../../services/UserManagement/OrganisationSearchService');
-const { userEdit } = require('../../services/UserManagement/UserActionsService');
+const { postRequest } = require('../../services/UserManagement/UserActionsService');
 class UserEditController extends BaseController {
 
   async getValues(req, res, next) {
@@ -45,7 +45,7 @@ class UserEditController extends BaseController {
 
     try {
       req.sessionModel.set('updatingUser', true);
-      await userEdit( {
+      await postRequest( {
         ...this.getOptions(req),
         url: `/admin/organisations/${req.params.orgId}/teams/${req.params.teamId}/users/${req.params.username}`,
       }, { firstname: firstname, lastname: lastname, teamId: updatedTeamId });

@@ -12,6 +12,7 @@
 {% set govukServiceTitleKey = translate("pages.user-management.teamPage.pageTitle") %}
 {% set hmpoPageKey = "user-management.teamPage" %}
 {% set govukServiceUrl = "/admin/organisations" %}
+{% set orgLink = govukServiceUrl + "/" + teamInfo.organisation.id %}
 
 {% block hmpoContent %}
   <div class="govuk-grid-row">
@@ -19,6 +20,24 @@
       {% block mainContent %}
 
       <div class="govuk-grid-column-two-thirds">
+
+        {% set status = '' %}
+        {% set html = '' %}
+
+        {% if addedUser %}
+          {% if userFullName %}
+            {% set status = "success" %}
+            {% set html = "<h2>You have successfully added " + userFullName %}
+          {% else %}
+            {% set status = "failure" %}
+            {% set html="<h2>There was a problem adding user</h2>" %}
+          {% endif %}
+
+          {{ govukNotificationBanner({
+            html: html,
+            type: status
+          }) }}
+        {% endif %}
 
         {% if deletedUser %}
 
@@ -55,6 +74,7 @@
 
         {{ govukButton({
           text: "Add new user",
+          href: orgLink + "/user/create?currentTeamId=" + teamInfo.id,
           classes: "govuk-button--secondary"
         }) }}
       </div>

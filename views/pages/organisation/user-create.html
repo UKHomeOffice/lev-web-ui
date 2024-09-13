@@ -1,0 +1,83 @@
+{% extends "app-template.njk" %}
+
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/select/macro.njk" import govukSelect %}
+{% from "hmpo-field/macro.njk" import hmpoField %}
+{% from "hmpo-text/macro.njk" import hmpoText %}
+{% from "hmpo-select/macro.njk" import hmpoSelect %}
+{% from "hmpo-form/macro.njk" import hmpoForm %}
+{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+
+{% set govukServiceNameKey = translate("pages.user-management.serviceName") %}
+{% set govukServiceTitleKey = translate("pages.user-management.userCreatePage.pageTitle") %}
+{% set hmpoPageKey = "user-management.userCreatePage" %}
+{% set govukServiceUrl = "/admin/organisations" %}
+{% set orgLink = "/admin/organisations/" + orgId %}
+{% set teamLink = orgLink + "/team/" + currentTeamId %}
+
+{% block hmpoContent %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        {% block mainContent %}
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-three-quarters">
+                <h1>{{ translate("pages." + hmpoPageKey + ".h1", { default: hmpoTitle }) | safe }}</h1>
+            </div>
+        </div>
+
+        {% set teamsToShow = [] %}
+        {% for team in orgTeams  %}
+            {% set itemInSelect = { text: team.name, value: team.id } %}
+            {% if (currentTeamId) and (currentTeamId === team.id) %}
+                {% set itemInSelect = { text: team.name, value: team.id, selected: true } %}
+            {% endif %}
+            {% set teamsToShow = (teamsToShow.push( itemInSelect ), teamsToShow) %}
+        {% endfor %}
+
+        {% call hmpoForm(ctx) %}
+        {{ hmpoText(ctx, {
+            id: "firstName",
+            label: {
+                text: translate("fields.firstName.label"),
+                classes: "govuk-label--s"
+            }
+        }) }}
+        {{ hmpoText(ctx, {
+            id: "lastName",
+            label: {
+                text: translate("fields.lastName.label"),
+                classes: "govuk-label--s"
+            }
+        }) }}
+        {{ hmpoText(ctx, {
+            id: "email",
+            label: {
+                text: translate("fields.email.label"),
+                classes: "govuk-label--s"
+            }
+        }) }}
+        {{ hmpoSelect(ctx, {
+            id: "teamSelect",
+            label: {
+                text: translate("fields.teamSelect.label"),
+                classes: "govuk-label--s"
+            },
+            classes: "govuk-!-width-one-half",
+            items: teamsToShow,
+            placeholder: true })
+        }}
+
+        <div class="govuk-button-group">
+            {{ hmpoSubmit(ctx, {id: "submit", key: "submit"}) }}
+            {% if currentTeamId %}
+                {{ hmpoSubmit(ctx, {id: "cancel", key: "cancel", href: teamLink, classes: "govuk-button--secondary"}) }}
+            {% else %}
+                {{ hmpoSubmit(ctx, {id: "cancel", key: "cancel", href: orgLink, classes: "govuk-button--secondary"}) }}
+            {% endif %}
+        </div>
+        {% endcall %}
+
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}
