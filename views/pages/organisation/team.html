@@ -30,7 +30,7 @@
             {% set html = "<h2>You have successfully added " + userFullName %}
           {% else %}
             {% set status = "failure" %}
-            {% set html="<h2>There was a problem adding user</h2>" %}
+            {% set html="<h2>" + errorMessage +"</h2>" %}
           {% endif %}
 
           {{ govukNotificationBanner({

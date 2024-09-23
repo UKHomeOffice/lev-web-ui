@@ -35,9 +35,11 @@ class TeamController extends BaseController {
       locals.deletedUser = req.sessionModel.get('deletedUser') || '';
       locals.addedUser = req.sessionModel.get('addedUser') || false;
       locals.userFullName = req.sessionModel.get('userFullName') || '';
+      locals.errorMessage = req.sessionModel.get('errorMessage') || '';
       req.sessionModel.unset('deletedUser');
       req.sessionModel.unset('addedUser');
       req.sessionModel.unset('userFullName');
+      req.sessionModel.unset('errorMessage');
       callback(null, locals);
     });
   }

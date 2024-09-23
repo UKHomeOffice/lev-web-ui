@@ -52,15 +52,21 @@ class UserCreateController extends BaseController {
       }, { firstname: firstname, lastname: lastname, email: email, teamId: teamIdToAdd });
 
       req.sessionModel.set('userFullName', firstname + ' ' + lastname);
-      req.sessionModel.unset('firstNameUserEntered');
-      req.sessionModel.unset('lastNameUserEntered');
-      req.sessionModel.unset('emailUserEntered');
-      req.sessionModel.unset('teamIdUserSelected');
 
     } catch (err) {
       req.sessionModel.set('userFullName', '');
+      req.sessionModel.set('errorMessage', 'Sorry, there is a problem with the service. Try again later.');
+
+      if (err.status === 409) {
+        req.sessionModel.set('errorMessage', 'Sorry, there is a problem. The user already exists');
+      }
+
     }
 
+    req.sessionModel.unset('firstNameUserEntered');
+    req.sessionModel.unset('lastNameUserEntered');
+    req.sessionModel.unset('emailUserEntered');
+    req.sessionModel.unset('teamIdUserSelected');
     res.redirect(`/admin/organisations/${req.params.orgId}/team/${teamIdToAdd}`);
   }
 
