@@ -8,6 +8,8 @@
   "buttons": {
     "search": "Search",
     "save": "Save",
+    "submit": "Submit",
+    "cancel": "Cancel",
     "newSearch": "New search",
     "editSearch": "Edit search",
     "editUser": "Edit user",
@@ -107,11 +109,12 @@
     "lastName": {
       "label": "Last name"
     },
+    "email": {
+      "label": "Email address"
+    },
     "teamSelect": {
-      "label": {
-        "text": "Team",
-        "classes": "govuk-label--s"
-      }
+      "label": "Team",
+      "placeholder": "Select a team"
     }
   },
   "pages": {
@@ -198,6 +201,10 @@
       "userEditPage": {
         "title": "Edit user",
         "pageTitle": "Edit user"
+      },
+      "userCreatePage": {
+        "title": "Add user",
+        "pageTitle": "Add user"
       }
     },
     "error": {
@@ -345,6 +352,11 @@
     "lastName": {
       "required": "Enter last name",
       "length": "Last name must be between 1 and 30 Characters"
+    },
+    "email": {
+      "email": "Enter email address in correct format",
+      "required": "Enter email address",
+      "length": "Email address must be between 3 and 254 characters"
     },
     "teamSelect": {
       "required": "Select a team"
