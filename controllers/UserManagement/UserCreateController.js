@@ -42,7 +42,7 @@ class UserCreateController extends BaseController {
     const firstname = req.form.values['firstName'];
     const lastname = req.form.values['lastName'];
     const email = req.form.values['email'];
-    const  teamIdToAdd = req.form.values['teamSelect'];
+    const teamIdToAdd = req.form.values['teamSelect'];
 
     try {
       req.sessionModel.set('addedUser', true);

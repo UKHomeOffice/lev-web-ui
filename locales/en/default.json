@@ -115,6 +115,27 @@
     "teamSelect": {
       "label": "Team",
       "placeholder": "Select a team"
+    },
+    "teamName": {
+      "label": "Team name"
+    },
+    "permissionCheckboxes": {
+      "legend": "Select search permissions",
+      "items": {
+        "birth": {
+          "label": "Birth"
+        },
+        "death": {
+          "label": "Death"
+        },
+        "marriage": {
+          "label": "Marriage"
+        },
+        "partnership": {
+          "label": "Partnership"
+        }
+      }
+
     }
   },
   "pages": {
@@ -193,6 +214,10 @@
       "teamPage": {
         "title": "Manage team",
         "pageTitle": "Manage team"
+      },
+      "addTeamPage": {
+        "title": "Add team",
+        "pageTitle": "Add team"
       },
       "userPage": {
         "title": "Manage user",
@@ -360,6 +385,14 @@
     },
     "teamSelect": {
       "required": "Select a team"
+    },
+    "teamName": {
+      "required": "Enter team name",
+      "length": "Team name must be 30 characters or less",
+      "regex": "Team name can only include letters, numbers and spaces"
+    },
+    "permissionCheckboxes": {
+      "required": "Select one or more search permissions"
     }
   },
   "footer": "Your feedback will help us improve this service. Email us <a href=\"mailto:ITnowServiceDesk@homeoffice.gov.uk?subject=LEV%20Feedback\">ITnowServiceDesk@homeoffice.gov.uk</a>"

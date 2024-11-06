@@ -1,0 +1,29 @@
+{% extends "app-template.njk" %}
+
+{% from "hmpo-field/macro.njk" import hmpoField %}
+{% from "hmpo-form/macro.njk" import hmpoForm %}
+{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+
+{% set govukServiceNameKey = translate("pages.user-management.serviceName") %}
+{% set govukServiceTitleKey = translate("pages.user-management.addTeamPage.pageTitle") %}
+{% set hmpoPageKey = "user-management.addTeamPage" %}
+{% set govukServiceUrl = "/admin/organisations" %}
+
+{% block mainContent %}
+{{ super() }}
+
+  {% call hmpoForm(ctx) %}
+
+    {{ hmpoField(ctx, "teamName") }}
+    {{ hmpoField(ctx, "permissionCheckboxes") }}
+
+    <div class="govuk-button-group">
+      {{ hmpoSubmit(ctx, {id: "submit", key: "submit"}) }}
+      {{ hmpoSubmit(ctx, {id: "back", key: "back", href: '/admin/organisations', classes: "govuk-button--secondary"}) }}
+    </div>
+  {% endcall %}
+{% endblock %}

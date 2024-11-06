@@ -4,6 +4,7 @@
 {% from "components/pagination.njk" import pagination %}
 {% from "components/users-table.njk" import usersTable %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 
 {% set govukServiceNameKey = translate("pages.user-management.serviceName") %}
 {% set govukServiceTitleKey = translate("pages.user-management.organisationPage.pageTitle") %}
@@ -13,8 +14,32 @@
 
 {% block hmpoContent %}
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
     {% block mainContent %}
+
+    <div class="govuk-grid-column-two-thirds">
+      {% set status = '' %}
+      {% set html = '' %}
+
+      {% if addTeamAttempt %}
+        {% if addTeamSuccess %}
+          {% set status = "success" %}
+          {% set html = "<h2>You have successfully added team " + addedTeamName + "</h2>" %}
+        {% else %}
+          {% set status = "failure" %}
+          {% if teamExistsError %}
+            {% set html = "<h2>Unable to add team as " + addedTeamName + " already exists in organisation</h2>" %}
+          {% else %}
+            {% set html = "<h2>There is a problem - Unable to add team " + addedTeamName + "</h2>" %}
+          {% endif %}
+      {% endif %}
+
+        {{ govukNotificationBanner({
+        html: html,
+        type: status
+        }) }}
+      {% endif %}
+    </div>
+  <div class="govuk-grid-column-full">
     <h1 id="header" data-page="{{hmpoPageKey}}">{{ translate("pages." + hmpoPageKey + ".h1", { default: hmpoTitle }) |
       safe }}: {{orgInfo.name}}</h1>
     <h3>Organisation Team(s)</h3>
@@ -41,19 +66,28 @@
       }) }}
     </div>
 
-    {{ govukButton({
-        text: "Add new user",
-        href: orgLink + "/user/create",
+    <div class="govuk-button-group">
+      {{ govukButton({
+          text: "Add user",
+          href: orgLink + "/user/create",
+          classes: "govuk-button--secondary" })
+      }}
+      {% if IS_EXTERNAL == "false" %}
+        {{ govukButton({
+        text: "Add team",
+        href: orgLink + "/team/create",
         classes: "govuk-button--secondary" })
-    }}
-
-      <h2>Organisation Users</h2>
-      {% if users.length == 0 %}
-        <p>There are no users in this organisation.</p>
-      {% else %}
-        {{ usersTable(users, usersMetaData, ["User", "Team", "Email address"]) }}
-        {{ pagination(usersMetaData.total, usersMetaData.perPage, usersMetaData.currentPage) }}
+        }}
       {% endif %}
+    </div>
+
+    <h2>Organisation Users</h2>
+    {% if users.length == 0 %}
+      <p>There are no users in this organisation.</p>
+    {% else %}
+      {{ usersTable(users, usersMetaData, ["User", "Team", "Email address"]) }}
+      {{ pagination(usersMetaData.total, usersMetaData.perPage, usersMetaData.currentPage) }}
+    {% endif %}
 
     {% endblock %}
   </div>
