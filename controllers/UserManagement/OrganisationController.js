@@ -42,7 +42,7 @@ class OrganisationController extends BaseController {
       locals.addTeamSuccess = req.sessionModel.get('addTeamSuccess') || false;
       locals.addedTeamName = req.sessionModel.get('addedTeamName') || '';
       locals.teamExistsError = req.sessionModel.get('teamExistsError') || false;
-      locals.IS_EXTERNAL = process.env.IS_EXTERNAL || 'false';
+      locals.IS_EXTERNAL = process.env.IS_EXTERNAL || 'true';
 
       req.sessionModel.unset('addTeamAttempt');
       req.sessionModel.unset('addTeamSuccess');
