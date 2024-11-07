@@ -136,6 +136,9 @@
         }
       }
 
+    },
+    "organisationName": {
+      "label": "Organisation Name"
     }
   },
   "pages": {
@@ -210,6 +213,10 @@
       "organisationsPage": {
         "title": "Manage organisations",
         "pageTitle": "Manage organisations"
+      },
+      "organisationCreatePage": {
+        "title": "Add organisation",
+        "pageTitle": "Add organisation"
       },
       "teamPage": {
         "title": "Manage team",
@@ -393,6 +400,11 @@
     },
     "permissionCheckboxes": {
       "required": "Select one or more search permissions"
+    },
+    "organisationName": {
+      "required": "Enter organisation name",
+      "length": "Organisation name must be 255 characters or less",
+      "regex": "Organisation name can only include letters and spaces"
     }
   },
   "footer": "Your feedback will help us improve this service. Email us <a href=\"mailto:ITnowServiceDesk@homeoffice.gov.uk?subject=LEV%20Feedback\">ITnowServiceDesk@homeoffice.gov.uk</a>"
