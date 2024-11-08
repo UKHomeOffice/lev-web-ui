@@ -20,8 +20,8 @@ class OrganisationCreateController extends BaseController {
       const createdOrg = orgResult.organisation;
 
       const defaultTeamName = 'Administrators';
-      const defaultTeamPermissions = ['birth', 'death', 'marriage', 'partnership', 'user-management' ];
-      const defaultTeamPermissionsObject= teamPermissionsObjectBuilder(defaultTeamPermissions, next);
+      const defaultTeamPermissions = [ 'user-management' ];
+      const defaultTeamPermissionsObject = teamPermissionsObjectBuilder(defaultTeamPermissions, next);
 
       await postRequest( {
         ...this.getOptions(req),
