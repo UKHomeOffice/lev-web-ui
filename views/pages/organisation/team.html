@@ -27,7 +27,7 @@
         {% if addedUser %}
           {% if userFullName %}
             {% set status = "success" %}
-            {% set html = "<h2>You have successfully added " + userFullName %}
+            {% set html = "<h2>You have successfully added " + userFullName + " </h2>" %}
           {% else %}
             {% set status = "failure" %}
             {% set html="<h2>" + errorMessage +"</h2>" %}

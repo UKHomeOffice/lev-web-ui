@@ -28,6 +28,15 @@ class OrganisationsController extends BaseController {
     super.locals(req, res, (error, locals) => {
       if (error) return callback(error);
       locals.orgsInfo = req.sessionModel.get('orgsResult') || [];
+      locals.IS_EXTERNAL = process.env.IS_EXTERNAL || 'true';
+      locals.addOrgAttempt = req.sessionModel.get('addOrgAttempt') || false;
+      locals.addOrgSuccess = req.sessionModel.get('addOrgSuccess') || false;
+      locals.addedOrgName = req.sessionModel.get('addedOrgName') || '';
+      locals.orgExistsError = req.sessionModel.get('orgExistsError') || false;
+      req.sessionModel.unset('addOrgAttempt');
+      req.sessionModel.unset('addOrgSuccess');
+      req.sessionModel.unset('addedOrgName');
+      req.sessionModel.unset('orgExistsError');
       callback(null, locals);
     });
   }

@@ -9,12 +9,12 @@ const DeleteUserController = require('../../controllers/UserManagement/DeleteUse
 const UserEditController = require('../../controllers/UserManagement/UserEditController');
 const ResetUserPasswordController = require('../../controllers/UserManagement/ResetUserPasswordController');
 const UserCreateController = require('../../controllers/UserManagement/UserCreateController');
+const OrganisationCreateController = require('../../controllers/UserManagement/OrganisationCreateController');
 
 const externalRoutes = {
   '/': {
     controller: OrganisationsController,
     entryPoint: true,
-    resetJourney: true,
     template: '/organisations.html',
     next: '/:orgId'
   },
@@ -60,15 +60,21 @@ const externalRoutes = {
     entryPoint: true,
     skip: true
   }
-}
+};
 
 const internalRoutes = {
+  '/create': {
+    fields: ['organisationName'],
+    controller: OrganisationCreateController,
+    entryPoint: true,
+    template: '/organisation-create.html'
+  },
   '/:orgId/team/create': {
-  controller: TeamCreateController,
+    controller: TeamCreateController,
     fields: ['teamName', 'permissionCheckboxes'],
     entryPoint: true,
     template: '/add-team.html'
   }
-}
+};
 
 module.exports = { externalRoutes, internalRoutes };
