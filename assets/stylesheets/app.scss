@@ -54,3 +54,9 @@ a, button {
   padding-top: 10px !important;
   padding-bottom: 10px !important;
 }
+
+.flex-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

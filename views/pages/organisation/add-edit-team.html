@@ -9,9 +9,10 @@
 
 
 {% set govukServiceNameKey = translate("pages.user-management.serviceName") %}
-{% set govukServiceTitleKey = translate("pages.user-management.addTeamPage.pageTitle") %}
-{% set hmpoPageKey = "user-management.addTeamPage" %}
 {% set govukServiceUrl = "/admin/organisations" %}
+
+{% set govukServiceTitleKey = translate("pages.user-management." + pageName + ".pageTitle") %}
+{% set hmpoPageKey = "user-management." + pageName %}
 
 {% block mainContent %}
 {{ super() }}

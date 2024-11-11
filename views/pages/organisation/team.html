@@ -7,88 +7,88 @@
 {% from "govuk/components/tag/macro.njk" import govukTag %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
 
 {% set govukServiceNameKey = translate("pages.user-management.serviceName") %}
 {% set govukServiceTitleKey = translate("pages.user-management.teamPage.pageTitle") %}
 {% set hmpoPageKey = "user-management.teamPage" %}
 {% set govukServiceUrl = "/admin/organisations" %}
 {% set orgLink = govukServiceUrl + "/" + teamInfo.organisation.id %}
+{% set teamLink = orgLink + "/team/" + teamInfo.id %}
 
-{% block hmpoContent %}
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-      {% block mainContent %}
+{% block mainContent %}
 
-      <div class="govuk-grid-column-two-thirds">
+  {% set status = '' %}
+  {% set html = '' %}
 
-        {% set status = '' %}
-        {% set html = '' %}
-
-        {% if addedUser %}
-          {% if userFullName %}
-            {% set status = "success" %}
-            {% set html = "<h2>You have successfully added " + userFullName + " </h2>" %}
-          {% else %}
-            {% set status = "failure" %}
-            {% set html="<h2>" + errorMessage +"</h2>" %}
-          {% endif %}
-
-          {{ govukNotificationBanner({
-            html: html,
-            type: status
-          }) }}
-        {% endif %}
-
-        {% if deletedUser %}
-
-          {% set html %}
-            <h2>You have successfully deleted {{ deletedUser }}'s account.</h2>
-          {% endset %}
-
-          {{ govukNotificationBanner({
-            html: html,
-            type: "success"
-          }) }}
-
-        {% endif %}
-
-        <span class="govuk-caption-m">{{ teamInfo.organisation.organisationName }}</span>
-        <h1>{{ teamInfo.teamName }}</h1>
-
-        {% set rowArray = [{ key: { text: "Search type", classes: "govuk-!-font-weight-bold text-color-black" }, value: { text: "Permission", classes: "govuk-!-font-weight-bold text-color-black" } }] %}
-
-        {% for key, value in teamInfo.permissions %}
-          {% set yesNoTag = govukTag({ text: "Yes" if value else "No", classes: "govuk-tag--turquoise" if value else "govuk-tag--red"  }) %}
-          {% set rowArray = (rowArray.push( { key: { text: key | title }, value: { text: yesNoTag } }), rowArray) %}
-        {% endfor %}
-
-        {{ govukSummaryList({
-          classes: "govuk-summary-list--wide",
-          card: {
-            title: {
-              text: "Search permissions"
-            }
-          },
-          rows: rowArray
-        }) }}
-
-        {{ govukButton({
-          text: "Add new user",
-          href: orgLink + "/user/create?currentTeamId=" + teamInfo.id,
-          classes: "govuk-button--secondary"
-        }) }}
-      </div>
-    </div>
-
-    <h2>Users</h2>
-    {% if users.length == 0 %}
-      <p>There are no users in this team.</p>
+  {% if addedUser %}
+    {% if userFullName %}
+      {% set status = "success" %}
+      {% set html = "<h2>You have successfully added " + userFullName + " </h2>" %}
     {% else %}
-      {{ usersTable(users, usersMetaData, ["User", "Email address"]) }}
-      {{ pagination(usersMetaData.total, usersMetaData.perPage, usersMetaData.currentPage) }}
+      {% set status = "failure" %}
+      {% set html="<h2>" + errorMessage +"</h2>" %}
     {% endif %}
 
-    {% endblock %}
+    {{ govukNotificationBanner({
+      html: html,
+      type: status
+    }) }}
+  {% endif %}
 
+  {% if deletedUser %}
+
+    {% set html %}
+      <h2>You have successfully deleted {{ deletedUser }}'s account.</h2>
+    {% endset %}
+
+    {{ govukNotificationBanner({
+      html: html,
+      type: "success"
+    }) }}
+
+  {% endif %}
+
+  <span class="govuk-caption-m">{{ teamInfo.organisation.organisationName }}</span>
+  <div class="govuk-!-width-full flex-row">
+    <h1>{{ teamInfo.teamName }}</h1>
+    {% if IS_EXTERNAL == "false" %}
+      <div class="govuk-!-text-align-right">
+        {{ hmpoSubmit(ctx, {id: "editTeam", key: "editTeam", href: teamLink + "/edit"}) }}
+      </div>
+    {% endif %}
   </div>
+
+  {% set rowArray = [{ key: { text: "Search type", classes: "govuk-!-font-weight-bold text-color-black" }, value: { text: "Permission", classes: "govuk-!-font-weight-bold text-color-black" } }] %}
+
+  {% for key, value in teamInfo.permissions %}
+    {% set yesNoTag = govukTag({ text: "Yes" if value else "No", classes: "govuk-tag--turquoise" if value else "govuk-tag--red"  }) %}
+    {% set rowArray = (rowArray.push( { key: { text: key | title }, value: { text: yesNoTag } }), rowArray) %}
+  {% endfor %}
+
+  {{ govukSummaryList({
+    classes: "govuk-summary-list--wide",
+    card: {
+      title: {
+        text: "Search permissions"
+      }
+    },
+    rows: rowArray
+  }) }}
+
+  {{ govukButton({
+    text: "Add new user",
+    href: orgLink + "/user/create?currentTeamId=" + teamInfo.id,
+    classes: "govuk-button--secondary"
+  }) }}
+
+
+  <h2>Users</h2>
+  {% if users.length == 0 %}
+    <p>There are no users in this team.</p>
+  {% else %}
+    {{ usersTable(users, usersMetaData, ["User", "Email address"]) }}
+    {{ pagination(usersMetaData.total, usersMetaData.perPage, usersMetaData.currentPage) }}
+  {% endif %}
+
 {% endblock %}

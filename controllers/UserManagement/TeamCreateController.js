@@ -28,6 +28,7 @@ class TeamCreateController extends BaseController {
   }
   locals(req, res, callback) {
     super.locals(req, res, (error, locals) => {
+      locals.pageName = "addTeamPage";
       if (error) return callback(error);
       callback(null, locals);
     });
