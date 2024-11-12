@@ -35,7 +35,7 @@ class TeamEditController extends BaseController {
       req.sessionModel.set('editTeamSuccess', true);
     } catch (err) {
       req.sessionModel.set('editTeamSuccess', false);
-      if (err.status === 409) {
+      if (err.status === 409 || err.status === 403) {
         req.sessionModel.set('editTeamAttempt', true);
       }
       next(err);
