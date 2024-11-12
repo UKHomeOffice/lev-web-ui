@@ -36,6 +36,8 @@ class TeamController extends BaseController {
       locals.addedUser = req.sessionModel.get('addedUser') || false;
       locals.userFullName = req.sessionModel.get('userFullName') || '';
       locals.errorMessage = req.sessionModel.get('errorMessage') || '';
+      locals.IS_EXTERNAL = process.env.IS_EXTERNAL || 'true';
+
       req.sessionModel.unset('deletedUser');
       req.sessionModel.unset('addedUser');
       req.sessionModel.unset('userFullName');

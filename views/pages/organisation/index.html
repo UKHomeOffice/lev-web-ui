@@ -17,25 +17,36 @@
     {% block mainContent %}
 
     <div class="govuk-grid-column-two-thirds">
+
       {% set status = '' %}
       {% set html = '' %}
 
-      {% if addTeamAttempt %}
-        {% if addTeamSuccess %}
-          {% set status = "success" %}
-          {% set html = "<h2>You have successfully added team " + addedTeamName + "</h2>" %}
-        {% else %}
-          {% set status = "failure" %}
-          {% if teamExistsError %}
-            {% set html = "<h2>Unable to add team as " + addedTeamName + " already exists in organisation</h2>" %}
+      {% if addTeamAttempt or editTeamAttempt %}
+        {% if addTeamAttempt %}
+          {% if addTeamSuccess %}
+            {% set status = "success" %}
+            {% set html = "<h2>You have successfully added team " + addedTeamName + "</h2>" %}
           {% else %}
-            {% set html = "<h2>There is a problem - Unable to add team " + addedTeamName + "</h2>" %}
+            {% set status = "failure" %}
+            {% if teamExistsError %}
+              {% set html = "<h2>Unable to add team as " + addedTeamName + " already exists in organisation</h2>" %}
+            {% else %}
+              {% set html = "<h2>There is a problem - Unable to add team " + addedTeamName + "</h2>" %}
+            {% endif %}
           {% endif %}
-      {% endif %}
+          {% elif editTeamAttempt %}
+          {% if editTeamSuccess %}
+            {% set status = "success" %}
+            {% set html = "<h2>You have successfully updated " + updatedTeamName + "</h2>" %}
+          {% else %}
+            {% set status = "failure" %}
+            {% set html = "<h2>There is a problem - Unable to update " + updatedTeamName + "</h2>" %}
+          {% endif %}
+        {% endif %}
 
         {{ govukNotificationBanner({
-        html: html,
-        type: status
+          html: html,
+          type: status
         }) }}
       {% endif %}
     </div>

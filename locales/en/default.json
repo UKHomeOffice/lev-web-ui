@@ -13,6 +13,7 @@
     "newSearch": "New search",
     "editSearch": "Edit search",
     "editUser": "Edit user",
+    "editTeam": "Edit Team",
     "resetPass": "Reset password",
     "deleteAccount": "Delete Account",
     "deleteUser": "Delete user",
@@ -225,6 +226,10 @@
       "addTeamPage": {
         "title": "Add team",
         "pageTitle": "Add team"
+      },
+      "editTeamPage": {
+        "title": "Edit team",
+        "pageTitle": "Edit team"
       },
       "userPage": {
         "title": "Manage user",
