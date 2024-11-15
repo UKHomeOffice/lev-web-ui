@@ -4,6 +4,13 @@ const teamPermissionsObjectBuilder = require('../../helpers/teamPermissionsObjec
 
 class OrganisationCreateController extends BaseController {
 
+  async process(req, res, next) {
+    // using it for pre-populating fields and remain the organisation name values on the error screen
+    req.sessionModel.set('organisationNameFromForm', req.form.values['organisationName']);
+
+    next();
+  }
+
   async saveValues(req, res, next) {
 
     // Get the values from the form
@@ -21,7 +28,7 @@ class OrganisationCreateController extends BaseController {
 
       const defaultTeamName = 'Administrators';
       const defaultTeamPermissions = [ 'user-management' ];
-      const defaultTeamPermissionsObject = teamPermissionsObjectBuilder(defaultTeamPermissions, next);
+      const defaultTeamPermissionsObject = teamPermissionsObjectBuilder.permissionsArrayToObject(defaultTeamPermissions, next);
 
       await postRequest( {
         ...this.getOptions(req),
@@ -38,12 +45,24 @@ class OrganisationCreateController extends BaseController {
     }
 
     req.sessionModel.set('addedOrgName', organisationName);
+    req.sessionModel.unset('organisationNameFromForm');
     res.redirect('/admin/organisations');
   }
 
   locals(req, res, callback) {
     super.locals(req, res, (error, locals) => {
       if (error) return callback(error);
+      locals.pageName = 'organisationCreatePage';
+      locals.backLink = '/admin/organisations';
+      locals.values = { organisationName: '' };
+
+      const organisationNameFromPreviousSubmittedForm = req.sessionModel.get('organisationNameFromForm');
+
+      if (organisationNameFromPreviousSubmittedForm || organisationNameFromPreviousSubmittedForm === '') {
+        locals.values.organisationName = organisationNameFromPreviousSubmittedForm;
+        req.sessionModel.unset('organisationNameFromForm');
+      }
+
       callback(null, locals);
     });
   }

@@ -45,6 +45,10 @@ class OrganisationController extends BaseController {
       locals.updatedTeamName = req.sessionModel.get('updatedTeamName') || '';
       locals.addedTeamName = req.sessionModel.get('addedTeamName') || '';
       locals.teamExistsError = req.sessionModel.get('teamExistsError') || false;
+      locals.editOrgAttempt = req.sessionModel.get('editOrgAttempt') || false;
+      locals.editOrgSuccess = req.sessionModel.get('editOrgSuccess') || false;
+      locals.orgExistsError = req.sessionModel.get('orgExistsError') || false;
+      locals.updatedOrgName = req.sessionModel.get('updatedOrgName') || '';
       locals.IS_EXTERNAL = process.env.IS_EXTERNAL || 'true';
 
       req.sessionModel.unset('addTeamAttempt');
@@ -53,6 +57,10 @@ class OrganisationController extends BaseController {
       req.sessionModel.unset('editTeamAttempt');
       req.sessionModel.unset('editTeamSuccess');
       req.sessionModel.unset('teamExistsError');
+      req.sessionModel.unset('editOrgAttempt');
+      req.sessionModel.unset('editOrgSuccess');
+      req.sessionModel.unset('orgExistsError');
+      req.sessionModel.unset('updatedOrgName');
       callback(null, locals);
     });
   }
