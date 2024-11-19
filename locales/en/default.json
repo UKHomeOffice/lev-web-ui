@@ -384,11 +384,13 @@
     },
     "firstName": {
       "required": "Enter first name",
-      "length": "First name must be between 1 and 30 Characters"
+      "length": "First name must be between 1 and 30 Characters",
+      "regex": "First name can only include letters, numbers, hyphens and spaces"
     },
     "lastName": {
       "required": "Enter last name",
-      "length": "Last name must be between 1 and 30 Characters"
+      "length": "Last name must be between 1 and 30 Characters",
+      "regex": "Last name can only include letters, numbers, hyphens and spaces"
     },
     "email": {
       "email": "Enter email address in correct format",
