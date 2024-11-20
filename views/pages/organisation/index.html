@@ -46,6 +46,7 @@
             {% else %}
               {% set html = "<h2>There is a problem - Unable to update " + updatedTeamName + "</h2>" %}
             {% endif %}
+          {% endif %}
         {% elif editOrgAttempt %}
           {% if editOrgSuccess %}
             {% set status = "success" %}
