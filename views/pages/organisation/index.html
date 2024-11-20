@@ -14,7 +14,7 @@
 {% set orgLink = govukServiceUrl + "/" + orgInfo.id %}
 
 {% block hmpoContent %}
-<div class="govuk-grid-row">
+  <div class="govuk-grid-row">
     {% block mainContent %}
 
     <div class="govuk-grid-column-two-thirds">
@@ -41,8 +41,11 @@
             {% set html = "<h2>You have successfully updated " + updatedTeamName + "</h2>" %}
           {% else %}
             {% set status = "failure" %}
-            {% set html = "<h2>There is a problem - Unable to update " + updatedTeamName + "</h2>" %}
-          {% endif %}
+            {% if editedTeamExists %}
+              {% set html = "<h2>Unable to add team as " + updatedTeamName + " already exists in organisation</h2>" %}
+            {% else %}
+              {% set html = "<h2>There is a problem - Unable to update " + updatedTeamName + "</h2>" %}
+            {% endif %}
         {% elif editOrgAttempt %}
           {% if editOrgSuccess %}
             {% set status = "success" %}
@@ -63,66 +66,66 @@
         }) }}
       {% endif %}
     </div>
-  <div class="govuk-grid-column-full">
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-three-quarters">
-        <h1 id="header" data-page="{{hmpoPageKey}}">{{ translate("pages." + hmpoPageKey + ".h1", { default: hmpoTitle }) |
-          safe }}: {{orgInfo.name}}</h1>
-      </div>
-      {% if IS_EXTERNAL == "false" %}
-        <div class="govuk-grid-column-one-quarter">
-          {{ hmpoSubmit(ctx, {id: "editOrganisation", key: "editOrganisation", href: orgLink + "/edit"}) }}
+    <div class="govuk-grid-column-full">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-three-quarters">
+          <h1 id="header" data-page="{{hmpoPageKey}}">{{ translate("pages." + hmpoPageKey + ".h1", { default: hmpoTitle }) |
+            safe }}: {{orgInfo.name}}</h1>
         </div>
-      {% endif %}
-    </div>
-    <h3>Organisation Team(s)</h3>
-    {% set teamHeaderArray = [] %}
-    {% set teamsArray = [] %}
-    {% for item in ["Team", "Users"] %}
-      {% set teamHeaderArray = (teamHeaderArray.push( { text: item }), teamHeaderArray) %}
-    {% endfor %}
+        {% if IS_EXTERNAL == "false" %}
+          <div class="govuk-grid-column-one-quarter">
+            {{ hmpoSubmit(ctx, {id: "editOrganisation", key: "editOrganisation", href: orgLink + "/edit"}) }}
+          </div>
+        {% endif %}
+      </div>
+      <h3>Organisation Team(s)</h3>
+      {% set teamHeaderArray = [] %}
+      {% set teamsArray = [] %}
+      {% for item in ["Team", "Users"] %}
+        {% set teamHeaderArray = (teamHeaderArray.push( { text: item }), teamHeaderArray) %}
+      {% endfor %}
 
-    {% for team in teams | sort('team.name') %}
-      {% set rowArray = [] %}
-      {% set teamLink = "/admin/organisations/" + orgInfo.id + "/team/" + team.id %}
-      {% set rowArray = (rowArray.push( { html: "<a href=" + teamLink +">" + team.name + "</a>" } ), rowArray) %}
-      {% set rowArray = (rowArray.push( { text: team.users } ), rowArray) %}
-      {% set teamsArray = (teamsArray.push(rowArray), teamsArray) %}
-    {% endfor %}
+      {% for team in teams | sort('team.name') %}
+        {% set rowArray = [] %}
+        {% set teamLink = "/admin/organisations/" + orgInfo.id + "/team/" + team.id %}
+        {% set rowArray = (rowArray.push( { html: "<a href=" + teamLink +">" + team.name + "</a>" } ), rowArray) %}
+        {% set rowArray = (rowArray.push( { text: team.users } ), rowArray) %}
+        {% set teamsArray = (teamsArray.push(rowArray), teamsArray) %}
+      {% endfor %}
 
-    <div class="table-horizontal-scrolling">
-      {{ govukTable({
-      classes: "audit",
-      firstCellIsHeader: true,
-      head: teamHeaderArray,
-      rows: teamsArray
-      }) }}
-    </div>
+      <div class="table-horizontal-scrolling">
+        {{ govukTable({
+          classes: "audit",
+          firstCellIsHeader: true,
+          head: teamHeaderArray,
+          rows: teamsArray
+        }) }}
+      </div>
 
-    <div class="govuk-button-group">
-      {{ govukButton({
-          text: "Add user",
-          href: orgLink + "/user/create",
-          classes: "govuk-button--secondary" })
-      }}
-      {% if IS_EXTERNAL == "false" %}
+      <div class="govuk-button-group">
         {{ govukButton({
-        text: "Add team",
-        href: orgLink + "/team/create",
-        classes: "govuk-button--secondary" })
+            text: "Add user",
+            href: orgLink + "/user/create",
+            classes: "govuk-button--secondary" })
         }}
+        {% if IS_EXTERNAL == "false" %}
+          {{ govukButton({
+            text: "Add team",
+            href: orgLink + "/team/create",
+            classes: "govuk-button--secondary" })
+          }}
+        {% endif %}
+      </div>
+
+      <h2>Organisation Users</h2>
+      {% if users.length == 0 %}
+        <p>There are no users in this organisation.</p>
+      {% else %}
+        {{ usersTable(users, usersMetaData, ["User", "Team", "Email address"]) }}
+        {{ pagination(usersMetaData.total, usersMetaData.perPage, usersMetaData.currentPage) }}
       {% endif %}
+
+      {% endblock %}
     </div>
-
-    <h2>Organisation Users</h2>
-    {% if users.length == 0 %}
-      <p>There are no users in this organisation.</p>
-    {% else %}
-      {{ usersTable(users, usersMetaData, ["User", "Team", "Email address"]) }}
-      {{ pagination(usersMetaData.total, usersMetaData.perPage, usersMetaData.currentPage) }}
-    {% endif %}
-
-    {% endblock %}
   </div>
-</div>
 {% endblock %}

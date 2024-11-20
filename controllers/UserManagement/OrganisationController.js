@@ -42,6 +42,7 @@ class OrganisationController extends BaseController {
       locals.addTeamSuccess = req.sessionModel.get('addTeamSuccess') || false;
       locals.editTeamAttempt = req.sessionModel.get('editTeamAttempt') || false;
       locals.editTeamSuccess = req.sessionModel.get('editTeamSuccess') || false;
+      locals.editedTeamExists = req.sessionModel.get('editedTeamExists') || false;
       locals.updatedTeamName = req.sessionModel.get('updatedTeamName') || '';
       locals.addedTeamName = req.sessionModel.get('addedTeamName') || '';
       locals.teamExistsError = req.sessionModel.get('teamExistsError') || false;
@@ -57,6 +58,7 @@ class OrganisationController extends BaseController {
       req.sessionModel.unset('editTeamAttempt');
       req.sessionModel.unset('editTeamSuccess');
       req.sessionModel.unset('teamExistsError');
+      req.sessionModel.unset('editedTeamExists');
       req.sessionModel.unset('editOrgAttempt');
       req.sessionModel.unset('editOrgSuccess');
       req.sessionModel.unset('orgExistsError');

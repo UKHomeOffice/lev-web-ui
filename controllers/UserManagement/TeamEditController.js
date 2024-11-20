@@ -38,6 +38,9 @@ class TeamEditController extends BaseController {
       if (err.status === 409 || err.status === 403) {
         req.sessionModel.set('editTeamAttempt', true);
       }
+      if (err.status === 409) {
+        req.sessionModel.set('editedTeamExists', true);
+      }
       next(err);
     }
     req.sessionModel.set('updatedTeamName', teamName);
