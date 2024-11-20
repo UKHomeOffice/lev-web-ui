@@ -11,6 +11,7 @@ const UserEditController = require('../../controllers/UserManagement/UserEditCon
 const ResetUserPasswordController = require('../../controllers/UserManagement/ResetUserPasswordController');
 const UserCreateController = require('../../controllers/UserManagement/UserCreateController');
 const OrganisationCreateController = require('../../controllers/UserManagement/OrganisationCreateController');
+const OrganisationEditController = require('../../controllers/UserManagement/OrganisationEditController');
 
 const externalRoutes = {
   '/': {
@@ -68,7 +69,13 @@ const internalRoutes = {
     fields: ['organisationName'],
     controller: OrganisationCreateController,
     entryPoint: true,
-    template: '/organisation-create.html'
+    template: '/add-edit-organisation.html'
+  },
+  '/:orgId/edit': {
+    fields: ['organisationName'],
+    controller: OrganisationEditController,
+    entryPoint: true,
+    template: '/add-edit-organisation.html'
   },
   '/:orgId/team/create': {
     controller: TeamCreateController,
@@ -77,7 +84,7 @@ const internalRoutes = {
     template: '/add-edit-team.html'
   },
   '/:orgId/team/:teamId/edit': {
-  controller: TeamEditController,
+    controller: TeamEditController,
     fields: ['teamName', 'permissionCheckboxes'],
     entryPoint: true,
     template: '/add-edit-team.html'

@@ -5,6 +5,7 @@
 {% from "components/users-table.njk" import usersTable %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
 
 {% set govukServiceNameKey = translate("pages.user-management.serviceName") %}
 {% set govukServiceTitleKey = translate("pages.user-management.organisationPage.pageTitle") %}
@@ -21,7 +22,7 @@
       {% set status = '' %}
       {% set html = '' %}
 
-      {% if addTeamAttempt or editTeamAttempt %}
+      {% if addTeamAttempt or editTeamAttempt or editOrgAttempt %}
         {% if addTeamAttempt %}
           {% if addTeamSuccess %}
             {% set status = "success" %}
@@ -34,7 +35,7 @@
               {% set html = "<h2>There is a problem - Unable to add team " + addedTeamName + "</h2>" %}
             {% endif %}
           {% endif %}
-          {% elif editTeamAttempt %}
+        {% elif editTeamAttempt %}
           {% if editTeamSuccess %}
             {% set status = "success" %}
             {% set html = "<h2>You have successfully updated " + updatedTeamName + "</h2>" %}
@@ -44,6 +45,17 @@
               {% set html = "<h2>Unable to add team as " + updatedTeamName + " already exists in organisation</h2>" %}
             {% else %}
               {% set html = "<h2>There is a problem - Unable to update " + updatedTeamName + "</h2>" %}
+            {% endif %}
+        {% elif editOrgAttempt %}
+          {% if editOrgSuccess %}
+            {% set status = "success" %}
+            {% set html = "<h2>You have successfully updated " + updatedOrgName + "</h2>" %}
+          {% else %}
+            {% set status = "failure" %}
+            {% if orgExistsError %}
+              {% set html = "<h2>Unable to edit organisation as " + updatedOrgName + " already exists</h2>" %}
+            {% else %}
+              {% set html = "<h2>There is a problem - Unable to edit organisation " + updatedOrgName + "</h2>" %}
             {% endif %}
           {% endif %}
         {% endif %}
@@ -55,8 +67,17 @@
       {% endif %}
     </div>
     <div class="govuk-grid-column-full">
-      <h1 id="header" data-page="{{hmpoPageKey}}">{{ translate("pages." + hmpoPageKey + ".h1", { default: hmpoTitle }) |
-        safe }}: {{orgInfo.name}}</h1>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-three-quarters">
+          <h1 id="header" data-page="{{hmpoPageKey}}">{{ translate("pages." + hmpoPageKey + ".h1", { default: hmpoTitle }) |
+            safe }}: {{orgInfo.name}}</h1>
+        </div>
+        {% if IS_EXTERNAL == "false" %}
+          <div class="govuk-grid-column-one-quarter">
+            {{ hmpoSubmit(ctx, {id: "editOrganisation", key: "editOrganisation", href: orgLink + "/edit"}) }}
+          </div>
+        {% endif %}
+      </div>
       <h3>Organisation Team(s)</h3>
       {% set teamHeaderArray = [] %}
       {% set teamsArray = [] %}
@@ -83,9 +104,9 @@
 
       <div class="govuk-button-group">
         {{ govukButton({
-          text: "Add user",
-          href: orgLink + "/user/create",
-          classes: "govuk-button--secondary" })
+            text: "Add user",
+            href: orgLink + "/user/create",
+            classes: "govuk-button--secondary" })
         }}
         {% if IS_EXTERNAL == "false" %}
           {{ govukButton({
