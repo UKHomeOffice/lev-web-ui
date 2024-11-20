@@ -1,8 +1,8 @@
 {% extends "app-template.njk" %}
 
 {% set govukServiceNameKey = translate("pages.user-management.serviceName") %}
-{% set govukServiceTitleKey = translate("pages.user-management.organisationCreatePage.pageTitle") %}
-{% set hmpoPageKey = "user-management.organisationCreatePage" %}
+{% set govukServiceTitleKey = translate("pages.user-management."+pageName+".pageTitle") %}
+{% set hmpoPageKey = "user-management." + pageName %}
 {% set govukServiceUrl = "/admin/organisations" %}
 {% from "hmpo-text/macro.njk" import hmpoText %}
 {% from "hmpo-form/macro.njk" import hmpoForm %}
@@ -24,7 +24,7 @@
         }) }}
         <div class="govuk-button-group">
             {{ hmpoSubmit(ctx, {id: "submit", key: "submit"}) }}
-            {{ hmpoSubmit(ctx, {id: "back", key: "back", href: govukServiceUrl, classes: "govuk-button--secondary"}) }}
+            {{ hmpoSubmit(ctx, {id: "back", key: "back", href: backLink, classes: "govuk-button--secondary"}) }}
         </div>
         {% endcall %}
 

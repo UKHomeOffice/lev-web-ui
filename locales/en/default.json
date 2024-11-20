@@ -14,6 +14,7 @@
     "editSearch": "Edit search",
     "editUser": "Edit user",
     "editTeam": "Edit Team",
+    "editOrganisation": "Edit organisation",
     "resetPass": "Reset password",
     "deleteAccount": "Delete Account",
     "deleteUser": "Delete user",
@@ -218,6 +219,10 @@
       "organisationCreatePage": {
         "title": "Add organisation",
         "pageTitle": "Add organisation"
+      },
+      "organisationEditPage": {
+        "title": "Edit organisation",
+        "pageTitle": "Edit organisation"
       },
       "teamPage": {
         "title": "Manage team",
