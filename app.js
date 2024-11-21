@@ -13,6 +13,7 @@ const metricsRoute = require('./routes/metrics');
 const userActivityRoute = require('./routes/user-activity');
 const organisationsRoute = require('./routes/organisation');
 const accessTest = require('./routes/access-test');
+const accessibilityStatement = require('./routes/accessibility-statement');
 
 const { router } = setup(options);
 
@@ -25,4 +26,5 @@ router.use('/metrics', metricsRoute);
 router.use('/audit/user-activity', userActivityRoute);
 router.use('/admin/organisations', organisationsRoute);
 router.use('/access-test', accessTest);
+router.use('/accessibility-statement', accessibilityStatement);
 router.use('/', (req, res) => res.redirect('/birth'));

@@ -5,22 +5,28 @@
 {% from "hmpo-html/macro.njk" import hmpoHtml %}
 
 {% block pageTitle %}
-    {{ (translate("govuk.error", { default: "Error" }) + ": ") if errorlist.length }}{{ govukServiceTitleKey | safe if govukServiceTitleKey }} – GOV.UK
+  {{ (translate("govuk.error", { default: "Error" }) + ": ") if errorlist.length }}{{ govukServiceTitleKey | safe if govukServiceTitleKey }} – GOV.UK
 {% endblock %}
 
 {% block header %}
-	{{ levHeader({
-        homepageUrl: hmpoPageKey,
-        serviceName: govukServiceNameKey,
-        serviceUrl: govukServiceUrl,
-        logout: translate("buttons.logout")
-    }) }}
+  {{ levHeader({
+    homepageUrl: hmpoPageKey,
+    serviceName: govukServiceNameKey,
+    serviceUrl: govukServiceUrl,
+    logout: translate("buttons.logout")
+  }) }}
 {% endblock %}
 
 {% block footer %}
-    {{ hmpoFooter({
-        meta: {
-            html: hmpoHtml(translate("footer"))
+  {{ hmpoFooter({
+    meta: {
+      items: [
+        {
+          href: "/accessibility-statement",
+          text: "Accessibility statement"
         }
-    }) }}
+      ],
+      html: hmpoHtml(translate("footer"))
+    }
+  }) }}
 {% endblock %}
