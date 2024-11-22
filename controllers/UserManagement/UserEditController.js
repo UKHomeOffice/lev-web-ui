@@ -13,7 +13,7 @@ class UserEditController extends BaseController {
 
       const orgTeamsResult = await orgLookup({
         ...this.getOptions(req),
-        url: `/admin/organisations/${req.params.orgId}/teams`
+        url: `/admin/organisations/${req.params.orgId}/teams?removeAdmin=true`
       });
 
       req.sessionModel.set('userResults', userResults);
