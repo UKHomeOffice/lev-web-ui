@@ -9,7 +9,7 @@ class UserCreateController extends BaseController {
     try {
       const orgTeamsResult = await orgLookup({
         ...this.getOptions(req),
-        url: `/admin/organisations/${req.params.orgId}/teams?removeAdmin=true`
+        url: `/admin/organisations/${req.params.orgId}/assignable-teams`
       });
 
       req.sessionModel.set('orgTeamsToSelect', orgTeamsResult);
