@@ -63,13 +63,13 @@
         }) }}
         {{ hmpoSelect(ctx, {
             id: "teamSelect",
-            key: "teamSelect",
             label: {
                 text: translate("fields.teamSelect.label"),
                 classes: "govuk-label--s"
             },
             classes: "govuk-!-width-one-half",
-            items: teamsToShow })
+            items: teamsToShow,
+            placeholder: true })
         }}
 
         <div class="govuk-button-group">
