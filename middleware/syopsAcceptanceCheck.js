@@ -7,7 +7,11 @@ module.exports.syopsAcceptanceCheck = async (req, res, next) => {
     return next()
   }
   const data = await OrganisationSearchService.orgLookup({
-    ...config,
+    headers: {
+      https: {
+        rejectUnauthorized: config.iamApi.rejectUnauthorized
+      }
+    },
     url: '/user/metadata'
   });
   const syopsDate = data.metadata.syopsAcceptedAt;
