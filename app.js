@@ -14,8 +14,19 @@ const userActivityRoute = require('./routes/user-activity');
 const organisationsRoute = require('./routes/organisation');
 const accessTest = require('./routes/access-test');
 const accessibilityStatement = require('./routes/accessibility-statement');
-
+const syops = require('./routes/syops');
+const OrganisationRestApiModel = require("./models/OrganisationRestApiModel");
+const config = require("./config");
+const {syopsAcceptanceCheck} = require("./middleware/syopsAcceptanceCheck");
 const { router } = setup(options);
+
+// routes for static assets
+router.use('/access-test', accessTest);
+router.use('/accessibility-statement', accessibilityStatement);
+router.use('/syops', syops);
+
+// middleware to check syops acceptance
+router.use((req, res, next) => syopsAcceptanceCheck(req, res, next));
 
 // routes
 router.use('/birth', birthRoute);
@@ -25,6 +36,4 @@ router.use('/partnership', partnershipRoute);
 router.use('/metrics', metricsRoute);
 router.use('/audit/user-activity', userActivityRoute);
 router.use('/admin/organisations', organisationsRoute);
-router.use('/access-test', accessTest);
-router.use('/accessibility-statement', accessibilityStatement);
 router.use('/', (req, res) => res.redirect('/birth'));
