@@ -15,8 +15,6 @@ const organisationsRoute = require('./routes/organisation');
 const accessTest = require('./routes/access-test');
 const accessibilityStatement = require('./routes/accessibility-statement');
 const syops = require('./routes/syops');
-const OrganisationRestApiModel = require("./models/OrganisationRestApiModel");
-const config = require("./config");
 const {syopsAcceptanceCheck} = require("./middleware/syopsAcceptanceCheck");
 const { router } = setup(options);
 

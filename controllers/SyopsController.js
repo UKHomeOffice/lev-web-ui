@@ -1,7 +1,6 @@
 'use strict';
 
 const BaseController = require('./BaseController');
-const OrganisationRestApiModel = require("../models/OrganisationRestApiModel");
 const OrganisationSearchService = require("../services/UserManagement/OrganisationSearchService");
 const UserActionsService = require("../services/UserManagement/UserActionsService");
 const config = require("../config");
@@ -24,7 +23,7 @@ class SyopsController extends BaseController {
     next();
   }
 
-  async saveValues(req, res, next) {
+  async saveValues(req, res) {
     await UserActionsService.postRequest({
       ...config,
       url: '/user/syops'

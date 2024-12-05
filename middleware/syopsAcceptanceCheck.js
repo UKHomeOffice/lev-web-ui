@@ -1,4 +1,3 @@
-const OrganisationRestApiModel = require("../models/OrganisationRestApiModel");
 const config = require("../config");
 const OrganisationSearchService = require("../services/UserManagement/OrganisationSearchService");
 const syopsDateCheck = require("../helpers/syopsDateCheck");
