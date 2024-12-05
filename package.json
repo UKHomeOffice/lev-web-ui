@@ -16,7 +16,7 @@
     "stop:mockapi": "npm-run-all -s -c --silent stop:mockapi:kill stop:mockapi:rm > /dev/null 2>&1;true",
     "stop:mockapi:kill": "docker kill lev-api-mock > /dev/null 2>&1;true",
     "stop:mockapi:rm": "docker rm lev-api-mock > /dev/null 2>&1;true",
-    "test": "npm-run-all test:unit test:coverage",
+    "test": "npm-run-all lint test:unit test:coverage",
     "test:unit": "jest test/unit",
     "test:coverage": "jest test/unit --coverage",
     "test:ui": "npm run $([ -n \"${SMOKE_TEST}\" ] && echo cypress:smoke || echo cypress:acceptance)",

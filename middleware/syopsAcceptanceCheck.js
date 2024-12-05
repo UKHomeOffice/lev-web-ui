@@ -3,6 +3,9 @@ const OrganisationSearchService = require("../services/UserManagement/Organisati
 const syopsDateCheck = require("../helpers/syopsDateCheck");
 
 module.exports.syopsAcceptanceCheck = async (req, res, next) => {
+  if(config.MOCK === "true") {
+    return next()
+  }
   const data = await OrganisationSearchService.orgLookup({
     ...config,
     url: '/user/metadata'
