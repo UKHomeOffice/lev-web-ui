@@ -9,11 +9,10 @@ const syopsDateCheck = require("../helpers/syopsDateCheck");
 class SyopsController extends BaseController {
   // re-running of middleware function is if page is navigated directly to, to not render accept button if accepted already
   async getValues(req, res, next) {
+
     const data = await OrganisationSearchService.orgLookup({
-      headers: {
-        https: {
-          rejectUnauthorized: config.iamApi.rejectUnauthorized
-        }
+      https: {
+        rejectUnauthorized: config.iamApi.rejectUnauthorized
       },
       url: '/user/metadata'
     });
@@ -29,10 +28,8 @@ class SyopsController extends BaseController {
 
   async saveValues(req, res) {
     await UserActionsService.postRequest({
-      headers: {
-        https: {
-          rejectUnauthorized: config.iamApi.rejectUnauthorized
-        }
+      https: {
+        rejectUnauthorized: config.iamApi.rejectUnauthorized
       },
       url: '/user/syops'
     });
