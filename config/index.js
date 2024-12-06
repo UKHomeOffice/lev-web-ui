@@ -27,7 +27,7 @@ module.exports = {
     host: process.env.API_HOST || 'localhost',
     port: process.env.API_PORT || 8080,
     client: process.env.API_KC_CLIENT || packageJson.name,
-    username: process.env.API_USER || 'minch.yoda@theforce.gov' || packageJson.name,
+    username: process.env.API_USER || packageJson.name,
     rejectUnauthorized: process.env.LEV_TLS_VERIFY !== 'false',
     get baseUrl() {
       return `${this.protocol}://${this.host}:${this.port}`;
@@ -38,7 +38,7 @@ module.exports = {
     host: process.env.IAM_API_HOST || 'localhost',
     port: process.env.IAM_API_PORT || 8000,
     client: process.env.IAM_API_KC_CLIENT || packageJson.name,
-    username: process.env.IAM_USER || 'minch.yoda@theforce.gov' || packageJson.name,
+    username: process.env.IAM_USER || packageJson.name,
     rejectUnauthorized: process.env.LEV_TLS_VERIFY !== 'false',
     get baseUrl() {
       return `${this.protocol}://${this.host}:${this.port}`;
