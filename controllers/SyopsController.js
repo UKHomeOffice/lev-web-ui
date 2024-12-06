@@ -8,16 +8,21 @@ const syopsDateCheck = require("../helpers/syopsDateCheck");
 class SyopsController extends BaseController {
   // re-running of middleware function is if page is navigated directly to, to not render accept button if accepted already
   async getValues(req, res, next) {
-    const data = await OrganisationSearchService.orgLookup({
-      ...this.getOptions(req),
-      url: '/user/metadata'
-    });
-    const syopsDate = data.metadata.syopsAcceptedAt;
+    try {
+      const data = await OrganisationSearchService.orgLookup({
+        ...this.getOptions(req),
+        url: '/user/metadata'
+      });
+      const syopsDate = data.metadata.syopsAcceptedAt;
 
-    if(syopsDate && syopsDateCheck(syopsDate)) {
-      req.sessionModel.set('syopsAccepted', true);
-    } else {
-      req.sessionModel.set('syopsAccepted', false);
+      if(syopsDate && syopsDateCheck(syopsDate)) {
+        req.sessionModel.set('syopsAccepted', true);
+      } else {
+        req.sessionModel.set('syopsAccepted', false);
+      }
+    }
+    catch (err) {
+      console.log(err)
     }
     next();
   }

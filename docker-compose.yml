@@ -7,7 +7,7 @@ services:
     environment:
       API_HOST: mock-api
       API_PORT: 8080
-      MOCK: "true"
+      MOCK: "false"
       IAM_USER: minch.yoda@theforce.gov
       REDIS_CONNECTION_STRING: "redis://redis-service:6379"
 #      REDIS_HOST: redis-service
