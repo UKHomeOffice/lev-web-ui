@@ -1,8 +1,11 @@
 'use strict';
 
+const dotenv = require('dotenv');
+dotenv.config();
 const packageJson = require('../package.json');
 
 module.exports = {
+  MOCK: process.env.MOCK || "false",
   options: {
     port: process.env.PORT || 8001,
     logs: {
@@ -42,5 +45,8 @@ module.exports = {
     get baseUrl() {
       return `${this.protocol}://${this.host}:${this.port}`;
     }
+  },
+  syops: {
+    renewalAfterDays: process.env.SYOPS_RENEWAL_PERIOD_DAYS || 365
   }
 };
