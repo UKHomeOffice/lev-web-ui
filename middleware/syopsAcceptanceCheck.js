@@ -23,9 +23,12 @@ module.exports.syopsAcceptanceCheck = async (req, res, next) => {
     }
   };
 
+  console.log("OPTIONS IN MIDDLEWARE");
+  console.log(options);
+
   try {
     const data = await OrganisationSearchService.orgLookup({
-      options,
+      ...options,
       url: '/user/metadata'
     });
     const syopsDate = data.metadata.syopsAcceptedAt;
