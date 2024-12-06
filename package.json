@@ -30,6 +30,7 @@
   "author": "HMPO",
   "dependencies": {
     "@aashutoshrathi/word-wrap": "^1.2.6",
+    "dotenv": "^16.4.7",
     "eslint": "^8.56.0",
     "eslint-plugin-cypress": "^3.3.0",
     "eslint-plugin-jest": "^28.6.0",

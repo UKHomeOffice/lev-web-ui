@@ -4,7 +4,7 @@
 process.env.IS_EXTERNAL = 'false';
 
 const { setup } = require('hmpo-app');
-const { options } = require('./config');
+const { options} = require('./config');
 const birthRoute = require('./routes/birth');
 const deathRoute = require('./routes/death');
 const marriageRoute = require('./routes/marriage');
@@ -22,16 +22,17 @@ const { router } = setup(options);
 router.use('/access-test', accessTest);
 router.use('/accessibility-statement', accessibilityStatement);
 router.use('/syops', syops);
+router.use('/metrics', metricsRoute);
 
 // middleware to check syops acceptance
 router.use((req, res, next) => syopsAcceptanceCheck(req, res, next));
+
 
 // routes
 router.use('/birth', birthRoute);
 router.use('/death', deathRoute);
 router.use('/marriage', marriageRoute);
 router.use('/partnership', partnershipRoute);
-router.use('/metrics', metricsRoute);
 router.use('/audit/user-activity', userActivityRoute);
 router.use('/admin/organisations', organisationsRoute);
 router.use('/', (req, res) => res.redirect('/birth'));
