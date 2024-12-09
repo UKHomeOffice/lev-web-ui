@@ -6,6 +6,8 @@ COPY ./ /app
 RUN npm ci -D
 RUN npx cypress install
 
+VOLUME ["/root/.cache/Cypress"]
+
 ENV NO_COLOR=1
 
 ENTRYPOINT ["/usr/local/bin/npm",  "run", "test:ui" ]
