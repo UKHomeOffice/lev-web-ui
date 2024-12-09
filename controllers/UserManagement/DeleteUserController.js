@@ -1,11 +1,13 @@
 const BaseController = require('../BaseController');
 const { deleteRequest } = require('../../services/UserManagement/UserActionsService');
+const requestOptions = require("../../helpers/requestOptions");
+const { iamApi } = require("../../config");
 
 class DeleteUserController extends BaseController {
     async saveValues(req, res, next) {
       try {
         await deleteRequest({
-          ...this.getOptions(req),
+          ...requestOptions(req, iamApi),
           url: `/admin/organisations/${req.params.orgId}/teams/${req.params.teamId}/users/${req.params.username}`
         });
 

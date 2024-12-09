@@ -1,18 +1,20 @@
 const BaseController = require('../BaseController');
 const { orgLookup } = require('../../services/UserManagement/OrganisationSearchService');
 const { postRequest } = require('../../services/UserManagement/UserActionsService');
+const requestOptions = require("../../helpers/requestOptions");
+const { iamApi } = require("../../config");
 class UserEditController extends BaseController {
 
   async getValues(req, res, next) {
 
     try {
       const userResults = await orgLookup({
-        ...this.getOptions(req),
+        ...requestOptions(req, iamApi),
         url: `/admin/organisations/${req.params.orgId}/teams/${req.params.teamId}/users/${req.params.username}`
       });
 
       const orgTeamsResult = await orgLookup({
-        ...this.getOptions(req),
+        ...requestOptions(req, iamApi),
         url: `/admin/organisations/${req.params.orgId}/assignable-teams`
       });
 
@@ -46,7 +48,7 @@ class UserEditController extends BaseController {
     try {
       req.sessionModel.set('updatingUser', true);
       await postRequest( {
-        ...this.getOptions(req),
+        ...requestOptions(req, iamApi),
         url: `/admin/organisations/${req.params.orgId}/teams/${req.params.teamId}/users/${req.params.username}`,
       }, { firstname: firstname, lastname: lastname, teamId: updatedTeamId });
 

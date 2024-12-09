@@ -6,6 +6,7 @@ const UserActionsService = require("../services/UserManagement/UserActionsServic
 const syopsDateCheck = require("../helpers/syopsDateCheck");
 const requestOptions = require('../helpers/requestOptions');
 const { iamApi } = require("../config");
+const logger = require('hmpo-logger').get();
 
 class SyopsController extends BaseController {
   // re-running of middleware function is if page is navigated directly to, to not render accept button if accepted already
@@ -24,7 +25,7 @@ class SyopsController extends BaseController {
       }
     }
     catch (err) {
-      console.log(err);
+      logger.log('error', err);
     }
     next();
   }

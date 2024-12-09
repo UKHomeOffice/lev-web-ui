@@ -3,6 +3,8 @@
 const DateController = require('./DateController');
 const UserActivityService = require('../services/UserActivityService');
 const { DateTime } = require('luxon');
+const requestOptions = require("../helpers/requestOptions");
+const { api } = require("../config");
 
 class UserActivitySearchController extends DateController {
 
@@ -27,7 +29,7 @@ class UserActivitySearchController extends DateController {
     try {
 
       const records = await UserActivityService.searchByParams({
-        ...this.getOptions(req),
+        ...requestOptions(req, api),
         url: '/api/v0/audit/user-activity',
         searchParams: { from, to: toPlusOneDay, user },
         includeWeekends

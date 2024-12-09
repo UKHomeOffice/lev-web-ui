@@ -2,7 +2,8 @@ const config = require("../config");
 const OrganisationSearchService = require("../services/UserManagement/OrganisationSearchService");
 const syopsDateCheck = require("../helpers/syopsDateCheck");
 const { iamApi } = require("../config");
-const requestOptions = require('../helpers/requestOptions')
+const requestOptions = require('../helpers/requestOptions');
+const logger = require('hmpo-logger').get();
 
 module.exports.syopsAcceptanceCheck = async (req, res, next) => {
   if(config.MOCK === "true") {
@@ -10,8 +11,6 @@ module.exports.syopsAcceptanceCheck = async (req, res, next) => {
   }
 
   try {
-
-    console.log(requestOptions(req))
     const data = await OrganisationSearchService.orgLookup({
       ...requestOptions(req, iamApi),
       url: '/user/metadata'
@@ -26,6 +25,6 @@ module.exports.syopsAcceptanceCheck = async (req, res, next) => {
     }
   }
   catch (err) {
-    console.log(err)
+    logger.log('error', err);
   }
 }

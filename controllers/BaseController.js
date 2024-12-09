@@ -1,13 +1,8 @@
 'use strict';
 
 const { Controller } = require('hmpo-form-wizard');
-const requestOptions = require('../helpers/requestOptions');
 
 class BaseController extends Controller {
-
-  getOptions(req) {
-    return requestOptions(req)
-  }
 
   pageNotFound() {
     const err = new Error('Page not found');

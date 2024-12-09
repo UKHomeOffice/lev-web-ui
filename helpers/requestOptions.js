@@ -1,6 +1,4 @@
-const config = require('../config/index')
-
-module.exports = (req, apiConfig = config.api) => {
+module.exports = (req, apiConfig) => {
   const token = req.headers['x-auth-token'];
   const roles = req.headers['x-auth-roles'];
 

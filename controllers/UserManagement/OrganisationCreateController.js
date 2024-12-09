@@ -1,6 +1,8 @@
 const BaseController = require('../BaseController');
 const {postRequest} = require('../../services/UserManagement/UserActionsService');
 const teamPermissionsObjectBuilder = require('../../helpers/teamPermissionsObjectBuilder');
+const requestOptions = require("../../helpers/requestOptions");
+const { iamApi } = require("../../config");
 
 class OrganisationCreateController extends BaseController {
 
@@ -20,7 +22,7 @@ class OrganisationCreateController extends BaseController {
       req.sessionModel.set('addOrgAttempt', true);
 
       const orgResult = await postRequest({
-        ...this.getOptions(req),
+        ...requestOptions(req, iamApi),
         url: '/admin/organisations',
       }, { organisationName: organisationName });
 
@@ -31,7 +33,7 @@ class OrganisationCreateController extends BaseController {
       const defaultTeamPermissionsObject = teamPermissionsObjectBuilder.permissionsArrayToObject(defaultTeamPermissions, next);
 
       await postRequest( {
-        ...this.getOptions(req),
+        ...requestOptions(req, iamApi),
         url: `/admin/organisations/${createdOrg.id}/teams`,
       }, { teamName: defaultTeamName, teamPermissions: defaultTeamPermissionsObject });
 
