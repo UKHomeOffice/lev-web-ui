@@ -41,6 +41,7 @@ services:
       - mock-api
     environment:
       - CYPRESS_baseUrl=http://lev-web-ui:8001
+      - CYPRESS_INSTALL_BINARY=0
     command: npm cypress run --headless --config-file ./cypress.config.js
     volumes:
       - ./cypress:/cypress
