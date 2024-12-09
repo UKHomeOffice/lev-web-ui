@@ -1,13 +1,15 @@
 const BaseController = require('../BaseController');
 const { postRequest } = require('../../services/UserManagement/UserActionsService');
 const { orgLookup } = require('../../services/UserManagement/OrganisationSearchService');
+const requestOptions = require("../../helpers/requestOptions");
+const { iamApi } = require("../../config");
 
 class OrganisationEditController extends BaseController {
 
   async getValues(req, res, next) {
     try {
       const orgInfo = await orgLookup({
-        ...this.getOptions(req),
+        ...requestOptions(req, iamApi),
         url: `/admin/organisations/${req.params.orgId}`
       });
 
@@ -36,7 +38,7 @@ class OrganisationEditController extends BaseController {
       req.sessionModel.set('editOrgAttempt', true);
 
       await postRequest({
-        ...this.getOptions(req),
+        ...requestOptions(req, iamApi),
         url: `/admin/organisations/${req.params.orgId}`,
       }, { organisationName: organisationName });
 

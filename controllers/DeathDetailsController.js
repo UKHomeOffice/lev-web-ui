@@ -2,6 +2,8 @@
 
 const BaseController = require('./BaseController');
 const DeathSearchService = require('../services/DeathSearchService');
+const requestOptions = require("../helpers/requestOptions");
+const { api } = require("../config");
 
 class DeathDetailsController extends BaseController {
   locals(req, res, callback) {
@@ -28,7 +30,7 @@ class DeathDetailsController extends BaseController {
 
           // Record not found in searchResults, call REST API
           record = await DeathSearchService.lookup({
-            ...this.getOptions(req),
+            ...requestOptions(req, api),
             url: `/v1/registration/death/${systemNumber}`
           });
         }

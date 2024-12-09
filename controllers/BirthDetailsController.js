@@ -2,6 +2,8 @@
 
 const BaseController = require('./BaseController');
 const BirthSearchService = require('../services/BirthSearchService');
+const requestOptions = require("../helpers/requestOptions");
+const { api } = require("../config");
 
 class BirthDetailsController extends BaseController {
   locals(req, res, callback) {
@@ -28,7 +30,7 @@ class BirthDetailsController extends BaseController {
 
           // Record not found in searchResults, call REST API
           record = await BirthSearchService.lookup({
-            ...this.getOptions(req),
+            ...requestOptions(req, api),
             url: `/v1/registration/birth/${systemNumber}`
           });
         }

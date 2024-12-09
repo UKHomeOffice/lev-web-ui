@@ -2,6 +2,8 @@
 
 const BaseController = require('./BaseController');
 const PartnershipSearchService = require('../services/PartnershipSearchService');
+const requestOptions = require("../helpers/requestOptions");
+const { api } = require("../config");
 
 class PartnershipDetailsController extends BaseController {
   locals(req, res, callback) {
@@ -28,7 +30,7 @@ class PartnershipDetailsController extends BaseController {
 
           // Record not found in searchResults, call REST API
           record = await PartnershipSearchService.lookup({
-            ...this.getOptions(req),
+            ...requestOptions(req, api),
             url: `/v1/registration/partnership/${systemNumber}`
           });
         }

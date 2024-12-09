@@ -3,6 +3,8 @@
 const DateController = require('./DateController');
 const { getCurrentTimeInMillis, incrementErrorMetrics, incrementRequestMetrics } = require('../lib/metrics');
 const BirthSearchService = require('../services/BirthSearchService');
+const requestOptions = require("../helpers/requestOptions");
+const { api } = require("../config");
 
 class BirthSearchController extends DateController {
 
@@ -29,7 +31,7 @@ class BirthSearchController extends DateController {
 
       try {
         const record = await BirthSearchService.lookup({
-          ...this.getOptions(req),
+          ...requestOptions(req, api),
           url: `/v1/registration/birth/${systemNumber}`
         });
 
@@ -51,7 +53,7 @@ class BirthSearchController extends DateController {
 
       try {
         const searchResults = await BirthSearchService.search({
-          ...this.getOptions(req),
+          ...requestOptions(req, api),
           url: '/v1/registration/birth',
           searchParams: { forenames, surname, dateOfBirth }
         });
