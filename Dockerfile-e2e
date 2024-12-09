@@ -4,6 +4,7 @@ WORKDIR /app
 COPY ./ /app
 
 RUN npm ci -D
+RUN npx cypress install
 
 ENV NO_COLOR=1
 
