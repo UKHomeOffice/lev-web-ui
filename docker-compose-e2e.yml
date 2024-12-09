@@ -45,5 +45,4 @@ services:
     volumes:
       - ./cypress:/cypress
       - ./cypress.config.js:/cypress.config.js
-      - /root/.cache/Cypress:/root/.cache/Cypress
 
