@@ -1,6 +1,5 @@
 const BaseController = require('../BaseController');
-const { orgLookup } = require('../../services/UserManagement/OrganisationSearchService');
-const { postRequest } = require('../../services/UserManagement/UserActionsService');
+const { getRequest, postRequest } = require('../../services/UserManagement/IamApiService');
 const requestOptions = require("../../helpers/requestOptions");
 const { iamApi } = require("../../config");
 class UserEditController extends BaseController {
@@ -8,12 +7,12 @@ class UserEditController extends BaseController {
   async getValues(req, res, next) {
 
     try {
-      const userResults = await orgLookup({
+      const userResults = await getRequest({
         ...requestOptions(req, iamApi),
         url: `/admin/organisations/${req.params.orgId}/teams/${req.params.teamId}/users/${req.params.username}`
       });
 
-      const orgTeamsResult = await orgLookup({
+      const orgTeamsResult = await getRequest({
         ...requestOptions(req, iamApi),
         url: `/admin/organisations/${req.params.orgId}/assignable-teams`
       });

@@ -1,5 +1,5 @@
 const BaseController = require('../BaseController');
-const { postRequest } = require('../../services/UserManagement/UserActionsService');
+const { postRequest } = require('../../services/UserManagement/IamApiService');
 const requestOptions = require("../../helpers/requestOptions");
 const { iamApi } = require("../../config");
 

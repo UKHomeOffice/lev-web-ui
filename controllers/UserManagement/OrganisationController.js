@@ -1,5 +1,5 @@
 const BaseController = require('../BaseController');
-const { orgLookup } = require('../../services/UserManagement/OrganisationSearchService');
+const { getRequest } = require('../../services/UserManagement/IamApiService');
 const queryParamsBuilder = require("../../helpers/queryParamsBuilder");
 const requestOptions = require("../../helpers/requestOptions");
 const { iamApi } = require("../../config");
@@ -7,16 +7,16 @@ const { iamApi } = require("../../config");
 class OrganisationController extends BaseController {
   async getValues(req, _res, next) {
     try {
-      const searchResults = await orgLookup({
+      const searchResults = await getRequest({
         ...requestOptions(req, iamApi),
         url: `/admin/organisations/${req.params.orgId}`,
       });
-      const teamResults = await orgLookup({
+      const teamResults = await getRequest({
         ...requestOptions(req, iamApi),
         url: `/admin/organisations/${req.params.orgId}/teams`
       });
 
-      const userResults = await orgLookup({
+      const userResults = await getRequest({
         ...requestOptions(req, iamApi),
         url: `/admin/organisations/${req.params.orgId}/users${queryParamsBuilder(req)}`
       });

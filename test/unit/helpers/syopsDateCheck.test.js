@@ -1,32 +1,30 @@
-const syopsDateCheck = require('../../../helpers/syopsDateCheck');
+const SyopsRenewalRequired = require('../../../helpers/SyopsRenewalNotRequired');
 const { DateTime } = require('luxon');
 const { syops } = require('../../../config/index');
 
-describe('syopsDateCheck', () => {
+describe('SyopsRenewalRequired', () => {
   it('when renewal set for a day in the future, current date returns true', () => {
-    syops.renewalAfterDays = 1;
-    expect(syopsDateCheck(DateTime.now())).toBe(true);
+    syops.renewalDate = DateTime.now().plus({ days: 1 }).toFormat('dd/MM/yyyy');
+    expect(SyopsRenewalRequired(DateTime.now())).toBe(false);
   });
   it('when renewal set for yesterday now returns false', () => {
-    syops.renewalAfterDays = -1;
-    expect(syopsDateCheck(DateTime.now())).toBe(false);
+    syops.renewalDate = DateTime.now().minus({ days: 1 }).toFormat('dd/MM/yyyy');
+    expect(SyopsRenewalRequired(DateTime.now())).toBe(true);
   });
   it('when renewal set for a year in the future, current date returns true', () => {
-    syops.renewalAfterDays = 365;
-    expect(syopsDateCheck(DateTime.now())).toBe(true);
+    syops.renewalDate = DateTime.now().plus({ days: 365 }).toFormat('dd/MM/yyyy');
+    expect(SyopsRenewalRequired(DateTime.now())).toBe(false);
   });
-  it('when renewal set for 2 years in the future, a syops acceptance date of 18 months in the future returns true', () => {
-    syops.renewalAfterDays = 1000
-    const now = DateTime.now();
-    const futureDate = now.plus({ months: 18 });
+  it('when renewal set 2 years in the future, a syops acceptance date of 18 months in the future returns true', () => {
+    syops.renewalDate = DateTime.now().plus({ days: 730 }).toFormat('dd/MM/yyyy');
+    const futureDate = DateTime.now().plus({ months: 18 });
 
-    expect(syopsDateCheck(futureDate)).toBe(true);
+    expect(SyopsRenewalRequired(futureDate)).toBe(false);
   });
   it('when renewal set for 2 years in the future, a date 30 months in the future returns false', () => {
-    syops.renewalAfterDays = 730;
-    const now = DateTime.now();
-    const futureDate = now.plus({ months: 30 });
+    syops.renewalDate = DateTime.now().plus({ days: 730 }).toFormat('dd/MM/yyyy');
+    const futureDate = DateTime.now().plus({ months: 30 });
 
-    expect(syopsDateCheck(futureDate)).toBe(false);
+    expect(SyopsRenewalRequired(futureDate)).toBe(true);
   });
 });

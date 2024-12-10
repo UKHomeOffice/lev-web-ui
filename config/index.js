@@ -5,7 +5,7 @@ dotenv.config();
 const packageJson = require('../package.json');
 
 module.exports = {
-  MOCK: process.env.MOCK || "false",
+  bypassSyops: process.env.MOCK?.toLowerCase() === 'true' || false,
   options: {
     port: process.env.PORT || 8001,
     logs: {
@@ -47,6 +47,7 @@ module.exports = {
     }
   },
   syops: {
-    renewalAfterDays: process.env.SYOPS_RENEWAL_PERIOD_DAYS || 365
+    // Date should be in correct format of dd/MM/yyyy
+    renewalDate: process.env.SYOPS_RENEWAL_DATE
   }
 };

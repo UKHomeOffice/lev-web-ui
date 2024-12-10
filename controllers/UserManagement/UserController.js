@@ -1,5 +1,5 @@
 const BaseController = require('../BaseController');
-const { orgLookup } = require('../../services/UserManagement/OrganisationSearchService');
+const { getRequest } = require('../../services/UserManagement/IamApiService');
 const requestOptions = require("../../helpers/requestOptions");
 const { iamApi } = require("../../config");
 
@@ -7,7 +7,7 @@ class UserController extends BaseController {
 
   async getValues(req, _res, next) {
     try {
-      const userResults = await orgLookup({
+      const userResults = await getRequest({
         ...requestOptions(req, iamApi),
         url: `/admin/organisations/${req.params.orgId}/teams/${req.params.teamId}/users/${req.params.username}`
       });

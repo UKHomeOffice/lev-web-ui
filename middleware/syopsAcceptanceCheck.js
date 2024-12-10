@@ -1,27 +1,30 @@
 const config = require("../config");
-const OrganisationSearchService = require("../services/UserManagement/OrganisationSearchService");
-const syopsDateCheck = require("../helpers/syopsDateCheck");
+const IamApiService = require("../services/UserManagement/IamApiService");
+const SyopsRenewalNotRequired = require("../helpers/SyopsRenewalNotRequired");
 const { iamApi } = require("../config");
 const requestOptions = require('../helpers/requestOptions');
 const logger = require('hmpo-logger').get();
 
 module.exports.syopsAcceptanceCheck = async (req, res, next) => {
-  if(config.MOCK === "true") {
+  if(config.bypassSyops) {
     return next()
   }
 
   try {
-    const data = await OrganisationSearchService.orgLookup({
+    const data = await IamApiService.getRequest({
       ...requestOptions(req, iamApi),
       url: '/user/metadata'
     });
-    const syopsDate = data.metadata.syopsAcceptedAt;
-    if(syopsDate && syopsDateCheck(syopsDate)) {
+
+    const syopsAcceptanceDate = data.metadata.syopsAcceptedAt;
+
+    if (!syopsAcceptanceDate || (config.syops.renewalDate && !SyopsRenewalNotRequired(syopsAcceptanceDate))) {
+      res.locals.syopsAccepted = false;
+      res.render('pages/syops/index');
+    }
+    else {
       res.locals.syopsAccepted = true;
       next();
-    } else {
-      res.locals.syopsAccepted = false;
-      res.render('pages/syops/index')
     }
   }
   catch (err) {

@@ -1,27 +1,27 @@
 'use strict';
 
 const BaseController = require('./BaseController');
-const OrganisationSearchService = require("../services/UserManagement/OrganisationSearchService");
-const UserActionsService = require("../services/UserManagement/UserActionsService");
-const syopsDateCheck = require("../helpers/syopsDateCheck");
+const IamApiService = require("../services/UserManagement/IamApiService");
+const SyopsRenewalRequired = require("../helpers/SyopsRenewalNotRequired");
 const requestOptions = require('../helpers/requestOptions');
-const { iamApi } = require("../config");
+const { iamApi, syops } = require("../config");
 const logger = require('hmpo-logger').get();
 
 class SyopsController extends BaseController {
   // re-running of middleware function is if page is navigated directly to, to not render accept button if accepted already
   async getValues(req, res, next) {
     try {
-      const data = await OrganisationSearchService.orgLookup({
+      const data = await IamApiService.getRequest({
         ...requestOptions(req, iamApi),
         url: '/user/metadata'
       });
+
       const syopsDate = data.metadata.syopsAcceptedAt;
 
-      if(syopsDate && syopsDateCheck(syopsDate)) {
+      req.sessionModel.set('syopsAccepted', false);
+
+      if(syopsDate && (!syops.renewalDate || SyopsRenewalRequired(syopsDate))) {
         req.sessionModel.set('syopsAccepted', true);
-      } else {
-        req.sessionModel.set('syopsAccepted', false);
       }
     }
     catch (err) {
@@ -31,7 +31,7 @@ class SyopsController extends BaseController {
   }
 
   async saveValues(req, res) {
-    await UserActionsService.postRequest({
+    await IamApiService.postRequest({
       ...requestOptions(req, iamApi),
       url: '/user/syops'
     });
