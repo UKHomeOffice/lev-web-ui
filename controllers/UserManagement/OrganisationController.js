@@ -1,21 +1,23 @@
 const BaseController = require('../BaseController');
-const { orgLookup } = require('../../services/UserManagement/OrganisationSearchService');
+const { getRequest } = require('../../services/UserManagement/IamApiService');
 const queryParamsBuilder = require("../../helpers/queryParamsBuilder");
+const requestOptions = require("../../helpers/requestOptions");
+const { iamApi } = require("../../config");
 
 class OrganisationController extends BaseController {
   async getValues(req, _res, next) {
     try {
-      const searchResults = await orgLookup({
-        ...this.getOptions(req),
+      const searchResults = await getRequest({
+        ...requestOptions(req, iamApi),
         url: `/admin/organisations/${req.params.orgId}`,
       });
-      const teamResults = await orgLookup({
-        ...this.getOptions(req),
+      const teamResults = await getRequest({
+        ...requestOptions(req, iamApi),
         url: `/admin/organisations/${req.params.orgId}/teams`
       });
 
-      const userResults = await orgLookup({
-        ...this.getOptions(req),
+      const userResults = await getRequest({
+        ...requestOptions(req, iamApi),
         url: `/admin/organisations/${req.params.orgId}/users${queryParamsBuilder(req)}`
       });
 

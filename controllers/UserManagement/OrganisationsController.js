@@ -1,11 +1,13 @@
 const BaseController = require('../BaseController');
-const { orgLookup } = require('../../services/UserManagement/OrganisationSearchService');
+const { getRequest } = require('../../services/UserManagement/IamApiService');
+const requestOptions = require("../../helpers/requestOptions");
+const { iamApi } = require("../../config");
 
 class OrganisationsController extends BaseController {
   async getValues(req, _res, next) {
     try {
-      const orgsResult = await orgLookup({
-        ...this.getOptions(req),
+      const orgsResult = await getRequest({
+        ...requestOptions(req, iamApi),
         url: '/admin/organisations'
       });
 

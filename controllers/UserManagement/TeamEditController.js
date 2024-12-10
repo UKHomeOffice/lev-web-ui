@@ -1,14 +1,15 @@
 const BaseController = require('../BaseController');
 const { permissionsArrayToObject, permissionsObjectToArray } = require('../../helpers/teamPermissionsObjectBuilder')
-const { postRequest } = require('../../services/UserManagement/UserActionsService');
-const { orgLookup } = require("../../services/UserManagement/OrganisationSearchService");
+const { getRequest, postRequest } = require("../../services/UserManagement/IamApiService");
+const requestOptions = require("../../helpers/requestOptions");
+const { iamApi } = require("../../config");
 
 class TeamEditController extends BaseController {
 
   async getValues(req, res, next) {
     try {
-      const teamInfo = await orgLookup({
-        ...this.getOptions(req),
+      const teamInfo = await getRequest({
+        ...requestOptions(req, iamApi),
         url: `/admin/organisations/${req.params.orgId}/teams/${req.params.teamId}`
       });
 
@@ -23,12 +24,11 @@ class TeamEditController extends BaseController {
 
   async saveValues(req, res, next) {
     const teamName = req.body.teamName;
-    console.log(req.body)
     try {
       const teamPermissions= permissionsArrayToObject(req.body.permissionCheckboxes, next);
 
       await postRequest( {
-        ...this.getOptions(req),
+        ...requestOptions(req, iamApi),
         url: `/admin/organisations/${req.params.orgId}/teams/${req.params.teamId}`,
       }, { teamName: teamName, teamPermissions: teamPermissions });
       req.sessionModel.set('editTeamAttempt', true);

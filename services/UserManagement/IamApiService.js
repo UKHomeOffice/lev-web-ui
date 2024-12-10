@@ -2,13 +2,26 @@
 
 const OrganisationRestApiModel = require('../../models/OrganisationRestApiModel');
 
-class UserActionsService {
+class IamApiService {
 
   /**
    * Calls the IAM REST API with the given options and returns results as a Promise.
    *
    // * @returns {Promise<string>}
    */
+
+  static async getRequest(options) {
+    return await new Promise((resolve, reject) => {
+      const model = new OrganisationRestApiModel({}, options);
+      model.fetch((err, data) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(data);
+        }
+      });
+    });
+  }
 
   static async deleteRequest(options) {
     return await new Promise((resolve, reject) => {
@@ -22,6 +35,7 @@ class UserActionsService {
       });
     });
   }
+
   static async postRequest(options, postData) {
     return await new Promise((resolve, reject) => {
       const model = new OrganisationRestApiModel({}, options);
@@ -37,4 +51,4 @@ class UserActionsService {
   }
 }
 
-module.exports = UserActionsService;
+module.exports = IamApiService;

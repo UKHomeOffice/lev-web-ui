@@ -3,6 +3,8 @@
 const DateController = require('./DateController');
 const { getCurrentTimeInMillis, incrementErrorMetrics, incrementRequestMetrics } = require('../lib/metrics');
 const PartnershipSearchService = require('../services/PartnershipSearchService');
+const requestOptions = require("../helpers/requestOptions");
+const { api } = require("../config");
 
 class PartnershipSearchController extends DateController {
 
@@ -29,7 +31,7 @@ class PartnershipSearchController extends DateController {
 
       try {
         const record = await PartnershipSearchService.lookup({
-          ...this.getOptions(req),
+          ...requestOptions(req, api),
           url: `/v1/registration/partnership/${systemNumber}`
         });
 
@@ -49,7 +51,7 @@ class PartnershipSearchController extends DateController {
 
       try {
         const searchResults = await PartnershipSearchService.search({
-          ...this.getOptions(req),
+          ...requestOptions(req, api),
           url: '/v1/registration/partnership',
           searchParams: { forenames, surname, dateOfPartnership }
         });

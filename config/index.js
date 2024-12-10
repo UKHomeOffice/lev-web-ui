@@ -1,8 +1,11 @@
 'use strict';
 
+const dotenv = require('dotenv');
+dotenv.config();
 const packageJson = require('../package.json');
 
 module.exports = {
+  bypassSyops: process.env.MOCK?.toLowerCase() === 'true' || false,
   options: {
     port: process.env.PORT || 8001,
     logs: {
@@ -42,5 +45,9 @@ module.exports = {
     get baseUrl() {
       return `${this.protocol}://${this.host}:${this.port}`;
     }
+  },
+  syops: {
+    // Date should be in correct format of dd/MM/yyyy
+    renewalDate: process.env.SYOPS_RENEWAL_DATE
   }
 };
