@@ -1,6 +1,10 @@
 {% extends "app-template.njk" %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
+{% set hmpoPageKey = "Terms and conditions" %}
+{% set govukServiceNameKey = translate("Terms and conditions") %}
+{% set govukServiceTitleKey = translate("Terms and conditions") %}
+
 {% block mainContent %}
   <h1 class="govuk-heading-l">Terms and conditions</h1>
   <p class="govuk-body">You must agree that you have read and understood the terms and conditions of using the service before you can use it.</p>
