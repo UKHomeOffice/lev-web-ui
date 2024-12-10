@@ -1,5 +1,9 @@
 {% extends "app-template.njk" %}
 
+{% set hmpoPageKey = "Accessibility Statement" %}
+{% set govukServiceNameKey = translate("Accessibility Statement") %}
+{% set govukServiceTitleKey = translate("Accessibility Statement") %}
+
 {% block mainContent %}
   <h1 class="govuk-heading-l">Accessibility Statement</h1>
 
@@ -43,11 +47,15 @@
 
   <h2 class="govuk-heading-s">Compliance status</h2>
 
-  <p class="govuk-body">LEV is compliant with the <a href="https://www.w3.org/TR/WCAG22" class="govuk-link">Web Content Accessibility Guidelines version 2.2</a> AA standard.</p>
+  <p class="govuk-body">LEV is compliant with the <a href="https://www.w3.org/TR/WCAG22" class="govuk-link">Web Content Accessibility Guidelines version 2.2</a> AA standard, with the exception of the following areas:</p>
 
   <h2 class="govuk-heading-s">Non-compliance with the accessibility regulations</h2>
 
-  <p class="govuk-body">All content tested is compliant with the WCAG guidelines to the best of our knowledge. If you find areas in the site that are inaccessible, please contact us.</p>
+  <p class="govuk-body">Areas where we know we are partially compliant which are to be addressed in a future release</p>
+
+  <ul class="govuk-list--bullet">
+    <li class="govuk-body">Users are signed-out after a period of inactivity (30 minutes), but are not proactively warned of imminent sign-out.</li>
+  </ul>
 
   <h2 class="govuk-heading-s">Disproportionate burden</h2>
 
