@@ -1,8 +1,5 @@
 'use strict';
 
-// until internal app is deployed, this ensures all functionality across user management and will be removed once separate apps
-process.env.IS_EXTERNAL = 'false';
-
 const { setup } = require('hmpo-app');
 const { options} = require('./config');
 const birthRoute = require('./routes/birth');
