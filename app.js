@@ -12,8 +12,17 @@ const organisationsRoute = require('./routes/organisation');
 const accessTest = require('./routes/access-test');
 const accessibilityStatement = require('./routes/accessibility-statement');
 const syops = require('./routes/syops');
-const {syopsAcceptanceCheck} = require("./middleware/syopsAcceptanceCheck");
+const { syopsAcceptanceCheck } = require("./middleware/syopsAcceptanceCheck");
 const { router } = setup(options);
+let originalRequestUrl;
+
+router.use((req, res, next) => {
+  if(!req.url.toLowerCase().includes('syops')) {
+    originalRequestUrl = req.url;
+  }
+  req.originalRequestUrl = originalRequestUrl
+  next();
+});
 
 // routes for static assets
 router.use('/access-test', accessTest);
@@ -23,7 +32,6 @@ router.use('/metrics', metricsRoute);
 
 // middleware to check syops acceptance
 router.use((req, res, next) => syopsAcceptanceCheck(req, res, next));
-
 
 // routes
 router.use('/birth', birthRoute);
