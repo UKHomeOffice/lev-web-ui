@@ -20,9 +20,16 @@ module.exports.syopsAcceptanceCheck = async (req, res, next) => {
 
     if (!syopsAcceptanceDate || (config.syops.renewalDate && !SyopsRenewalNotRequired(syopsAcceptanceDate))) {
       res.locals.syopsAccepted = false;
+      console.log("Redirecting to syops ")
+      console.log(!syopsAcceptanceDate)
+      console.log(config.syops.renewalDate)
+      console.log(!SyopsRenewalNotRequired(syopsAcceptanceDate))
+      console.log(req.url)
       res.redirect('/syops');
     }
     else {
+      console.log("Syops Accepted and moving on...")
+      console.log(req.url)
       res.locals.syopsAccepted = true;
       next();
     }
