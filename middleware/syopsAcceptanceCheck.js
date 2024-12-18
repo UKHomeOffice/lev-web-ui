@@ -23,7 +23,6 @@ module.exports.syopsAcceptanceCheck = async (req, res, next) => {
       console.log("Redirecting to syops ")
       console.log(!syopsAcceptanceDate)
       console.log(config.syops.renewalDate)
-      console.log(!SyopsRenewalNotRequired(syopsAcceptanceDate))
       console.log(req.url)
       res.redirect('/syops');
     }
