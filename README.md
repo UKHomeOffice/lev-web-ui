@@ -64,3 +64,12 @@ Tests can be run locally against an environment. Note that the user used must ha
 `docker build -t lev-web-ui-e2e -f Dockerfile-e2e .`
 
 `docker run --name lev-web-ui-e2e -e 'SMOKE_TEST=true' -e 'ENV=ENVIROMENT' -e 'KEYCLOAK_URL=KC_ENV_URL' -e 'TEST_URL=SERVICE_URL'  -e 'TEST_USERNAME=USERNAME' -e 'TEST_PASSWORD=PASSWORD' --net host lev-web-ui-e2e`
+
+### iam-api integration
+
+Syops is tied to the iam-api as the syops agreement check, is against the iam-api. The docker-compose envs are set up with a 
+MOCK env variable that sets the bypassSyops variable to bypass the check. 
+
+If running the ui with npm against an iam environment, this env variable can be set 
+in the command or an .env file can be used. The IAM_USER variable should be set to the same user that the iam env is using, to 
+enable access. 

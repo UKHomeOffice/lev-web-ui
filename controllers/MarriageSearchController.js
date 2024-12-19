@@ -3,6 +3,8 @@
 const DateController = require('./DateController');
 const { getCurrentTimeInMillis, incrementErrorMetrics, incrementRequestMetrics } = require('../lib/metrics');
 const MarriageSearchService = require('../services/MarriageSearchService');
+const requestOptions = require("../helpers/requestOptions");
+const { api } = require("../config");
 
 class MarriageSearchController extends DateController {
 
@@ -29,7 +31,7 @@ class MarriageSearchController extends DateController {
 
       try {
         const record = await MarriageSearchService.lookup({
-          ...this.getOptions(req),
+          ...requestOptions(req, api),
           url: `/v1/registration/marriage/${systemNumber}`
         });
 
@@ -51,7 +53,7 @@ class MarriageSearchController extends DateController {
 
       try {
         const searchResults = await MarriageSearchService.search({
-          ...this.getOptions(req),
+          ...requestOptions(req, api),
           url: '/v1/registration/marriage',
           searchParams: { forenames, surname, dateOfMarriage }
         });
