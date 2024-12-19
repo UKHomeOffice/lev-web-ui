@@ -1,4 +1,4 @@
-FROM node:22.12-alpine3.19 as base
+FROM 113355358853.dkr.ecr.eu-west-1.amazonaws.com/ho/hmpo/lev/bac/lev-node:ef901be0b478a2ea1efeafb1b0674f432c9a025b as base
 
 RUN apk add --no-cache ca-certificates \
  && apk upgrade --no-cache
