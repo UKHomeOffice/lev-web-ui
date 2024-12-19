@@ -14,13 +14,16 @@ const accessibilityStatement = require('./routes/accessibility-statement');
 const syops = require('./routes/syops');
 const { syopsAcceptanceCheck } = require("./middleware/syopsAcceptanceCheck");
 const { router } = setup(options);
-let originalRequestUrl = '';
+let originalRequestUrl = '/';
 
 router.use((req, res, next) => {
   if(!req.url.toLowerCase().includes('syops') && !req.url.toLowerCase().includes('metrics') && !req.url.toLowerCase().includes('access-test')) {
+    console.log("IN THE CHANGE ORIGINAL REQUEST URL BLOCK")
     originalRequestUrl = req.url;
   }
   req.originalRequestUrl = originalRequestUrl
+
+  console.log(req.originalRequestUrl)
   next();
 });
 
