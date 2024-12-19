@@ -41,6 +41,7 @@ module.exports = {
     type: 'checkboxes',
     classes: 'govuk-checkboxes--small',
     items: [
+      { value: 'user-management'},
       { value: 'birth' },
       { value: 'death' },
       { value: 'marriage'},
