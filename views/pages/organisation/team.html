@@ -52,6 +52,12 @@
   <span class="govuk-caption-m">{{ teamInfo.organisation.organisationName }}</span>
   <div class="govuk-!-width-full flex-row">
     <h1>{{ teamInfo.teamName }}</h1>
+      {% if teamInfo.isAdmin %}
+      <h2>{{ govukTag({
+          text: "Admin",
+          classes: "govuk-tag--turquoise"
+        }) }}</h2>
+      {% endif %}
     {% if IS_EXTERNAL == "false" %}
       <div class="govuk-!-text-align-right">
         {{ hmpoSubmit(ctx, {id: "editTeam", key: "editTeam", href: teamLink + "/edit"}) }}

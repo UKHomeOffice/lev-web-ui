@@ -122,7 +122,7 @@
       "label": "Team name"
     },
     "permissionCheckboxes": {
-      "legend": "Select search permissions",
+      "legend": "Select permissions",
       "items": {
         "birth": {
           "label": "Birth"
@@ -135,6 +135,9 @@
         },
         "partnership": {
           "label": "Partnership"
+        },
+        "user-management": {
+          "label": "Admin"
         }
       }
 
