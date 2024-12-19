@@ -17,7 +17,7 @@ const { router } = setup(options);
 let originalRequestUrl = '';
 
 router.use((req, res, next) => {
-  if(!req.url.toLowerCase().includes('syops') && !req.url.toLowerCase().includes('syops')) {
+  if(!req.url.toLowerCase().includes('syops') && !req.url.toLowerCase().includes('metrics')) {
     originalRequestUrl = req.url;
   }
   req.originalRequestUrl = originalRequestUrl
