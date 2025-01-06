@@ -17,9 +17,16 @@ const { router } = setup(options);
 let originalRequestUrl = null;
 
 router.use((req, res, next) => {
-  if(!originalRequestUrl && !req.url.toLowerCase().includes('syops') && !req.url.toLowerCase().includes('metrics') && !req.url.toLowerCase().includes('access-test') && !req.url.toLowerCase().includes('public') && !req.url.toLowerCase().includes('assets')) {
-    originalRequestUrl = req.url;
+  if(req.url.toLowerCase().includes('syops') && !req.url.toLowerCase().includes('metrics') && !req.url.toLowerCase().includes('access-test') && !req.url.toLowerCase().includes('public') && !req.url.toLowerCase().includes('assets')) {
+    originalRequestUrl = req.originalUrl;
   }
+  console.log("req.url")
+  console.log(req.url);
+  console.log("req.originalUrl")
+  console.log(req.originalUrl);
+  console.log("req.originalRequestUrl")
+  console.log(req.originalRequestUrl);
+
   req.originalRequestUrl = originalRequestUrl
   console.log("Initial URL Captured:", originalRequestUrl);
   next();
