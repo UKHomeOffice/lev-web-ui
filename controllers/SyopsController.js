@@ -35,7 +35,7 @@ class SyopsController extends BaseController {
       ...requestOptions(req, iamApi),
       url: '/user/syops'
     });
-    res.redirect(req.originalRequestUrl);
+    res.redirect(req.session.originalRequestUrl || '/');
   }
 
   locals(req, res, callback) {
