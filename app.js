@@ -16,11 +16,9 @@ const { syopsAcceptanceCheck } = require("./middleware/syopsAcceptanceCheck");
 const { router } = setup(options);
 
 router.use((req, res, next) => {
-  console.log(req.session)
   if(!req.url.toLowerCase().includes('syops') && !req.url.toLowerCase().includes('metrics') && !req.url.toLowerCase().includes('access-test') && !req.url.toLowerCase().includes('public') && !req.url.toLowerCase().includes('assets')) {
     req.session.originalRequestUrl = req.originalUrl;
   }
-  console.log("Initial URL Captured:", req.session.originalRequestUrl,);
   next();
 });
 
