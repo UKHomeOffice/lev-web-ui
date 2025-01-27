@@ -410,7 +410,7 @@
     },
     "teamName": {
       "required": "Enter team name",
-      "length": "Team name must be 30 characters or less",
+      "length": "Team name must be 128 characters or less",
       "regex": "Team name can only include letters, numbers and spaces"
     },
     "permissionCheckboxes": {
