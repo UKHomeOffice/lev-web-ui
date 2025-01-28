@@ -34,7 +34,7 @@ module.exports = {
     validate: [
       'required',
       { type: 'regex', arguments: '^[a-zA-Z0-9 ]+$'},
-      { type: 'length', fn: (e) => e.length >= 1 && e.length <= 30 }
+      { type: 'length', fn: (e) => e.length >= 1 && e.length <= 128 }
     ]
   },
   'permissionCheckboxes': {
