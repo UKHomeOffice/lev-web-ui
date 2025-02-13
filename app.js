@@ -2,6 +2,7 @@
 
 const { setup } = require('hmpo-app');
 const { options} = require('./config');
+const homeRoute = require('./routes/home');
 const birthRoute = require('./routes/birth');
 const deathRoute = require('./routes/death');
 const marriageRoute = require('./routes/marriage');
@@ -38,4 +39,4 @@ router.use('/marriage', marriageRoute);
 router.use('/partnership', partnershipRoute);
 router.use('/audit/user-activity', userActivityRoute);
 router.use('/admin/organisations', organisationsRoute);
-router.use('/', (req, res) => res.redirect('/birth'));
+router.use('/', homeRoute);
