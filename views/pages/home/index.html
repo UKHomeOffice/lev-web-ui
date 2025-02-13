@@ -1,0 +1,44 @@
+{% extends "app-template.njk" %}
+{% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+
+{% set govukServiceNameKey = translate("govuk.serviceName") %}
+{% set govukServiceTitleKey = translate("govuk.serviceName") %}
+{% set govukServiceUrl = "/" %}
+{% block mainContent %}
+
+<h1>Search</h1>
+
+<div class="govuk-grid-column-full">
+    <div class="govuk-!-width-one-third govuk-!-padding-bottom-3">
+        {{ govukServiceNavigation({
+            classes: 'govuk-!-padding-left-3',
+            serviceName: "Birth",
+            serviceUrl: "#"
+        }) }}
+    </div>
+    <div class="govuk-!-width-one-third govuk-!-padding-bottom-3">
+        {{ govukServiceNavigation({
+            classes: 'govuk-!-padding-left-3',
+            serviceName: "Death",
+            serviceUrl: "#"
+        }) }}
+    </div>
+    <div class="govuk-!-width-one-third govuk-!-padding-bottom-3">
+        {{ govukServiceNavigation({
+            classes: 'govuk-!-padding-left-3',
+            serviceName: "Marriages",
+            serviceUrl: "#"
+        }) }}
+    </div>
+    <div class="govuk-!-width-one-third govuk-!-padding-bottom-3">
+        {{ govukServiceNavigation({
+            classes: 'govuk-!-padding-left-3',
+            serviceName: "Civil partnerships",
+            serviceUrl: "#"
+        }) }}
+    </div>
+</div>
+
+<h1>Manage</h1>
+
+{% endblock %}
