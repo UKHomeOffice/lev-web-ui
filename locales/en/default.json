@@ -393,15 +393,15 @@
     "firstName": {
       "required": "Enter first name",
       "length": "First name must be between 1 and 30 Characters",
-      "regex": "First name can only include letters, numbers, hyphens and spaces"
+      "regex": "First name can only include letters, numbers, hyphens, apostrophes and spaces"
     },
     "lastName": {
       "required": "Enter last name",
       "length": "Last name must be between 1 and 30 Characters",
-      "regex": "Last name can only include letters, numbers, hyphens and spaces"
+      "regex": "Last name can only include letters, numbers, hyphens, apostrophes and spaces"
     },
     "email": {
-      "email": "Enter email address in correct format",
+      "regex": "Enter email address in correct format",
       "required": "Enter email address",
       "length": "Email address must be between 3 and 254 characters"
     },
