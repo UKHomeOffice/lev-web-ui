@@ -4,7 +4,7 @@ module.exports = {
     validate: [
       'required',
       { type: 'length', fn: (e) => e.length >= 1 && e.length <= 30 },
-      { type: 'regex', arguments: '^[a-zA-Z0-9- ]+$'}
+      { type: 'regex', arguments: '^[a-zA-Z0-9-\' ]+$'}
     ]
   },
   'lastName': {
@@ -12,18 +12,18 @@ module.exports = {
     validate: [
       'required',
       { type: 'length', fn: (e) => e.length >= 1 && e.length <= 30 },
-      { type: 'regex', arguments: '^[a-zA-Z0-9- ]+$'},
+      { type: 'regex', arguments: '^[a-zA-Z0-9-\' ]+$'},
     ]
   },
   'email': {
     type: 'text',
     validate: [
-      'email',
       'required',
+      { type: 'regex', arguments: /^(?!.*\.\.)[a-z0-9_%+-](?:[a-z0-9._%+'-]*[a-z0-9_%+-])?@([a-z0-9]+([a-z0-9-]*[a-z0-9]+)?\.)+[a-z]{2,6}$/i},
       { type: 'length', fn: (e) => e.length >= 3 && e.length <= 254 }
     ]
   },
-  'teamSelect': {
+'teamSelect': {
     type: 'select',
     validate: [
       'required'
