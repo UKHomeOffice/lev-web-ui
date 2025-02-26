@@ -7,9 +7,17 @@
 
     {% set detailsKey = "fields." + detailsKey or fieldName + "-hint" %}
 
+
+    {% set rawSumHtml = ctx().translate(detailsKey + ".summaryHtml") %}
+    {% set sumHtml = rawSumHtml if rawSumHtml != detailsKey + ".summaryHtml" else undefined %}
+    {% set rawSumText = ctx().translate(detailsKey + ".summaryText") %}
+    {% set sumText = rawSumText if rawSumText != detailsKey + ".summaryText" else undefined %}
+
+
     {{ hmpoDetails({
         id: fieldName + "-hint",
-        summaryText: ctx().translate(detailsKey + ".summaryText"),
+        summaryText: sumText if sumText and not sumHtml,
+        summaryHtml: sumHtml if sumHtml,
         html: hmpoHtml(ctx().translate(detailsKey + ".html"))
     }) }}
 {% endmacro %}
