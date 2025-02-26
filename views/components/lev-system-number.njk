@@ -17,7 +17,7 @@
 
     {{ hmpoDetails({
         id: fieldName + "-hint",
-        summaryText: sumText if sumText,
+        summaryText: sumText if sumText and not sumHtml,
         summaryHtml: sumHtml if sumHtml,
         html: hmpoHtml(ctx().translate(detailsKey + ".html"))
     }) }}
