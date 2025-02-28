@@ -7,13 +7,6 @@
 
     {% set detailsKey = "fields." + detailsKey or fieldName + "-hint" %}
 
-
-    {% set rawSumHtml = ctx().translate(detailsKey + ".summaryHtml") %}
-    {% set sumHtml = rawSumHtml if rawSumHtml != detailsKey + ".summaryHtml" else undefined %}
-    {% set rawSumText = ctx().translate(detailsKey + ".summaryText") %}
-    {% set sumText = rawSumText if rawSumText != detailsKey + ".summaryText" else undefined %}
-
-
     {{ hmpoDetails({
         id: fieldName + "-hint",
         summaryHtml: ctx().translate(detailsKey + ".summaryHtml"),
