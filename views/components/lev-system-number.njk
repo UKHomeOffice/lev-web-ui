@@ -14,6 +14,7 @@
     {% set sumText = rawSumText if rawSumText != detailsKey + ".summaryText" else undefined %}
 
 
+
     {{ hmpoDetails({
         id: fieldName + "-hint",
         summaryText: sumText if sumText and not sumHtml,
