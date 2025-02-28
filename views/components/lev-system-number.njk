@@ -9,7 +9,7 @@
 
     {{ hmpoDetails({
         id: fieldName + "-hint",
-        summaryText: hmpoHtml(ctx().translate(detailsKey + ".summaryHtml")),
+        summaryText: ctx().translate(detailsKey + ".summaryText"),
         html: hmpoHtml(ctx().translate(detailsKey + ".html"))
     }) }}
 {% endmacro %}
