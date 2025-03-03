@@ -5,13 +5,22 @@ const BaseController = require('./BaseController');
 class HomeController extends BaseController {
 
   async getValues(req, _res, next) {
-    // get roles from token
 
-    req.sessionModel.set('birth', true);
-    req.sessionModel.set('death', true);
-    req.sessionModel.set('marriage', true);
-    req.sessionModel.set('partnership', true);
-    req.sessionModel.set('manageOrganisation', true);
+    const birth = this.hasRole(req, 'birth') || false;
+    const death = this.hasRole(req, 'death') || false;
+    const marriage = this.hasRole(req, 'marriage') || false;
+    const partnership = this.hasRole(req, 'partnership') || false;
+    const manageOrg = this.hasRole(req, 'user-management') || false;
+
+    if (!birth && !death && !marriage && !partnership && !manageOrg) {
+      _res.redirect('/outh/logout');
+    }
+
+    req.sessionModel.set('birth', birth);
+    req.sessionModel.set('death', death);
+    req.sessionModel.set('marriage', marriage);
+    req.sessionModel.set('partnership', partnership);
+    req.sessionModel.set('manageOrganisation', manageOrg);
     next();
   }
   locals(req, res, callback) {

@@ -56,7 +56,10 @@
     </a>
     {% endif %}
 
-    <a id="logout" class="govuk-header__link logout" href="/oauth/logout">{{ params.logout }}</a>
+    <div class="home-logout__link">
+        <a id="home" class="govuk-header__link logout" href="/">{{ params.home }}</a> |
+        <a id="logout" class="govuk-header__link logout" href="/oauth/logout">{{ params.logout }}</a>
+    </div>
 
     {% if params.navigation %}
     <nav aria-label="{{ params.navigationLabel | default('Menu') }}" class="govuk-header__navigation {{ params.navigationClasses if params.navigationClasses }}">

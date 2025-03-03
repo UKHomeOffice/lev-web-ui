@@ -1,6 +1,6 @@
 $govuk-assets-path: "/public/";
 
-@import "node_modules/govuk-frontend/dist/govuk/all";
+@import "node_modules/govuk-frontend/dist/govuk/index";
 @import "node_modules/hmpo-components/all";
 @import "./details";
 @import "./flags";
@@ -31,11 +31,14 @@ a, button {
   }
 
   &.logout {
-    float: right;
     margin-bottom: 10px;
     font-size: 20px;
     font-size: 1.1875rem;
   }
+}
+.home-logout__link {
+  float: right;
+  font-weight: 400;
 }
 
 .text-color-black {
@@ -59,4 +62,17 @@ a, button {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.govuk-service-navigation {
+  border-bottom: 3px solid #1d70b8;
+}
+
+.govuk-header {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.govuk-header__content {
+  padding-top: 5px;
 }

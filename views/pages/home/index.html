@@ -4,41 +4,80 @@
 {% set govukServiceNameKey = translate("govuk.serviceName") %}
 {% set govukServiceTitleKey = translate("govuk.serviceName") %}
 {% set govukServiceUrl = "/" %}
-{% block mainContent %}
 
-<h1>Search</h1>
+{% block hmpoContent %}
 
-<div class="govuk-grid-column-full">
-    <div class="govuk-!-width-one-third govuk-!-padding-bottom-3">
-        {{ govukServiceNavigation({
-            classes: 'govuk-!-padding-left-3',
-            serviceName: "Birth",
-            serviceUrl: "#"
-        }) }}
+<div class="govuk-grid-row">
+    {% block mainContent %}
+
+    <div class="govuk-grid-column-full govuk-!-margin-bottom-3">
+
+        {% if birth or death or marriage or partnership %}
+        <h1>Search</h1>
+
+        {% if birth %}
+            <div class="govuk-!-width-one-third govuk-!-padding-left-3 govuk-!-padding-bottom-3 govuk-!-display-inline-block">
+                {{ govukServiceNavigation({
+                classes: 'govuk-!-padding-left-3 ',
+                navigation: [{
+                href: "/birth",
+                text: "Birth"
+                }]
+                }) }}
+            </div>
+        {% endif %}
+        {% if death %}
+            <div class="govuk-!-width-one-third govuk-!-padding-left-3 govuk-!-padding-bottom-3 govuk-!-display-inline-block">
+                {{ govukServiceNavigation({
+                classes: 'govuk-!-padding-left-3',
+                navigation: [{
+                href: "/death",
+                text: "Deaths"
+                }]
+                }) }}
+            </div>
+        {% endif %}
+        {% if marriage %}
+            <div class="govuk-!-width-one-third govuk-!-padding-left-3 govuk-!-padding-bottom-3 govuk-!-display-inline-block">
+                {{ govukServiceNavigation({
+                classes: 'govuk-!-padding-left-3',
+                navigation: [{
+                href: "/marriage",
+                text: "Marriages"
+                }]
+                }) }}
+            </div>
+        {% endif %}
+        {% if partnership %}
+            <div class="govuk-!-width-one-third govuk-!-padding-left-3 govuk-!-padding-bottom-3 govuk-!-display-inline-block">
+                {{ govukServiceNavigation({
+                classes: 'govuk-!-padding-left-3',
+                navigation: [{
+                href: "/partnership",
+                text: "Civil partnerships"
+                }]
+                }) }}
+            </div>
+        {% endif %}
+
+        {% endif %}
     </div>
-    <div class="govuk-!-width-one-third govuk-!-padding-bottom-3">
-        {{ govukServiceNavigation({
-            classes: 'govuk-!-padding-left-3',
-            serviceName: "Death",
-            serviceUrl: "#"
-        }) }}
+
+    <div class="govuk-grid-column-full">
+
+        {% if manageOrganisation %}
+        <h1>Manage</h1>
+            <div class="govuk-!-width-one-third govuk-!-padding-left-3 govuk-!-padding-bottom-3 govuk-!-display-inline-block">
+                {{ govukServiceNavigation({
+                    classes: 'govuk-!-padding-left-3',
+                    navigation: [{
+                        href: "/admin/organisations",
+                        text: "Organisation"
+                    }]
+                }) }}
+            </div>
+        {% endif %}
     </div>
-    <div class="govuk-!-width-one-third govuk-!-padding-bottom-3">
-        {{ govukServiceNavigation({
-            classes: 'govuk-!-padding-left-3',
-            serviceName: "Marriages",
-            serviceUrl: "#"
-        }) }}
-    </div>
-    <div class="govuk-!-width-one-third govuk-!-padding-bottom-3">
-        {{ govukServiceNavigation({
-            classes: 'govuk-!-padding-left-3',
-            serviceName: "Civil partnerships",
-            serviceUrl: "#"
-        }) }}
-    </div>
+    {% endblock %}
 </div>
-
-<h1>Manage</h1>
-
 {% endblock %}
