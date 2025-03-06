@@ -1,5 +1,6 @@
 {% macro usersTable(users, usersMetaData, fieldsToDisplay) %}
   {% from "govuk/components/table/macro.njk" import govukTable %}
+  {% from "govuk/components/tag/macro.njk" import govukTag %}
 
   {% set startIndex = ((usersMetaData.currentPage - 1) * usersMetaData.perPage) + 1 %}
   {% set endIndex = usersMetaData.currentPage * usersMetaData.perPage %}
@@ -25,6 +26,7 @@
   {% endfor %}
 
   {# Build rows dynamically #}
+
   {% for user in users | sort(attribute='username') %}
     {% set rowArray = [] %}
     {% for field in fieldsToDisplay %}
@@ -34,6 +36,15 @@
         {% set cellItem = { text: user.teamName } %}
       {% elif field == 'Email address' %}
         {% set cellItem = { text: user.email } %}
+      {% elif field == 'Account Status' %}
+        {% set statusClasses = {
+          "Active": "govuk-tag--green",
+          "Inactive": "govuk-tag--yellow",
+          "Pending": "govuk-tag--blue",
+          "Locked": "govuk-tag--red"
+        } %}
+        {% set tagClass = statusClasses[user.status] %}
+        {% set cellItem = { text: govukTag({ text: user.status , classes: tagClass }) }%}
       {% endif %}
       {% if rowArray %}
         {% set rowArray = rowArray | push(cellItem) %}

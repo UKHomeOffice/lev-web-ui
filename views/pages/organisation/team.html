@@ -16,7 +16,7 @@
 {% set orgLink = govukServiceUrl + "/" + teamInfo.organisation.id %}
 {% set teamLink = orgLink + "/team/" + teamInfo.id %}
 
-{% block mainContent %}
+{% block hmpoContent %}
 
   {% set status = '' %}
   {% set html = '' %}
@@ -49,21 +49,29 @@
 
   {% endif %}
 
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    {% block mainContent %}
+      <div class="govuk-!-width-two-thirds">
+
   <span class="govuk-caption-m">{{ teamInfo.organisation.organisationName }}</span>
   <div class="govuk-!-width-full flex-row">
     <h1>{{ teamInfo.teamName }}</h1>
-      {% if teamInfo.isAdmin %}
-      <h2>{{ govukTag({
-          text: "Admin",
-          classes: "govuk-tag--turquoise"
-        }) }}</h2>
-      {% endif %}
     {% if IS_EXTERNAL == "false" %}
       <div class="govuk-!-text-align-right">
         {{ hmpoSubmit(ctx, {id: "editTeam", key: "editTeam", href: teamLink + "/edit"}) }}
       </div>
     {% endif %}
+
   </div>
+        {% if teamInfo.isAdmin %}
+          <h2>{{ govukTag({
+              text: "Admin",
+              classes: "govuk-tag--turquoise"
+            }) }}</h2>
+        {% endif %}
+
+
 
   {% set rowArray = [{ key: { text: "Search type", classes: "govuk-!-font-weight-bold text-color-black" }, value: { text: "Permission", classes: "govuk-!-font-weight-bold text-color-black" } }] %}
 
@@ -87,14 +95,16 @@
     href: orgLink + "/user/create?currentTeamId=" + teamInfo.id,
     classes: "govuk-button--secondary"
   }) }}
-
-
+      </div>
+    </div>
+  </div>
   <h2>Users</h2>
   {% if users.length == 0 %}
     <p>There are no users in this team.</p>
   {% else %}
-    {{ usersTable(users, usersMetaData, ["User", "Email address"]) }}
+    {{ usersTable(users, usersMetaData, ["User", "Email address", "Account Status"]) }}
     {{ pagination(usersMetaData.total, usersMetaData.perPage, usersMetaData.currentPage) }}
   {% endif %}
 
+  {% endblock %}
 {% endblock %}
