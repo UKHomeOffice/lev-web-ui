@@ -13,6 +13,7 @@ const organisationsRoute = require('./routes/organisation');
 const accessTest = require('./routes/access-test');
 const accessibilityStatement = require('./routes/accessibility-statement');
 const syops = require('./routes/syops');
+const { healthCheck } = require('./routes/health');
 const { syopsAcceptanceCheck } = require("./middleware/syopsAcceptanceCheck");
 const { router } = setup(options);
 
@@ -26,6 +27,7 @@ router.use((req, res, next) => {
 // routes for static assets
 router.use('/access-test', accessTest);
 router.use('/accessibility-statement', accessibilityStatement);
+router.use('/health', healthCheck);
 router.use('/syops', syops);
 router.use('/metrics', metricsRoute);
 

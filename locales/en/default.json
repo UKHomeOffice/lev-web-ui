@@ -43,28 +43,28 @@
       "label": "System number from birth certificate"
     },
     "birth-system-number-hint": {
-      "summaryText": "What is the system number?",
+      "summaryHtml": "<div aria-labelledby=\"system-number-hint\">What is the system number?</div>",
       "html": "<img src=\"/public/images/system-number-hint.png\" alt=\"The system number is a nine digit number located in the bottom left corner of the birth certificate\" title=\"Where to find the system number on a birth certificate\"/>"
     },
     "death-system-number": {
       "label": "System number from death certificate"
     },
     "death-system-number-hint": {
-      "summaryText": "What is the system number?",
+      "summaryHtml": "<div aria-labelledby=\"system-number-hint\">What is the system number?</div>",
       "html": "<img src=\"/public/images/system-number-hint.png\" alt=\"The system number is a nine digit number located in the bottom left corner of the death certificate\" title=\"Where to find the system number on a death certificate\"/>"
     },
     "marriage-system-number": {
       "label": "System number from marriage certificate"
     },
     "marriage-system-number-hint": {
-      "summaryText": "What is the system number?",
+      "summaryHtml": "<div aria-labelledby=\"system-number-hint\">What is the system number?</div>",
       "html": "<img src=\"/public/images/system-number-hint.png\" alt=\"The system number is a nine digit number located in the bottom left corner of the marriage certificate\" title=\"Where to find the system number on a marriage certificate\"/>"
     },
     "partnership-system-number": {
       "label": "System number from civil partnership certificate"
     },
     "partnership-system-number-hint": {
-      "summaryText": "What is the system number?",
+      "summaryHtml": "<div aria-labelledby=\"system-number-hint\">What is the system number?</div>",
       "html": "<img src=\"/public/images/system-number-hint.png\" alt=\"The system number is a nine digit number located in the bottom left corner of the civil partnership certificate\" title=\"Where to find the system number on a civil partnership certificate\"/>"
     },
     "surname": {
@@ -394,15 +394,15 @@
     "firstName": {
       "required": "Enter first name",
       "length": "First name must be between 1 and 30 Characters",
-      "regex": "First name can only include letters, numbers, hyphens and spaces"
+      "regex": "First name can only include letters, numbers, hyphens, apostrophes and spaces"
     },
     "lastName": {
       "required": "Enter last name",
       "length": "Last name must be between 1 and 30 Characters",
-      "regex": "Last name can only include letters, numbers, hyphens and spaces"
+      "regex": "Last name can only include letters, numbers, hyphens, apostrophes and spaces"
     },
     "email": {
-      "email": "Enter email address in correct format",
+      "regex": "Enter email address in correct format",
       "required": "Enter email address",
       "length": "Email address must be between 3 and 254 characters"
     },
