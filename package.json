@@ -9,7 +9,7 @@
     "postinstall": "npm run build",
     "build": "rm -rf public/; npm-run-all build:sass build:js",
     "build:sass": "mkdir -p public/stylesheets; sass --load-path=. --quiet-deps --style=compressed assets/stylesheets/app.scss public/stylesheets/application.css",
-    "build:js": "mkdir -p public/javascripts; cat node_modules/govuk-frontend/dist/govuk/all.scss node_modules/hmpo-components/all.js assets/javascripts/*.js > public/javascripts/application.js",
+    "build:js": "mkdir -p public/javascripts; cat node_modules/govuk-frontend/dist/govuk/all.bundle.js node_modules/hmpo-components/all.js assets/javascripts/*.js > public/javascripts/application.js",
     "watch:dev": "nodemon .",
     "watch:sass": "sass --watch --load-path=. --quiet-deps --style=compressed assets/stylesheets/app.scss public/stylesheets/application.css",
     "start:mockapi": "docker run -d -p 8080:8080 --name lev-api-mock --env 'MOCK=true' quay.io/ukhomeofficedigital/lev-api:0.18.1 > /dev/null 2>&1;true",
