@@ -6,6 +6,7 @@ const HomeController = require('../../controllers/HomeController');
 module.exports = wizard({
   '/': {
     entryPoint: true,
+    resetJourney: true,
     controller: HomeController
   },
 }, {}, {
