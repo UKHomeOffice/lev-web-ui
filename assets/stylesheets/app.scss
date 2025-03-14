@@ -1,17 +1,17 @@
 $govuk-assets-path: "/public/";
 
-@import "node_modules/govuk-frontend/dist/govuk/index";
-@import "node_modules/hmpo-components/all";
-@import "./details";
-@import "./flags";
-@import "./audit";
-@import "./results";
+@use "node_modules/govuk-frontend/dist/govuk/index" as govuk-frontend;
+@use "node_modules/hmpo-components/all";
+@forward "./details";
+@forward "./flags";
+@forward "./audit";
+@forward "./results";
 
 $blue-button-colour: #005ea5;
-$blue-button-hover-colour: govuk-shade($blue-button-colour, 20%);
+$blue-button-hover-colour: govuk-frontend.govuk-shade($blue-button-colour, 20%);
 
 $grey-button-colour: #52585a;
-$grey-button-hover-colour: govuk-shade($grey-button-colour, 20%);
+$grey-button-hover-colour: govuk-frontend.govuk-shade($grey-button-colour, 20%);
 
 a, button {
   &.blue {
