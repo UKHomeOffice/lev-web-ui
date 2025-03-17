@@ -4,6 +4,7 @@
 {% from "components/pagination.njk" import pagination %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% from "govuk/components/tag/macro.njk" import govukTag %}
 
 {% set govukServiceNameKey = translate("pages.user-management.serviceName") %}
 {% set govukServiceTitleKey = translate("pages.user-management.userPage.pageTitle") %}
@@ -68,6 +69,15 @@
                 </div>
             </div>
         </div>
+
+            {% set statusClasses = {
+                "Active": "govuk-tag--green",
+                "Inactive": "govuk-tag--yellow",
+                "Locked": "govuk-tag--red"
+            } %}
+            {% set tagClass = statusClasses[userInfo.status] %}
+
+            {{  govukTag({ text: userInfo.status , classes: tagClass + " " + "govuk-!-margin-bottom-5" }) }}
 
         {% set userInfoArray = [
           { key: { text: "First name" }, value: { text: userInfo.firstName } },
