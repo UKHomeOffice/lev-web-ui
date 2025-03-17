@@ -1,11 +1,11 @@
 $govuk-assets-path: "/public/";
 
-@use "node_modules/govuk-frontend/dist/govuk/index" as govuk-frontend;
-@use "node_modules/hmpo-components/all";
+@import "node_modules/govuk-frontend/dist/govuk/index";
+@impoty "node_modules/hmpo-components/all";
 
 table {
   &.results {
-    border-top: 1px solid govuk-frontend.$govuk-border-colour;
+    border-top: 1px solid $govuk-border-colour;
 
     margin-bottom: 0;
 
