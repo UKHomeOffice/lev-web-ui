@@ -1,7 +1,7 @@
 $govuk-assets-path: "/public/";
 
-@import "node_modules/govuk-frontend/govuk/all";
-@import "node_modules/hmpo-components/all";
+@import "node_modules/govuk-frontend/dist/govuk/index";
+@impoty "node_modules/hmpo-components/all";
 
 table {
   &.results {

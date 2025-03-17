@@ -22,6 +22,11 @@ npm run start:mockapi
 npm start
 ```
 
+Landing page requires roles to be injected to decide which service to appear on the page. Add ROLES environment variable into .env file example can be seen in .example.env file.
+```shell
+ROLES=birth,death,user-management
+```
+
 #### To run the application in development mode
 ```shell
 npm run start:mockapi

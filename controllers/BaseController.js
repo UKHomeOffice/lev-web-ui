@@ -14,7 +14,7 @@ class BaseController extends Controller {
   }
 
   hasRole(req, role) {
-    const roles = req.headers['x-auth-roles'];
+    const roles = req.headers['x-auth-roles'] || process.env.ROLES;
 
     return roles && roles.includes(role);
   }

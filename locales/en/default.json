@@ -24,7 +24,8 @@
     "logout": "Sign out",
     "reRegistrationLink": "View the previous registration.",
     "reRegisteredLink": "View the next registration.",
-    "exportToCSV": "Export to CSV"
+    "exportToCSV": "Export to CSV",
+    "home": "Home"
   },
   "flags": {
     "refer": "Refer to GRO.",
