@@ -7,6 +7,8 @@ const { iamApi } = require("../../config");
 class TeamController extends BaseController {
   async getValues(req, _res, next) {
     try {
+      this.validateGetRequest(req, _res, next);
+
       const teamResults = await getRequest({
         ...requestOptions(req, iamApi),
         url: `/admin/organisations/${req.params.orgId}/teams/${req.params.teamId}`
@@ -22,6 +24,7 @@ class TeamController extends BaseController {
       req.sessionModel.set('teamResults', teamResults);
       req.sessionModel.set('userResults', userResults.users);
       req.sessionModel.set('usersMetaData', userResults.metadata);
+      req.sessionModel.set('userSearchParam', req.query.searchTerm);
 
       next();
     } catch (err) {
@@ -41,6 +44,7 @@ class TeamController extends BaseController {
       locals.userFullName = req.sessionModel.get('userFullName') || '';
       locals.errorMessage = req.sessionModel.get('errorMessage') || '';
       locals.IS_EXTERNAL = process.env.IS_EXTERNAL || 'true';
+      locals.userSearchParam = req.sessionModel.get('userSearchParam') || null;
 
       req.sessionModel.unset('deletedUser');
       req.sessionModel.unset('addedUser');
