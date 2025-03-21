@@ -24,6 +24,34 @@ class BaseController extends Controller {
 
     return groups ? groups.split(',') : [];
   }
+
+  validateGetRequest(req, res, next) {
+    if (req.method === 'GET') {
+      let queryErrors = this.validateUserSearchTermQueryParam(req);
+
+      if (Object.keys(queryErrors).length > 0) {
+        req.form.errors = queryErrors;
+        return next();
+      }
+    }
+  }
+
+  validateUserSearchTermQueryParam(req) {
+    let errors = {};
+    let queryParams = req.query;
+
+    const searchTermRegex = /^[a-zA-Z0-9-'@.]{3,128}$/;
+
+    const searchTermRegexCheck = searchTermRegex.test(queryParams.searchTerm);
+
+    if (queryParams.searchTerm && !searchTermRegexCheck) {
+      errors.userName = {
+        // placeholder message
+        message: 'Searches should be between 3 and 128 characters and can only include letters, numbers, hyphens, ampersands and apostrophes',
+      };
+    }
+    return errors;
+  }
 }
 
 module.exports = BaseController;

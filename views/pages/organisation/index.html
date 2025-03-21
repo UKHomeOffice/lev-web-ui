@@ -3,6 +3,7 @@
 {% from "govuk/components/table/macro.njk" import govukTable %}
 {% from "components/pagination.njk" import pagination %}
 {% from "components/users-table.njk" import usersTable %}
+{% from "components/user-search.njk" import userSearch %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
@@ -103,6 +104,8 @@
         }) }}
       </div>
 
+      {{ userSearch(ctx, orgLink, userSearchParam) }}
+
       <div class="govuk-button-group">
         {{ govukButton({
             text: "Add user",
@@ -118,7 +121,6 @@
         {% endif %}
       </div>
 
-      <h2>Organisation Users</h2>
       {% if users.length == 0 %}
         <p>There are no users in this organisation.</p>
       {% else %}

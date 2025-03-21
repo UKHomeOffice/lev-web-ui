@@ -21,11 +21,13 @@ const externalRoutes = {
     next: '/:orgId'
   },
   '/:orgId': {
+    fields: ['searchTerm'],
     controller: OrganisationController,
     entryPoint: true,
     template: '/index.html'
   },
   '/:orgId/team/:teamId': {
+    fields: ['searchTerm'],
     controller: TeamController,
     entryPoint: true,
     template: '/team.html'

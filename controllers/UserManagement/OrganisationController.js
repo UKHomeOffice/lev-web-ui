@@ -6,7 +6,10 @@ const { iamApi } = require("../../config");
 
 class OrganisationController extends BaseController {
   async getValues(req, _res, next) {
+
     try {
+      this.validateGetRequest(req, _res, next);
+
       const searchResults = await getRequest({
         ...requestOptions(req, iamApi),
         url: `/admin/organisations/${req.params.orgId}`,
@@ -25,6 +28,7 @@ class OrganisationController extends BaseController {
       req.sessionModel.set('teamResults', teamResults);
       req.sessionModel.set('userResults', userResults.users);
       req.sessionModel.set('usersMetaData', userResults.metadata);
+      req.sessionModel.set('userSearchParam', req.query.searchTerm);
 
       next();
     } catch (err) {
@@ -52,6 +56,7 @@ class OrganisationController extends BaseController {
       locals.editOrgSuccess = req.sessionModel.get('editOrgSuccess') || false;
       locals.orgExistsError = req.sessionModel.get('orgExistsError') || false;
       locals.updatedOrgName = req.sessionModel.get('updatedOrgName') || '';
+      locals.userSearchParam = req.sessionModel.get('userSearchParam') || null;
       locals.IS_EXTERNAL = process.env.IS_EXTERNAL || 'true';
 
       req.sessionModel.unset('addTeamAttempt');

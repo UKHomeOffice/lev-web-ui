@@ -3,6 +3,7 @@
 {% from "govuk/components/table/macro.njk" import govukTable %}
 {% from "components/pagination.njk" import pagination %}
 {% from "components/users-table.njk" import usersTable %}
+{% from "components/user-search.njk" import userSearch %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/tag/macro.njk" import govukTag %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
@@ -71,8 +72,6 @@
             }) }}</h2>
         {% endif %}
 
-
-
   {% set rowArray = [{ key: { text: "Search type", classes: "govuk-!-font-weight-bold text-color-black" }, value: { text: "Permission", classes: "govuk-!-font-weight-bold text-color-black" } }] %}
 
   {% for key, value in teamInfo.permissions %}
@@ -89,20 +88,23 @@
     },
     rows: rowArray
   }) }}
+  </div>
 
-  {{ govukButton({
+  {{ userSearch(ctx, teamLink, userSearchParam) }}
+
+        {{ govukButton({
     text: "Add new user",
     href: orgLink + "/user/create?currentTeamId=" + teamInfo.id,
     classes: "govuk-button--secondary"
   }) }}
-      </div>
+
     </div>
   </div>
   <h2>Users</h2>
   {% if users.length == 0 %}
     <p>There are no users in this team.</p>
   {% else %}
-    {{ usersTable(users, usersMetaData, ["User", "Email address", "Account Status"]) }}
+    {{ usersTable(users, usersMetaData, ["User", "Email address", "Account Status"], ctx) }}
     {{ pagination(usersMetaData.total, usersMetaData.perPage, usersMetaData.currentPage) }}
   {% endif %}
 

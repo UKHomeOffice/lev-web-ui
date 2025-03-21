@@ -1,0 +1,31 @@
+{% macro userSearch(ctx, url, userSearchParam) %}
+  {% from "hmpo-field/macro.njk" import hmpoField %}
+  {% from "hmpo-form/macro.njk" import hmpoForm %}
+  {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+  {% from "govuk/components/input/macro.njk" import govukInput %}
+
+  <div class="govuk-!-width-full">
+    {% call hmpoForm(ctx, { method: "GET" }) %}
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-third govuk-!-padding-right-0">
+        {{ govukInput({
+          label: {
+            text: "Find User",
+            classes: "govuk-label--s"
+          },
+          id: "searchTerm",
+          name: "searchTerm",
+          value: userSearchParam
+        }) }}
+      </div>
+      <div class="govuk-button-group govuk-!-padding-left-2 govuk-!-padding-top-6">
+        {{ hmpoSubmit(ctx, { key: "search" }) }}
+        <a href="{{ url }}" class="govuk-link">Clear search</a>
+      </div>
+      {% endcall %}
+    </div>
+    <hr class="govuk-!-margin-bottom-6" />
+  </div>
+{% endmacro %}
+
+
