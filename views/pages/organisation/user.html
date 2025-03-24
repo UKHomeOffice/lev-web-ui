@@ -71,9 +71,9 @@
         </div>
 
             {% set statusClasses = {
-                "Active": "govuk-tag--green",
+                "Active": "govuk-tag--turquoise",
                 "Inactive": "govuk-tag--yellow",
-                "Locked": "govuk-tag--red"
+                "Locked": "govuk-tag--orange"
             } %}
             {% set tagClass = statusClasses[userInfo.status] %}
 

@@ -38,9 +38,9 @@
         {% set cellItem = { text: user.email } %}
       {% elif field == 'Account Status' %}
         {% set statusClasses = {
-          "Active": "govuk-tag--green",
+          "Active": "govuk-tag--turquoise",
           "Inactive": "govuk-tag--yellow",
-          "Locked": "govuk-tag--red"
+          "Locked": "govuk-tag--orange"
         } %}
         {% set tagClass = statusClasses[user.status] %}
         {% set cellItem = { text: govukTag({ text: user.status , classes: tagClass }) }%}
