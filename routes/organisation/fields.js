@@ -20,7 +20,7 @@ module.exports = {
     validate: [
       'required',
       { type: 'regex', arguments: /^(?!.*\.\.)[a-z0-9_%+-](?:[a-z0-9._%+'-]*[a-z0-9_%+-])?@([a-z0-9]+([a-z0-9-]*[a-z0-9]+)?\.)+[a-z]{2,6}$/i},
-      { type: 'length', fn: (e) => e.length >= 3 && e.length <= 254 }
+      { type: 'length', fn: (e) => e.length >= 3 && e.length <= 64 }
     ]
   },
 'teamSelect': {
