@@ -36,6 +36,8 @@
         {% set cellItem = { text: user.teamName } %}
       {% elif field == 'Email address' %}
         {% set cellItem = { text: user.email } %}
+      {% elif field == 'Last Active' %}
+        {% set cellItem = { html: '<p title="' + user.lastActive + '">' + user.relativeLastActive + '</p>'} %}
       {% elif field == 'Account Status' %}
         {% set statusClasses = {
           "Active": "govuk-tag--turquoise",

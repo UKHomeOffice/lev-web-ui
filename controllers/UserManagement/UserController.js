@@ -2,6 +2,7 @@ const BaseController = require('../BaseController');
 const { getRequest } = require('../../services/UserManagement/IamApiService');
 const requestOptions = require("../../helpers/requestOptions");
 const { iamApi } = require("../../config");
+const { formatLastActiveFullDate } = require('../../helpers/lastActiveFormatter');
 
 class UserController extends BaseController {
 
@@ -11,6 +12,8 @@ class UserController extends BaseController {
         ...requestOptions(req, iamApi),
         url: `/admin/organisations/${req.params.orgId}/teams/${req.params.teamId}/users/${req.params.username}`
       });
+
+      userResults.lastActive = formatLastActiveFullDate(userResults);
 
       req.sessionModel.set('userResults', userResults);
 
