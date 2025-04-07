@@ -85,7 +85,7 @@
           { key: { text: "Email address" }, value: { text: userInfo.email } },
           { key: { text: "Organisation" }, value: { html:  "<a href=" + orgLink +">" + userInfo.organisationName + "</a>" } },
           { key: { text: "Team" }, value: { html: "<a href=" + teamLink +">" + userInfo.teamName + "</a>"  } },
-          { key: { text: "Last Active" }, value: { text: userInfo.lastActive  } }
+          { key: { text: "Last Active" }, value: { text: userInfo.lastActive | date("DD MMM YYYY, HH:MMa") } }
         ] %}
 
         <div class="govuk-!-width-two-thirds">
