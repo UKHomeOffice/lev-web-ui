@@ -1,6 +1,7 @@
 const BaseController = require('../BaseController');
 const { getRequest } = require('../../services/UserManagement/IamApiService');
 const requestOptions = require("../../helpers/requestOptions");
+const getCurrentUser = require("../../helpers/getCurrentUser");
 const { iamApi } = require("../../config");
 
 class UserController extends BaseController {
@@ -13,12 +14,7 @@ class UserController extends BaseController {
       });
 
       req.sessionModel.set('userResults', userResults);
-      function getCurrentUserFromHeader(req) {
-        return req.header('x-original-username') || req.header('x-auth-username') || process.env.IAM_USER || '';
-      }
-
-      req.sessionModel.set('currentUser', getCurrentUserFromHeader(req));
-
+      req.sessionModel.set('currentUser', getCurrentUser(req));
 
       next();
     } catch (err) {
