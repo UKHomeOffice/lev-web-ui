@@ -3,7 +3,6 @@ const { getRequest } = require('../../services/UserManagement/IamApiService');
 const queryParamsBuilder = require("../../helpers/queryParamsBuilder");
 const requestOptions = require("../../helpers/requestOptions");
 const { iamApi } = require("../../config");
-const { formatLastActive } = require('../../helpers/lastActiveFormatter');
 
 class OrganisationController extends BaseController {
   async getValues(req, _res, next) {
@@ -25,11 +24,9 @@ class OrganisationController extends BaseController {
         url: `/admin/organisations/${req.params.orgId}/users${queryParamsBuilder(req)}`
       });
       
-      const userResultsFormatted = formatLastActive(userResults.users);
-
       req.sessionModel.set('orgResults', searchResults);
       req.sessionModel.set('teamResults', teamResults);
-      req.sessionModel.set('userResults', userResultsFormatted);
+      req.sessionModel.set('userResults', userResults.users);
       req.sessionModel.set('usersMetaData', userResults.metadata);
       req.sessionModel.set('userSearchParam', req.query.searchTerm);
 

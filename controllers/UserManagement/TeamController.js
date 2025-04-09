@@ -3,7 +3,6 @@ const { getRequest } = require('../../services/UserManagement/IamApiService');
 const queryParamsBuilder = require("../../helpers/queryParamsBuilder");
 const requestOptions = require("../../helpers/requestOptions");
 const { iamApi } = require("../../config");
-const { formatLastActive } = require('../../helpers/lastActiveFormatter');
 
 class TeamController extends BaseController {
   async getValues(req, _res, next) {
@@ -20,16 +19,14 @@ class TeamController extends BaseController {
         url: `/admin/organisations/${req.params.orgId}/teams/${req.params.teamId}/users${queryParamsBuilder(req)}`
       });
 
-      const userResultsFormatted = formatLastActive(userResults.users);
 
       delete teamResults.permissions['user-management'];
 
       req.sessionModel.set('teamResults', teamResults);
-      req.sessionModel.set('userResults', userResultsFormatted);
+      req.sessionModel.set('userResults', userResults.users);
       req.sessionModel.set('usersMetaData', userResults.metadata);
       req.sessionModel.set('userSearchParam', req.query.searchTerm);
-      req.sessionModel.set('lastActiveFormatted', formatLastActive(userResults.users));
-
+      
       next();
     } catch (err) {
       err.template = 'errors/organisation-error';
