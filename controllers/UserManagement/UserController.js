@@ -13,6 +13,12 @@ class UserController extends BaseController {
       });
 
       req.sessionModel.set('userResults', userResults);
+      function getCurrentUserFromHeader(req) {
+        return req.header('x-original-username') || req.header('x-auth-username') || process.env.IAM_USER || '';
+      }
+
+      req.sessionModel.set('currentUser', getCurrentUserFromHeader(req));
+
 
       next();
     } catch (err) {
@@ -29,6 +35,7 @@ class UserController extends BaseController {
       locals.passwordResetSuccess = req.sessionModel.get('passwordResetSuccess') || false;
       locals.updatingUser = req.sessionModel.get('updatingUser') || false;
       locals.updatedUser = req.sessionModel.get('updatedUser') || false;
+      locals.currentUser = req.sessionModel.get('currentUser') || null;
       req.sessionModel.unset('passwordResetAttempted');
       req.sessionModel.unset('passwordResetSuccess');
       req.sessionModel.unset('updatingUser');
