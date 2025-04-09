@@ -8,6 +8,15 @@ describe('lastActiveFormatter', () => {
             expect(result).toEqual("-");
         });
 
+        it('should return "-" when date is after current date', () => {
+            const lastActiveDate = new Date();
+            lastActiveDate.setDate(lastActiveDate.getDate() + 1);
+
+            const result = lastActiveFormatter.relativeTime(lastActiveDate);
+    
+            expect(result).toEqual("-");
+        });
+
         it('should return "< 1 day ago" when provided date is less than 24 hours ago', () => {
             const lastActiveDate = new Date();
 

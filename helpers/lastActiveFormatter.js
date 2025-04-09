@@ -1,6 +1,6 @@
 module.exports = {
   relativeTime: (lastActive) => {
-    if (!lastActive) return '-';
+    if (!lastActive || lastActive > new Date()) return '-';
 
     const now = new Date();
     const lastActiveDate = new Date(lastActive);
