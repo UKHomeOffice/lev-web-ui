@@ -19,13 +19,14 @@ class TeamController extends BaseController {
         url: `/admin/organisations/${req.params.orgId}/teams/${req.params.teamId}/users${queryParamsBuilder(req)}`
       });
 
+
       delete teamResults.permissions['user-management'];
 
       req.sessionModel.set('teamResults', teamResults);
       req.sessionModel.set('userResults', userResults.users);
       req.sessionModel.set('usersMetaData', userResults.metadata);
       req.sessionModel.set('userSearchParam', req.query.searchTerm);
-
+      
       next();
     } catch (err) {
       err.template = 'errors/organisation-error';

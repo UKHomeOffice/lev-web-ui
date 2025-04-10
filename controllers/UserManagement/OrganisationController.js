@@ -23,7 +23,7 @@ class OrganisationController extends BaseController {
         ...requestOptions(req, iamApi),
         url: `/admin/organisations/${req.params.orgId}/users${queryParamsBuilder(req)}`
       });
-
+      
       req.sessionModel.set('orgResults', searchResults);
       req.sessionModel.set('teamResults', teamResults);
       req.sessionModel.set('userResults', userResults.users);
