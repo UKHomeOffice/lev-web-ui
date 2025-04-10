@@ -16,12 +16,9 @@ const syops = require('./routes/syops');
 const { healthCheck } = require('./routes/health');
 const { syopsAcceptanceCheck } = require("./middleware/syopsAcceptanceCheck");
 const { router, app } = setup(options);
-const lastActiveFilters = require("./helpers/lastActiveFormatter");
-
 const nunjucksEnv = app.get('nunjucksEnv');
-Object.entries(lastActiveFilters).forEach(([name, fn]) => {
-  nunjucksEnv.addFilter(name, fn);
-});
+
+nunjucksEnv.addFilter('relativeDateTime', require('./filters/relativeDateTimeFilter'));
 
 router.use((req, res, next) => {
   if(!req.url.toLowerCase().includes('syops') && !req.url.toLowerCase().includes('metrics') && !req.url.toLowerCase().includes('access-test') && !req.url.toLowerCase().includes('public') && !req.url.toLowerCase().includes('assets')) {
