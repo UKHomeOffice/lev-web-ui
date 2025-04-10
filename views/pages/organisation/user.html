@@ -63,9 +63,11 @@
             </div>
             <div class="govuk-grid-column-one-half">
                 <div class="govuk-button-group">
-                  {{ hmpoSubmit(ctx, {id: "editUser", key: "editUser", href: teamLink + "/user/" +userInfo.email+ "/modify"}) }}
-                    {{ hmpoSubmit(ctx, {id: "resetPass", key: "resetPass", href: teamLink + "/user/" +userInfo.email + "/reset-password", classes: "govuk-button--secondary"}) }}
-                    {{ hmpoSubmit(ctx, {id: "deleteUser", key: "deleteUser", href: teamLink + "/user/" +userInfo.email+ "/delete/confirm", classes: "govuk-button--warning"}) }}
+                  {{ hmpoSubmit(ctx, {id: "editUser", key: "editUser", href: teamLink + "/user/" + userInfo.email + "/modify"}) }}
+                  {{ hmpoSubmit(ctx, {id: "resetPass", key: "resetPass", href: teamLink + "/user/" + userInfo.email + "/reset-password", classes: "govuk-button--secondary"}) }}
+                  {% if currentUser != userInfo.email %}
+                    {{ hmpoSubmit(ctx, {id: "deleteUser", key: "deleteUser", href: teamLink + "/user/"  + userInfo.email + "/delete/confirm", classes: "govuk-button--warning"}) }}
+                  {% endif %}
                 </div>
             </div>
         </div>

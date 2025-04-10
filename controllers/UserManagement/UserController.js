@@ -1,6 +1,7 @@
 const BaseController = require('../BaseController');
 const { getRequest } = require('../../services/UserManagement/IamApiService');
 const requestOptions = require("../../helpers/requestOptions");
+const getCurrentUser = require("../../helpers/getCurrentUser");
 const { iamApi } = require("../../config");
 
 class UserController extends BaseController {
@@ -13,6 +14,7 @@ class UserController extends BaseController {
       });
 
       req.sessionModel.set('userResults', userResults);
+      req.sessionModel.set('currentUser', getCurrentUser(req));
 
       next();
     } catch (err) {
@@ -29,6 +31,7 @@ class UserController extends BaseController {
       locals.passwordResetSuccess = req.sessionModel.get('passwordResetSuccess') || false;
       locals.updatingUser = req.sessionModel.get('updatingUser') || false;
       locals.updatedUser = req.sessionModel.get('updatedUser') || false;
+      locals.currentUser = req.sessionModel.get('currentUser') || null;
       req.sessionModel.unset('passwordResetAttempted');
       req.sessionModel.unset('passwordResetSuccess');
       req.sessionModel.unset('updatingUser');
