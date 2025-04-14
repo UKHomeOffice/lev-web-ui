@@ -37,7 +37,7 @@
       {% elif field == 'Email address' %}
         {% set cellItem = { text: user.email } %}
       {% elif field == 'Last Active' %}
-        {% set cellItem = { html: '<p title="' + user.lastActive + '">' + user.lastActive | relativeDateTime + '</p>'} %}
+        {% set cellItem = { html: '<p title="' + user.lastActive | date("DD MMM YYYY, HH:MMa") + '">' + user.lastActive | relativeDateTime + '</p>'} %}
       {% elif field == 'Account Status' %}
         {% set statusClasses = {
           "Active": "govuk-tag--turquoise",
