@@ -52,6 +52,10 @@ a, button {
   padding-bottom: 10px !important;
 }
 
+.govuk-error-summary {
+  width: 66%;
+}
+
 .govuk-summary-list__value {
   @extend .text-color-black;
   padding-top: 10px !important;
@@ -66,4 +70,11 @@ a, button {
 
 .govuk-service-navigation {
   border-bottom: 3px solid #1d70b8;
+}
+
+.govuk-service-navigation__link {
+  font-weight: bold;
+  text-decoration: underline !important;
+  text-decoration-thickness: from-font !important;
+  text-underline-offset: 0.18em;
 }
