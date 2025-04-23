@@ -30,7 +30,7 @@ module.exports = {
     port: process.env.API_PORT || 8080,
     client: process.env.API_KC_CLIENT || packageJson.name,
     username: process.env.API_USER || packageJson.name,
-    originalClient: process.env.ORIGNAL_CLIENT,
+    originalClient: process.env.ORIGINAL_CLIENT,
     rejectUnauthorized: process.env.LEV_TLS_VERIFY !== 'false',
     get baseUrl() {
       return `${this.protocol}://${this.host}:${this.port}`;
