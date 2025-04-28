@@ -20,24 +20,6 @@ class MarriageDetailsPage extends DetailsPage {
   }
 
   /**
-   * Visit the details page with the "full-details" role
-   *
-   * @param search
-   * @param record
-   * @param multipleResults
-   */
-  static visitWithFullDetails(record) {
-    cy.clearAllCookies();
-    cy.clearAllLocalStorage();
-    cy.clearAllSessionStorage();
-    cy.visit(`/marriage/details/${record.id}`, {
-      headers: {
-        'X-Auth-Roles': 'full-details'
-      }
-    });
-  }
-
-  /**
    * Check marriage registrations details page has the expected data
    */
   static hasLimitedRecord(record) {

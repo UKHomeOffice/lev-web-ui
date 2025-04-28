@@ -48,13 +48,13 @@ describe('requestOptions()', () => {
     it('should return an options object', () => {
 
       const req = { headers: {
-        'x-auth-roles': 'full-details'
+        'x-auth-roles': 'birth'
       } };
       const expected = {
         headers: {
           'x-auth-aud': apiConfig.client,
           'x-auth-username': apiConfig.username,
-          'x-auth-roles': 'full-details'
+          'x-auth-roles': 'birth'
         },
         https: {
           rejectUnauthorized: apiConfig.rejectUnauthorized
@@ -71,7 +71,7 @@ describe('requestOptions()', () => {
 
       const req = { headers: {
         'x-auth-token': 'xxxxx',
-        'x-auth-roles': 'full-details'
+        'x-auth-roles': 'birth'
       } };
       const expected = {
         headers: {

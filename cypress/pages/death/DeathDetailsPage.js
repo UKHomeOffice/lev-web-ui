@@ -29,19 +29,6 @@ class DeathDetailsPage extends DetailsPage {
   }
 
   /**
-   * Visit the death details page directly with the "full-details" role
-   *
-   * @param systemNumber
-   */
-  static visitWithFullDetails(systemNumber) {
-    cy.visit(`/death/details/${systemNumber}`, {
-      headers: {
-        'x-auth-roles': 'full-details'
-      }
-    });
-  }
-
-  /**
    * Check death registrations details page has the expected data
    */
   static hasLimitedRecord(record) {
