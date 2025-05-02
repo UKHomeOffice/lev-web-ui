@@ -41,35 +41,6 @@ describe('Partnership details page', () => {
     });
   });
 
-  if (!Cypress.env('e2e')) {
-    const { result } = expectedSingleRecord;
-    describe('which shows the full details to select users', () => {
-      before(() => {
-        PartnershipDetailsPage.visitWithFullDetails(result);
-      });
-
-      it('returns a details page', () => {
-        PartnershipDetailsPage.shouldBeVisible();
-      });
-
-      it('an appropriate message is displayed', () => {
-        PartnershipDetailsPage.hasExpectedTitle(result);
-      });
-
-      it('the complete record is displayed in a table', () => {
-        PartnershipDetailsPage.hasCompleteRecord(result);
-      });
-
-      it('contains a link back to the search screen', () => {
-        PartnershipResultsPage.hasEditSearchButton();
-      });
-
-      it('does not contain a link back to the search results screen', () => {
-        PartnershipResultsPage.backToSearchResultsNotDisplayed();
-      });
-    });
-  }
-
   describe('When I select the "New search" button', () => {
     const { search } = expectedSingleRecord;
 

@@ -27,7 +27,7 @@ describe('BaseController tests', () => {
 
       // Arrange
       const req = { headers: { 'x-auth-roles': [] } };
-      const role = 'full-details';
+      const role = 'birth';
 
       // Act
       const received = controller.hasRole(req, role);
@@ -39,8 +39,8 @@ describe('BaseController tests', () => {
     it('should return true when the given role is present in the request headers', () => {
 
       // Arrange
-      const req = { headers: { 'x-auth-roles': ['full-details'] } };
-      const role = 'full-details';
+      const req = { headers: { 'x-auth-roles': ['birth'] } };
+      const role = 'birth';
 
       // Act
       const received = controller.hasRole(req, role);
