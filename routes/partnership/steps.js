@@ -12,7 +12,7 @@ module.exports = {
     next: 'search'
   },
   '/search': {
-    fields: ['system-number', 'surname', 'forenames', 'dop'],
+    fields: ['entry-number', 'surname', 'forenames', 'dop'],
     controller: PartnershipSearchController,
     next: [
       { fn: 'isSingleResult', next: 'details' },

@@ -1,7 +1,7 @@
 module.exports = {
-  'system-number': {
+  'entry-number': {
     type: 'number',
-    contentKey: 'marriage-system-number',
+    contentKey: 'marriage-entry-number',
     attributes: {
       autofocus: true
     },
@@ -13,7 +13,7 @@ module.exports = {
   'surname': {
     type: 'text',
     dependent: {
-      field: 'system-number',
+      field: 'entry-number',
       value: ''
     },
     validate: [
@@ -24,7 +24,7 @@ module.exports = {
   'forenames': {
     type: 'text',
     dependent: {
-      field: 'system-number',
+      field: 'entry-number',
       value: ''
     },
     validate: [
@@ -35,7 +35,7 @@ module.exports = {
   'dom': {
     type: 'date',
     dependent: {
-      field: 'system-number',
+      field: 'entry-number',
       value: ''
     },
     validate: [
