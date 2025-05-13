@@ -99,7 +99,7 @@ describe('Partnership results', () => {
 
       it('a search page should be displayed with no values', () => {
         PartnershipSearchPage.shouldBeVisible();
-        PartnershipSearchPage.hasExpectedValues({ systemNumber: '', surname: '', forenames: '', dop: { day: '', month: '', year: '' } });
+        PartnershipSearchPage.hasExpectedValues({ entryNumber: '', surname: '', forenames: '', dop: { day: '', month: '', year: '' } });
       });
     });
 

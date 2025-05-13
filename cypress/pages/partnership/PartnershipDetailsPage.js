@@ -25,7 +25,7 @@ class PartnershipDetailsPage extends DetailsPage {
   static hasLimitedRecord(record) {
     const { partner1, partner2, registrar } = record;
     const rows = [
-      `System number ${record.id}`,
+      `Entry number ${record.id}`,
       `Date of civil partnership ${record.dateOfPartnership}`,
       `Place of civil partnership ${record.placeOfPartnership.address}`,
 
@@ -53,7 +53,7 @@ class PartnershipDetailsPage extends DetailsPage {
   static hasCompleteRecord(record) {
     const { partner1, partner2, fatherOfPartner1, motherOfPartner1, fatherOfPartner2, motherOfPartner2,  registrar } = record;
     const rows = [
-      `System number ${record.id}`,
+      `Entry number ${record.id}`,
       `Date of civil partnership ${record.dateOfPartnership}`,
       `Place of civil partnership ${record.placeOfPartnership.address}`,
 

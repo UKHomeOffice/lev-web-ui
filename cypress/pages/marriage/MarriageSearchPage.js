@@ -20,7 +20,7 @@ class MarriageSearchPage extends SearchPage {
     cy.get('h1').contains('Applicant\'s details');
 
     // Has labels
-    cy.get('label[for=system-number]').contains('System number from marriage certificate');
+    cy.get('label[for=entry-number]').contains('Entry number from marriage certificate');
     cy.get('label[for=surname]').contains('Surname');
     cy.get('label[for=forenames]').contains('Forename(s)');
     cy.get('label[for=dom-day]').contains('Day');
@@ -31,18 +31,18 @@ class MarriageSearchPage extends SearchPage {
   /**
    * Perform a marriage registration search with the given params
    *
-   * @param systemNumber
+   * @param entryNumber
    * @param surname
    * @param forenames
    * @param dom
    */
   static performSearch({
-    systemNumber,
+    entryNumber,
     surname,
     forenames,
     dom
   }) {
-    this.setText('#system-number', systemNumber);
+    this.setText('#entry-number', entryNumber);
     this.setText('#surname', surname);
     this.setText('#forenames', forenames);
     this.setText('#dom-day', dom && dom.day);
@@ -54,18 +54,18 @@ class MarriageSearchPage extends SearchPage {
   /**
    * Check the search page has the expected values
    *
-   * @param systemNumber
+   * @param entryNumber
    * @param surname
    * @param forenames
    * @param dom
    */
   static hasExpectedValues({
-    systemNumber,
+    entryNumber,
     surname,
     forenames,
     dom
   }) {
-    cy.get('#system-number').should('have.value', systemNumber);
+    cy.get('#entry-number').should('have.value', entryNumber);
     cy.get('#surname').should('have.value', surname);
     cy.get('#forenames').should('have.value', forenames);
     cy.get('#dom-day').should('have.value', dom.day);
@@ -95,6 +95,10 @@ class MarriageSearchPage extends SearchPage {
     cy.get('.error-summary').contains('Fix the following error(s)');
     cy.get('.govuk-error-summary__list > li').contains('Please enter a date of marriage in the past');
     cy.get('#dom-error.govuk-error-message').should('exist');
+  }
+
+  static hasEntryNumberHint() {
+    cy.get('#marriage-entry-number-hint').should('exist');
   }
 }
 

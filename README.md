@@ -78,3 +78,8 @@ MOCK env variable that sets the bypassSyops variable to bypass the check.
 If running the ui with npm against an iam environment, this env variable can be set 
 in the command or an .env file can be used. The IAM_USER variable should be set to the same user that the iam env is using, to 
 enable access. 
+
+### api integration
+
+The api expects a client header to be set that is added by another service. For local development and testing, this variable
+(API_ORIGINAL_CLIENT) can be added in a .env file and will be used in requests to the locally running api.

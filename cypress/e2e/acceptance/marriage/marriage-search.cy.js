@@ -102,12 +102,12 @@ describe('Marriage search', () => {
       });
     });
 
-    describe('with a system number', () => {
+    describe('with an entry number', () => {
       describe('of an invalid length', () => {
         before(() => {
           MarriageSearchPage.visit();
           MarriageSearchPage.performSearch({
-            systemNumber: '12345678'
+            entryNumber: '12345678'
           });
         });
 
@@ -115,12 +115,12 @@ describe('Marriage search', () => {
           MarriageSearchPage.hasErrorTitle();
         });
 
-        it('requests a system number of the valid length', () => {
-          MarriageSearchPage.hasErrorMessage('The system number should be 9 digits');
+        it('requests an entry number of the valid length', () => {
+          MarriageSearchPage.hasErrorMessage('The entry number should be 9 digits');
         });
 
-        it('shows the system number details hint', () => {
-          MarriageSearchPage.hasSystemNumberHint();
+        it('shows the entry number details hint', () => {
+          MarriageSearchPage.hasEntryNumberHint();
         });
       });
     });

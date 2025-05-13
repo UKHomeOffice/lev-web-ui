@@ -102,12 +102,12 @@ describe('Partnership search', () => {
       });
     });
 
-    describe('with a system number', () => {
+    describe('with an entry number', () => {
       describe('of an invalid length', () => {
         before(() => {
           PartnershipSearchPage.visit();
           PartnershipSearchPage.performSearch({
-            systemNumber: '12345678'
+            entryNumber: '12345678'
           });
         });
 
@@ -115,12 +115,12 @@ describe('Partnership search', () => {
           PartnershipSearchPage.hasErrorTitle();
         });
 
-        it('requests a system number of the valid length', () => {
-          PartnershipSearchPage.hasErrorMessage('The system number should be 9 digits');
+        it('requests an entry number of the valid length', () => {
+          PartnershipSearchPage.hasErrorMessage('The entry number should be 9 digits');
         });
 
-        it('shows the system number details hint', () => {
-          PartnershipSearchPage.hasSystemNumberHint();
+        it('shows the entry number details hint', () => {
+          PartnershipSearchPage.hasEntryNumberHint();
         });
       });
     });

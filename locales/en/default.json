@@ -44,28 +44,28 @@
     },
     "birth-system-number-hint": {
       "summaryHtml": "<div aria-labelledby=\"system-number-hint\">What is the system number?</div>",
-      "html": "<img src=\"/public/images/birth-number-hint.png\" alt=\"The system number is a nine digit number located in the bottom left corner of the birth certificate\" title=\"Where to find the system number on a birth certificate\"/>"
+      "html": "<div class=\"image-wrapper\"><img src=\"/public/images/birth-number-hint.png\" alt=\"The system number is a nine digit number located in the bottom left corner of the birth certificate\" title=\"Where to find the system number on a birth certificate\"/></div>"
     },
     "death-system-number": {
       "label": "System number from death certificate"
     },
     "death-system-number-hint": {
       "summaryHtml": "<div aria-labelledby=\"system-number-hint\">What is the system number?</div>",
-      "html": "<img src=\"/public/images/death-number-hint.png\" alt=\"The system number is a nine digit number located in the bottom left corner of the death certificate\" title=\"Where to find the system number on a death certificate\"/>"
+      "html": "<div class=\"image-wrapper\"><img src=\"/public/images/death-number-hint.png\" alt=\"The system number is a nine digit number located in the bottom left corner of the death certificate\" title=\"Where to find the system number on a death certificate\"/></div>"
     },
     "marriage-entry-number": {
-      "label": "Entry number of marriage certificate"
+      "label": "Entry number from marriage certificate"
     },
     "marriage-entry-number-hint": {
       "summaryHtml": "<div aria-labelledby=\"entry-number-hint\">What is the entry number?</div>",
-      "html": "<img src=\"/public/images/marriage-number-hint.png\" alt=\"The entry number is a nine digit number located in the bottom left corner of the marriage certificate\" title=\"Where to find the entry number on a marriage certificate\"/>"
+      "html": "<div class=\"image-wrapper\"><img src=\"/public/images/marriage-number-hint.png\" alt=\"The entry number is a nine digit number located in the bottom left corner of the marriage certificate\" title=\"Where to find the entry number on a marriage certificate\"/></div>"
     },
     "partnership-entry-number": {
-      "label": "Entry number of Civil partnership certificate"
+      "label": "Entry number from civil partnership certificate"
     },
     "partnership-entry-number-hint": {
       "summaryHtml": "<div aria-labelledby=\"entry-number-hint\">What is the entry number?</div>",
-      "html": "<img src=\"/public/images/civil-partnership-number-hint.png\" alt=\"The entry number is a nine digit number located in the bottom left corner of the civil partnership certificate\" title=\"Where to find the entry number on a civil partnership certificate\"/>"
+      "html": "<div class=\"image-wrapper\"><img src=\"/public/images/civil-partnership-number-hint.png\" alt=\"The entry number is a nine digit number located in the bottom left corner of the civil partnership certificate\" title=\"Where to find the entry number on a civil partnership certificate\"/></div>"
     },
     "surname": {
       "label": "Surname"

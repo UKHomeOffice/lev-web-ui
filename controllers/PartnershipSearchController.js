@@ -18,13 +18,13 @@ class PartnershipSearchController extends DateController {
   async validate(req, _res, next) {
 
     // Get the values from the search form
-    const systemNumber = req.form.values['system-number'];
+    const entryNumber = req.form.values['entry-number'];
     const surname = req.form.values['surname'];
     const forenames = req.form.values['forenames'];
     const dateOfPartnership = req.form.values['dop'];
 
-    // If systemNumber exists, perform lookup otherwise perform search
-    if (systemNumber && systemNumber !== '') {
+    // If entryNumber exists, perform lookup otherwise perform search
+    if (entryNumber && entryNumber !== '') {
 
       // lookup
       const startTime = getCurrentTimeInMillis();
@@ -32,7 +32,7 @@ class PartnershipSearchController extends DateController {
       try {
         const record = await PartnershipSearchService.lookup({
           ...requestOptions(req, api),
-          url: `/v1/registration/partnership/${systemNumber}`
+          url: `/v1/registration/partnership/${entryNumber}`
         });
 
         req.sessionModel.set('searchResults', record ? [record] : []);

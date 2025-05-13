@@ -57,7 +57,7 @@ describe('Marriage details page', () => {
 
     it('has empty form values', () => {
       MarriageSearchPage.hasExpectedValues({
-        systemNumber: '',
+        entryNumber: '',
         surname: '',
         forenames: '',
         dom: {
@@ -71,7 +71,7 @@ describe('Marriage details page', () => {
 
   describe('When I select the "Edit search" link on the results page', () => {
     const search = {
-      systemNumber: '',
+      entryNumber: '',
       surname: 'NotRealPersonSurname',
       forenames: 'NotRealPersonForename',
       dom: {
@@ -144,7 +144,7 @@ describe('Marriage details page', () => {
 
       before(() => {
         MarriageSearchPage.visit();
-        MarriageSearchPage.performSearch({ systemNumber: 999999971 });
+        MarriageSearchPage.performSearch({ entryNumber: 999999971 });
       });
 
       it(`should display the "${REFERRED}" flag`, () => {

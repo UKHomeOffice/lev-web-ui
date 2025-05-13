@@ -99,7 +99,7 @@ describe('Marriage results', () => {
 
       it('a search page should be displayed with no values', () => {
         MarriageSearchPage.shouldBeVisible();
-        MarriageSearchPage.hasExpectedValues({ systemNumber: '', surname: '', forenames: '', dom: { day: '', month: '', year: '' } });
+        MarriageSearchPage.hasExpectedValues({ entryNumber: '', surname: '', forenames: '', dom: { day: '', month: '', year: '' } });
       });
     });
 
