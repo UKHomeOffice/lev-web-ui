@@ -6,6 +6,7 @@ module.exports = (req, apiConfig) => {
     headers: {
       'x-auth-aud': apiConfig.client,
       'x-auth-username': apiConfig.username,
+      'x-original-client': apiConfig.originalClient,
       ...(token && { Authorization: `Bearer ${token}`}),
       ...(!token && roles && { 'x-auth-roles': roles })
     },

@@ -11,6 +11,7 @@ services:
     environment:
       API_HOST: mock-api
       API_PORT: 8080
+      API_ORIGINAL_CLIENT: "lev-web-ui"
       MOCK: "true"
       IAM_USER: minch.yoda@theforce.gov
       REDIS_CONNECTION_STRING: "redis://redis-service:6379"
@@ -20,7 +21,7 @@ services:
     - redis-service
     - mock-api
   mock-api:
-    image: 113355358853.dkr.ecr.eu-west-1.amazonaws.com/ho/hmpo/lev/api/lev-api:13f6c8908b156ab91537671146b3f179ff4a2b01
+    image: 113355358853.dkr.ecr.eu-west-1.amazonaws.com/ho/hmpo/lev/api/lev-api:61f797f2c00cca6fc2f077be1eda73bf61693f26
     environment:
       MOCK: "true"
     ports:

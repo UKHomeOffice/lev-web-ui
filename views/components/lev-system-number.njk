@@ -5,10 +5,11 @@
 
     {{ hmpoField(ctx, fieldName) }}
 
+    {% set hintKey = detailsKey or fieldName + "-hint" %}
     {% set detailsKey = "fields." + detailsKey or fieldName + "-hint" %}
 
     {{ hmpoDetails({
-        id: fieldName + "-hint",
+        id: hintKey,
         summaryHtml: ctx().translate(detailsKey + ".summaryHtml"),
         html: hmpoHtml(ctx().translate(detailsKey + ".html"))
     }) }}

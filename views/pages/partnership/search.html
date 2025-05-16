@@ -14,7 +14,7 @@
     {{ super() }}
 
     {% call hmpoForm(ctx) %}
-        {{ levSystemNumber(ctx, "system-number", "partnership-system-number-hint") }}
+        {{ levSystemNumber(ctx, "entry-number", "partnership-entry-number-hint") }}
         {{ hmpoField(ctx, "surname") }}
         {{ hmpoField(ctx, "forenames") }}
         {{ hmpoField(ctx, "dop") }}

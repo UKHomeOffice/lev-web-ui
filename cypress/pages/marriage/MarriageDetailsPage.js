@@ -25,7 +25,7 @@ class MarriageDetailsPage extends DetailsPage {
   static hasLimitedRecord(record) {
     const { groom, bride, registrar } = record;
     const rows = [
-      `System number ${record.id}`,
+      `Entry number ${record.id}`,
       `Date of marriage ${record.dateOfMarriage}`,
       `Place of marriage ${record.placeOfMarriage.address} ${record.placeOfMarriage.parish}`,
 
@@ -53,7 +53,7 @@ class MarriageDetailsPage extends DetailsPage {
   static hasCompleteRecord(record) {
     const { groom, bride, fatherOfGroom, fatherOfBride, registrar } = record;
     const rows = [
-      `System number ${record.id}`,
+      `Entry number ${record.id}`,
       `Date of marriage ${record.dateOfMarriage}`,
       `Place of marriage ${record.placeOfMarriage.address} ${record.placeOfMarriage.parish}`,
 

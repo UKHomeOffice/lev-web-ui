@@ -55,13 +55,13 @@ class BirthSearchPage extends SearchPage {
   static noSystemNumber() {
     cy.get('.error-summary').contains('Fix the following error(s)');
     cy.get('.govuk-error-summary__list > li').contains('Please enter a number');
-    cy.get('#system-number-hint').should('exist');
+    cy.get('#birth-system-number-hint').should('exist');
   }
 
   static invalidLengthSystemNumber() {
     cy.get('.error-summary').contains('Fix the following error(s)');
     cy.get('.govuk-error-summary__list > li').contains('The system number should be 9 digits');
-    cy.get('#system-number-hint').should('exist');
+    cy.get('#birth-system-number-hint').should('exist');
   }
 
   static noForenames() {

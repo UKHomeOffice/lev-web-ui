@@ -20,7 +20,7 @@ class PartnershipSearchPage extends SearchPage {
     cy.get('h1').contains('Applicant\'s details');
 
     // Has labels
-    cy.get('label[for=system-number]').contains('System number from civil partnership certificate');
+    cy.get('label[for=entry-number]').contains('Entry number from civil partnership certificate');
     cy.get('label[for=surname]').contains('Surname');
     cy.get('label[for=forenames]').contains('Forename(s)');
     cy.get('label[for=dop-day]').contains('Day');
@@ -31,18 +31,18 @@ class PartnershipSearchPage extends SearchPage {
   /**
    * Perform a civil partnership registration search with the given params
    *
-   * @param systemNumber
+   * @param entryNumber
    * @param surname
    * @param forenames
    * @param dop
    */
   static performSearch({
-    systemNumber,
+    entryNumber,
     surname,
     forenames,
     dop
   }) {
-    this.setText('#system-number', systemNumber);
+    this.setText('#entry-number', entryNumber);
     this.setText('#surname', surname);
     this.setText('#forenames', forenames);
     this.setText('#dop-day', dop && dop.day);
@@ -54,18 +54,18 @@ class PartnershipSearchPage extends SearchPage {
   /**
    * Check the search page has the expected values
    *
-   * @param systemNumber
+   * @param entryNumber
    * @param surname
    * @param forenames
    * @param dop
    */
   static hasExpectedValues({
-    systemNumber,
+    entryNumber,
     surname,
     forenames,
     dop
   }) {
-    cy.get('#system-number').should('have.value', systemNumber);
+    cy.get('#entry-number').should('have.value', entryNumber);
     cy.get('#surname').should('have.value', surname);
     cy.get('#forenames').should('have.value', forenames);
     cy.get('#dop-day').should('have.value', dop.day);
@@ -95,6 +95,10 @@ class PartnershipSearchPage extends SearchPage {
     cy.get('.error-summary').contains('Fix the following error(s)');
     cy.get('.govuk-error-summary__list > li').contains('Please enter a date of civil partnership in the past');
     cy.get('#dop-error.govuk-error-message').should('exist');
+  }
+
+  static hasEntryNumberHint() {
+    cy.get('#partnership-entry-number-hint').should('exist');
   }
 }
 

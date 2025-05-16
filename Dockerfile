@@ -1,4 +1,4 @@
-FROM 113355358853.dkr.ecr.eu-west-1.amazonaws.com/ho/hmpo/lev/bac/lev-node:ef901be0b478a2ea1efeafb1b0674f432c9a025b as base
+FROM 113355358853.dkr.ecr.eu-west-1.amazonaws.com/ho/hmpo/lev/bac/lev-node:ef901be0b478a2ea1efeafb1b0674f432c9a025b AS base
 
 RUN apk add --no-cache ca-certificates \
  && apk upgrade --no-cache
@@ -13,12 +13,12 @@ COPY --chown=app:app package.json package-lock.json /app/
 COPY --chown=app:app assets/ /app/assets/
 RUN mkdir "logs"
 
-FROM base as test
+FROM base AS test
 RUN npm ci
 COPY --chown=app:app . /app
 RUN npm run test
 
-FROM base as prod
+FROM base AS prod
 
 ENV NODE_ENV production
 RUN npm ci --only=production

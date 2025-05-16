@@ -57,7 +57,7 @@ describe('Partnership details page', () => {
 
     it('has empty form values', () => {
       PartnershipSearchPage.hasExpectedValues({
-        systemNumber: '',
+        entryNumber: '',
         surname: '',
         forenames: '',
         dop: {
@@ -71,7 +71,7 @@ describe('Partnership details page', () => {
 
   describe('When I select the "Edit search" link on the results page', () => {
     const search = {
-      systemNumber: '',
+      entryNumber: '',
       surname: 'NotRealPersonSurname',
       forenames: 'NotRealPersonForename',
       dop: {
@@ -144,7 +144,7 @@ describe('Partnership details page', () => {
 
       before(() => {
         PartnershipSearchPage.visit();
-        PartnershipSearchPage.performSearch({ systemNumber: 999999971 });
+        PartnershipSearchPage.performSearch({ entryNumber: 999999971 });
       });
 
       it(`should display the "${REFERRED}" flag`, () => {

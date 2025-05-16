@@ -9,7 +9,8 @@ describe('requestOptions()', () => {
       const expected = {
         headers: {
           'x-auth-aud': apiConfig.client,
-          'x-auth-username': apiConfig.username
+          'x-auth-username': apiConfig.username,
+          'x-original-client': apiConfig.originalClient
         },
         https: {
           rejectUnauthorized: apiConfig.rejectUnauthorized
@@ -32,6 +33,7 @@ describe('requestOptions()', () => {
         headers: {
           'x-auth-aud': apiConfig.client,
           'x-auth-username': apiConfig.username,
+          'x-original-client': apiConfig.originalClient,
           Authorization: 'Bearer xxxxx'
         },
         https: {
@@ -54,6 +56,7 @@ describe('requestOptions()', () => {
         headers: {
           'x-auth-aud': apiConfig.client,
           'x-auth-username': apiConfig.username,
+          'x-original-client': apiConfig.originalClient,
           'x-auth-roles': 'birth'
         },
         https: {
@@ -77,6 +80,7 @@ describe('requestOptions()', () => {
         headers: {
           'x-auth-aud': apiConfig.client,
           'x-auth-username': apiConfig.username,
+          'x-original-client': apiConfig.originalClient,
           Authorization: 'Bearer xxxxx'
         },
         https: {

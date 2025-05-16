@@ -1,7 +1,7 @@
 'use strict';
 
 const search = {
-  systemNumber: '',
+  entryNumber: '',
   forenames: 'Test',
   surname: 'BRIDE',
   dop: {

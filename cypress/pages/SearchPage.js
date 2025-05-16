@@ -38,13 +38,6 @@ class SearchPage extends Page {
   }
 
   /**
-   * Check the system number hint is visible
-   */
-  static hasSystemNumberHint() {
-    cy.get('#system-number-hint').should('exist');
-  }
-
-  /**
    * Check the surname field has focus
    */
   static hasSurnameFocused() {
