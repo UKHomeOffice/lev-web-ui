@@ -11,7 +11,7 @@ const MarriageDetailsPage = require('../../pages/marriage/MarriageDetailsPage');
 const PartnershipSearchPage = require('../../pages/partnership/PartnershipSearchPage');
 const PartnershipDetailsPage = require('../../pages/partnership/PartnershipDetailsPage');
 
-if (Cypress.env('e2e')) {
+if (1) {
   describe('Smoke Tests', () => {
     describe('Accessing the UI', () => {
       it('presents me with the login prompt', () => {
@@ -54,7 +54,7 @@ if (Cypress.env('e2e')) {
         it('presents me with the details page', () => {
           MarriageSearchPage.visit();
           MarriageSearchPage.shouldBeVisible();
-          MarriageSearchPage.performSearch({systemNumber: '999999910'});
+          MarriageSearchPage.performSearch({entryNumber: '999999910'});
           MarriageDetailsPage.shouldBeVisible();
         });
       });
@@ -65,7 +65,7 @@ if (Cypress.env('e2e')) {
         it('presents me with the details page', () => {
           PartnershipSearchPage.visit();
           PartnershipSearchPage.shouldBeVisible();
-          PartnershipSearchPage.performSearch({systemNumber: '999999910'});
+          PartnershipSearchPage.performSearch({entryNumber: '999999910'});
           PartnershipDetailsPage.shouldBeVisible();
         });
       });
