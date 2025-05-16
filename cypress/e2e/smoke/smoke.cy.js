@@ -11,7 +11,7 @@ const MarriageDetailsPage = require('../../pages/marriage/MarriageDetailsPage');
 const PartnershipSearchPage = require('../../pages/partnership/PartnershipSearchPage');
 const PartnershipDetailsPage = require('../../pages/partnership/PartnershipDetailsPage');
 
-if (1) {
+if (Cypress.env('e2e')) {
   describe('Smoke Tests', () => {
     describe('Accessing the UI', () => {
       it('presents me with the login prompt', () => {
