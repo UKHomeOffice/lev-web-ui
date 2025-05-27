@@ -63,6 +63,16 @@ a, button {
   padding-bottom: 10px !important;
 }
 
+
+.govuk-summary-list__key_no_bold {
+  font-weight: normal !important;
+}
+
+.govuk-summary-list__row_no_border {
+ border-bottom: none !important;
+}
+
+
 .flex-row {
   display: flex;
   align-items: center;

@@ -12,6 +12,8 @@ const ResetUserPasswordController = require('../../controllers/UserManagement/Re
 const UserCreateController = require('../../controllers/UserManagement/UserCreateController');
 const OrganisationCreateController = require('../../controllers/UserManagement/OrganisationCreateController');
 const OrganisationEditController = require('../../controllers/UserManagement/OrganisationEditController');
+const OrganisationUpdateEmailDomain = require('../../controllers/UserManagement/OrganisationUpdateEmailDomain');
+const ManageOrganisationController = require('../../controllers/UserManagement/ManageOrganisationController');
 
 const externalRoutes = {
   '/': {
@@ -78,6 +80,29 @@ const internalRoutes = {
     controller: OrganisationEditController,
     entryPoint: true,
     template: '/add-edit-organisation.html'
+  },
+  '/:orgId/manage': {
+    controller: ManageOrganisationController,
+    entryPoint: true,
+    template: '/manage-organisation.html'
+  },
+  '/:orgId/add-email-domain': {
+    fields: ["emailDomains"],
+    controller: OrganisationUpdateEmailDomain,
+    entryPoint: true,
+    template: '/add-email-domain.html',
+    // multiple seems not to work
+    multiple: true
+  },
+  '/:orgId/delete-email-domain/:emailDomainToDelete/confirm': {
+    controller: OrganisationUpdateEmailDomain,
+    entryPoint: true,
+    template: '/delete-email-domain.html'
+  },
+  '/:orgId/delete-email-domain/:emailDomainToDelete': {
+    controller: OrganisationUpdateEmailDomain,
+    entryPoint: true,
+    skip: true
   },
   '/:orgId/team/create': {
     controller: TeamCreateController,

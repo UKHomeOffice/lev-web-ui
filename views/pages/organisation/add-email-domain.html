@@ -1,0 +1,87 @@
+{% extends "app-template.njk" %}
+
+{% set govukServiceNameKey = translate("pages.user-management.serviceName") %}
+{% set govukServiceTitleKey = translate("pages.user-management."+pageName+".pageTitle") %}
+{% set hmpoPageKey = "user-management." + pageName %}
+{% set govukServiceUrl = "/admin/organisations" %}
+{% from "hmpo-text/macro.njk" import hmpoText %}
+{% from "hmpo-form/macro.njk" import hmpoForm %}
+{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+{% block hmpoContent %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      {% block mainContent %}
+        <h1 id="header"
+            data-page="{{ hmpoPageKey }}">{{ translate("pages." + hmpoPageKey + ".h1", { default: hmpoTitle }) |
+          safe }}</h1>
+
+        <div class="govuk-!-width-two-thirds">
+
+        {{ govukSummaryList({
+          rows: [
+            {
+              key: { text: "Organisation name" }, value: { text: orgInfo.name } }
+          ]
+        }) }}
+
+        {% call hmpoForm(ctx) %}
+          <input type="hidden" name="operation" value="add">
+          <div id="emailDomainForm">
+            <div class="govuk-form-group">
+              <label class="govuk-label govuk-label--s" for="emailDomains-1">
+                Email domain
+              </label>
+              <input class="govuk-input govuk-!-width-one-half" id="emailDomains-1" name="emailDomains[]" type="text">
+            </div>
+          </div>
+
+          <p class="govuk-body">
+            <a href="#" class="govuk-link govuk-link--no-underline" id="addEmailDomain">+ Add another email domain</a>
+          </p>
+
+          <div class="govuk-button-group">
+            {{ hmpoSubmit(ctx, {id: "submit", key: "submit"}) }}
+            {{ hmpoSubmit(ctx, {id: "back", key: "back", href: backLink, classes: "govuk-button--secondary"}) }}
+          </div>
+
+          </div>
+        {% endcall %}
+
+      {% endblock %}
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const container = document.getElementById('emailDomainForm');
+      const addBtn = document.getElementById('addEmailDomain');
+      let counter = 1;
+
+      addBtn.addEventListener('click', function () {
+        counter++;
+
+        const fieldWrapper = document.createElement('div');
+        fieldWrapper.className = 'govuk-form-group';
+        fieldWrapper.innerHTML = `
+      <label class="govuk-label govuk-label--s" for="emailDomains-${counter}">
+        Email domain
+      </label>
+      <input class="govuk-input govuk-!-width-one-half"
+             id="emailDomains-${counter}"
+             name="emailDomains[]"
+             type="text">
+      <a href="#" class="govuk-link govuk-!-margin-left-2 remove-email-field">Remove</a>
+    `;
+        container.appendChild(fieldWrapper);
+
+        fieldWrapper.querySelector('.remove-email-field').addEventListener('click', function (e) {
+          e.preventDefault();
+          container.removeChild(fieldWrapper);
+        });
+      });
+    });
+  </script>
+{% endblock %}

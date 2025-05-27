@@ -55,24 +55,36 @@
             </div>
         </div>
 
-        {% set orgsHeaderArray = [{ text: "Organisation" }] %}
+        {% set orgsHeaderArray = [
+        { text: "Organisation" },
+        { text: "", classes: "govuk-table__header--right" }
+        ] %}
         {% set orgsArray = [] %}
 
         {% for org in orgsInfo %}
-            {% set rowArray = [] %}
-            {% set orgLink = "/admin/organisations/" + org.id %}
-            {% set rowArray = (rowArray.push( { html: "<a href=" + orgLink +">" + org.name + "</a>" } ), rowArray) %}
-            {% set orgsArray = (orgsArray.push(rowArray), orgsArray) %}
+        {% set rowArray = [] %}
+        {% set orgLink = "/admin/organisations/" + org.id %}
+
+        {% set rowArray = (rowArray.push({
+        html: '<a href="' + orgLink + '">' + org.name + '</a>'
+        }), rowArray) %}
+
+        {% set rowArray = (rowArray.push({
+        html: '<a href="' + orgLink + '/manage" class="govuk-link">Manage</a>'
+        }), rowArray) %}
+
+        {% set orgsArray = (orgsArray.push(rowArray), orgsArray) %}
         {% endfor %}
 
         <div class="govuk-!-width-two-thirds">
             {{ govukTable({
-                classes: "detail",
-                firstCellIsHeader: true,
-                head: orgsHeaderArray,
-                rows: orgsArray
+            classes: "detail",
+            firstCellIsHeader: true,
+            head: orgsHeaderArray,
+            rows: orgsArray
             }) }}
         </div>
+
         {% endblock %}
     </div>
 </div>
