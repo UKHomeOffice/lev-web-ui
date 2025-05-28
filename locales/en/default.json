@@ -418,7 +418,8 @@
       "regex": "Enter email address in correct format",
       "required": "Enter email address",
       "length": "Email address must be between 3 and 254 characters",
-      "local": "Email address must have less than 65 characters before the @ symbol"
+      "local": "Email address must have less than 65 characters before the @ symbol",
+      "domain": "This email domain is not allowed for this organisation. Enter a different email address, or contact an administrator."
     },
     "teamSelect": {
       "required": "Select a team"
