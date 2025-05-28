@@ -37,6 +37,30 @@ class UserCreateController extends BaseController {
     next();
   }
 
+  async validateFields(req, res, callback) {
+    super.validateFields(req, res, async (errors) => {
+      if (!errors.email) {
+        const orgInfo = await getRequest({
+          ...requestOptions(req, iamApi),
+          url: `/admin/organisations/${req.params.orgId}`
+        });
+        const email = req.form.values['email'];
+        const domain = email?.split('@')[1]?.toLowerCase();
+
+        errors = errors || {};
+
+        if (!domain || !orgInfo.emailDomains.includes(domain)) {
+          errors.email = new this.Error('email', {
+            key: 'email',
+            type: 'domain',
+            message: req.form.options.messages?.validation?.email?.domain
+          }, req, res);
+        }
+      }
+      callback(errors);
+    });
+  }
+
   async saveValues(req, res) {
 
     // Get the values from the edit form

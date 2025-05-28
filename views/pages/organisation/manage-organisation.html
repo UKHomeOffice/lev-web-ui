@@ -1,0 +1,88 @@
+{% extends "app-template.njk" %}
+
+{% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set govukServiceUrl = "/admin/organisations" %}
+{% set orgLink = govukServiceUrl + "/" + orgInfo.id %}
+
+{% block hmpoContent %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      {% block mainContent %}
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+
+            {% set status = '' %}
+            {% set html = '' %}
+
+            {% if updateDomainsAttempt %}
+              {% if addedDomains %}
+                {% set status = "success" %}
+                {% set html = "<h2>You have successfully added " + orgInfo.name + " email domains.</h2>" %}
+              {% endif %}
+              {% if deletedDomain %}
+                {% set status = "success" %}
+                {% set html = "<h2>You have successfully deleted \'" + deletedDomain + "\' as an email domain.</h2>" %}
+              {% endif %}
+
+              {{ govukNotificationBanner({
+                html: html,
+                type: status
+              }) }}
+            {% endif %}
+          </div>
+
+
+          <div class="govuk-grid-column-three-quarters">
+            <h1 id="header" data-page="{{ hmpoPageKey }}">{{ orgInfo.name }}</h1>
+
+            {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+            {% set summaryRows = [] %}
+
+            {% for domain in orgInfo.emailDomains %}
+              {% set summaryRows = summaryRows.concat([{
+                key: {
+                  text: domain,
+                  classes: 'govuk-summary-list__key_no_bold govuk-!-width-two-thirds'
+                },
+                actions: {
+                  items: [
+                    {
+                      href: orgLink + '/delete-email-domain/' + domain + '/confirm',
+                      text: 'Delete'
+                    }
+                  ]
+                },
+                classes: 'govuk-summary-list__row_no_border'
+              }]) %}
+            {% endfor %}
+
+            {{ govukSummaryList({
+              card: {
+                title: {
+                  text: "Email domains"
+                },
+                actions: {
+                  items: [
+                    {
+                      href: orgLink + '/add-email-domain',
+                      text: 'Add domain'
+                    }
+                  ]
+                }
+              },
+              rows: summaryRows
+            }) }}
+
+          </div>
+
+        </div>
+      {% endblock %}
+    </div>
+  </div>
+
+{% endblock %}

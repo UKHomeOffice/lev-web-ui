@@ -23,7 +23,7 @@ class OrganisationController extends BaseController {
         ...requestOptions(req, iamApi),
         url: `/admin/organisations/${req.params.orgId}/users${queryParamsBuilder(req)}`
       });
-      
+
       req.sessionModel.set('orgResults', searchResults);
       req.sessionModel.set('teamResults', teamResults);
       req.sessionModel.set('userResults', userResults.users);
@@ -57,6 +57,9 @@ class OrganisationController extends BaseController {
       locals.orgExistsError = req.sessionModel.get('orgExistsError') || false;
       locals.updatedOrgName = req.sessionModel.get('updatedOrgName') || '';
       locals.userSearchParam = req.sessionModel.get('userSearchParam') || null;
+      locals.addedDomains = req.sessionModel.get('addedDomains') || [];
+      locals.deletedDomain = req.sessionModel.get('deletedDomain') || '';
+      locals.updateDomainsAttempt = req.sessionModel.get('updateDomainsAttempt') || '';
       locals.IS_EXTERNAL = process.env.IS_EXTERNAL || 'true';
 
       req.sessionModel.unset('addTeamAttempt');
@@ -70,6 +73,9 @@ class OrganisationController extends BaseController {
       req.sessionModel.unset('editOrgSuccess');
       req.sessionModel.unset('orgExistsError');
       req.sessionModel.unset('updatedOrgName');
+      req.sessionModel.unset('addedDomains');
+      req.sessionModel.unset('deletedDomain');
+      req.sessionModel.unset('updateDomainsAttempt');
       callback(null, locals);
     });
   }

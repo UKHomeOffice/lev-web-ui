@@ -59,5 +59,14 @@ module.exports = {
       { type: 'regex', arguments: '^[a-zA-Z ]+$'},
       { type: 'length', fn: (e) => e.length >= 1 && e.length <= 255 }
     ]
+  },
+  'emailDomains': {
+    type: 'text',
+    multiple: true,
+    validate: [
+      'required',
+      { type: 'regex', arguments: '^[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$' },
+      { type: 'length', fn: (e) => e.length >= 1 && e.length <= 128 }
+    ]
   }
 };

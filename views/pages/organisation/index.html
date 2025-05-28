@@ -23,7 +23,7 @@
       {% set status = '' %}
       {% set html = '' %}
 
-      {% if addTeamAttempt or editTeamAttempt or editOrgAttempt %}
+      {% if addTeamAttempt or editTeamAttempt or editOrgAttempt or updateDomainsAttempt %}
         {% if addTeamAttempt %}
           {% if addTeamSuccess %}
             {% set status = "success" %}
@@ -59,6 +59,15 @@
             {% else %}
               {% set html = "<h2>There is a problem - Unable to edit organisation " + updatedOrgName + "</h2>" %}
             {% endif %}
+          {% endif %}
+        {% elif updateDomainsAttempt %}
+          {% if addedDomains %}
+            {% set status = "success" %}
+            {% set html = "<h2>You have successfully added " + orgInfo.name + " email domains.</h2>" %}
+          {% endif %}
+          {% if deletedDomain %}
+            {% set status = "success" %}
+            {% set html = "<h2>You have successfully deleted \'" + deletedDomain + "\' as an email domain.</h2>" %}
           {% endif %}
         {% endif %}
 
