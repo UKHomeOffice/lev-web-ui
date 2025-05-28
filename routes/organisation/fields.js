@@ -22,14 +22,6 @@ module.exports = {
       { type: 'regex', arguments: /^(?!.*\.\.)[a-z0-9_%+-](?:[a-z0-9._%+'-]*[a-z0-9_%+-])?@([a-z0-9]+([a-z0-9-]*[a-z0-9]+)?\.)+[a-z]{2,6}$/i},
       { type: 'length', fn: (e) => e.length >= 3 && e.length <= 254 },
       { type: 'local', fn: (e) => e.split('@')[0].length <= 64 }
-      // { type: "domain", fn: function(value, req, res) {
-      //     console.log(value)
-      //     console.log("REQ")
-      //     console.log(req)
-      //     console.log("RES")
-      //     console.log(res)
-      //     return 1 === 0
-      //   }}
     ]
   },
 'teamSelect': {
