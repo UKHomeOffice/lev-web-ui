@@ -69,9 +69,11 @@
         html: '<a href="' + orgLink + '">' + org.name + '</a>'
         }), rowArray) %}
 
-        {% set rowArray = (rowArray.push({
-        html: '<a href="' + orgLink + '/manage" class="govuk-link">Manage</a>'
-        }), rowArray) %}
+        {% if IS_EXTERNAL == "false" %}
+            {% set rowArray = (rowArray.push({
+            html: '<a href="' + orgLink + '/manage" class="govuk-link">Manage</a>'
+            }), rowArray) %}
+        {% endif %}
 
         {% set orgsArray = (orgsArray.push(rowArray), orgsArray) %}
         {% endfor %}
