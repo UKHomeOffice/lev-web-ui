@@ -4,6 +4,8 @@
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
+{% set govukServiceNameKey = translate("pages.user-management.serviceName") %}
+{% set govukServiceTitleKey = translate("pages.user-management.organisationPage.pageTitle") %}
 {% set govukServiceUrl = "/admin/organisations" %}
 {% set orgLink = govukServiceUrl + "/" + orgInfo.id %}
 
