@@ -205,16 +205,6 @@
         "pageTitle": "Civil partnership record result"
       }
     },
-    "user-activity": {
-      "serviceName": "User Activity Report",
-      "searchPage": {
-        "title": "Audit information",
-        "pageTitle": "User Activity Report search"
-      },
-      "resultPage": {
-        "pageTitle": "User Activity Report results"
-      }
-    },
     "user-management": {
       "serviceName": "Administration",
       "organisationPage": {
