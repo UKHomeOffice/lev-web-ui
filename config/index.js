@@ -18,7 +18,7 @@ module.exports = {
     redis: {
       connectionString: process.env.REDIS_CONNECTION_STRING || undefined,
       host: process.env.REDIS_HOST || undefined,
-      port: process.env.REDIS_PORT || undefined,
+      port: process.env.REDIS_PORT || undefined
     },
     session: {
       ttl: 660

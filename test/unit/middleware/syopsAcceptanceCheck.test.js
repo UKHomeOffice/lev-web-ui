@@ -1,7 +1,6 @@
 const { syopsAcceptanceCheck } = require('../../../middleware/syopsAcceptanceCheck');
 const redisService = require('../../../lib/redisCacheService');
 const IamApiService = require('../../../services/UserManagement/IamApiService');
-const logger = require('hmpo-logger').get();
 const config = require('../../../config');
 const SyopsRenewalNotRequired = require('../../../helpers/SyopsRenewalNotRequired');
 var mockLoggerInstance;
