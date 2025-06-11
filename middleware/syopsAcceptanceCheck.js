@@ -12,10 +12,16 @@ module.exports.syopsAcceptanceCheck = async (req, res, next) => {
   }
 
   try {
+    console.log("LOOKING IN CACHE")
+    console.log(iamApi.username)
+    console.log(await redisService.get(`${iamApi.username}:SyopsAccepted`))
+
     if (await redisService.get(`${iamApi.username}:SyopsAccepted`)) {
+      console.log("USER IN CACHE FOUND")
       return next()
     }
 
+    console.log("NOT IN CACHE - FETCHING FROM API")
     const data = await IamApiService.getRequest({
       ...requestOptions(req, iamApi),
       url: '/user/metadata'
