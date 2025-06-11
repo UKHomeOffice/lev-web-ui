@@ -4,6 +4,7 @@ const SyopsRenewalNotRequired = require("../helpers/SyopsRenewalNotRequired");
 const { iamApi } = require("../config");
 const requestOptions = require('../helpers/requestOptions');
 const redisService = require("../lib/redisCacheService");
+const getCurrentUser = require("../helpers/getCurrentUser");
 const logger = require('hmpo-logger').get();
 
 module.exports.syopsAcceptanceCheck = async (req, res, next) => {
@@ -12,16 +13,10 @@ module.exports.syopsAcceptanceCheck = async (req, res, next) => {
   }
 
   try {
-    console.log("LOOKING IN CACHE")
-    console.log(iamApi.username)
-    console.log(await redisService.get(`${iamApi.username}:SyopsAccepted`))
-
-    if (await redisService.get(`${iamApi.username}:SyopsAccepted`)) {
-      console.log("USER IN CACHE FOUND")
+    if (await redisService.get(`${getCurrentUser(req)}:SyopsAccepted`)) {
       return next()
     }
 
-    console.log("NOT IN CACHE - FETCHING FROM API")
     const data = await IamApiService.getRequest({
       ...requestOptions(req, iamApi),
       url: '/user/metadata'
