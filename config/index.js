@@ -18,7 +18,7 @@ module.exports = {
     redis: {
       connectionString: process.env.REDIS_CONNECTION_STRING || undefined,
       host: process.env.REDIS_HOST || undefined,
-      port: process.env.REDIS_PORT || undefined
+      port: process.env.REDIS_PORT || undefined,
     },
     session: {
       ttl: 660
@@ -49,6 +49,7 @@ module.exports = {
   },
   syops: {
     // Date should be in correct format of dd/MM/yyyy
-    renewalDate: process.env.SYOPS_RENEWAL_DATE
+    renewalDate: process.env.SYOPS_RENEWAL_DATE,
+    metadataCacheSeconds: process.env.METADATA_CACHE_SECONDS || 900
   }
 };

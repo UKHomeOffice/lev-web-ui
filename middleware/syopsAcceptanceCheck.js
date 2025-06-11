@@ -3,6 +3,7 @@ const IamApiService = require("../services/UserManagement/IamApiService");
 const SyopsRenewalNotRequired = require("../helpers/SyopsRenewalNotRequired");
 const { iamApi } = require("../config");
 const requestOptions = require('../helpers/requestOptions');
+const redisService = require("../lib/redisCacheService");
 const logger = require('hmpo-logger').get();
 
 module.exports.syopsAcceptanceCheck = async (req, res, next) => {
@@ -11,6 +12,10 @@ module.exports.syopsAcceptanceCheck = async (req, res, next) => {
   }
 
   try {
+    if (await redisService.get(`${iamApi.username}:SyopsAccepted`)) {
+      return next()
+    }
+
     const data = await IamApiService.getRequest({
       ...requestOptions(req, iamApi),
       url: '/user/metadata'
@@ -24,6 +29,7 @@ module.exports.syopsAcceptanceCheck = async (req, res, next) => {
     }
     else {
       res.locals.syopsAccepted = true;
+      await redisService.set(`${data.user}:SyopsAccepted`, true, config.syops.metadataCacheSeconds);
       next();
     }
   }
