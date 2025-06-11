@@ -3,9 +3,11 @@ const redisService = require('../../../lib/redisCacheService');
 const IamApiService = require('../../../services/UserManagement/IamApiService');
 const config = require('../../../config');
 const SyopsRenewalNotRequired = require('../../../helpers/SyopsRenewalNotRequired');
+const getCurrentUser = require('../../../helpers/getCurrentUser')
 var mockLoggerInstance;
 
 jest.mock('../../../lib/redisCacheService');
+jest.mock('../../../helpers/getCurrentUser');
 jest.mock('../../../services/UserManagement/IamApiService', () => ({
   getRequest: jest.fn()
 }));
@@ -42,6 +44,7 @@ describe('syopsAcceptanceCheck', () => {
       metadataCacheSeconds: 3600
     };
     SyopsRenewalNotRequired.mockReturnValue(false);
+    getCurrentUser.mockReturnValue("malcolm.tucker@dosac.gov.uk")
   });
 
   it('should call next if config.bypassSyops is true', async () => {
@@ -87,7 +90,7 @@ describe('syopsAcceptanceCheck', () => {
 
   it('should call next if syopsAcceptedAt is valid and SyopsRenewalNotRequired returns true', async () => {
     IamApiService.getRequest.mockResolvedValue({
-      user: "testUser",
+      user: "malcolm.tucker@dosac.gov.uk",
       metadata: {
         syopsAcceptedAt: '01-01-2023'
       }
@@ -97,12 +100,12 @@ describe('syopsAcceptanceCheck', () => {
     await syopsAcceptanceCheck(req, res, next);
 
     expect(next).toHaveBeenCalled();
-    expect(redisService.set).toHaveBeenCalledWith('testUser:SyopsAccepted', true, 3600);
+    expect(redisService.set).toHaveBeenCalledWith('malcolm.tucker@dosac.gov.uk:SyopsAccepted', true, 3600);
     expect(res.locals.syopsAccepted).toBe(true);
   });
 
   it('should log an error if an exception is thrown', async () => {
-    const error = new Error('Test error');
+    const error = new Error('Sponge Avengers');
     IamApiService.getRequest.mockRejectedValue(error);
 
     await syopsAcceptanceCheck(req, res, next);

@@ -13,11 +13,11 @@ describe('redisCacheService', () => {
   });
 
   test('get should return value from redisClient.get', async () => {
-    redisClient.get.mockResolvedValue('value');
+    redisClient.get.mockResolvedValue('redisClient');
 
-    const result = await redisCacheService.get('myKey');
-    expect(redisClient.get).toHaveBeenCalledWith('myKey');
-    expect(result).toBe('value');
+    const result = await redisCacheService.get('testKey');
+    expect(redisClient.get).toHaveBeenCalledWith('testKey');
+    expect(result).toBe('redisClient');
   });
 
   test('set should call redisClient.set with expiry', async () => {
