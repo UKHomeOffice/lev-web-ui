@@ -63,7 +63,8 @@
   },
   "overrides": {
     "hmpo-app": {
-      "govuk-frontend": "^5.6.0"
+      "govuk-frontend": "^5.6.0",
+      "glob": "^10.0.0"
     },
     "hmpo-component": {
       "govuk-frontend": "^5.6.0"
