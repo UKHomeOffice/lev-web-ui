@@ -49,6 +49,7 @@ module.exports = {
   },
   syops: {
     // Date should be in correct format of dd/MM/yyyy
-    renewalDate: process.env.SYOPS_RENEWAL_DATE
+    renewalDate: process.env.SYOPS_RENEWAL_DATE,
+    metadataCacheSeconds: process.env.METADATA_CACHE_SECONDS || 900
   }
 };
