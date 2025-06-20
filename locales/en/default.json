@@ -1,5 +1,6 @@
 {
   "govuk": {
+    "logoName": "HM Passport Office",
     "serviceName": "Life Event Verification",
     "skipLink": "Skip to main content",
     "backLink": "Back",
