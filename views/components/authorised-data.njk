@@ -37,6 +37,7 @@
 {% macro addFields(dataset, fields, orgInfo) %}
   {% for key, section in fields[dataset] %}
     {% set rows = [] %}
+
     {% for field in section.fields %}
       {% set status_ui = true %}
       {% set status_api = true %}
@@ -46,10 +47,10 @@
           {% for path in field.path %}
             {% for item in orgInfo.flsSchema[dataset] %}
               {% if item.field == path %}
-                {% if not item.ui %}
+                {% if item.ui == false %}
                   {% set status_ui = false %}
                 {% endif %}
-                {% if not item.api %}
+                {% if item.api == false %}
                   {% set status_api = false %}
                 {% endif %}
               {% endif %}
@@ -70,8 +71,10 @@
         { text: booleanTag(status_ui), classes: "govuk-!-width-one-quarter" },
         { text: booleanTag(status_api), classes: "govuk-!-width-one-quarter" }
       ] %}
+
       {% set rows = rows.concat([row]) %}
     {% endfor %}
+
     {{ authorisedDataSummaryCard(section.header, rows) }}
   {% endfor %}
 {% endmacro %}
