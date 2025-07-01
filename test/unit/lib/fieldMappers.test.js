@@ -1,45 +1,31 @@
 const filterUIMapperByPermissions = require('../../../lib/filterUIMapperByPermissions');
+const completeUIMapper = require('../../../lib/FullDatasetFieldMapper')
 
 describe('filterUIMapperByPermissions', () => {
-  const completeUIMapper = {
-    birthV1: {
-      overview: {
-        header: "Overview",
-        fields: [{ path: "id", label: "ID" }]
-      },
-      child: {
-        header: "Child",
-        fields: [
-          { path: "child.forenames", label: "Forenames" },
-          { path: "child.surname", label: "Surname" }
-        ]
-      }
-    },
-    death: {
-      overview: {
-        header: "Overview",
-        fields: [{ path: "id", label: "ID" }]
-      },
-      deceased: {
-        header: "Deceased",
-        fields: [
-          { path: "deceased.forenames", label: "Forenames" },
-          { path: "deceased.surname", label: "Surname" }
-        ]
-      }
-    }
-  };
 
-  test('filters fields based on permissions', () => {
+  it('filters fields based on permissions', () => {
     const permissions = {
       birthV1: {
         groupA: [
-          { field: "child.forenames", ui: true }
+          { field: "child.forenames", ui: true },
+          { field: "informant1.qualification", ui: true },
+          { field: "informant2.qualification", ui: true }
         ]
       },
       death: {
         groupB: [
-          { field: "deceased.surname", ui: true }
+          { field: "deceased.surname", ui: true },
+          { field: "deceased.forenames", ui: true }
+        ]
+      },
+      marriage: {
+        groupC: [
+          { field: "registrar.administrativeArea", ui: true }
+        ]
+      },
+      partnership: {
+        groupD: [
+          { field: "registrar.district", ui: true }
         ]
       }
     };
@@ -49,20 +35,42 @@ describe('filterUIMapperByPermissions', () => {
     expect(result).toEqual({
       birthV1: {
         child: {
-          header: "Child",
-          fields: [{ path: "child.forenames", label: "Forenames" }]
+          header: "Child details",
+          fields: [{ path: "child.forenames", label: "First and middle names" }]
+        },
+        registration: {
+          header: "Registration details",
+          fields: [{ path: ["informant1.qualification", "informant2.qualification"], label: "Birth registered by" }]
         }
       },
       death: {
         deceased: {
-          header: "Deceased",
-          fields: [{ path: "deceased.surname", label: "Surname" }]
+          header: "Deceased details",
+          fields: [
+            { path: ["deceased.forenames", "deceased.surname"], label: "Name" }
+          ]
+        }
+      },
+      marriage: {
+        registration: {
+          header: "Registration details",
+          fields: [
+            { path: "registrar.administrativeArea", label: "Administrative area" },
+          ]
+        }
+      },
+      partnership: {
+        registration: {
+          header: "Registration details",
+          fields: [
+            { path: "registrar.district", label: "District" },
+          ]
         }
       }
     });
   });
 
-  test('returns empty object when permissions are empty', () => {
+  it('returns empty object when permissions are empty', () => {
     const permissions = {};
     const result = filterUIMapperByPermissions(permissions, completeUIMapper);
     expect(result).toEqual({});
@@ -77,7 +85,7 @@ describe('filterUIMapperByPermissions', () => {
         },
         validSection: {
           header: "Valid",
-          fields: [{ path: "child.forenames", label: "Forenames" }]
+          fields: [{ path: "child.forenames", label: "First and middle names" }]
         }
       }
     };
@@ -94,13 +102,13 @@ describe('filterUIMapperByPermissions', () => {
       birthV1: {
         validSection: {
           header: "Valid",
-          fields: [{ path: "child.forenames", label: "Forenames" }]
+          fields: [{ path: "child.forenames", label: "First and middle names" }]
         }
       }
     });
   });
 
-  test('ignores fields not in permissions', () => {
+  it('ignores fields not in permissions', () => {
     const permissions = {
       birthV1: {
         groupA: [{ field: "nonexistent.field", ui: true }]
@@ -111,7 +119,7 @@ describe('filterUIMapperByPermissions', () => {
     expect(result).toEqual({});
   });
 
-  test('handles mixed valid and invalid permission entries', () => {
+  it('handles mixed valid and invalid permission entries', () => {
     const permissions = {
       birthV1: {
         groupA: [
@@ -127,8 +135,8 @@ describe('filterUIMapperByPermissions', () => {
     expect(result).toEqual({
       birthV1: {
         child: {
-          header: "Child",
-          fields: [{ path: "child.forenames", label: "Forenames" }]
+          header: "Child details",
+          fields: [{ path: "child.forenames", label: "First and middle names" }]
         }
       }
     });

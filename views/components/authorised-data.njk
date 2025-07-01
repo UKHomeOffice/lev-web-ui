@@ -21,35 +21,56 @@
   </div>
 {% endmacro %}
 
-
 {% macro booleanTag(value) %}
-  {% if value %}
-    {{ govukTag({ text: "Yes", classes: "govuk-tag--turquoise" }) }}
-  {% else %}
-    {{ govukTag({ text: "No", classes: "govuk-tag--red" }) }}
+  {% set tagText = "No" %}
+  {% set tagClass = "govuk-tag--red" %}
+  {% if value === true %}
+    {% set tagText = "Yes" %}
+    {% set tagClass = "govuk-tag--turquoise" %}
   {% endif %}
+  {{ govukTag({
+    text: tagText,
+    classes: tagClass
+  }) }}
 {% endmacro %}
 
-
 {% macro addFields(dataset, fields, orgInfo) %}
-  {% set flsList = orgInfo.flsSchema[dataset] or [] %}
-
   {% for key, section in fields[dataset] %}
     {% set rows = [] %}
     {% for field in section.fields %}
-      {% set status = {} %}
-      {% for item in flsList %}
-        {% if item.field == field.path %}
-          {% set status = item %}
+      {% set status_ui = true %}
+      {% set status_api = true %}
+
+      {% if orgInfo.flsSchema[dataset] %}
+        {% if field.path is iterable and field.path is not string %}
+          {% for path in field.path %}
+            {% for item in orgInfo.flsSchema[dataset] %}
+              {% if item.field == path %}
+                {% if not item.ui %}
+                  {% set status_ui = false %}
+                {% endif %}
+                {% if not item.api %}
+                  {% set status_api = false %}
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+          {% endfor %}
+        {% else %}
+          {% for item in orgInfo.flsSchema[dataset] %}
+            {% if item.field == field.path %}
+              {% set status_ui = item.ui %}
+              {% set status_api = item.api %}
+            {% endif %}
+          {% endfor %}
         {% endif %}
-      {% endfor %}
+      {% endif %}
 
       {% set row = [
         { text: field.label },
-        { text: booleanTag(status.ui), classes: "govuk-!-width-one-quarter" },
-        { text: booleanTag(status.api), classes: "govuk-!-width-one-quarter" }
+        { text: booleanTag(status_ui), classes: "govuk-!-width-one-quarter" },
+        { text: booleanTag(status_api), classes: "govuk-!-width-one-quarter" }
       ] %}
-      {% set rows = rows | push(row) %}
+      {% set rows = rows.concat([row]) %}
     {% endfor %}
     {{ authorisedDataSummaryCard(section.header, rows) }}
   {% endfor %}
