@@ -35,6 +35,8 @@
 {% endmacro %}
 
 {% macro addFields(dataset, fields, orgInfo) %}
+  {% set schemaList = orgInfo.flsSchema[dataset] or [] %}
+
   {% for key, section in fields[dataset] %}
     {% set rows = [] %}
 
@@ -42,28 +44,26 @@
       {% set status_ui = true %}
       {% set status_api = true %}
 
-      {% if orgInfo.flsSchema[dataset] %}
-        {% if field.path is iterable and field.path is not string %}
-          {% for path in field.path %}
-            {% for item in orgInfo.flsSchema[dataset] %}
-              {% if item.field == path %}
-                {% if item.ui == false %}
-                  {% set status_ui = false %}
-                {% endif %}
-                {% if item.api == false %}
-                  {% set status_api = false %}
-                {% endif %}
+      {% if field.path is iterable and field.path is not string %}
+        {% for path in field.path %}
+          {% for pair in schemaList %}
+            {% if pair.field == path %}
+              {% if pair.ui == false %}
+                {% set status_ui = false %}
               {% endif %}
-            {% endfor %}
-          {% endfor %}
-        {% else %}
-          {% for item in orgInfo.flsSchema[dataset] %}
-            {% if item.field == field.path %}
-              {% set status_ui = item.ui %}
-              {% set status_api = item.api %}
+              {% if pair.api == false %}
+                {% set status_api = false %}
+              {% endif %}
             {% endif %}
           {% endfor %}
-        {% endif %}
+        {% endfor %}
+      {% else %}
+        {% for pair in schemaList %}
+          {% if pair.field == field.path %}
+            {% set status_ui = pair.ui %}
+            {% set status_api = pair.api %}
+          {% endif %}
+        {% endfor %}
       {% endif %}
 
       {% set row = [
@@ -78,3 +78,4 @@
     {{ authorisedDataSummaryCard(section.header, rows) }}
   {% endfor %}
 {% endmacro %}
+
