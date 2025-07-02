@@ -1,0 +1,81 @@
+{% from "govuk/components/tag/macro.njk" import govukTag %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+
+{% macro authorisedDataSummaryCard(title, rows) %}
+  <div class="govuk-summary-card">
+    <div class="govuk-summary-card__title-wrapper">
+      <h2 class="govuk-summary-card__title">{{ title }}</h2>
+    </div>
+    <div class="govuk-summary-card__content">
+      {{ govukTable({
+        classes: "govuk-table govuk-!-margin-bottom-0",
+        firstCellIsHeader: false,
+        head: [
+          { text: "Data type" },
+          { text: "User interface" },
+          { text: "API" }
+        ],
+        rows: rows
+      }) }}
+    </div>
+  </div>
+{% endmacro %}
+
+{% macro booleanTag(value) %}
+  {% set tagText = "No" %}
+  {% set tagClass = "govuk-tag--red" %}
+  {% if value === true %}
+    {% set tagText = "Yes" %}
+    {% set tagClass = "govuk-tag--turquoise" %}
+  {% endif %}
+  {{ govukTag({
+    text: tagText,
+    classes: tagClass
+  }) }}
+{% endmacro %}
+
+{% macro addFields(dataset, fields, orgInfo) %}
+  {% set schemaList = orgInfo.flsSchema[dataset] or [] %}
+
+  {% for key, section in fields[dataset] %}
+    {% set rows = [] %}
+
+    {% for field in section.fields %}
+      {% set status_ui = true %}
+      {% set status_api = true %}
+
+      {% if field.path is iterable and field.path is not string %}
+        {% for path in field.path %}
+          {% for pair in schemaList %}
+            {% if pair.field == path %}
+              {% if pair.ui == false %}
+                {% set status_ui = false %}
+              {% endif %}
+              {% if pair.api == false %}
+                {% set status_api = false %}
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+      {% else %}
+        {% for pair in schemaList %}
+          {% if pair.field == field.path %}
+            {% set status_ui = pair.ui %}
+            {% set status_api = pair.api %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+
+      {% set row = [
+        { text: field.label },
+        { text: booleanTag(status_ui), classes: "govuk-!-width-one-quarter" },
+        { text: booleanTag(status_api), classes: "govuk-!-width-one-quarter" }
+      ] %}
+
+      {% set rows = rows.concat([row]) %}
+    {% endfor %}
+
+    {{ authorisedDataSummaryCard(section.header, rows) }}
+  {% endfor %}
+{% endmacro %}
+
