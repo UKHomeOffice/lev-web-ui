@@ -35,6 +35,11 @@
 {% endmacro %}
 
 {% macro addFields(dataset, fields, orgInfo) %}
+
+  {% if fields is none or fields | length == 0 or not fields[dataset] %}
+    This search functionality is currently disabled.
+  {% else %}
+
   {% set schemaList = orgInfo.flsSchema[dataset] or [] %}
 
   {% for key, section in fields[dataset] %}
@@ -77,5 +82,7 @@
 
     {{ authorisedDataSummaryCard(section.header, rows) }}
   {% endfor %}
+  {% endif %}
+
 {% endmacro %}
 
