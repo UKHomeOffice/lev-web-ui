@@ -1,5 +1,5 @@
-const filterUIMapperByPermissions = require('../../../lib/filterUIMapperByPermissions');
 const completeUIMapper = require('../../../lib/FullDatasetFieldMapper')
+const {filterUIMapperByPermissions} = require('../../../helpers/FlsSchemaHelper');
 
 describe('filterUIMapperByPermissions', () => {
 
