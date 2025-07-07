@@ -93,8 +93,12 @@ function optimiseForUserManagementRender(fullMapper, schemaData) {
           paths.forEach(path => {
             const schemaEntry = schemaLookup[path];
             if (schemaEntry) {
-              status_ui = schemaEntry.ui ?? false;
-              status_api = schemaEntry.api ?? false;
+              if (schemaEntry.ui === true) {
+                status_ui = true;
+              }
+              if (schemaEntry.api === true) {
+                status_api = true;
+              }
             }
           });
 
