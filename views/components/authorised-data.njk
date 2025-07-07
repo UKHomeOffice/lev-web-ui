@@ -34,47 +34,19 @@
   }) }}
 {% endmacro %}
 
-{% macro addFields(dataset, fields, orgInfo) %}
-
-  {% if fields is none or fields | length == 0 or not fields[dataset] %}
+{% macro addFields(dataset, optimizedFields, orgInfo) %}
+  {% if optimizedFields is none or optimizedFields | length == 0 or not optimizedFields[dataset] %}
     This search functionality is currently disabled.
   {% else %}
 
-  {% set schemaList = orgInfo.flsSchema[dataset] or [] %}
-
-  {% for key, section in fields[dataset] %}
+  {% for key, section in optimizedFields[dataset] %}
     {% set rows = [] %}
 
     {% for field in section.fields %}
-      {% set status_ui = true %}
-      {% set status_api = true %}
-
-      {% if field.path is iterable and field.path is not string %}
-        {% for path in field.path %}
-          {% for pair in schemaList %}
-            {% if pair.field == path %}
-              {% if pair.ui == false %}
-                {% set status_ui = false %}
-              {% endif %}
-              {% if pair.api == false %}
-                {% set status_api = false %}
-              {% endif %}
-            {% endif %}
-          {% endfor %}
-        {% endfor %}
-      {% else %}
-        {% for pair in schemaList %}
-          {% if pair.field == field.path %}
-            {% set status_ui = pair.ui %}
-            {% set status_api = pair.api %}
-          {% endif %}
-        {% endfor %}
-      {% endif %}
-
       {% set row = [
         { text: field.label },
-        { text: booleanTag(status_ui), classes: "govuk-!-width-one-quarter" },
-        { text: booleanTag(status_api), classes: "govuk-!-width-one-quarter" }
+        { text: booleanTag(field.computed_status_ui), classes: "govuk-!-width-one-quarter" },
+        { text: booleanTag(field.computed_status_api), classes: "govuk-!-width-one-quarter" }
       ] %}
 
       {% set rows = rows.concat([row]) %}
@@ -83,6 +55,4 @@
     {{ authorisedDataSummaryCard(section.header, rows) }}
   {% endfor %}
   {% endif %}
-
 {% endmacro %}
-
