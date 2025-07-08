@@ -34,12 +34,12 @@
   }) }}
 {% endmacro %}
 
-{% macro addFields(dataset, optimizedFields, orgInfo) %}
-  {% if optimizedFields is none or optimizedFields | length == 0 or not optimizedFields[dataset] %}
+{% macro addFields(dataset, fields, orgInfo) %}
+  {% if fields is none or fields | length == 0 or not fields[dataset] %}
     This search functionality is currently disabled.
   {% else %}
 
-  {% for key, section in optimizedFields[dataset] %}
+  {% for key, section in fields[dataset] %}
     {% set rows = [] %}
 
     {% for field in section.fields %}
