@@ -54,7 +54,7 @@ function filterUIMapperByPermissions(permissions, completeUIMapper) {
  * A function that applies the FLS schema to the full UI mapper and indicates whether fields are permitted for UI and API rendering.
  * It's optimised for rendering in Nunjucks templates which previously highlighted performance issues.
  *
- * This DOES NOT remove any fields, it only marks them as permitted or not and is intended to to the schema to LEV Administrators.
+ * This DOES NOT remove any fields, it only marks them as permitted or not and is intended to display the schema to LEV Administrators.
  *
  * @param fullMapper The full UI mapper containing all datasets and fields.
  * @param schemaData The FLS schema against the Organisation.
