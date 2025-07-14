@@ -1,6 +1,6 @@
 const BaseController = require('../BaseController');
 const { getRequest } = require('../../services/UserManagement/IamApiService');
-const filterUIMapperByPermissions = require("../../lib/filterUIMapperByPermissions");
+const { optimiseForUserManagementRender } = require('../../helpers/FlsSchemaHelper');
 const fullDatasetFieldMapper = require("../../lib/FullDatasetFieldMapper");
 const requestOptions = require("../../helpers/requestOptions");
 const { iamApi } = require("../../config");
@@ -18,8 +18,7 @@ class ViewOrganisationAuthorisedDataController extends BaseController {
 
       req.sessionModel.set('orgResults', searchResults);
 
-      const fields = filterUIMapperByPermissions(searchResults.flsSchema, fullDatasetFieldMapper)
-
+      const fields = optimiseForUserManagementRender(fullDatasetFieldMapper, searchResults.flsSchema);
       req.sessionModel.set('fields', fields);
 
       next();
