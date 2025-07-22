@@ -52,7 +52,7 @@ describe('Partnership results', () => {
     });
 
     it('a limited version is displayed in a table', () => {
-      PartnershipDetailsPage.hasLimitedRecord(result);
+      PartnershipDetailsPage.hasCompleteRecord(result);
     });
 
     it('contains a link back to the search screen', () => {
@@ -86,7 +86,7 @@ describe('Partnership results', () => {
       it('a details page should be displayed', () => {
         PartnershipDetailsPage.shouldBeVisible();
         PartnershipDetailsPage.hasExpectedTitle(searchMultipleRecords.results[0]);
-        PartnershipDetailsPage.hasLimitedRecord(searchMultipleRecords.results[0]);
+        PartnershipDetailsPage.hasCompleteRecord(searchMultipleRecords.results[0]);
       });
     });
 

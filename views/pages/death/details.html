@@ -10,39 +10,7 @@
 {% set govukServiceUrl = "/death" %}
 {% set rowsArray = [] %}
 
-{% macro redact(value) %}
-    {{ "UNAVAILABLE" if record.status.blocked else value }}
-{% endmacro %}
-
-{% set hmpoTitle -%}
-    {{ redact(record.deceased.forenames) }} {{ redact(record.deceased.surname) }} {{ redact(record.deceased.dateOfBirth | date("DD/MM/YYYY")) }}
-{%- endset %}
-
-{% macro deceasedName() %}
-    {{ record.deceased.forenames }} {{ record.deceased.surname }}
-    {% for alias in record.deceased.aliases %}
-        {% if alias.type %}
-            <br/>
-            {{ [alias.type, alias.prefix, alias.forenames, alias.surname, alias.suffix] | filter | join(" ") }}
-        {% endif %}
-    {% endfor %}
-{% endmacro %}
-
-{% macro deceasedOccupation() %}
-    {% if record.deceased.occupation %}
-        {{ record.deceased.occupation }} {{ "(retired)" if record.deceased.retired }}
-    {% elseif record.partner.occupation %}
-        <br/>
-        {{ record.deceased.relationshipToPartner }} {{ record.partner.name }}, {{ record.partner.occupation }} {{ "(retired)" if record.partner.retired }}
-    {% else %}
-        {% if record.father.occupation %}
-            <br/> Child of {{ record.father.name }}, {{ record.father.occupation }}
-        {% endif %}
-        {% if record.mother.occupation %}
-            <br/> Child of {{ record.mother.name }}, {{ record.mother.occupation }}
-        {% endif %}
-    {% endif %}
-{% endmacro %}
+{% set hmpoTitle -%} {{ title }} {%- endset %}
 
 {% block mainContent %}
     {{ super() }}
@@ -56,51 +24,10 @@
 
     {% include "../links.html" %}
 
-    {% set rowsArray = (rowsArray.push([
-        { text: "System number" },
-        { text: record.id }
-    ],[
-        { html: "<h2>Deceased</h2>", colspan: 2, classes: "section-head" }
-    ],[
-        { text: "Name" },
-        { html: redact(deceasedName()) }
-    ]), rowsArray) %}
-    {% set rowsArray = (rowsArray.push([
-        { text: "Date of birth" },
-        { text: redact(record.deceased.dateOfBirth | date("DD/MM/YYYY")) }
-    ]), rowsArray) %}
-    {% set rowsArray = (rowsArray.push([
-        { text: "Sex" },
-        { text: redact(record.deceased.sex) }
-    ],[
-        { text: "Address" },
-        { text: redact(record.deceased.address) }
-    ]), rowsArray) %}
-    {% set rowsArray = (rowsArray.push([
-        { text: "Date of death" },
-        { text: redact([record.deceased.dateOfDeathQualifier, record.deceased.dateOfDeath | date("DD/MM/YYYY")] | filter | join(" ")) }
-    ]), rowsArray) %}
-    {% set rowsArray = (rowsArray.push([
-        { html: "<h2>Registration</h2>", colspan: 2, classes: "section-head" }
-    ]), rowsArray) %}
-    {% set rowsArray = (rowsArray.push([
-        { text: "Sub-district" },
-        { text: redact(record.registrar.subdistrict) }
-    ],[
-        { text: "District" },
-        { text: redact(record.registrar.district) }
-    ],[
-        { text: "Administrative area" },
-        { text: redact(record.registrar.administrativeArea) }
-    ],[
-        { text: "Date of registration" },
-        { text: redact(record.date | date("DD/MM/YYYY")) }
-    ]), rowsArray) %}
-
     {{ govukTable({
         classes: "details",
         firstCellIsHeader: true,
-        rows: rowsArray
+        rows: record
     }) }}
 
     <div class="govuk-button-group">

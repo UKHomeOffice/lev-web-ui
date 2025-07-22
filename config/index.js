@@ -51,5 +51,10 @@ module.exports = {
     // Date should be in correct format of dd/MM/yyyy
     renewalDate: process.env.SYOPS_RENEWAL_DATE,
     metadataCacheSeconds: process.env.METADATA_CACHE_SECONDS || 900
+  },
+  fls: {
+    enabled: process.env.FLS_ENABLED.toLowerCase() === 'true' || false,
+    schemaCacheSeconds: process.env.FLS_SCHEMA_CACHE_SECONDS || 900
+
   }
 };

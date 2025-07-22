@@ -25,6 +25,7 @@ describe('filterUIMapperByPermissions', () => {
       },
       partnership: {
         groupD: [
+          { field: "dateOfPartnership", ui: true },
           { field: "registrar.district", ui: true }
         ]
       }
@@ -60,10 +61,10 @@ describe('filterUIMapperByPermissions', () => {
         }
       },
       partnership: {
-        registration: {
-          header: "Registration details",
+        details: {
+          header: "Civil partnership details",
           fields: [
-            { path: "registrar.district", label: "District" },
+            { path: "dateOfPartnership", label: "Date of civil partnership" }
           ]
         }
       }

@@ -1,11 +1,11 @@
-{% if record.previousRegistration and not record.status.blocked %}
+{% if record.previousRegistration and not record.status.blocked and not record.flags.refer %}
     {{ levFlag(ctx, {
         key: "reRegistrationLabel",
         html: hmpoSubmit(ctx, {id: "previousRegistration", key: "reRegistrationLink", href: govukServiceUrl + "/details/" + record.previousRegistration.id})
     }) }}
 {% endif %}
 
-{% if record.nextRegistration and not record.status.blocked %}
+{% if record.nextRegistration and not record.status.blocked and not record.flags.refer %}
     {{ levFlag(ctx, {
         key: "replaced",
         type: "warning",

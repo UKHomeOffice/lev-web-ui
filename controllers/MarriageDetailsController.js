@@ -4,6 +4,9 @@ const BaseController = require('./BaseController');
 const MarriageSearchService = require('../services/MarriageSearchService');
 const requestOptions = require("../helpers/requestOptions");
 const { api } = require("../config");
+const { recordBuilder } = require("../helpers/FlsSchemaHelper");
+const fullDatasetFieldMapper = require("../lib/FullDatasetFieldMapper");
+const { flsSchemaCache } = require("../helpers/flsSchemaCache");
 
 class MarriageDetailsController extends BaseController {
   locals(req, res, callback) {
@@ -42,7 +45,13 @@ class MarriageDetailsController extends BaseController {
       }
 
       if (record) {
-        locals.record = record;
+        const flsSchema = await flsSchemaCache(req);
+
+        locals.record = recordBuilder(fullDatasetFieldMapper.marriage, flsSchema?.marriage, record);
+        locals.record.previousRegistration = record.previousRegistration;
+        locals.record.nextRegistration = record.nextRegistration;
+        locals.record.flags = record.flags;
+        locals.title = !record.status.blocked ? `${record.bride.forenames} ${record.bride.surname} & ${record.groom.forenames} ${record.groom.surname} ` : "UNAVAILABLE"
         locals.showBackToResults = searchResults.length > 1;
 
         callback(null, locals);

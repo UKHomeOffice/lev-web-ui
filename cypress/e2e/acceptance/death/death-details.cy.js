@@ -21,7 +21,7 @@ describe('Death details', () => {
     it('a details page should be displayed', () => {
       DeathDetailsPage.shouldBeVisible();
       DeathDetailsPage.hasExpectedTitle(searchSingleRecord.result);
-      DeathDetailsPage.hasLimitedRecord(searchSingleRecord.result);
+      DeathDetailsPage.hasCompleteRecord(searchSingleRecord.result);
       DeathDetailsPage.newSearchButtonExists();
       DeathDetailsPage.editSearchButtonExists();
       DeathDetailsPage.backToResultsButtonNotExists();
@@ -38,7 +38,7 @@ describe('Death details', () => {
     it('a details page should be displayed', () => {
       DeathDetailsPage.shouldBeVisible();
       DeathDetailsPage.hasExpectedTitle(searchMultipleRecords.results[0]);
-      DeathDetailsPage.hasLimitedRecord(searchMultipleRecords.results[0]);
+      DeathDetailsPage.hasCompleteRecord(searchMultipleRecords.results[0]);
       DeathDetailsPage.newSearchButtonExists();
       DeathDetailsPage.editSearchButtonExists();
       DeathDetailsPage.backToResultsButtonExists();
@@ -130,7 +130,7 @@ describe('Death details', () => {
     it('a details page should be displayed', () => {
       DeathDetailsPage.shouldBeVisible();
       DeathDetailsPage.hasExpectedTitle(searchSingleRecord.result);
-      DeathDetailsPage.hasLimitedRecord(searchSingleRecord.result);
+      DeathDetailsPage.hasCompleteRecord(searchSingleRecord.result);
       DeathDetailsPage.newSearchButtonExists();
       DeathDetailsPage.editSearchButtonExists();
       DeathDetailsPage.backToResultsButtonNotExists();

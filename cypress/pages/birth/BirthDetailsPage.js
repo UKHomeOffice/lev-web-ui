@@ -10,36 +10,35 @@ class BirthDetailsPage extends DetailsPage {
   }
 
   static recordDisplaysSystemNumber(record) {
-    cy.get('.details tr').eq(0).contains(`System number ${record.id}`);
+    cy.get('.details tr').eq(1).contains(`System number ${record.id}`);
   }
 
   static recordDisplaysChildDetails(record) {
-    cy.get('.details tr').eq(2).contains(`Surname ${record.child.surname}`);
-    cy.get('.details tr').eq(3).contains(`Forename(s) ${record.child.forenames}`);
-    cy.get('.details tr').eq(4).contains(`Date of birth ${record.child.dateOfBirth}`);
-    cy.get('.details tr').eq(5).contains(`Sex ${record.child.sex}`);
-    cy.get('.details tr').eq(6).contains(`Place of birth ${record.child.birthplace}`);
+    cy.get('.details tr').eq(3).contains(`Last name ${record.child.surname}`);
+    cy.get('.details tr').eq(4).contains(`First and middle names ${record.child.forenames}`);
+    cy.get('.details tr').eq(5).contains(`Date of birth ${record.child.dateOfBirth}`);
+    cy.get('.details tr').eq(6).contains(`Sex ${record.child.sex}`);
+    cy.get('.details tr').eq(7).contains(`Place of birth ${record.child.birthplace}`);
   }
 
   static recordDisplaysMotherDetails(record) {
-    cy.get('.details tr').eq(8).contains(`Name ${record.mother.forenames} ${record.mother.surname}`);
-    cy.get('.details tr').eq(9).contains(`Maiden name ${record.mother.maidenSurname}`);
-    cy.get('.details tr').eq(10)
-      .contains(`Surname at marriage if different from maiden name ${record.mother.marriageSurname}`);
-    cy.get('.details tr').eq(11).contains(`Place of birth ${record.mother.birthplace}`);
+    cy.get('.details tr').eq(9).contains(`Name ${record.mother.forenames} ${record.mother.surname}`);
+    cy.get('.details tr').eq(10).contains(`Maiden name ${record.mother.maidenSurname}`);
+    cy.get('.details tr').eq(11).contains(`Last name at marriage ${record.mother.marriageSurname}`);
+    cy.get('.details tr').eq(12).contains(`Place of birth ${record.mother.birthplace}`);
   }
 
   static recordDisplaysFatherDetails(record) {
-    cy.get('.details tr').eq(13).contains(`Name ${record.father.forenames} ${record.father.surname}`);
-    cy.get('.details tr').eq(14).contains(`Place of birth ${record.father.birthplace}`);
+    cy.get('.details tr').eq(14).contains(`Name ${record.father.forenames} ${record.father.surname}`);
+    cy.get('.details tr').eq(15).contains(`Place of birth ${record.father.birthplace}`);
   }
 
   static recordDisplaysRegistrationDetails(record) {
-    cy.get('.details tr').eq(16).contains('Birth registered by Mother');
-    cy.get('.details tr').eq(17).contains(`Registration district ${record.registrar.district}`);
-    cy.get('.details tr').eq(18).contains(`Sub-district ${record.registrar.subdistrict}`);
-    cy.get('.details tr').eq(19).contains(`Administrative area ${record.registrar.administrativeArea}`);
-    cy.get('.details tr').eq(20).contains(`Date of registration ${record.date}`);
+    cy.get('.details tr').eq(17).contains('Birth registered by Mother');
+    cy.get('.details tr').eq(18).contains(`Registration district ${record.registrar.district}`);
+    cy.get('.details tr').eq(19).contains(`Sub-district ${record.registrar.subdistrict}`);
+    cy.get('.details tr').eq(20).contains(`Administrative area ${record.registrar.administrativeArea}`);
+    cy.get('.details tr').eq(21).contains(`Date of registration ${record.date}`);
   }
 
   static flagVisible(flag) {

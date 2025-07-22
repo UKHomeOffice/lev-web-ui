@@ -30,15 +30,20 @@ class DeathResultsPage extends ResultsPage {
    * @param results
    */
   static hasExpectedResults(results) {
-    for (let index = 0; index < results.length; index++) {
-      const { deceased } = results[index];
-      const offset = index * 4;
+    cy.get('tbody tr').eq(0).contains(`${results[0].deceased.forenames} ${results[0].deceased.surname}`);
+    cy.get('tbody tr').eq(1).contains(`Date of birth ${results[0].deceased.dateOfBirth}`);
+    cy.get('tbody tr').eq(2).contains(`Address ${results[0].deceased.address}`);
+    cy.get('tbody tr').eq(3).contains(`Date of death ${results[0].deceased.dateOfDeath}`);
 
-      cy.get('tbody tr').eq(offset + 0).contains(`${deceased.forenames} ${deceased.surname}`);
-      cy.get('tbody tr').eq(offset + 1).contains(`Date of birth ${deceased.dateOfBirth}`);
-      cy.get('tbody tr').eq(offset + 2).contains(`Address ${deceased.address}`);
-      cy.get('tbody tr').eq(offset + 3).contains(`Date of death ${deceased.dateOfDeath}`);
-    }
+    cy.get('tbody tr').eq(4).contains(`${results[1].deceased.forenames} ${results[2].deceased.surname}`);
+    cy.get('tbody tr').eq(5).contains(`Date of birth ${results[1].deceased.dateOfBirth}`);
+    cy.get('tbody tr').eq(6).contains(`Address ${results[1].deceased.address}`);
+    cy.get('tbody tr').eq(7).contains(`Date of death ${results[1].deceased.dateOfDeath}`);
+
+    cy.get('tbody tr').eq(8).contains(`${results[2].deceased.forenames} ${results[1].deceased.surname}`);
+    cy.get('tbody tr').eq(9).contains(`Date of birth ${results[2].deceased.dateOfBirth}`);
+    cy.get('tbody tr').eq(10).contains(`Address ${results[2].deceased.address}`);
+    cy.get('tbody tr').eq(11).contains(`Date of death ${results[2].deceased.dateOfDeath}`);
   }
 
   static hasExpectedFlags(results) {

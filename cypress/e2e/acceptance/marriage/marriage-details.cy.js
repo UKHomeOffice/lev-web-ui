@@ -29,7 +29,7 @@ describe('Marriage details page', () => {
     });
 
     it('a limited version is displayed in a table', () => {
-      MarriageDetailsPage.hasLimitedRecord(result);
+      MarriageDetailsPage.hasCompleteRecord(result);
     });
 
     it('contains a link back to the search screen', () => {
