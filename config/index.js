@@ -53,7 +53,7 @@ module.exports = {
     metadataCacheSeconds: process.env.METADATA_CACHE_SECONDS || 900
   },
   fls: {
-    enabled: process.env.FLS_ENABLED.toLowerCase() === 'true' || false,
+    enabled: process.env.FLS_ENABLED?.toLowerCase() === 'true' || false,
     schemaCacheSeconds: process.env.FLS_SCHEMA_CACHE_SECONDS || 900
 
   }
