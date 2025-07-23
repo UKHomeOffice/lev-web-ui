@@ -8,27 +8,33 @@
 {% set govukServiceNameKey = translate("pages.death.serviceName") %}
 {% set govukServiceTitleKey = translate("pages.death.detailPage.pageTitle") %}
 {% set govukServiceUrl = "/death" %}
-{% set rowsArray = [] %}
 
-{% set hmpoTitle -%} {{ title }} {%- endset %}
+{% set hasRecord = record and record.length > 0 %}
+
+{% if hasRecord %}
+    {% set hmpoTitle = title %}
+{% else %}
+    {% set hmpoTitle = "User Organisation does not have permission to access records" %}
+{% endif %}
 
 {% block mainContent %}
     {{ super() }}
+    {% if hasRecord %}
+        {% if record.flags.refer %}
+            {{ levFlag(ctx, {key: "refer", type: "alert"}) }}
+        {% endif %}
+        {% if record.flags.corrected %}
+            {{ levFlag(ctx, {key: "corrected", type: "warning"}) }}
+        {% endif %}
 
-    {% if record.flags.refer %}
-        {{ levFlag(ctx, {key: "refer", type: "alert"}) }}
+        {% include "../links.html" %}
+
+        {{ govukTable({
+            classes: "details",
+            firstCellIsHeader: true,
+            rows: record
+        }) }}
     {% endif %}
-    {% if record.flags.corrected %}
-        {{ levFlag(ctx, {key: "corrected", type: "warning"}) }}
-    {% endif %}
-
-    {% include "../links.html" %}
-
-    {{ govukTable({
-        classes: "details",
-        firstCellIsHeader: true,
-        rows: record
-    }) }}
 
     <div class="govuk-button-group">
         {{ hmpoSubmit(ctx, {id: "newSearch", key: "newSearch", href: "/death"}) }}

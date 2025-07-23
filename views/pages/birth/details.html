@@ -9,19 +9,26 @@
 {% set govukServiceTitleKey = translate("pages.birth.detailPage.pageTitle") %}
 {% set govukServiceUrl = "/birth" %}
 
-{% set hmpoTitle -%} {{ title }} {%- endset %}
+{% set hasRecord = record and record.length > 0 %}
+
+{% if hasRecord %}
+    {% set hmpoTitle = title %}
+{% else %}
+    {% set hmpoTitle = "User Organisation does not have permission to access records" %}
+{% endif %}
 
 {% block mainContent %}
     {{ super() }}
+    {% if hasRecord %}
+        {% include "./flags.html" %}
+        {% include "../links.html" %}
 
-    {% include "./flags.html" %}
-    {% include "../links.html" %}
-
-    {{ govukTable({
-        classes: "details",
-        firstCellIsHeader: true,
-        rows: record
-    }) }}
+        {{ govukTable({
+            classes: "details",
+            firstCellIsHeader: true,
+            rows: record
+        }) }}
+    {% endif %}
 
     <div class="govuk-button-group">
         {{ hmpoSubmit(ctx, {id: "newSearch", key: "newSearch", href: "/birth"}) }}

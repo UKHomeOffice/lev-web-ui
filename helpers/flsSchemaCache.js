@@ -19,7 +19,7 @@ module.exports.flsSchemaCache = async (req) => {
 
     const organisationInfo = await getRequest({
       ...requestOptions(req, iamApi),
-      url: `/admin/organisations/${getUserOrganisation(req)}`,
+      url: `/admin/organisations/${await getUserOrganisation(req)}`,
     });
 
     flsSchema = organisationInfo.flsSchema;

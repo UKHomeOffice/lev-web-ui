@@ -69,6 +69,7 @@ const isFieldPermitted = (itemPath, permissions) => {
  */
 
 const recordBuilder = (mapper, permissions, record) => {
+  if (!permissions && config.fls.enabled) { return [] }
   return Object.entries(mapper).reduce((acc, [_, value]) => {
     if (!value.fields) return acc;
 
