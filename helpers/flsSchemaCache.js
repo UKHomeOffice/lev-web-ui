@@ -13,7 +13,7 @@ module.exports.flsSchemaCache = async (req) => {
   let flsSchema;
 
   try {
-    flsSchema = await redisService.get(`flsSchema:${getUserOrganisation(req)}`);
+    flsSchema = await redisService.get(`flsSchema:${await getUserOrganisation(req)}`);
 
     if (flsSchema) return JSON.parse(flsSchema);
 
@@ -23,7 +23,7 @@ module.exports.flsSchemaCache = async (req) => {
     });
 
     flsSchema = organisationInfo.flsSchema;
-    await redisService.set(`flsSchema:${getUserOrganisation(req)}`, JSON.stringify(flsSchema), config.fls.schemaCacheSeconds);
+    await redisService.set(`flsSchema:${await getUserOrganisation(req)}`, JSON.stringify(flsSchema), config.fls.schemaCacheSeconds);
 
     return flsSchema;
   }
