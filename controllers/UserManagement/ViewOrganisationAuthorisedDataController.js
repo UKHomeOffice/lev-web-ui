@@ -1,6 +1,6 @@
 const BaseController = require('../BaseController');
 const { getRequest } = require('../../services/UserManagement/IamApiService');
-const { optimiseForUserManagementRender } = require('../../helpers/FlsSchemaHelper');
+const { optimiseForUserManagementRender } = require('../../helpers/FlsSchemaHelpers');
 const fullDatasetFieldMapper = require("../../lib/FullDatasetFieldMapper");
 const requestOptions = require("../../helpers/requestOptions");
 const { iamApi } = require("../../config");

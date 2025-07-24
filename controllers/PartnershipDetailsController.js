@@ -4,7 +4,7 @@ const BaseController = require('./BaseController');
 const PartnershipSearchService = require('../services/PartnershipSearchService');
 const requestOptions = require("../helpers/requestOptions");
 const { api } = require("../config");
-const { recordBuilder } = require("../helpers/FlsSchemaHelper");
+const { recordRowsBuilder } = require("../helpers/recordRowsBuilder");
 const fullDatasetFieldMapper = require("../lib/FullDatasetFieldMapper");
 const { flsSchemaCache } = require("../helpers/flsSchemaCache");
 
@@ -47,7 +47,7 @@ class PartnershipDetailsController extends BaseController {
       if (record) {
         const flsSchema = await flsSchemaCache(req);
 
-        locals.record = recordBuilder(fullDatasetFieldMapper.partnership, flsSchema?.partnership, record);
+        locals.record = recordRowsBuilder(fullDatasetFieldMapper.partnership, flsSchema?.partnership, record);
         locals.record.previousRegistration = record.previousRegistration;
         locals.record.nextRegistration = record.nextRegistration;
         locals.record.flags = record.flags;

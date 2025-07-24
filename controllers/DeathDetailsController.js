@@ -5,7 +5,8 @@ const DeathSearchService = require('../services/DeathSearchService');
 const requestOptions = require("../helpers/requestOptions");
 const { api } = require("../config");
 const { flsSchemaCache } = require("../helpers/flsSchemaCache");
-const { recordBuilder, formatDate } = require("../helpers/FlsSchemaHelper");
+const { formatDate } = require("../helpers/FlsSchemaHelpers");
+const { recordRowsBuilder } = require("../helpers/recordRowsBuilder");
 const fullDatasetFieldMapper = require("../lib/FullDatasetFieldMapper");
 
 class DeathDetailsController extends BaseController {
@@ -47,7 +48,7 @@ class DeathDetailsController extends BaseController {
       if (record) {
         const flsSchema = await flsSchemaCache(req);
 
-        locals.record = recordBuilder(fullDatasetFieldMapper.death, flsSchema?.death, record);
+        locals.record = recordRowsBuilder(fullDatasetFieldMapper.death, flsSchema?.death, record);
         locals.record.previousRegistration = record.previousRegistration;
         locals.record.nextRegistration = record.nextRegistration;
         locals.record.flags = record.flags;

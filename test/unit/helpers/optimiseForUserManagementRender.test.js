@@ -1,5 +1,5 @@
 const completeUIMapper = require('../../../lib/FullDatasetFieldMapper');
-const {optimiseForUserManagementRender} = require('../../../helpers/FlsSchemaHelper');
+const {optimiseForUserManagementRender} = require('../../../helpers/FlsSchemaHelpers');
 
 describe('optimiseForUserManagementRender', () => {
   it('marks fields as permitted or not for UI/API', () => {
