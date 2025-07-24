@@ -83,3 +83,14 @@ enable access.
 
 The api expects a client header to be set that is added by another service. For local development and testing, this variable
 (API_ORIGINAL_CLIENT) can be added in a .env file and will be used in requests to the locally running api.
+
+### Field Level Security (fls)
+
+A feature has been added to dictate which fields an organisation can view in an event record. This is controlled via a schema
+that is retrieved and mapped against the field schema `lib/FullDatasetFieldMapper.js`.
+
+A mapping of allowed fields, setting values and formatting is then applied via `helpers/recordRowsBuilder.js` - this returns an array
+of all headers, values etc that is rendered in the details table. Previous issues with nunjucks led to this approach and is more performant than
+the templating producing the values. 
+
+It can be disabled via the environment variable FLS_ENABLED="false" in a .env file.
