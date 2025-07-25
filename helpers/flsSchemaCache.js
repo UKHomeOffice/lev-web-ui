@@ -2,7 +2,7 @@ const config = require("../config");
 const { iamApi } = require("../config");
 const requestOptions = require('../helpers/requestOptions');
 const redisService = require("../lib/redisCacheService");
-const getUserOrganisation = require("../helpers/getUserOrganisation");
+const getUserMetadata = require("./getUserMetadata");
 const { getRequest } = require("../services/UserManagement/IamApiService");
 const logger = require('hmpo-logger').get();
 
@@ -13,17 +13,22 @@ module.exports.flsSchemaCache = async (req) => {
   let flsSchema;
 
   try {
-    flsSchema = await redisService.get(`flsSchema:${await getUserOrganisation(req)}`);
+
+    const userMetadata = await getUserMetadata();
+
+    flsSchema = await redisService.get(`flsSchema:${userMetadata.organisationId}`);
 
     if (flsSchema) return JSON.parse(flsSchema);
 
+    const orgId = process.env.ORGANISATION_ID || userMetadata.organisationId;
+
     const organisationInfo = await getRequest({
       ...requestOptions(req, iamApi),
-      url: `/admin/organisations/${await getUserOrganisation(req)}`,
+      url: `/admin/organisations/${orgId}`,
     });
 
     flsSchema = organisationInfo.flsSchema;
-    await redisService.set(`flsSchema:${await getUserOrganisation(req)}`, JSON.stringify(flsSchema), config.fls.schemaCacheSeconds);
+    await redisService.set(`flsSchema:${userMetadata.orgId}`, JSON.stringify(flsSchema), config.fls.schemaCacheSeconds);
 
     return flsSchema;
   }

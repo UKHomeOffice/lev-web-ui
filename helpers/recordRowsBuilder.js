@@ -1,6 +1,6 @@
 const config = require("../config");
 
-const { isFieldPermitted, getNestedValue } = require('./FlsSchemaHelpers')
+const { isFieldPermitted, getNestedValue } = require('./FlsSchemaHelpers');
 
 /**
  * A function that applies the FLS schema to a record. It generates rows with only the data that is authorised and in the
@@ -14,25 +14,25 @@ const { isFieldPermitted, getNestedValue } = require('./FlsSchemaHelpers')
 
 module.exports.recordRowsBuilder = (mapper, permissions, record) => {
   if (!permissions && config.fls.enabled) { return [] }
-  return Object.entries(mapper).reduce((acc, [_, value]) => {
-    if (!value.fields) return acc;
+  return Object.entries(mapper).reduce((rows, [_, value]) => {
+    if (!value.fields) return rows;
 
     const permittedFields = value.fields.filter(item =>
       isFieldPermitted(item.path, permissions)
     );
 
-    if (permittedFields.length === 0) return acc;
+    if (permittedFields.length === 0) return rows;
 
     if (value.header) {
-      acc.push([{ html: `<h2>${value.header}</h2>`, colspan: 2, classes: "section-head" }]);
+      rows.push([{ html: `<h2>${value.header}</h2>`, colspan: 2, classes: "section-head" }]);
     }
 
     permittedFields.forEach(item => {
-      acc.push([
+      rows.push([
         { text: item.label },
         { html: getNestedValue(record, item.path) }
       ]);
     });
-    return acc;
+    return rows;
   }, []);
 }
