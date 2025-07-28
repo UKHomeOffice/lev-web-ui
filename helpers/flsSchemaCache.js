@@ -16,11 +16,11 @@ module.exports.flsSchemaCache = async (req) => {
 
     const userMetadata = await getUserMetadata(req);
 
-    flsSchema = await redisService.get(`flsSchema:${userMetadata.organisationId}`);
+    const orgId = process.env.ORGANISATION_ID || userMetadata.organisationId;
+
+    flsSchema = await redisService.get(`flsSchema:${orgId}`);
 
     if (flsSchema) return JSON.parse(flsSchema);
-
-    const orgId = process.env.ORGANISATION_ID || userMetadata.organisationId;
 
     const organisationInfo = await getRequest({
       ...requestOptions(req, iamApi),
@@ -28,7 +28,7 @@ module.exports.flsSchemaCache = async (req) => {
     });
 
     flsSchema = organisationInfo.flsSchema;
-    await redisService.set(`flsSchema:${userMetadata.orgId}`, JSON.stringify(flsSchema), config.fls.schemaCacheSeconds);
+    await redisService.set(`flsSchema:${orgId}`, JSON.stringify(flsSchema), config.fls.schemaCacheSeconds);
 
     return flsSchema;
   }
