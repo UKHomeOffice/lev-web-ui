@@ -1,5 +1,5 @@
 const completeUIMapper = require('../../../lib/FullDatasetFieldMapper');
-const {optimiseForUserManagementRender} = require('../../../helpers/FlsSchemaHelper');
+const {optimiseForUserManagementRender} = require('../../../helpers/FlsSchemaHelpers');
 
 describe('optimiseForUserManagementRender', () => {
   it('marks fields as permitted or not for UI/API', () => {
@@ -18,8 +18,8 @@ describe('optimiseForUserManagementRender', () => {
     expect(result.birthV1.child.fields.find(f => f.path === 'child.surname').computed_status_ui).toBe(false);
     expect(result.birthV1.child.fields.find(f => f.path === 'child.surname').computed_status_api).toBe(true);
     // Fields not in schemaData should default to false
-    expect(result.birthV1.child.fields.find(f => f.path === 'date').computed_status_ui).toBe(false);
-    expect(result.birthV1.child.fields.find(f => f.path === 'date').computed_status_api).toBe(false);
+    expect(result.birthV1.child.fields.find(f => f.path === 'child.dateOfBirth').computed_status_ui).toBe(false);
+    expect(result.birthV1.child.fields.find(f => f.path === 'child.dateOfBirth').computed_status_api).toBe(false);
     expect(result.birthV1.child.fields.find(f => f.path === 'child.sex').computed_status_ui).toBe(false);
     expect(result.birthV1.child.fields.find(f => f.path === 'child.sex').computed_status_api).toBe(false);
     expect(result.birthV1.child.fields.find(f => f.path === 'child.birthplace').computed_status_ui).toBe(false);

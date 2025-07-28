@@ -4,6 +4,10 @@ const BaseController = require('./BaseController');
 const DeathSearchService = require('../services/DeathSearchService');
 const requestOptions = require("../helpers/requestOptions");
 const { api } = require("../config");
+const { flsSchemaCache } = require("../helpers/flsSchemaCache");
+const { formatDate } = require("../helpers/FlsSchemaHelpers");
+const { recordRowsBuilder } = require("../helpers/recordRowsBuilder");
+const fullDatasetFieldMapper = require("../lib/FullDatasetFieldMapper");
 
 class DeathDetailsController extends BaseController {
   locals(req, res, callback) {
@@ -42,7 +46,13 @@ class DeathDetailsController extends BaseController {
       }
 
       if (record) {
-        locals.record = record;
+        const flsSchema = await flsSchemaCache(req);
+
+        locals.record = recordRowsBuilder(fullDatasetFieldMapper.death, flsSchema?.death, record);
+        locals.record.previousRegistration = record.previousRegistration;
+        locals.record.nextRegistration = record.nextRegistration;
+        locals.record.flags = record.flags;
+        locals.title = !record.status.blocked ? `${record.deceased.forenames} ${record.deceased.surname} ${formatDate(record.deceased.dateOfBirth)}` : "UNAVAILABLE"
         locals.showBackToResults = searchResults.length > 1;
 
         callback(null, locals);

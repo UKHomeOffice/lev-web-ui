@@ -4,11 +4,14 @@ import pluginJs from '@eslint/js';
 export default [
   {
     ignores: [
-      'public/**', 
+      'public/**',
     ],
   },
   {
     files: ['**/*.js'],
+    rules: {
+      "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }]
+    },
     languageOptions: {
       sourceType: 'script',
       globals: {

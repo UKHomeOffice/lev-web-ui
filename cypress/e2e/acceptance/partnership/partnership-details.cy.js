@@ -29,7 +29,7 @@ describe('Partnership details page', () => {
     });
 
     it('a limited version is displayed in a table', () => {
-      PartnershipDetailsPage.hasLimitedRecord(result);
+      PartnershipDetailsPage.hasCompleteRecord(result);
     });
 
     it('contains a link back to the search screen', () => {

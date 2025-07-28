@@ -52,7 +52,7 @@ describe('Marriage results', () => {
     });
 
     it('a limited version is displayed in a table', () => {
-      MarriageDetailsPage.hasLimitedRecord(result);
+      MarriageDetailsPage.hasCompleteRecord(result);
     });
 
     it('contains a link back to the search screen', () => {
@@ -86,7 +86,7 @@ describe('Marriage results', () => {
       it('a details page should be displayed', () => {
         MarriageDetailsPage.shouldBeVisible();
         MarriageDetailsPage.hasExpectedTitle(searchMultipleRecords.results[0]);
-        MarriageDetailsPage.hasLimitedRecord(searchMultipleRecords.results[0]);
+        MarriageDetailsPage.hasCompleteRecord(searchMultipleRecords.results[0]);
       });
     });
 

@@ -9,86 +9,26 @@
 {% set govukServiceTitleKey = translate("pages.birth.detailPage.pageTitle") %}
 {% set govukServiceUrl = "/birth" %}
 
-{% macro redact(value) %}
-    {{ "UNAVAILABLE" if record.status.blocked else value }}
-{% endmacro %}
+{% set hasRecord = record and record.length > 0 %}
 
-{% set hmpoTitle -%}
-    {{ redact(record.child.forenames) }} {{ redact(record.child.surname) }} {{ redact(record.child.dateOfBirth | date("DD/MM/YYYY")) }}
-{%- endset %}
+{% if hasRecord %}
+    {% set hmpoTitle = title %}
+{% else %}
+    {% set hmpoTitle = "User Organisation does not have permission to access records" %}
+{% endif %}
 
 {% block mainContent %}
     {{ super() }}
+    {% if hasRecord %}
+        {% include "./flags.html" %}
+        {% include "../links.html" %}
 
-    {% include "./flags.html" %}
-    {% include "../links.html" %}
-
-    {{ govukTable({
-        classes: "details",
-        firstCellIsHeader: true,
-        rows: [
-            [
-                { text: "System number" },
-                { text: record.id }
-            ],[
-                { html: "<h2>Child</h2>", colspan: 2, classes: "section-head" }
-            ],[
-                { text: "Surname" },
-                { text: redact(record.child.surname) }
-            ],[
-                { text: "Forename(s)" },
-                { text: redact(record.child.forenames) }
-            ],[
-                { text: "Date of birth" },
-                { text: redact(record.child.dateOfBirth | date("DD/MM/YYYY")) }
-            ],[
-                { text: "Sex" },
-                { text: redact(record.child.sex) }
-            ],[
-                { text: "Place of birth" },
-                { text: redact(record.child.birthplace) }
-            ],[
-                { html: "<h2>Mother</h2>", colspan: 2, classes: "section-head" }
-            ],[
-                { text: "Name" },
-                { text: redact(record.mother.forenames + " " + record.mother.surname) }
-            ],[
-                { text: "Maiden name" },
-                { text: redact(record.mother.maidenSurname) }
-            ],[
-                { html: "Surname at marriage <p class=\"govuk-body-s\">if different from maiden name</p>" },
-                { text: redact(record.mother.marriageSurname) }
-            ],[
-                { text: "Place of birth" },
-                { text: redact(record.mother.birthplace) }
-            ],[
-                { html: "<h2>Father / Parent</h2>", colspan: 2, classes: "section-head" }
-            ],[
-                { text: "Name" },
-                { text: redact(record.father.forenames + " " + record.father.surname) }
-            ],[
-                { text: "Place of birth" },
-                { text: redact(record.father.birthplace) }
-            ],[
-                { html: "<h2>Registration</h2>", colspan: 2, classes: "section-head" }
-            ],[
-                { text: "Birth registered by" },
-                { text: redact([record.informant1.qualification, record.informant2.qualification] | filter | join(", ")) }
-            ],[
-                { text: "Registration district" },
-                { text: redact(record.registrar.district) }
-            ],[
-                { text: "Sub-district" },
-                { text: redact(record.registrar.subdistrict) }
-            ],[
-                { text: "Administrative area" },
-                { text: redact(record.registrar.administrativeArea) }
-            ],[
-                { text: "Date of registration" },
-                { text: redact(record.date | date("DD/MM/YYYY")) }
-            ]
-        ]
-    }) }}
+        {{ govukTable({
+            classes: "details",
+            firstCellIsHeader: true,
+            rows: record
+        }) }}
+    {% endif %}
 
     <div class="govuk-button-group">
         {{ hmpoSubmit(ctx, {id: "newSearch", key: "newSearch", href: "/birth"}) }}

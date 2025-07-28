@@ -3,11 +3,13 @@ const redisService = require('../../../lib/redisCacheService');
 const IamApiService = require('../../../services/UserManagement/IamApiService');
 const config = require('../../../config');
 const SyopsRenewalNotRequired = require('../../../helpers/SyopsRenewalNotRequired');
-const getCurrentUser = require('../../../helpers/getCurrentUser')
+const getCurrentUser = require('../../../helpers/getCurrentUser');
+const getUserMetadata = require('../../../helpers/getUserMetadata');
 var mockLoggerInstance;
 
 jest.mock('../../../lib/redisCacheService');
 jest.mock('../../../helpers/getCurrentUser');
+jest.mock('../../../helpers/getUserMetadata');
 jest.mock('../../../services/UserManagement/IamApiService', () => ({
   getRequest: jest.fn()
 }));
@@ -38,13 +40,22 @@ describe('syopsAcceptanceCheck', () => {
     next = jest.fn();
 
     redisService.get.mockResolvedValue(null);
+    redisService.set.mockResolvedValue(null);
     config.bypassSyops = false;
     config.syops = {
       renewalDate: '01-01-2023',
       metadataCacheSeconds: 3600
     };
     SyopsRenewalNotRequired.mockReturnValue(false);
-    getCurrentUser.mockReturnValue("malcolm.tucker@dosac.gov.uk")
+    getCurrentUser.mockReturnValue("malcolm.tucker@dosac.gov.uk");
+    getUserMetadata.mockResolvedValue({
+      user: "malcolm.tucker@dosac.gov.uk",
+      organisationId: "f1a903b2-d756-4f25-b50b-b1a9ef0afbab",
+      metadata: {
+      syopsAcceptedAt: "01-01-2025",
+      lastActive: "2025-07-25T10:53:33.729Z"
+      }
+    })
   });
 
   it('should call next if config.bypassSyops is true', async () => {
@@ -56,8 +67,10 @@ describe('syopsAcceptanceCheck', () => {
     expect(res.redirect).not.toHaveBeenCalled();
   });
 
-  it('should call next if SyopsAccepted is true in Redis', async () => {
-    redisService.get.mockResolvedValue(true);
+  it('should call next if user metadata retrieved with syops agreement and not renewal date', async () => {
+    config.syops = {
+      renewalDate: null
+    };
 
     await syopsAcceptanceCheck(req, res, next);
 
@@ -106,7 +119,7 @@ describe('syopsAcceptanceCheck', () => {
 
   it('should log an error if an exception is thrown', async () => {
     const error = new Error('Sponge Avengers');
-    IamApiService.getRequest.mockRejectedValue(error);
+    getUserMetadata.mockRejectedValue(error);
 
     await syopsAcceptanceCheck(req, res, next);
 

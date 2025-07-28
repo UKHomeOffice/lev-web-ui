@@ -8,97 +8,30 @@
 {% set govukServiceNameKey = translate("pages.partnership.serviceName") %}
 {% set govukServiceTitleKey = translate("pages.partnership.detailPage.pageTitle") %}
 {% set govukServiceUrl = "/partnership" %}
-{% set rowsArray = [] %}
 
-{% macro redact(value) %}
-    {{ "UNAVAILABLE" if record.status.blocked else value }}
-{% endmacro %}
+{% set hasRecord = record and record.length > 0 %}
 
-{% set hmpoTitle -%}
-    {{ redact(record.partner2.forenames) }} {{ redact(record.partner2.surname) }} & {{ redact(record.partner1.forenames) }} {{ redact(record.partner1.surname) }}
-{%- endset %}
-
-{% macro partner(title, partner) %}
-    {% set rowsArray = (rowsArray.push([
-        { html: "<h2>" + title + "</h2>", colspan: 2, classes: "section-head" }
-    ],[
-        { text: "Surname" },
-        { html: redact(partner.surname) }
-    ],[
-        { text: "Forename(s)" },
-        { html: redact(partner.forenames) }
-    ]), rowsArray) %}
-    {% set rowsArray = (rowsArray.push([
-        { text: "Address" },
-        { html: redact(partner.address) }
-    ]), rowsArray) %}
-{% endmacro %}
-
-{% macro parent(title, parent) %}
-    {% set rowsArray = (rowsArray.push([
-        { html: "<h2>" + title + "</h2>", colspan: 2, classes: "section-head" }
-    ],[
-        { text: "Surname" },
-        { html: redact(parent.surname) }
-    ],[
-        { text: "Forename(s)" },
-        { html: redact(parent.forenames) }
-    ],[
-        { text: "Occupation" },
-        { html: redact(occupation(parent)) }
-    ],[
-        { text: "Designation" },
-        { html: redact(parent.designation) }
-    ],[
-        { text: "Deceased" },
-        { html: redact(yesNo(parent.deceased)) }
-    ]), rowsArray) %}
-{% endmacro %}
-
-{% macro witness(title, witness) %}
-    {% set rowsArray = (rowsArray.push([
-        { html: "<h2>" + title + "</h2>", colspan: 2, classes: "section-head" }
-    ],[
-        { text: "Signature" },
-        { html: redact(witness.forename + " " + witness.surname) }
-    ]), rowsArray) %}
-{% endmacro %}
-
-{% macro occupation(person) %}
-    {{ person.occupation }} {{ "(retired)" if person.retired }}
-{% endmacro %}
-
-{% macro yesNo(value) %}
-    {{ "Yes" if value else "No" }}
-{% endmacro %}
+{% if hasRecord %}
+    {% set hmpoTitle = title %}
+{% else %}
+    {% set hmpoTitle = "User Organisation does not have permission to access records" %}
+{% endif %}
 
 {% block mainContent %}
     {{ super() }}
+    {% if hasRecord %}
+        {% if record.flags.refer %}
+            {{ levFlag(ctx, {key: "refer", type: "alert"}) }}
+        {% endif %}
 
-    {% if record.flags.refer %}
-        {{ levFlag(ctx, {key: "refer", type: "alert"}) }}
+        {% include "../links.html" %}
+
+        {{ govukTable({
+            classes: "details",
+            firstCellIsHeader: true,
+            rows: record
+        }) }}
     {% endif %}
-
-    {% include "../links.html" %}
-
-    {% set rowsArray = (rowsArray.push([
-        { text: "Entry number" },
-        { text: record.id }
-    ],[
-        { text: "Date of civil partnership" },
-        { text: redact(record.dateOfPartnership | date("DD/MM/YYYY")) }
-    ],[
-        { text: "Place of civil partnership" },
-        { html: redact(record.placeOfPartnership.address) }
-    ]), rowsArray) %}
-    {{ partner('Partner 1', record.partner1) }}
-    {{ partner('Partner 2', record.partner2) }}
-
-    {{ govukTable({
-        classes: "details",
-        firstCellIsHeader: true,
-        rows: rowsArray
-    }) }}
 
     <div class="govuk-button-group">
         {{ hmpoSubmit(ctx, {id: "newSearch", key: "newSearch", href: "/partnership"}) }}

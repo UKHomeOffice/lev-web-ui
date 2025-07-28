@@ -4,6 +4,7 @@ const BaseController = require('./BaseController');
 const IamApiService = require("../services/UserManagement/IamApiService");
 const SyopsRenewalRequired = require("../helpers/SyopsRenewalNotRequired");
 const requestOptions = require('../helpers/requestOptions');
+const getUserMetadata = require("../helpers/getUserMetadata");
 const { iamApi, syops } = require("../config");
 const logger = require('hmpo-logger').get();
 
@@ -11,10 +12,7 @@ class SyopsController extends BaseController {
   // re-running of middleware function is if page is navigated directly to, to not render accept button if accepted already
   async getValues(req, res, next) {
     try {
-      const data = await IamApiService.getRequest({
-        ...requestOptions(req, iamApi),
-        url: '/user/metadata'
-      });
+      const data = await getUserMetadata(req);
 
       const syopsDate = data.metadata.syopsAcceptedAt;
 

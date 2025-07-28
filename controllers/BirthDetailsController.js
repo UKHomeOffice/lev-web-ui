@@ -4,6 +4,10 @@ const BaseController = require('./BaseController');
 const BirthSearchService = require('../services/BirthSearchService');
 const requestOptions = require("../helpers/requestOptions");
 const { api } = require("../config");
+const { formatDate } = require("../helpers/FlsSchemaHelpers");
+const { recordRowsBuilder } = require("../helpers/recordRowsBuilder");
+const fullDatasetFieldMapper = require("../lib/FullDatasetFieldMapper");
+const { flsSchemaCache } = require("../helpers/flsSchemaCache");
 
 class BirthDetailsController extends BaseController {
   locals(req, res, callback) {
@@ -42,7 +46,13 @@ class BirthDetailsController extends BaseController {
       }
 
       if (record) {
-        locals.record = record;
+        const flsSchema = await flsSchemaCache(req);
+
+        locals.record = recordRowsBuilder(fullDatasetFieldMapper.birthV1, flsSchema?.birthV1, record);
+        locals.record.previousRegistration = record.previousRegistration;
+        locals.record.nextRegistration = record.nextRegistration;
+        locals.record.flags = record.flags;
+        locals.title = !record.status.blocked ? `${record.child.forenames} ${record.child.surname} ${formatDate(record.child.dateOfBirth)}` : "UNAVAILABLE"
         locals.showBackToResults = searchResults.length > 1;
 
         callback(null, locals);

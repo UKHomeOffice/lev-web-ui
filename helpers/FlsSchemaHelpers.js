@@ -1,53 +1,60 @@
-function filterUIMapperByPermissions(permissions, completeUIMapper) {
-  const allowedUIFieldsByRecordType = {};
+const config = require("../config");
 
-  Object.entries(permissions).forEach(([recordType, permissionGroups]) => {
-    if (recordType === 'birthV0') return;
+const formatDate = (value) => {
+  if (typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value)) {
+    const [year, month, day] = value.split("-");
+    return `${day}/${month}/${year}`;
+  }
+  return value;
+};
 
-    allowedUIFieldsByRecordType[recordType] = new Set();
+const formatAlias = (alias) => {
+  if (!alias || !alias.type) return null;
+  const parts = [alias.type, alias.prefix, alias.forenames, alias.surname, alias.suffix];
+  return parts.filter(Boolean).join(" ").trim();
+};
 
-    Object.values(permissionGroups).flat().forEach(permission => {
-      // this will likely need to be parameterised/re-used for the search results
-      // if (permission.ui === true)
-      if (permission?.field) {
-        allowedUIFieldsByRecordType[recordType].add(permission.field);
-      }
-    });
-  });
+const addDeathAliases = (record) => {
+  const aliases = record?.deceased?.aliases || [];
+  return aliases.map(formatAlias).filter(Boolean).join("<br>");
+};
 
-  const filteredMapper = {};
-
-  Object.entries(completeUIMapper).forEach(([recordType, sections]) => {
-    const allowedFields = allowedUIFieldsByRecordType[recordType];
-    if (!allowedFields) return;
-
-    const filteredSections = {};
-
-    Object.entries(sections).forEach(([sectionKey, section]) => {
-      if (!Array.isArray(section.fields)) return;
-
-      const filteredFields = section.fields.filter(field => {
-        if (Array.isArray(field.path)) {
-          return field.path.every(paths => allowedFields.has(paths));
-        } else {
-          return allowedFields.has(field.path);
-        }
-      });
-
-      if (filteredFields.length > 0) {
-        filteredSections[sectionKey] = {
-          header: section.header,
-          fields: filteredFields
-        };
-      }
-    });
-
-    if (Object.keys(filteredSections).length > 0) {
-      filteredMapper[recordType] = filteredSections;
+const resolvePathValue = (record, path) => {
+  return path.split('.').reduce((obj, key) => {
+    if (key === "placeOfMarriage" && obj[key]?.parish) {
+      return { address: `${obj[key].address} in the parish of ${obj[key].parish}` };
     }
-  });
+    return obj?.[key];
+  }, record);
+};
 
-  return filteredMapper;
+const getNestedValue = (record, path) => {
+  if (record.status?.blocked && path !== "id") return "UNAVAILABLE";
+
+  const resolveAndFormat = (p) => formatDate(resolvePathValue(record, p));
+
+  if (Array.isArray(path)) {
+    const result = path.map(resolveAndFormat);
+
+    const needsAlias = ['deceased.forenames', 'deceased.surname'].every(p => path.includes(p));
+    if (record?.deceased?.aliases && needsAlias) {
+      result.push("<br>" + addDeathAliases(record));
+    }
+
+    return result.join(" ");
+  }
+
+  return resolveAndFormat(path);
+};
+
+const isFieldPermitted = (itemPath, permissions) => {
+  if (!config.fls.enabled) return true;
+  if (Array.isArray(itemPath)) {
+    return itemPath.some(path =>
+      permissions.some(p => p.field === path && p.ui)
+    );
+  }
+  return permissions.some(p => p.field === itemPath && p.ui);
 }
 
 /**
@@ -117,6 +124,11 @@ function optimiseForUserManagementRender(fullMapper, schemaData) {
 }
 
 module.exports = {
-  filterUIMapperByPermissions,
-  optimiseForUserManagementRender
+  optimiseForUserManagementRender,
+  formatDate,
+  formatAlias,
+  resolvePathValue,
+  getNestedValue,
+  isFieldPermitted,
+  addDeathAliases
 };
