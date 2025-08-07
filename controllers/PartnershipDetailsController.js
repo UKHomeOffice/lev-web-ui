@@ -45,7 +45,7 @@ class PartnershipDetailsController extends BaseController {
       }
 
       if (record) {
-        const flsSchema = await flsSchemaCache(req);
+        const flsSchema = (await flsSchemaCache(req))?.flsSchema;
 
         locals.record = recordRowsBuilder(fullDatasetFieldMapper.partnership, flsSchema?.partnership, record);
         locals.record.previousRegistration = record.previousRegistration;

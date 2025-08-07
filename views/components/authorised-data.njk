@@ -1,10 +1,11 @@
 {% from "govuk/components/tag/macro.njk" import govukTag %}
 {% from "govuk/components/table/macro.njk" import govukTable %}
 
-{% macro authorisedDataSummaryCard(title, rows) %}
+{% macro authorisedDataSummaryCard(title, rows, dataset, sectionKey) %}
   <div class="govuk-summary-card">
     <div class="govuk-summary-card__title-wrapper">
       <h2 class="govuk-summary-card__title">{{ title }}</h2>
+      <a href="change-authorised-data/{{ dataset }}/{{ sectionKey }}" class="govuk-!-margin-top-1">Change</a>
     </div>
     <div class="govuk-summary-card__content">
       {{ govukTable({
@@ -34,12 +35,12 @@
   }) }}
 {% endmacro %}
 
-{% macro addFields(dataset, fields, orgInfo) %}
+{% macro addFields(dataset, fields) %}
   {% if fields is none or fields | length == 0 or not fields[dataset] %}
     This search functionality is currently disabled.
   {% else %}
 
-  {% for key, section in fields[dataset] %}
+  {% for sectionKey, section in fields[dataset] %}
     {% set rows = [] %}
 
     {% for field in section.fields %}
@@ -52,7 +53,7 @@
       {% set rows = rows.concat([row]) %}
     {% endfor %}
 
-    {{ authorisedDataSummaryCard(section.header, rows) }}
+    {{ authorisedDataSummaryCard(section.header, rows, dataset, sectionKey) }}
   {% endfor %}
   {% endif %}
 {% endmacro %}

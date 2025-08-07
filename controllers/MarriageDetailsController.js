@@ -45,7 +45,7 @@ class MarriageDetailsController extends BaseController {
       }
 
       if (record) {
-        const flsSchema = await flsSchemaCache(req);
+        const flsSchema = (await flsSchemaCache(req))?.flsSchema;
 
         locals.record = recordRowsBuilder(fullDatasetFieldMapper.marriage, flsSchema?.marriage, record);
         locals.record.previousRegistration = record.previousRegistration;

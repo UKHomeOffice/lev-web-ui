@@ -46,7 +46,7 @@ class BirthDetailsController extends BaseController {
       }
 
       if (record) {
-        const flsSchema = await flsSchemaCache(req);
+        const flsSchema = (await flsSchemaCache(req))?.flsSchema;
 
         locals.record = recordRowsBuilder(fullDatasetFieldMapper.birthV1, flsSchema?.birthV1, record);
         locals.record.previousRegistration = record.previousRegistration;

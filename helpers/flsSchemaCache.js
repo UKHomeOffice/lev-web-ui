@@ -10,7 +10,7 @@ module.exports.flsSchemaCache = async (req) => {
 
   if (!config.fls.enabled) { return }
 
-  let flsSchema;
+  let flsPayload;
 
   try {
 
@@ -18,19 +18,19 @@ module.exports.flsSchemaCache = async (req) => {
 
     const orgId = process.env.ORGANISATION_ID || userMetadata.organisationId;
 
-    flsSchema = await redisService.get(`flsSchema:${orgId}`);
+    flsPayload = await redisService.get(`flsSchema:${orgId}`);
 
-    if (flsSchema) return JSON.parse(flsSchema);
+    if (flsPayload) return JSON.parse(flsPayload);
 
     const organisationInfo = await getRequest({
       ...requestOptions(req, iamApi),
       url: `/admin/organisations/${orgId}`,
     });
 
-    flsSchema = organisationInfo.flsSchema;
-    await redisService.set(`flsSchema:${orgId}`, JSON.stringify(flsSchema), config.fls.schemaCacheSeconds);
+    flsPayload = { flsSchema: organisationInfo.flsSchema, orgInfo: { name: organisationInfo.name, id: orgId } };
+    await redisService.set(`flsSchema:${orgId}`, JSON.stringify(flsPayload), config.fls.schemaCacheSeconds);
 
-    return flsSchema;
+    return flsPayload;
   }
   catch (err) {
     logger.log('error', err);

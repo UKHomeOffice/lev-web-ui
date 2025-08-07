@@ -6,6 +6,7 @@ const SyopsRenewalRequired = require("../helpers/SyopsRenewalNotRequired");
 const requestOptions = require('../helpers/requestOptions');
 const getUserMetadata = require("../helpers/getUserMetadata");
 const { iamApi, syops } = require("../config");
+const redisService = require("../lib/redisCacheService");
 const logger = require('hmpo-logger').get();
 
 class SyopsController extends BaseController {
@@ -29,10 +30,13 @@ class SyopsController extends BaseController {
   }
 
   async saveValues(req, res) {
-    await IamApiService.postRequest({
+    const metadata = await IamApiService.postRequest({
       ...requestOptions(req, iamApi),
       url: '/user/syops'
     });
+
+    await redisService.del(`${metadata.user}:UserMetadata`);
+
     res.redirect(req.session.originalRequestUrl || '/');
   }
 

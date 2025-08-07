@@ -46,7 +46,7 @@ class DeathDetailsController extends BaseController {
       }
 
       if (record) {
-        const flsSchema = await flsSchemaCache(req);
+        const flsSchema = (await flsSchemaCache(req))?.flsSchema;
 
         locals.record = recordRowsBuilder(fullDatasetFieldMapper.death, flsSchema?.death, record);
         locals.record.previousRegistration = record.previousRegistration;

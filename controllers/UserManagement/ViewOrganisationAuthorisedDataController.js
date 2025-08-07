@@ -1,24 +1,17 @@
 const BaseController = require('../BaseController');
-const { getRequest } = require('../../services/UserManagement/IamApiService');
 const { optimiseForUserManagementRender } = require('../../helpers/FlsSchemaHelpers');
 const fullDatasetFieldMapper = require("../../lib/FullDatasetFieldMapper");
-const requestOptions = require("../../helpers/requestOptions");
-const { iamApi } = require("../../config");
+const { flsSchemaCache } = require("../../helpers/flsSchemaCache");
 
 class ViewOrganisationAuthorisedDataController extends BaseController {
   async getValues(req, _res, next) {
 
     try {
-      this.validateGetRequest(req, _res, next);
 
-      const searchResults = await getRequest({
-        ...requestOptions(req, iamApi),
-        url: `/admin/organisations/${req.params.orgId}`,
-      });
+      const flsPayload = (await flsSchemaCache(req));
+      const fields = optimiseForUserManagementRender(fullDatasetFieldMapper, flsPayload.flsSchema);
 
-      req.sessionModel.set('orgResults', searchResults);
-
-      const fields = optimiseForUserManagementRender(fullDatasetFieldMapper, searchResults.flsSchema);
+      req.sessionModel.set('orgResults', flsPayload.orgInfo);
       req.sessionModel.set('fields', fields);
 
       next();
@@ -34,7 +27,12 @@ class ViewOrganisationAuthorisedDataController extends BaseController {
       locals.orgInfo = req.sessionModel.get('orgResults') || [];
       locals.fields = req.sessionModel.get('fields') || {};
       locals.backLink = '/admin/organisations';
+      locals.changeAuthorisedDataAttempt = req.sessionModel.get('changeAuthorisedDataAttempt');
+      locals.changeAuthorisedDataSuccess = req.sessionModel.get('changeAuthorisedDataSuccess');
       locals.IS_EXTERNAL = process.env.IS_EXTERNAL || 'true';
+
+      req.sessionModel.unset('changeAuthorisedDataAttempt');
+      req.sessionModel.unset('changeAuthorisedDataSuccess');
 
       callback(null, locals);
     });

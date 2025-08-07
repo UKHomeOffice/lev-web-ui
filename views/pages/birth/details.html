@@ -14,11 +14,16 @@
 {% if hasRecord %}
     {% set hmpoTitle = title %}
 {% else %}
-    {% set hmpoTitle = "User Organisation does not have permission to access records" %}
+
+    {#  need to look at this - potentially an error state #}
+    {% set hmpoTitle = "Sorry, there is a problem with the service" %}
+    <p>Search results are currently not available to members of your organisation.</p>
+    <p>Try again later. If the issue persists, contact an administrator.</p>
 {% endif %}
 
 {% block mainContent %}
     {{ super() }}
+
     {% if hasRecord %}
         {% include "./flags.html" %}
         {% include "../links.html" %}
