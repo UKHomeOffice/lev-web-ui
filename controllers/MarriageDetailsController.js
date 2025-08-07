@@ -7,6 +7,7 @@ const { api } = require("../config");
 const { recordRowsBuilder } = require("../helpers/recordRowsBuilder");
 const fullDatasetFieldMapper = require("../lib/FullDatasetFieldMapper");
 const { flsSchemaCache } = require("../helpers/flsSchemaCache");
+const { formatDate } = require("../helpers/FlsSchemaHelpers");
 
 class MarriageDetailsController extends BaseController {
   locals(req, res, callback) {
@@ -51,7 +52,13 @@ class MarriageDetailsController extends BaseController {
         locals.record.previousRegistration = record.previousRegistration;
         locals.record.nextRegistration = record.nextRegistration;
         locals.record.flags = record.flags;
-        locals.title = !record.status.blocked ? `${record.bride.forenames} ${record.bride.surname} & ${record.groom.forenames} ${record.groom.surname} ` : "UNAVAILABLE"
+
+        const hasCompleteMarriageDetails = record?.bride?.forenames && record?.bride?.surname && record?.groom?.forenames && record?.groom?.surname;
+
+        locals.title = (!record?.status?.blocked && hasCompleteMarriageDetails)
+          ? `${record.bride.forenames} ${record.bride.surname} & ${record.groom.forenames} ${record.groom.surname}`
+          : "UNAVAILABLE";
+
         locals.showBackToResults = searchResults.length > 1;
 
         callback(null, locals);

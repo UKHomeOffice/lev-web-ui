@@ -52,7 +52,13 @@ class DeathDetailsController extends BaseController {
         locals.record.previousRegistration = record.previousRegistration;
         locals.record.nextRegistration = record.nextRegistration;
         locals.record.flags = record.flags;
-        locals.title = !record.status.blocked ? `${record.deceased.forenames} ${record.deceased.surname} ${formatDate(record.deceased.dateOfBirth)}` : "UNAVAILABLE"
+
+        const hasCompleteDeceasedDetails = record?.deceased?.forenames && record?.deceased?.surname && record?.deceased?.dateOfBirth;
+
+        locals.title = (!record?.status?.blocked && hasCompleteDeceasedDetails)
+          ? `${record.deceased.forenames} ${record.deceased.surname} ${formatDate(record.deceased.dateOfBirth)}`
+          : "UNAVAILABLE";
+
         locals.showBackToResults = searchResults.length > 1;
 
         callback(null, locals);

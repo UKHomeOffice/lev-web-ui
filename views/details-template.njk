@@ -1,10 +1,22 @@
 {% extends "app-template.njk" %}
 
+{% set hasRecord = record and record.length > 0 %}
+
+{% if hasRecord %}
+  {% set hmpoTitle = title %}
+{% else %}
+  {% set hmpoTitle = "Sorry, there is a problem with the service" %}
+{% endif %}
+
 {% block hmpoContent %}
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             {% block mainContent %}
                 <h1 id="header" data-page="{{hmpoPageKey}}">{{ translate("pages." + hmpoPageKey + ".h1", { default: hmpoTitle }) | safe }}</h1>
+                {% if not hasRecord %}
+                  <p>Search results are currently not available to members of your organisation.</p>
+                  <p>Try again later. If the issue persists, contact an administrator.</p>
+                {% endif %}
             {% endblock %}
         </div>
     </div>

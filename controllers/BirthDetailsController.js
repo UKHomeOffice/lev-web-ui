@@ -52,8 +52,12 @@ class BirthDetailsController extends BaseController {
         locals.record.previousRegistration = record.previousRegistration;
         locals.record.nextRegistration = record.nextRegistration;
         locals.record.flags = record.flags;
-        locals.title = !record.status.blocked ? `${record.child.forenames} ${record.child.surname} ${formatDate(record.child.dateOfBirth)}` : "UNAVAILABLE"
-        locals.showBackToResults = searchResults.length > 1;
+
+        const hasCompleteChildDetails = record?.child?.forenames && record?.child?.surname && record?.child?.dateOfBirth;
+
+        locals.title = (!record?.status?.blocked && hasCompleteChildDetails)
+          ? `${record.child.forenames} ${record.child.surname} ${formatDate(record.child.dateOfBirth)}`
+          : "UNAVAILABLE";
 
         callback(null, locals);
       } else {

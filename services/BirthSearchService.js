@@ -22,6 +22,7 @@ class BirthSearchService extends SearchService {
       record.status.cancelled ||
       record.status.potentiallyFictitious ||
       (
+        record.status.reregistration &&
         record.status.reregistration !== 'None' &&
         record.status.reregistration !== 'Father added' &&
         record.status.reregistration !== 'Subsequently married' &&
@@ -29,6 +30,7 @@ class BirthSearchService extends SearchService {
         record.status.reregistration !== 'Replacement registration'
       ) ||
       (
+        record.status.marginalNote &&
         record.status.marginalNote !== 'None' &&
         record.status.marginalNote !== 'Court order in place' &&
         record.status.marginalNote !== 'Court order revoked'

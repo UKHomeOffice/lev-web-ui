@@ -51,7 +51,12 @@ class PartnershipDetailsController extends BaseController {
         locals.record.previousRegistration = record.previousRegistration;
         locals.record.nextRegistration = record.nextRegistration;
         locals.record.flags = record.flags;
-        locals.title = !record.status.blocked ? `${record.partner2.forenames} ${record.partner2.surname} & ${record.partner1.forenames} ${record.partner1.surname} ` : "UNAVAILABLE"
+
+        const hasCompletePartnershipDetails = record?.partner2?.forenames && record?.partner2?.surname && record?.partner1?.forenames && record?.partner1?.surname;
+
+        locals.title = (!record?.status?.blocked && hasCompletePartnershipDetails)
+          ? `${record.partner2.forenames} ${record.partner2.surname} & ${record.partner1.forenames} ${record.partner1.surname}`
+          : "UNAVAILABLE";
 
         locals.showBackToResults = searchResults.length > 1;
 
