@@ -7,7 +7,6 @@ const { api } = require("../config");
 const { recordRowsBuilder } = require("../helpers/recordRowsBuilder");
 const fullDatasetFieldMapper = require("../lib/FullDatasetFieldMapper");
 const { flsSchemaCache } = require("../helpers/flsSchemaCache");
-const { formatDate } = require("../helpers/FlsSchemaHelpers");
 
 class MarriageDetailsController extends BaseController {
   locals(req, res, callback) {

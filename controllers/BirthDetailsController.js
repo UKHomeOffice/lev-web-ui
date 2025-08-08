@@ -59,6 +59,8 @@ class BirthDetailsController extends BaseController {
           ? `${record.child.forenames} ${record.child.surname} ${formatDate(record.child.dateOfBirth)}`
           : "UNAVAILABLE";
 
+        locals.showBackToResults = searchResults.length > 1;
+
         callback(null, locals);
       } else {
         callback(this.pageNotFound());
