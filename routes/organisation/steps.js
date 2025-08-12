@@ -15,6 +15,7 @@ const OrganisationEditController = require('../../controllers/UserManagement/Org
 const OrganisationUpdateEmailDomain = require('../../controllers/UserManagement/OrganisationUpdateEmailDomain');
 const ManageOrganisationController = require('../../controllers/UserManagement/ManageOrganisationController');
 const ViewOrganisationAuthorisedDataController = require('../../controllers/UserManagement/ViewOrganisationAuthorisedDataController');
+const ChangeOrganisationAuthorisedDataController = require('../../controllers/UserManagement/ChangeOrganisationAuthorisedDataController');
 
 const externalRoutes = {
   '/': {
@@ -91,6 +92,11 @@ const internalRoutes = {
     controller: ViewOrganisationAuthorisedDataController,
     entryPoint: true,
     template: '/view-authorised-data.html'
+  },
+  '/:orgId/manage/change-authorised-data/:dataset/:sectionKey': {
+    controller: ChangeOrganisationAuthorisedDataController,
+    entryPoint: true,
+    template: '/change-authorised-data.html',
   },
   '/:orgId/add-email-domain': {
     fields: ["emailDomains"],

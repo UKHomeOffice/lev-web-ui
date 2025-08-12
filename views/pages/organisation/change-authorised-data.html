@@ -1,0 +1,123 @@
+{% extends "app-template.njk" %}
+
+{% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "hmpo-form/macro.njk" import hmpoForm %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+{% set govukServiceNameKey = translate("pages.user-management.serviceName") %}
+{% set govukServiceTitleKey = translate("pages.user-management.organisationPage.pageTitle") %}
+{% set govukServiceUrl = "/admin/organisations" %}
+{% set orgLink = govukServiceUrl + "/" + orgInfo.id %}
+
+{% from "govuk/components/tag/macro.njk" import govukTag %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+
+{% macro authorisedDataSummaryCard(title, rows) %}
+  <div class="govuk-summary-card">
+    <div class="govuk-summary-card__title-wrapper">
+      <h2 class="govuk-summary-card__title">{{ title }}</h2>
+    </div>
+    <div class="govuk-summary-card__content">
+      {{ govukTable({
+        classes: "govuk-table govuk-!-margin-bottom-0",
+        firstCellIsHeader: false,
+        head: [
+          { text: "Data type" },
+          { text: "Permission" }
+        ],
+        rows: rows
+      }) }}
+    </div>
+  </div>
+{% endmacro %}
+
+{% block hmpoContent %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      {% block mainContent %}
+        <div class="govuk-grid-row">
+
+          {% if errors %}
+            {{ govukErrorSummary({
+              titleText: "There is a problem",
+              errorList: [{ text: "API must also be allowed." }]
+            }) }}
+          {% endif %}
+
+          <h1>Change authorised data</h1>
+
+          <h2 class="govuk-heading-m">
+            <span class="govuk-!-font-weight-regular">Organisation:</span> {{ orgInfo.name }}
+          </h2>
+
+          <h2 class="govuk-heading-m">
+            <span class="govuk-!-font-weight-regular">Function:</span> {{ dataset | capitalize }}
+          </h2>
+
+          <h3>{{ fields.header }}</h3>
+
+          {% call hmpoForm(ctx) %}
+
+            {% set userInterfaceRows = [] %}
+            {% for item in fields.fields %}
+
+              {% set fieldError = errors[item.path] %}
+              {% if fieldError %}
+                {% set errorMessage = { text: fieldError.message } %}
+              {% else %}
+                {% set errorMessage = null %}
+              {% endif %}
+
+              {% set userInterfaceRows = userInterfaceRows.concat([[
+                { text: item.label },
+                { html: govukRadios({
+                  classes: "govuk-radios--inline govuk-radios--small",
+                  name: "ui[" + item.path + "]",
+                  errorMessage: errorMessage,
+                  items: [
+                    { value: "true", text: "Yes", checked: item.computed_status_ui == true },
+                    { value: "false", text: "No", checked: item.computed_status_ui == false }
+                  ]
+                }),
+                  classes: "govuk-!-width-one-half" }
+              ]]) %}
+            {% endfor %}
+
+            {% set apiRows = [] %}
+            {% for item in fields.fields %}
+              {% set apiRows = apiRows.concat([[
+                { text: item.label },
+                { html: govukRadios({
+                  classes: "govuk-radios--inline govuk-radios--small",
+                  name: "api[" + item.path + "]",
+                  items: [
+                    { value: "true", text: "Yes", checked: item.computed_status_api == true },
+                    { value: "false", text: "No", checked: item.computed_status_api == false }
+                  ]
+                }),
+                  classes: "govuk-!-width-one-half" }
+              ]]) %}
+            {% endfor %}
+
+            {{ authorisedDataSummaryCard("User interface", userInterfaceRows) }}
+            {{ authorisedDataSummaryCard("API", apiRows) }}
+
+            <div class="govuk-button-group">
+              {{ hmpoSubmit(ctx, {id: "save", key: "save" }) }}
+              {{ hmpoSubmit(ctx, {id: "back", key: "back", href: backLink, classes: "govuk-button--secondary"}) }}
+            </div>
+
+          {% endcall %}
+
+        </div>
+
+      {% endblock %}
+
+    </div>
+  </div>
+
+{% endblock %}

@@ -8,6 +8,7 @@
 {% from "components/authorised-data.njk" import addFields %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 
 {% set govukServiceNameKey = translate("pages.user-management.serviceName") %}
 {% set govukServiceTitleKey = translate("pages.user-management.organisationPage.pageTitle") %}
@@ -20,7 +21,25 @@
 
       {% block mainContent %}
         <div class="govuk-grid-row">
+
           <div class="govuk-grid-column-two-thirds">
+
+            {% set status = '' %}
+            {% set html = '' %}
+
+            {% if changeAuthorisedDataAttempt %}
+              {% if changeAuthorisedDataSuccess %}
+                {% set status = "success" %}
+                {% set html = "<h2>You have successfully changed " + orgInfo.name +  " search functions.</h2><p>Changes may take up to 15 minutes to take effect in search results.</p>" %}
+              {% endif %}
+
+              {{ govukNotificationBanner({
+                html: html,
+                type: status
+              }) }}
+
+            {% endif %}
+
             <h1>View authorised data</h1>
 
             <h2 class="govuk-heading-m">
@@ -35,28 +54,28 @@
               label: "Births",
               id: "birth",
               panel: {
-              html:  addFields("birthV1", fields, orgInfo)
+              html:  addFields("birthV1", fields)
             }
             },
             {
               label: "Deaths",
               id: "death",
               panel: {
-              html: addFields("death", fields, orgInfo)
+              html: addFields("death", fields)
             }
             },
             {
               label: "Marriages",
               id: "marriage",
               panel: {
-              html: addFields("marriage", fields, orgInfo)
+              html: addFields("marriage", fields)
             }
             },
             {
               label: "Civil Partnerships",
               id: "partnership",
               panel: {
-              html: addFields("partnership", fields, orgInfo)
+              html: addFields("partnership", fields)
             }
             }
           ]

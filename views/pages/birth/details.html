@@ -9,16 +9,9 @@
 {% set govukServiceTitleKey = translate("pages.birth.detailPage.pageTitle") %}
 {% set govukServiceUrl = "/birth" %}
 
-{% set hasRecord = record and record.length > 0 %}
-
-{% if hasRecord %}
-    {% set hmpoTitle = title %}
-{% else %}
-    {% set hmpoTitle = "User Organisation does not have permission to access records" %}
-{% endif %}
-
 {% block mainContent %}
     {{ super() }}
+
     {% if hasRecord %}
         {% include "./flags.html" %}
         {% include "../links.html" %}

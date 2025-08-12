@@ -45,13 +45,19 @@ class MarriageDetailsController extends BaseController {
       }
 
       if (record) {
-        const flsSchema = await flsSchemaCache(req);
+        const flsSchema = (await flsSchemaCache(req))?.flsSchema;
 
         locals.record = recordRowsBuilder(fullDatasetFieldMapper.marriage, flsSchema?.marriage, record);
         locals.record.previousRegistration = record.previousRegistration;
         locals.record.nextRegistration = record.nextRegistration;
         locals.record.flags = record.flags;
-        locals.title = !record.status.blocked ? `${record.bride.forenames} ${record.bride.surname} & ${record.groom.forenames} ${record.groom.surname} ` : "UNAVAILABLE"
+
+        const hasCompleteMarriageDetails = record?.bride?.forenames && record?.bride?.surname && record?.groom?.forenames && record?.groom?.surname;
+
+        locals.title = (!record?.status?.blocked && hasCompleteMarriageDetails)
+          ? `${record.bride.forenames} ${record.bride.surname} & ${record.groom.forenames} ${record.groom.surname}`
+          : "UNAVAILABLE";
+
         locals.showBackToResults = searchResults.length > 1;
 
         callback(null, locals);
