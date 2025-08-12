@@ -30,7 +30,7 @@
             {% if changeAuthorisedDataAttempt %}
               {% if changeAuthorisedDataSuccess %}
                 {% set status = "success" %}
-                {% set html = "<h2>You have successfully changed " + orgInfo.name +  " search functions.</h2>" %}
+                {% set html = "<h2>You have successfully changed " + orgInfo.name +  " search functions.</h2><p>Changes may take up to 15 minutes to take effect in search results.</p>" %}
               {% endif %}
 
               {{ govukNotificationBanner({
