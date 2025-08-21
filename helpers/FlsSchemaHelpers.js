@@ -1,4 +1,5 @@
 const config = require("../config");
+const { fls } = require("../config");
 
 const formatDate = (value) => {
   if (typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value)) {
@@ -68,6 +69,7 @@ const isFieldPermitted = (itemPath, permissions) => {
  * @returns {{}} An optimised data structure that is much faster to render in Nunjucks
  */
 function optimiseForUserManagementRender(fullMapper, schemaData) {
+  if (!fls.enabled) return {};
   const optimised = {};
 
   // Loop over the full mapper (all available datasets and fields).

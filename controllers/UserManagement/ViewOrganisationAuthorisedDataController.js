@@ -9,13 +9,14 @@ class ViewOrganisationAuthorisedDataController extends BaseController {
     try {
 
       const flsPayload = (await flsSchemaCache(req));
-      const fields = optimiseForUserManagementRender(fullDatasetFieldMapper, flsPayload.flsSchema);
+      const fields = optimiseForUserManagementRender(fullDatasetFieldMapper, flsPayload?.flsSchema);
 
-      req.sessionModel.set('orgResults', flsPayload.orgInfo);
+      req.sessionModel.set('orgResults', flsPayload?.orgInfo);
       req.sessionModel.set('fields', fields);
 
       next();
     } catch (err) {
+      console.log(err)
       err.template = 'errors/organisation-error';
       next(err);
     }
