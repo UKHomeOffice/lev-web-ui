@@ -14,7 +14,7 @@ COPY --chown=app:app assets/ /app/assets/
 RUN mkdir "logs"
 
 FROM base AS test
-RUN npm ci
+RUN npm ci --legacy-peer-deps
 COPY --chown=app:app . /app
 RUN npm run test
 
