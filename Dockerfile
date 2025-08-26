@@ -20,8 +20,8 @@ RUN npm run test
 
 FROM base AS prod
 
-ENV NODE_ENV production
-RUN npm ci --only=production
+ENV NODE_ENV=production
+RUN npm ci --legacy-peer-deps --only=production
 COPY --chown=app:app . /app
 
 USER 31337
