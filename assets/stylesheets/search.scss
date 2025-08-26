@@ -1,0 +1,44 @@
+$govuk-assets-path: "/public/";
+
+@import "node_modules/govuk-frontend/dist/govuk/index";
+@import "node_modules/hmpo-components/all";
+
+.govuk-label--m {
+  font-size: 19px;
+  padding: 0 0 5px 0;
+  margin: 0;
+}
+
+.govuk-label {
+  font-size: 19px;
+}
+
+.govuk-fieldset__legend {
+  font-size: 19px;
+  padding: 0 0 5px 0;
+  margin: 0;
+}
+
+.govuk-hint {
+  padding: 0 0 10px 0;
+  font-size: 19px;
+  margin-bottom: 0;
+}
+
+.govuk-input--width-10 {
+  max-width: none;
+  width: 315px;
+  height: 40px;
+  padding: 8px 7px 7px 7px;
+}
+
+.govuk-\!-width-one-half {
+  max-width: none;
+  width: 315px !important;
+  height: 40px;
+  padding: 8px 7px 7px 7px;
+}
+
+h1#header{
+  font-size: 36px;
+}
