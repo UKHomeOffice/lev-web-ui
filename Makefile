@@ -10,7 +10,7 @@ install:
 	npm install
 
 lint:
-	npm install && npm run lint .
+	npm install --legacy-peer-deps && npm run lint .
 
 test:
 	npm install --legacy-peer-deps && npm run test
