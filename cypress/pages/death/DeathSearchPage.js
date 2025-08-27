@@ -17,15 +17,18 @@ class DeathSearchPage extends SearchPage {
   static shouldBeVisible() {
 
     // Has title
-    cy.get('h1').contains('Applicant\'s details');
+    cy.get('h1').contains('Find a death record');
 
     // Has labels
-    cy.get('label[for=system-number]').contains('System number from death certificate');
-    cy.get('label[for=surname]').contains('Surname');
-    cy.get('label[for=forenames]').contains('Forename(s)');
+    cy.get('label[for=system-number]').contains('System number');
+    cy.get('label[for=surname]').contains('Last name');
+    cy.get('label[for=forenames]').contains('First and middle name');
     cy.get('label[for=dobd-day]').contains('Day');
     cy.get('label[for=dobd-month]').contains('Month');
     cy.get('label[for=dobd-year]').contains('Year');
+
+    // Has hint
+    cy.get('#system-number-hint').should('exist');
   }
 
   /**
@@ -73,13 +76,11 @@ class DeathSearchPage extends SearchPage {
   static noSystemNumber() {
     cy.get('.error-summary').contains('Fix the following error(s)');
     cy.get('.govuk-error-summary__list > li').contains('Please enter a number');
-    cy.get('#death-system-number-hint').should('exist');
   }
 
   static invalidLengthSystemNumber() {
     cy.get('.error-summary').contains('Fix the following error(s)');
     cy.get('.govuk-error-summary__list > li').contains('The system number should be 9 digits');
-    cy.get('#death-system-number-hint').should('exist');
   }
 
   static noForenames() {

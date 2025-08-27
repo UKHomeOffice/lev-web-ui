@@ -118,10 +118,6 @@ describe('Partnership search', () => {
         it('requests an entry number of the valid length', () => {
           PartnershipSearchPage.hasErrorMessage('The entry number should be 9 digits');
         });
-
-        it('shows the entry number details hint', () => {
-          PartnershipSearchPage.hasEntryNumberHint();
-        });
       });
     });
 
