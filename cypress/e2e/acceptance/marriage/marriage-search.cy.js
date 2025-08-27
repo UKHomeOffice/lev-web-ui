@@ -118,10 +118,6 @@ describe('Marriage search', () => {
         it('requests an entry number of the valid length', () => {
           MarriageSearchPage.hasErrorMessage('The entry number should be 9 digits');
         });
-
-        it('shows the entry number details hint', () => {
-          MarriageSearchPage.hasEntryNumberHint();
-        });
       });
     });
 

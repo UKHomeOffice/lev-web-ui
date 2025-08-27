@@ -17,15 +17,18 @@ class PartnershipSearchPage extends SearchPage {
   static shouldBeVisible() {
 
     // Has title
-    cy.get('h1').contains('Applicant\'s details');
+    cy.get('h1').contains('Find a civil partnership record');
 
     // Has labels
-    cy.get('label[for=entry-number]').contains('Entry number from civil partnership certificate');
-    cy.get('label[for=surname]').contains('Surname');
-    cy.get('label[for=forenames]').contains('Forename(s)');
+    cy.get('label[for=entry-number]').contains('Entry number');
+    cy.get('label[for=surname]').contains('Last name');
+    cy.get('label[for=forenames]').contains('First and middle name');
     cy.get('label[for=dop-day]').contains('Day');
     cy.get('label[for=dop-month]').contains('Month');
     cy.get('label[for=dop-year]').contains('Year');
+
+    // Has hint
+    cy.get('#entry-number-hint').should('exist');
   }
 
   /**
@@ -95,10 +98,6 @@ class PartnershipSearchPage extends SearchPage {
     cy.get('.error-summary').contains('Fix the following error(s)');
     cy.get('.govuk-error-summary__list > li').contains('Please enter a date of civil partnership in the past');
     cy.get('#dop-error.govuk-error-message').should('exist');
-  }
-
-  static hasEntryNumberHint() {
-    cy.get('#partnership-entry-number-hint').should('exist');
   }
 }
 
