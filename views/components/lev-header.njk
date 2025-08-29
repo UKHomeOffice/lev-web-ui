@@ -35,16 +35,13 @@
     </div>
   </header>
 
-
-  <div class="centered-wrapper">
-    <div class="govuk-!-width-two-thirds">
+    <div class="govuk-width-container">
       {{ govukServiceNavigation({
         serviceName: "Life Event Verification",
         serviceUrl: "/",
-        classes: "govuk-!-margin-2 govuk-!-padding-left-7 no-underline"
+        classes: "govuk-!-margin-top-2 indented-text no-underline"
       }) }}
     </div>
-  </div>
 
 {% if displayFeedbackBanner() %}
 <div class="govuk-phase-banner govuk-width-container">

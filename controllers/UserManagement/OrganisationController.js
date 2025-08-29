@@ -52,10 +52,7 @@ class OrganisationController extends BaseController {
       locals.updatedTeamName = req.sessionModel.get('updatedTeamName') || '';
       locals.addedTeamName = req.sessionModel.get('addedTeamName') || '';
       locals.teamExistsError = req.sessionModel.get('teamExistsError') || false;
-      locals.editOrgAttempt = req.sessionModel.get('editOrgAttempt') || false;
-      locals.editOrgSuccess = req.sessionModel.get('editOrgSuccess') || false;
       locals.orgExistsError = req.sessionModel.get('orgExistsError') || false;
-      locals.updatedOrgName = req.sessionModel.get('updatedOrgName') || '';
       locals.userSearchParam = req.sessionModel.get('userSearchParam') || null;
       locals.addedDomains = req.sessionModel.get('addedDomains') || [];
       locals.deletedDomain = req.sessionModel.get('deletedDomain') || '';
@@ -69,10 +66,7 @@ class OrganisationController extends BaseController {
       req.sessionModel.unset('editTeamSuccess');
       req.sessionModel.unset('teamExistsError');
       req.sessionModel.unset('editedTeamExists');
-      req.sessionModel.unset('editOrgAttempt');
-      req.sessionModel.unset('editOrgSuccess');
       req.sessionModel.unset('orgExistsError');
-      req.sessionModel.unset('updatedOrgName');
       req.sessionModel.unset('addedDomains');
       req.sessionModel.unset('deletedDomain');
       req.sessionModel.unset('updateDomainsAttempt');

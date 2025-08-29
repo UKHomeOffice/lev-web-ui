@@ -21,6 +21,18 @@
             {% set status = '' %}
             {% set html = '' %}
 
+            {% if editOrgAttempt or updateDomainsAttempt %}
+              {% if editOrgSuccess %}
+                {% set status = "success" %}
+                {% set html = "<h2>You have successfully updated " + updatedOrgName + "</h2>" %}
+              {% else %}
+                {% set status = "failure" %}
+                {% if orgExistsError %}
+                  {% set html = "<h2>Unable to edit organisation as " + updatedOrgName + " already exists</h2>" %}
+                {% else %}
+                  {% set html = "<h2>There is a problem - Unable to edit organisation " + updatedOrgName + "</h2>" %}
+                {% endif %}
+              {% endif %}
             {% if updateDomainsAttempt %}
               {% if addedDomains %}
                 {% set status = "success" %}
@@ -30,6 +42,7 @@
                 {% set status = "success" %}
                 {% set html = "<h2>You have successfully deleted \'" + deletedDomain + "\' as an email domain.</h2>" %}
               {% endif %}
+            {% endif %}
 
               {{ govukNotificationBanner({
                 html: html,
@@ -38,9 +51,32 @@
             {% endif %}
           </div>
 
-
           <div class="govuk-grid-column-three-quarters">
             <h1 id="header" data-page="{{ hmpoPageKey }}">{{ orgInfo.name }}</h1>
+
+            {{ govukSummaryList({
+              card: {
+                title: {
+                  text: "Profile"
+                },
+                actions: {
+                  items: [
+                    {
+                      href: orgLink + '/change-profile',
+                      text: 'Change'
+                    }
+                  ]
+                }
+              },
+              rows: [
+                { key: { text: "Organisation name", classes: "govuk-summary-list__key_no_bold govuk-!-width-one-half_no_padding" }, value: { text: orgInfo.name }, classes: "govuk-summary-list__key_no_bold govuk-!-width-one-half_no_padding" },
+                {
+                  key: { text: null },
+                  value: { text: null },
+                  classes: "govuk-summary-list__row--empty"
+                }
+              ]
+            }) }}
 
             {{ govukSummaryList({
               card: {
@@ -60,7 +96,7 @@
                   ]
                 }
               },
-              rows: summaryRows
+              rows: []
             }) }}
 
 

@@ -52,7 +52,7 @@ class OrganisationEditController extends BaseController {
 
     req.sessionModel.set('updatedOrgName', organisationName);
     req.sessionModel.unset('organisationNameFromForm');
-    res.redirect(`/admin/organisations/${req.params.orgId}`);
+    res.redirect(`/admin/organisations/${req.params.orgId}/manage`);
   }
 
   locals(req, res, callback) {
@@ -61,7 +61,7 @@ class OrganisationEditController extends BaseController {
       locals.pageName = 'organisationEditPage';
       locals.orgInfo = req.sessionModel.get('orgInfo');
       locals.values = { organisationName: locals.orgInfo.name };
-      locals.backLink = '/admin/organisations/'+locals.orgInfo.id;
+      locals.backLink = '/admin/organisations/' + locals.orgInfo.id +'/manage';
 
       const organisationNameFromPreviousSubmittedForm = req.sessionModel.get('organisationNameFromForm');
 

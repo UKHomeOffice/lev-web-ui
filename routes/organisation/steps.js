@@ -77,7 +77,7 @@ const internalRoutes = {
     entryPoint: true,
     template: '/add-edit-organisation.html'
   },
-  '/:orgId/edit': {
+  '/:orgId/change-profile': {
     fields: ['organisationName'],
     controller: OrganisationEditController,
     entryPoint: true,

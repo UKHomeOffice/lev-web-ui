@@ -10,6 +10,7 @@
     "search": "Search",
     "save": "Save",
     "submit": "Submit",
+    "saveAndSubmit": "Save and submit",
     "cancel": "Cancel",
     "newSearch": "New search",
     "editSearch": "Edit search",
@@ -208,8 +209,8 @@
         "pageTitle": "Add organisation"
       },
       "organisationEditPage": {
-        "title": "Edit organisation",
-        "pageTitle": "Edit organisation"
+        "title": "Change profile",
+        "pageTitle": "Change profile"
       },
       "addEmailDomainPage": {
         "title": "Add email domain",
