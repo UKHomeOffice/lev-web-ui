@@ -32,7 +32,9 @@ class HomeController extends BaseController {
       locals.marriage = req.sessionModel.get('marriage') || false;
       locals.partnership = req.sessionModel.get('partnership') || false;
       locals.manageOrganisation = req.sessionModel.get('manageOrganisation') || false;
-      
+      locals.isExternal = process.env.IS_EXTERNAL;
+      locals.externalURL = process.env.EXTERNAL_URL;
+
       callback(null, locals);
     });
   }

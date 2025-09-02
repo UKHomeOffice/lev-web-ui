@@ -4,7 +4,7 @@ const wizard = require('hmpo-form-wizard');
 const steps = require('./steps');
 const fields = require('./fields');
 
-module.exports = wizard(steps, fields, {
+module.exports = wizard(process.env.IS_EXTERNAL === 'true' ? steps : {}, fields, {
   name: 'birth',
   templatePath: 'pages/birth'
 });

@@ -11,55 +11,56 @@
     {% block mainContent %}
 
     <div class="govuk-grid-column-full govuk-!-margin-bottom-3">
-
-        {% if birth or death or marriage or partnership %}
-        <h1>Search</h1>
-
-        {% if birth %}
-            <div class="govuk-!-width-one-third govuk-!-padding-bottom-3 govuk-!-display-inline-block">
-                {{ govukServiceNavigation({
-                classes: 'govuk-!-padding-left-3 ',
-                navigation: [{
-                href: "/birth",
-                text: "Births"
-                }]
-                }) }}
-            </div>
-        {% endif %}
-        {% if death %}
-            <div class="govuk-!-width-one-third govuk-!-padding-left-3 govuk-!-padding-bottom-3 govuk-!-display-inline-block">
-                {{ govukServiceNavigation({
-                classes: 'govuk-!-padding-left-3',
-                navigation: [{
-                href: "/death",
-                text: "Deaths"
-                }]
-                }) }}
-            </div>
-        {% endif %}
-        {% if marriage %}
-            <div class="govuk-!-width-one-third govuk-!-padding-bottom-3 govuk-!-display-inline-block">
-                {{ govukServiceNavigation({
-                classes: 'govuk-!-padding-left-3',
-                navigation: [{
-                href: "/marriage",
-                text: "Marriages"
-                }]
-                }) }}
-            </div>
-        {% endif %}
-        {% if partnership %}
-            <div class="govuk-!-width-one-third govuk-!-padding-left-3 govuk-!-padding-bottom-3 govuk-!-display-inline-block">
-                {{ govukServiceNavigation({
-                classes: 'govuk-!-padding-left-3',
-                navigation: [{
-                href: "/partnership",
-                text: "Civil partnerships"
-                }]
-                }) }}
-            </div>
-        {% endif %}
-
+      <h1>Search</h1>
+      {% if isExternal == "false" %}
+        <p>To search Life Event Verification (LEV) records, login to the <a class="govuk-notification-banner__link" href={{ externalURL }}>external LEV service</a>.</p>
+      {% else %}
+          {% if birth or death or marriage or partnership %}
+            {% if birth %}
+                <div class="govuk-!-width-one-third govuk-!-padding-bottom-3 govuk-!-display-inline-block">
+                    {{ govukServiceNavigation({
+                    classes: 'govuk-!-padding-left-3 ',
+                    navigation: [{
+                    href: "/birth",
+                    text: "Births"
+                    }]
+                    }) }}
+                </div>
+            {% endif %}
+            {% if death %}
+                <div class="govuk-!-width-one-third govuk-!-padding-left-3 govuk-!-padding-bottom-3 govuk-!-display-inline-block">
+                    {{ govukServiceNavigation({
+                    classes: 'govuk-!-padding-left-3',
+                    navigation: [{
+                    href: "/death",
+                    text: "Deaths"
+                    }]
+                    }) }}
+                </div>
+            {% endif %}
+            {% if marriage %}
+                <div class="govuk-!-width-one-third govuk-!-padding-bottom-3 govuk-!-display-inline-block">
+                    {{ govukServiceNavigation({
+                    classes: 'govuk-!-padding-left-3',
+                    navigation: [{
+                    href: "/marriage",
+                    text: "Marriages"
+                    }]
+                    }) }}
+                </div>
+            {% endif %}
+            {% if partnership %}
+                <div class="govuk-!-width-one-third govuk-!-padding-left-3 govuk-!-padding-bottom-3 govuk-!-display-inline-block">
+                    {{ govukServiceNavigation({
+                    classes: 'govuk-!-padding-left-3',
+                    navigation: [{
+                    href: "/partnership",
+                    text: "Civil partnerships"
+                    }]
+                    }) }}
+                </div>
+            {% endif %}
+          {% endif %}
         {% endif %}
     </div>
 
