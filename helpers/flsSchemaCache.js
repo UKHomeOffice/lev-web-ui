@@ -16,7 +16,7 @@ module.exports.flsSchemaCache = async (req) => {
 
     const userMetadata = await getUserMetadata(req);
 
-    const orgId = process.env.ORGANISATION_ID || userMetadata.organisationId;
+    const orgId = req.params.orgId || process.env.ORGANISATION_ID || userMetadata.organisationId;
 
     flsPayload = await redisService.get(`flsSchema:${orgId}`);
 
