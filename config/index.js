@@ -54,7 +54,8 @@ module.exports = {
   },
   fls: {
     enabled: process.env.FLS_ENABLED?.toLowerCase() === 'true' || false,
-    schemaCacheSeconds: process.env.FLS_SCHEMA_CACHE_SECONDS || 900
+    schemaCacheSeconds: process.env.FLS_SCHEMA_CACHE_SECONDS || 900,
+    ignoreFieldPermissions: ['id']
   },
   externalURL: process.env.EXTERNAL_URL || ''
 };

@@ -10,49 +10,67 @@
 {% set govukServiceUrl = "/marriage" %}
 
 {% set hmpoTitle -%}
-    {{- "No" if results.length === 0 else results.length }} records found for {{ values['system-number']}} {{ values.forenames }} {{ values.surname }} {{ values.dom | date("DD/MM/YYYY")}}
+  {{- "No" if results.length === 0 else results.length }} records found for {{ values['system-number'] }} {{ values.forenames }} {{ values.surname }} {{ values.dom | date("DD/MM/YYYY") }}
 {%- endset %}
 
 {% block mainContent %}
-    {{ super() }}
+  {{ super() }}
 
-    <ul id="records">
-        {% for record in results %}
-        <li>
-            <article>
-                {% set rowsArray = [] %}
-                {% set rowsArray = (rowsArray.push([
-                    {
-                        html: "<h2><a href=\"/marriage/details/" + record.id + "\">" + record.groom.forenames + " " + record.groom.surname + " & " + record.bride.forenames + " " + record.bride.surname + "</a></h2>",
-                        colspan: 2
-                    }
-                ],[
-                    { text: "Date of marriage" },
-                    { text: record.dateOfMarriage | date("DD/MM/YYYY")}
-                ],[
-                    { text: "Place of marriage" },
-                    { text: record.placeOfMarriage.short }
-                ]), rowsArray) %}
+  <ul id="records">
+    {% for record in results %}
+      <li>
+        <article>
+          {% set rowsArray = [] %}
 
-                {{ govukTable({
-                    classes: "results",
-                    firstCellIsHeader: true,
-                    rows: rowsArray
-                }) }}
+          {% if record.groom.forenames and record.groom.surname and record.bride.forenames and record.bride.surname %}
+            {% set _ = rowsArray.push([
+              {
+                html: "<h2><a href=\"/marriage/details/" + record.id + "\">" + record.groom.forenames + " " + record.groom.surname + " & " + record.bride.forenames + " " + record.bride.surname + "</a></h2>",
+                colspan: 2
+              }
+            ]) %}
+          {% else %}
+            {% set _ = rowsArray.push([
+              {
+                html: "<h2><a href=\"/marriage/details/" + record.id + "\">" + "Name redacted" + "</a></h2>",
+                colspan: 2
+              }
+            ]) %}
+          {% endif %}
 
-                {% if record.flags.refer %}
-                    {{ levFlag(ctx, {key: "refer", type: "alert"}) }}
-                {% endif %}
-                {% if record.nextRegistration %}
-                    {{ levFlag(ctx, {key: "replaced", type: "warning"}) }}
-                {% endif %}
-            </article>
-        </li>
-        {% endfor %}
-    </ul>
+          {% if record.dateOfMarriage %}
+            {% set _ = rowsArray.push([
+              { text: "Date of marriage" },
+              { text: record.dateOfMarriage | date("DD/MM/YYYY")}
+            ]) %}
+          {% endif %}
 
-    <div class="govuk-button-group">
-        {{ hmpoSubmit(ctx, {id: "newSearch", key: "newSearch", href: "/marriage"}) }}
-        {{ hmpoSubmit(ctx, {id: "editSearch", key: "editSearch", href: "/marriage/search", classes: "blue"}) }}
-    </div>
+          {% if record.placeOfMarriage.short %}
+            {% set _ = rowsArray.push([
+              { text: "Place of marriage" },
+              { text: record.placeOfMarriage.short }
+            ]) %}
+          {% endif %}
+
+          {{ govukTable({
+            classes: "results",
+            firstCellIsHeader: true,
+            rows: rowsArray
+          }) }}
+
+          {% if record.flags.refer %}
+            {{ levFlag(ctx, {key: "refer", type: "alert"}) }}
+          {% endif %}
+          {% if record.nextRegistration %}
+            {{ levFlag(ctx, {key: "replaced", type: "warning"}) }}
+          {% endif %}
+        </article>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <div class="govuk-button-group">
+    {{ hmpoSubmit(ctx, {id: "newSearch", key: "newSearch", href: "/marriage"}) }}
+    {{ hmpoSubmit(ctx, {id: "editSearch", key: "editSearch", href: "/marriage/search", classes: "blue"}) }}
+  </div>
 {% endblock %}
