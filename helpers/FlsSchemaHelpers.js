@@ -72,8 +72,7 @@ const isFieldPermitted = (itemPath, permissions) => {
 function optimiseForUserManagementRender(fullMapper, schemaData) {
 
   // these fields should be shown in all cases, so omitted from fields that admins can remove
-  // todo test for this?
-  const flsIgnoreFields = ["overview"];
+  const flsIgnoreSections = ["overview"];
 
   if (!fls.enabled) return {};
   const optimised = {};
@@ -95,8 +94,8 @@ function optimiseForUserManagementRender(fullMapper, schemaData) {
     optimised[dataset] = {};
 
     for (const [sectionKey, section] of Object.entries(sections)) { // Each section mapper (Mother, Registration details etc.)
-      // These are 'hard coded' fields that are not part of fls and removed so admins cannot change permissions
-      if (!flsIgnoreFields.includes(sectionKey)) {
+      // These are 'hard coded' sections of fields that are not part of fls and removed so admins cannot change permissions
+      if (!flsIgnoreSections?.includes(sectionKey)) {
       optimised[dataset][sectionKey] = {
         header: section.header,
         fields: section.fields.map(field => {
