@@ -28,7 +28,7 @@ module.exports.recordSummaryFilter = (permissions, record) => {
     });
   }
 
-  const filterRecordByUISchema = (record, schema, ignoreFieldPermissions = []) => {
+  const filterRecordByUISchema = (record, schema) => {
     const filtered = {};
 
     // Include ignoreFieldPermissions fields directly
