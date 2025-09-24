@@ -102,6 +102,17 @@ describe('Death search', () => {
       DeathSearchPage.invalidSurname();
     });
   });
+  describe('with an forename and surname with special characters and numbers', () => {
+    before(() => {
+      DeathSearchPage.visit();
+      DeathSearchPage.performSearch({
+        surname: '123@/*', forenames: '123@/*', dobd: { day: '01', month: '10', year: '2010' }
+      });
+    });
+    it('displays an error message, surname, forename and middle name should only contain letters', () => {
+      DeathSearchPage.forenameSurnameLettersOnly();
+    })
+  });
   describe('with an invalid date of birth or death that has an', () => {
     describe('invalid day', () => {
       before(() => {
@@ -145,6 +156,138 @@ describe('Death search', () => {
       });
       it('displays an error message, requests a past date and shows the dob hint', () => {
         DeathSearchPage.dateInFuture();
+      });
+    });
+    describe('invalid year length', () => {
+      before(() => {
+        DeathSearchPage.visit();
+        DeathSearchPage.shouldBeVisible();
+        DeathSearchPage.performSearch({
+          surname: 'TEST', forenames: 'TEST', dobd: { day: '01', month: '01', year: '201' }
+        });
+      });
+      it('displays an error message, requests a valid dob of 4 digits long', () => {
+        DeathSearchPage.dobdYearMustHaveFourDigits();
+      });
+    });
+    describe('invalid day range for month with 28 days', () => {
+      before(() => {
+        DeathSearchPage.visit();
+        DeathSearchPage.shouldBeVisible();
+        DeathSearchPage.performSearch({
+          surname: 'TEST', forenames: 'TEST', dobd: { day: '29', month: '02', year: '2010' }
+        });
+      });
+      it('displays an error message, requests a valid day with the range of 1 and 28', () => {
+        DeathSearchPage.dobdDayOutOfRange28();
+      });
+    });
+    describe('invalid day below range for month with 28 days', () => {
+      before(() => {
+        DeathSearchPage.visit();
+        DeathSearchPage.shouldBeVisible();
+        DeathSearchPage.performSearch({
+          surname: 'TEST', forenames: 'TEST', dobd: { day: '00', month: '02', year: '2010' }
+        });
+      });
+      it('displays an error message, requests a valid day with the range of 1 and 28', () => {
+        DeathSearchPage.dobdDayOutOfRange28();
+      });
+    });
+    describe('invalid day above range for month with 29 days', () => {
+      before(() => {
+        DeathSearchPage.visit();
+        DeathSearchPage.shouldBeVisible();
+        DeathSearchPage.performSearch({
+          surname: 'TEST', forenames: 'TEST', dobd: { day: '30', month: '02', year: '2012' }
+        });
+      });
+      it('displays an error message, requests a valid day with the range of 1 and 29', () => {
+        DeathSearchPage.dobdDayOutOfRange29();
+      });
+    });
+    describe('invalid day below range for month with 29 days', () => {
+      before(() => {
+        DeathSearchPage.visit();
+        DeathSearchPage.shouldBeVisible();
+        DeathSearchPage.performSearch({
+          surname: 'TEST', forenames: 'TEST', dobd: { day: '00', month: '02', year: '2012' }
+        });
+      });
+      it('displays an error message, requests a valid day with the range of 1 and 29', () => {
+        DeathSearchPage.dobdDayOutOfRange29();
+      });
+    });
+    describe('invalid day above range for month with 30 days', () => {
+      before(() => {
+        DeathSearchPage.visit();
+        DeathSearchPage.shouldBeVisible();
+        DeathSearchPage.performSearch({
+          surname: 'TEST', forenames: 'TEST', dobd: { day: '31', month: '04', year: '2010' }
+        });
+      });
+      it('displays an error message, requests a valid day with the range of 1 and 30', () => {
+        DeathSearchPage.dobdDayOutOfRange30();
+      });
+    });
+    describe('invalid day below range for month with 30 days', () => {
+      before(() => {
+        DeathSearchPage.visit();
+        DeathSearchPage.shouldBeVisible();
+        DeathSearchPage.performSearch({
+          surname: 'TEST', forenames: 'TEST', dobd: { day: '00', month: '04', year: '2010' }
+        });
+      });
+      it('displays an error message, requests a valid day with the range of 1 and 30', () => {
+        DeathSearchPage.dobdDayOutOfRange30();
+      });
+    });
+    describe('invalid day above range for month with 31 days', () => {
+      before(() => {
+        DeathSearchPage.visit();
+        DeathSearchPage.shouldBeVisible();
+        DeathSearchPage.performSearch({
+          surname: 'TEST', forenames: 'TEST', dobd: { day: '32', month: '01', year: '2010' }
+        });
+      });
+      it('displays an error message, requests a valid day with the range of 1 and 31', () => {
+        DeathSearchPage.dobdDayOutOfRange31();
+      });
+    });
+    describe('invalid day above range for month with 31 days', () => {
+      before(() => {
+        DeathSearchPage.visit();
+        DeathSearchPage.shouldBeVisible();
+        DeathSearchPage.performSearch({
+          surname: 'TEST', forenames: 'TEST', dobd: { day: '00', month: '01', year: '2010' }
+        });
+      });
+      it('displays an error message, requests a valid day with the range of 1 and 31', () => {
+        DeathSearchPage.dobdDayOutOfRange31();
+      });
+    });
+    describe('invalid month above range', () => {
+      before(() => {
+        DeathSearchPage.visit();
+        DeathSearchPage.shouldBeVisible();
+        DeathSearchPage.performSearch({
+          surname: 'TEST', forenames: 'TEST', dobd: { day: '10', month: '13', year: '2012' }
+        });
+      });
+      it('displays an error message, requests a valid day with the range of 1 and 12', () => {
+        DeathSearchPage.dobdMonthOutOfRange();
+      });
+    });
+    describe('invalid month below range', () => {
+      before(() => {
+        DeathSearchPage.visit();
+        DeathSearchPage.shouldBeVisible();
+        DeathSearchPage.performSearch({
+          surname: 'TEST', forenames: 'TEST', dobd: { day: '10', month: '00', year: '2012' }
+        });
+      });
+      it('displays an error message, requests a valid day with the range of 1 and 12', () => {
+        DeathSearchPage.dobdMonthOutOfRange();
       });
     });
   });

@@ -8,7 +8,7 @@ class PartnershipSearchPage extends SearchPage {
    * Navigate to civil partnership registration search page
    */
   static visit() {
-    cy.visit('/partnership');
+    cy.visit('/partnership', {failOnStatusCode: false});
   }
 
   /**
@@ -76,27 +76,91 @@ class PartnershipSearchPage extends SearchPage {
     cy.get('#dop-year').should('have.value', dop.year);
   }
 
+  static invalidLengthSystemNumber() {
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('System number must contain 9 digits');
+  }
+
+  static noSearchCriteria() {
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Enter last name');
+    cy.get('.govuk-error-summary__list > li').contains('Enter first name. Middle name is optional');
+    cy.get('.govuk-error-summary__list > li').contains('Please enter a date of birth or death');
+  }
+
+  static invalidSurname() {
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Last name must be 30 characters or less');
+    cy.get('.govuk-error-summary__list > li').contains('First and middle name must be 30 characters or less');
+    cy.get('.govuk-error-message').contains('Last name must be 30 characters or less');
+    cy.get('.govuk-error-message').contains('First and middle name must be 30 characters or less');
+  }
+
+  static forenameSurnameLettersOnly() {
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Last name can only contain letters');
+    cy.get('.govuk-error-summary__list > li').contains('First and middle name can only contain letters');
+    cy.get('.govuk-error-message').contains('Last name can only contain letters');
+    cy.get('.govuk-error-message').contains('First and middle name can only contain letters');
+  }
+
   static invalidDOPDay() {
-    cy.get('.error-summary').contains('Fix the following error(s)');
-    cy.get('.govuk-error-summary__list > li').contains('Enter a day using numbers only');
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Day can only contain digits');
     cy.get('#dop-error.govuk-error-message').should('exist');
   }
 
   static invalidDOPMonth() {
-    cy.get('.error-summary').contains('Fix the following error(s)');
-    cy.get('.govuk-error-summary__list > li').contains('Enter a month using numbers only');
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Month can only contain digits');
     cy.get('#dop-error.govuk-error-message').should('exist');
   }
 
   static invalidDOPYear() {
-    cy.get('.error-summary').contains('Fix the following error(s)');
-    cy.get('.govuk-error-summary__list > li').contains('Enter a year using numbers only');
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Year can only contain digits');
     cy.get('#dop-error.govuk-error-message').should('exist');
   }
 
   static dopInFuture() {
-    cy.get('.error-summary').contains('Fix the following error(s)');
-    cy.get('.govuk-error-summary__list > li').contains('Please enter a date of civil partnership in the past');
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Date of civil partnership must be in the past');
+    cy.get('#dop-error.govuk-error-message').should('exist');
+  }
+
+  static dopMonthOutOfRange() {
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Month must be between 1 and 12');
+    cy.get('#dop-error.govuk-error-message').should('exist');
+  }
+
+  static dopDayOutOfRange28() {
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Date must be between 1 and 28');
+    cy.get('#dop-error.govuk-error-message').should('exist');
+  }
+
+  static dopDayOutOfRange29() {
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Date must be between 1 and 29');
+    cy.get('#dop-error.govuk-error-message').should('exist');
+  }
+
+  static dopDayOutOfRange30() {
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Date must be between 1 and 30');
+    cy.get('#dop-error.govuk-error-message').should('exist');
+  }
+
+  static dopDayOutOfRange31() {
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Date must be between 1 and 31');
+    cy.get('#dop-error.govuk-error-message').should('exist');
+  }
+
+  static dopYearMustHaveFourDigits() {
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Year must be 4 digits long');
     cy.get('#dop-error.govuk-error-message').should('exist');
   }
 }

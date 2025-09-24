@@ -5,6 +5,7 @@ const { getCurrentTimeInMillis, incrementErrorMetrics, incrementRequestMetrics }
 const PartnershipSearchService = require('../services/PartnershipSearchService');
 const requestOptions = require("../helpers/requestOptions");
 const { api } = require("../config");
+const searchValidation = require("../helpers/searchValidation");
 
 class PartnershipSearchController extends DateController {
 
@@ -68,6 +69,59 @@ class PartnershipSearchController extends DateController {
         next(err);
       }
     }
+  }
+
+  async validateFields(req, res, callback) {
+    super.validateFields(req, res, async (errors) => {
+      const dayInput = req.form.values['dop-day'];
+      const monthInput = req.form.values['dop-month'];
+      const yearInput = req.form.values['dop-year'];
+
+      errors = errors || {};
+
+      if (isNaN(dayInput)) {
+        errors.dop = new this.Error('dop-day', {
+          key: 'dop',
+          errorGroup: 'dop',
+          field: 'dop-day',
+          type: 'numeric-day'
+        }, req, res);
+      } else if (isNaN(monthInput)) {
+        errors.dop = new this.Error('dop-month', {
+          key: 'dop',
+          errorGroup: 'dop',
+          field: 'dop-month',
+          type: 'numeric-month'
+        }, req, res);
+      } else if (isNaN(yearInput)) {
+        errors.dop = new this.Error('dop-year', {
+          key: 'dop',
+          errorGroup: 'dop',
+          field: 'dop-year',
+          type: 'numeric-year'
+        }, req, res);
+      } else {
+
+        const day = parseInt(dayInput);
+        const month = parseInt(monthInput);
+        const year = parseInt(yearInput);
+        const maxDay = searchValidation.getDaysInMonth(month, year);
+
+        if (month > 12 || month < 1){
+          errors.dop = new this.Error('dop', {
+            key: 'dop',
+            type: 'date-month',
+          }, req, res);
+        } else if (searchValidation.dateOutOfBounds(day, maxDay)) {
+          errors.dop = new this.Error('dop', {
+            key: 'dop',
+            type: 'date-day',
+            message: `Date must be between 1 and ${maxDay}`
+          }, req, res);
+        }
+      }
+      callback(errors);
+    });
   }
 
   /**
