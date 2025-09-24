@@ -8,7 +8,7 @@ class PartnershipSearchPage extends SearchPage {
    * Navigate to civil partnership registration search page
    */
   static visit() {
-    cy.visit('/partnership', {failOnStatusCode: false});
+    cy.visit('/partnership');
   }
 
   /**

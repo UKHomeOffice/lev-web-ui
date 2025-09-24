@@ -8,7 +8,7 @@ class BirthSearchPage extends SearchPage {
    * Navigate to birth registration search page
    */
   static visit() {
-    cy.visit('/birth', {failOnStatusCode: false});
+    cy.visit('/birth');
   }
 
   /**
