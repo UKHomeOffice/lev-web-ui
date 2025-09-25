@@ -1,10 +1,10 @@
 'use strict';
 
 const DateController = require('./DateController');
-const {getCurrentTimeInMillis, incrementErrorMetrics, incrementRequestMetrics} = require('../lib/metrics');
+const { getCurrentTimeInMillis, incrementErrorMetrics, incrementRequestMetrics } = require('../lib/metrics');
 const MarriageSearchService = require('../services/MarriageSearchService');
 const requestOptions = require("../helpers/requestOptions");
-const {api} = require("../config");
+const { api } = require("../config");
 const searchValidation = require("../helpers/searchValidation");
 
 class MarriageSearchController extends DateController {
