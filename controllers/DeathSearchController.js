@@ -5,7 +5,7 @@ const { getCurrentTimeInMillis, incrementErrorMetrics, incrementRequestMetrics }
 const DeathSearchService = require('../services/DeathSearchService');
 const requestOptions = require("../helpers/requestOptions");
 const { api } = require("../config");
-const searchValidation = require("../helpers/searchValidation");
+const {fieldValidation} = require("../helpers/searchValidation");
 
 class DeathSearchController extends DateController {
 
@@ -75,52 +75,8 @@ class DeathSearchController extends DateController {
 
   async validateFields(req, res, callback) {
     super.validateFields(req, res, async (errors) => {
-      const dayInput = req.form.values['dobd-day'];
-      const monthInput = req.form.values['dobd-month'];
-      const yearInput = req.form.values['dobd-year'];
-
       errors = errors || {};
-
-      if (isNaN(dayInput)) {
-        errors.dobd = new this.Error('dobd-day', {
-          key: 'dobd',
-          errorGroup: 'dobd',
-          field: 'dobd-day',
-          type: 'numeric-day'
-        }, req, res);
-      } else if (isNaN(monthInput)) {
-        errors.dobd = new this.Error('dobd-month', {
-          key: 'dobd',
-          errorGroup: 'dobd',
-          field: 'dobd-month',
-          type: 'numeric-month'
-        }, req, res);
-      } else if (isNaN(yearInput)) {
-        errors.dobd = new this.Error('dobd-year', {
-          key: 'dobd',
-          errorGroup: 'dobd',
-          field: 'dobd-year',
-          type: 'numeric-year'
-        }, req, res);
-      } else {
-        const day = parseInt(dayInput);
-        const month = parseInt(monthInput);
-        const year = parseInt(yearInput);
-        const maxDay = searchValidation.getDaysInMonth(month, year);
-
-        if (month > 12 || month < 1){
-          errors.dobd = new this.Error('dobd', {
-            key: 'dobd',
-            type: 'date-month',
-          }, req, res);
-        } else if (searchValidation.dateOutOfBounds(day, maxDay)) {
-          errors.dobd = new this.Error('dobd', {
-            key: 'dobd',
-            type: 'date-day',
-            message: `Date must be between 1 and ${maxDay}`
-          }, req, res);
-        }
-      }
+      errors = await fieldValidation(req, res, errors, this.Error, 'dobd');
       callback(errors);
     });
   }
