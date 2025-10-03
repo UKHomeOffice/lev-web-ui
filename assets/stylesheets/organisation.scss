@@ -1,0 +1,12 @@
+$govuk-assets-path: "/public/";
+
+@import "node_modules/govuk-frontend/dist/govuk/index";
+@import "node_modules/hmpo-components/all";
+
+h1#organisationName.govuk-caption-m {
+  margin-bottom: 0;
+}
+
+table.audit {
+  border-top: 0;
+}

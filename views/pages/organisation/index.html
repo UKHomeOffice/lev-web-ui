@@ -59,14 +59,14 @@
     <div class="govuk-grid-column-full">
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-three-quarters">
+          <h1 id="organisationName" class="govuk-caption-m">{{orgInfo.name}}</h1>
           <h1 id="header" data-page="{{hmpoPageKey}}">{{ translate("pages." + hmpoPageKey + ".h1", { default: hmpoTitle }) |
-            safe }}: {{orgInfo.name}}</h1>
+            safe }}</h1>
         </div>
       </div>
-      <h3>Organisation Team(s)</h3>
       {% set teamHeaderArray = [] %}
       {% set teamsArray = [] %}
-      {% for item in ["Team", "Users"] %}
+      {% for item in ["Teams", "Users"] %}
         {% set teamHeaderArray = (teamHeaderArray.push( { text: item }), teamHeaderArray) %}
       {% endfor %}
 
@@ -107,7 +107,7 @@
       {% if users.length == 0 %}
         <p>There are no users in this organisation.</p>
       {% else %}
-        {{ usersTable(users, usersMetaData, ["User", "Team", "Email address", "Last Active", "Account Status"]) }}
+        {{ usersTable(users, usersMetaData, ["User", "Team", "Email address", "Last active", "Account status"]) }}
         {{ pagination(usersMetaData.total, usersMetaData.perPage, usersMetaData.currentPage) }}
       {% endif %}
 
