@@ -26,7 +26,7 @@ class SearchPage extends Page {
    * Check the expected error title is displayed
    */
   static hasErrorTitle() {
-    cy.get('.error-summary').contains('Fix the following error');
+    cy.get('.error-summary').contains('There is a problem');
   }
 
   /**

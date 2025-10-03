@@ -4,7 +4,7 @@
     "serviceName": "Life Event Verification",
     "skipLink": "Skip to main content",
     "backLink": "Back",
-    "errorSummaryTitle": "Fix the following error(s)"
+    "errorSummaryTitle": "There is a problem"
   },
   "buttons": {
     "search": "Search",
@@ -258,97 +258,95 @@
   "validation": {
     "birth-system-number": {
       "numeric": "Please enter a number",
-      "exactlength": "The system number should be 9 digits"
+      "exactlength": "System number must contain 9 digits"
     },
     "death-system-number": {
       "numeric": "Please enter a number",
-      "exactlength": "The system number should be 9 digits"
+      "exactlength": "System number must contain 9 digits"
     },
     "marriage-entry-number": {
       "numeric": "Please enter a number",
-      "exactlength": "The entry number should be 9 digits"
+      "exactlength": "System or entry number must contain 9 digits"
     },
     "partnership-entry-number": {
       "numeric": "Please enter a number",
-      "exactlength": "The entry number should be 9 digits"
+      "exactlength": "Entry number must contain 9 digits"
     },
     "surname": {
-      "required": "Please enter a surname",
-      "maximumlength": "Surname: Your entry cannot exceed 30 characters"
+      "required": "Enter last name",
+      "maximumlength": "Last name must be 30 characters or less",
+      "regex": "Last name can only contain letters"
     },
     "forenames": {
-      "required": "Please enter at least one forename",
-      "maximumlength": "Forename(s): Your entry cannot exceed 30 characters"
+      "required": "Enter first name. Middle name is optional",
+      "maximumlength": "First and middle name must be 30 characters or less",
+      "regex": "First and middle name can only contain letters"
     },
     "dob": {
-      "required": "Please enter a {{name}}",
+      "required": "Enter {{name}}",
       "required-day": "Enter a complete {{name}}",
       "required-month": "Enter a complete {{name}}",
       "required-year": "Enter a complete {{name}}",
 
       "date": "Enter a complete {{name}}",
-      "date-year": "Enter a valid year",
-      "date-month": "Enter a valid month",
-      "date-day": "Enter a valid day",
+      "date-year": "Year must be 4 digits long",
+      "date-month": "Month must be between 1 and 12",
 
-      "numeric-year": "Enter a year using numbers only",
-      "numeric-month": "Enter a month using numbers only",
-      "numeric-day": "Enter a day using numbers only",
+      "numeric-year": "Year can only contain digits",
+      "numeric-month": "Month can only contain digits",
+      "numeric-day": "Day can only contain digits",
 
-      "before": "Please enter a {{name}} in the past",
-      "after": "Please enter a date after our records began (1 July 2009)"
+      "before": "{{name|capitalize}} must be in the past",
+      "after": "Enter a date after our records began (1 July 2009)"
     },
     "dobd": {
-      "required": "Please enter a {{name}}",
+      "required": "Enter {{name}}",
       "required-day": "Enter a complete {{name}}",
       "required-month": "Enter a complete {{name}}",
       "required-year": "Enter a complete {{name}}",
 
       "date": "Enter a complete {{name}}",
-      "date-year": "Enter a valid year",
-      "date-month": "Enter a valid month",
-      "date-day": "Enter a valid day",
+      "date-year": "Year must be 4 digits long",
+      "date-month": "Month must be between 1 and 12",
 
-      "numeric-year": "Enter a year using numbers only",
-      "numeric-month": "Enter a month using numbers only",
-      "numeric-day": "Enter a day using numbers only",
+      "numeric-year": "Year can only contain digits",
+      "numeric-month": "Month can only contain digits",
+      "numeric-day": "Day can only contain digits",
 
-      "before": "Please enter a {{name}} in the past"
+      "before": "{{name|capitalize}} must be in the past"
     },
     "dom": {
-      "required": "Please enter a {{name}}",
+      "required": "Enter {{name}}",
       "required-day": "Enter a complete {{name}}",
       "required-month": "Enter a complete {{name}}",
       "required-year": "Enter a complete {{name}}",
 
       "date": "Enter a complete {{name}}",
-      "date-year": "Enter a valid year",
-      "date-month": "Enter a valid month",
-      "date-day": "Enter a valid day",
+      "date-year": "Year must be 4 digits long",
+      "date-month": "Month must be between 1 and 12",
 
-      "numeric-year": "Enter a year using numbers only",
-      "numeric-month": "Enter a month using numbers only",
-      "numeric-day": "Enter a day using numbers only",
+      "numeric-year": "Year can only contain digits",
+      "numeric-month": "Month can only contain digits",
+      "numeric-day": "Day can only contain digits",
 
-      "before": "Please enter a {{name}} in the past"
+      "before": "{{name|capitalize}} must be in the past"
     },
     "dop": {
-      "required": "Please enter a {{name}}",
+      "required": "Enter {{name}}",
       "required-day": "Enter a complete {{name}}",
       "required-month": "Enter a complete {{name}}",
       "required-year": "Enter a complete {{name}}",
 
       "date": "Enter a complete {{name}}",
-      "date-year": "Enter a valid year",
-      "date-month": "Enter a valid month",
-      "date-day": "Enter a valid day",
+      "date-year": "Year must be 4 digits long",
+      "date-month": "Month must be between 1 and 12",
 
-      "numeric-year": "Enter a year using numbers only",
-      "numeric-month": "Enter a month using numbers only",
-      "numeric-day": "Enter a day using numbers only",
+      "numeric-year": "Year can only contain digits",
+      "numeric-month": "Month can only contain digits",
+      "numeric-day": "Day can only contain digits",
 
-      "before": "Please enter a {{name}} in the past",
-      "after": "Please enter a date after our records began (1 December 2005)"
+      "before": "{{name|capitalize}} must be in the past",
+      "after": "Enter a date after our records began (1 December 2005)"
     },
     "dateFrom": {
       "required": "Please enter a {{name}}",

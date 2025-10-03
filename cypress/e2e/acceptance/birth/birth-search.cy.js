@@ -109,6 +109,17 @@ describe('Birth search', () => {
       BirthSearchPage.invalidSurname();
     });
   });
+  describe('with an forename and surname with special characters and numbers', () => {
+    before(() => {
+      BirthSearchPage.visit();
+      BirthSearchPage.performSearch({
+        surname: '123@/*', forenames: '123@/*', day: '01', month: '10', year: '2010'
+      });
+    });
+    it('displays an error message, surname, forename and middle name should only contain letters', () => {
+      BirthSearchPage.forenameSurnameLettersOnly();
+    })
+  });
   describe('with an invalid date of birth that has an', () => {
     describe('invalid day', () => {
       before(() => {
@@ -169,6 +180,138 @@ describe('Birth search', () => {
       });
       it('displays an error message and shows dob hint', () => {
         BirthSearchPage.dobBeforeRecordsBegan();
+      });
+    });
+    describe('invalid year length', () => {
+      before(() => {
+        BirthSearchPage.visit();
+        BirthSearchPage.shouldBeVisible();
+        BirthSearchPage.performSearch({
+          surname: 'TEST', forenames: 'TEST', day: '01', month: '01', year: '201'
+        });
+      });
+      it('displays an error message, requests a valid dob of 4 digits long', () => {
+        BirthSearchPage.dobYearMustHaveFourDigits();
+      });
+    });
+    describe('invalid day range for month with 28 days', () => {
+      before(() => {
+        BirthSearchPage.visit();
+        BirthSearchPage.shouldBeVisible();
+        BirthSearchPage.performSearch({
+          surname: 'TEST', forenames: 'TEST', day: '29', month: '02', year: '2010'
+        });
+      });
+      it('displays an error message, requests a valid day with the range of 1 and 28', () => {
+        BirthSearchPage.dobDayOutOfRange28();
+      });
+    });
+    describe('invalid day below range for month with 28 days', () => {
+      before(() => {
+        BirthSearchPage.visit();
+        BirthSearchPage.shouldBeVisible();
+        BirthSearchPage.performSearch({
+          surname: 'TEST', forenames: 'TEST', day: '00', month: '02', year: '2010'
+        });
+      });
+      it('displays an error message, requests a valid day with the range of 1 and 28', () => {
+        BirthSearchPage.dobDayOutOfRange28();
+      });
+    });
+    describe('invalid day above range for month with 29 days', () => {
+      before(() => {
+        BirthSearchPage.visit();
+        BirthSearchPage.shouldBeVisible();
+        BirthSearchPage.performSearch({
+          surname: 'TEST', forenames: 'TEST', day: '30', month: '02', year: '2012'
+        });
+      });
+      it('displays an error message, requests a valid day with the range of 1 and 29', () => {
+        BirthSearchPage.dobDayOutOfRange29();
+      });
+    });
+    describe('invalid day below range for month with 29 days', () => {
+      before(() => {
+        BirthSearchPage.visit();
+        BirthSearchPage.shouldBeVisible();
+        BirthSearchPage.performSearch({
+          surname: 'TEST', forenames: 'TEST', day: '00', month: '02', year: '2012'
+        });
+      });
+      it('displays an error message, requests a valid day with the range of 1 and 29', () => {
+        BirthSearchPage.dobDayOutOfRange29();
+      });
+    });
+    describe('invalid day above range for month with 30 days', () => {
+      before(() => {
+        BirthSearchPage.visit();
+        BirthSearchPage.shouldBeVisible();
+        BirthSearchPage.performSearch({
+          surname: 'TEST', forenames: 'TEST', day: '31', month: '04', year: '2010'
+        });
+      });
+      it('displays an error message, requests a valid day with the range of 1 and 30', () => {
+        BirthSearchPage.dobDayOutOfRange30();
+      });
+    });
+    describe('invalid day below range for month with 30 days', () => {
+      before(() => {
+        BirthSearchPage.visit();
+        BirthSearchPage.shouldBeVisible();
+        BirthSearchPage.performSearch({
+          surname: 'TEST', forenames: 'TEST', day: '00', month: '04', year: '2010'
+        });
+      });
+      it('displays an error message, requests a valid day with the range of 1 and 30', () => {
+        BirthSearchPage.dobDayOutOfRange30();
+      });
+    });
+    describe('invalid day above range for month with 31 days', () => {
+      before(() => {
+        BirthSearchPage.visit();
+        BirthSearchPage.shouldBeVisible();
+        BirthSearchPage.performSearch({
+          surname: 'TEST', forenames: 'TEST', day: '32', month: '01', year: '2010'
+        });
+      });
+      it('displays an error message, requests a valid day with the range of 1 and 31', () => {
+        BirthSearchPage.dobDayOutOfRange31();
+      });
+    });
+    describe('invalid day above range for month with 31 days', () => {
+      before(() => {
+        BirthSearchPage.visit();
+        BirthSearchPage.shouldBeVisible();
+        BirthSearchPage.performSearch({
+          surname: 'TEST', forenames: 'TEST', day: '00', month: '01', year: '2010'
+        });
+      });
+      it('displays an error message, requests a valid day with the range of 1 and 31', () => {
+        BirthSearchPage.dobDayOutOfRange31();
+      });
+    });
+    describe('invalid month above range', () => {
+      before(() => {
+        BirthSearchPage.visit();
+        BirthSearchPage.shouldBeVisible();
+        BirthSearchPage.performSearch({
+          surname: 'TEST', forenames: 'TEST', day: '10', month: '13', year: '2012'
+        });
+      });
+      it('displays an error message, requests a valid day with the range of 1 and 12', () => {
+        BirthSearchPage.dobMonthOutOfRange();
+      });
+    });
+    describe('invalid month below range', () => {
+      before(() => {
+        BirthSearchPage.visit();
+        BirthSearchPage.shouldBeVisible();
+        BirthSearchPage.performSearch({
+          surname: 'TEST', forenames: 'TEST', day: '10', month: '00', year: '2012'
+        });
+      });
+      it('displays an error message, requests a valid day with the range of 1 and 12', () => {
+        BirthSearchPage.dobMonthOutOfRange();
       });
     });
   });

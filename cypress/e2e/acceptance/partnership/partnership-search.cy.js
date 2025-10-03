@@ -90,15 +90,15 @@ describe('Partnership search', () => {
       });
 
       it('requests a surname', () => {
-        PartnershipSearchPage.hasErrorMessage('Please enter a surname');
+        PartnershipSearchPage.hasErrorMessage('Enter last name');
       });
 
       it('requests a forename', () => {
-        PartnershipSearchPage.hasErrorMessage('Please enter at least one forename');
+        PartnershipSearchPage.hasErrorMessage('Enter first name. Middle name is optional');
       });
 
       it('requests a date of civil partnership', () => {
-        PartnershipSearchPage.hasErrorMessage('Please enter a date of civil partnership');
+        PartnershipSearchPage.hasErrorMessage('Enter date of civil partnership');
       });
     });
 
@@ -116,7 +116,7 @@ describe('Partnership search', () => {
         });
 
         it('requests an entry number of the valid length', () => {
-          PartnershipSearchPage.hasErrorMessage('The entry number should be 9 digits');
+          PartnershipSearchPage.hasErrorMessage('Entry number must contain 9 digits');
         });
       });
     });
@@ -139,7 +139,7 @@ describe('Partnership search', () => {
       });
 
       it('requests a forename', () => {
-        PartnershipSearchPage.hasErrorMessage('Please enter at least one forename');
+        PartnershipSearchPage.hasErrorMessage('Enter first name. Middle name is optional');
       });
 
       describe('and a missing surname', () => {
@@ -159,11 +159,11 @@ describe('Partnership search', () => {
         });
 
         it('requests a surname', () => {
-          PartnershipSearchPage.hasErrorMessage('Please enter a surname');
+          PartnershipSearchPage.hasErrorMessage('Enter last name');
         });
 
         it('requests a forename', () => {
-          PartnershipSearchPage.hasErrorMessage('Please enter at least one forename');
+          PartnershipSearchPage.hasErrorMessage('Enter first name. Middle name is optional');
         });
       });
     });
@@ -186,7 +186,7 @@ describe('Partnership search', () => {
       });
 
       it('requests a forename within 30 character limit', () => {
-        PartnershipSearchPage.hasErrorMessage('Forename(s): Your entry cannot exceed 30 characters');
+        PartnershipSearchPage.hasErrorMessage('First and middle name must be 30 characters or less');
       });
 
       describe('and a surname more than 30 character length ', () => {
@@ -208,12 +208,42 @@ describe('Partnership search', () => {
         });
 
         it('requests a surname within 30 character limit', () => {
-          PartnershipSearchPage.hasErrorMessage('Surname: Your entry cannot exceed 30 characters');
+          PartnershipSearchPage.hasErrorMessage('Last name must be 30 characters or less');
         });
 
         it('requests a forename within 30 character limit', () => {
-          PartnershipSearchPage.hasErrorMessage('Forename(s): Your entry cannot exceed 30 characters');
+          PartnershipSearchPage.hasErrorMessage('First and middle name must be 30 characters or less');
         });
+      });
+
+      describe('with surname with numbers and symbols', () => {
+        before(() => {
+          PartnershipSearchPage.visit();
+          PartnershipSearchPage.performSearch({
+            surname: '123@/*', forenames: 'TEST', dom: { day: '5', month: '6', year: '2010' }
+          });
+        });
+        it('displays an error message', () => {
+          PartnershipSearchPage.hasErrorTitle();
+        });
+        it('requests a valid surname with letters only', () => {
+          PartnershipSearchPage.hasErrorTitle('Last name can only contain letters');
+        })
+      });
+
+      describe('with forename with numbers and symbols', () => {
+        before(() => {
+          PartnershipSearchPage.visit();
+          PartnershipSearchPage.performSearch({
+            surname: 'TEST', forenames: '123@/*', dom: { day: '5', month: '6', year: '2010' }
+          });
+        });
+        it('displays an error message', () => {
+          PartnershipSearchPage.hasErrorTitle();
+        });
+        it('requests a valid forename with letters only', () => {
+          PartnershipSearchPage.hasErrorTitle('First and middle name can only contain letters');
+        })
       });
     });
     describe('with an invalid date of partnership that has an', () => {
@@ -264,6 +294,138 @@ describe('Partnership search', () => {
         });
         it('displays an error message, requests a past date and shows the dop hint', () => {
           PartnershipSearchPage.dopInFuture();
+        });
+      });
+      describe('invalid year length', () => {
+        before(() => {
+          PartnershipSearchPage.visit();
+          PartnershipSearchPage.shouldBeVisible();
+          PartnershipSearchPage.performSearch({
+            surname: 'TEST', forenames: 'TEST', dop: { day: '01', month: '01', year: '201' }
+          });
+        });
+        it('displays an error message, requests a valid dob of 4 digits long', () => {
+          PartnershipSearchPage.dopYearMustHaveFourDigits();
+        });
+      });
+      describe('invalid day range for month with 28 days', () => {
+        before(() => {
+          PartnershipSearchPage.visit();
+          PartnershipSearchPage.shouldBeVisible();
+          PartnershipSearchPage.performSearch({
+            surname: 'TEST', forenames: 'TEST', dop: { day: '29', month: '02', year: '2010' }
+          });
+        });
+        it('displays an error message, requests a valid day with the range of 1 and 28', () => {
+          PartnershipSearchPage.dopDayOutOfRange28();
+        });
+      });
+      describe('invalid day below range for month with 28 days', () => {
+        before(() => {
+          PartnershipSearchPage.visit();
+          PartnershipSearchPage.shouldBeVisible();
+          PartnershipSearchPage.performSearch({
+            surname: 'TEST', forenames: 'TEST', dop: { day: '00', month: '02', year: '2010' }
+          });
+        });
+        it('displays an error message, requests a valid day with the range of 1 and 28', () => {
+          PartnershipSearchPage.dopDayOutOfRange28();
+        });
+      });
+      describe('invalid day above range for month with 29 days', () => {
+        before(() => {
+          PartnershipSearchPage.visit();
+          PartnershipSearchPage.shouldBeVisible();
+          PartnershipSearchPage.performSearch({
+            surname: 'TEST', forenames: 'TEST', dop: { day: '30', month: '02', year: '2012' }
+          });
+        });
+        it('displays an error message, requests a valid day with the range of 1 and 29', () => {
+          PartnershipSearchPage.dopDayOutOfRange29();
+        });
+      });
+      describe('invalid day below range for month with 29 days', () => {
+        before(() => {
+          PartnershipSearchPage.visit();
+          PartnershipSearchPage.shouldBeVisible();
+          PartnershipSearchPage.performSearch({
+            surname: 'TEST', forenames: 'TEST', dop: { day: '00', month: '02', year: '2012' }
+          });
+        });
+        it('displays an error message, requests a valid day with the range of 1 and 29', () => {
+          PartnershipSearchPage.dopDayOutOfRange29();
+        });
+      });
+      describe('invalid day above range for month with 30 days', () => {
+        before(() => {
+          PartnershipSearchPage.visit();
+          PartnershipSearchPage.shouldBeVisible();
+          PartnershipSearchPage.performSearch({
+            surname: 'TEST', forenames: 'TEST', dop: { day: '31', month: '04', year: '2010' }
+          });
+        });
+        it('displays an error message, requests a valid day with the range of 1 and 30', () => {
+          PartnershipSearchPage.dopDayOutOfRange30();
+        });
+      });
+      describe('invalid day below range for month with 30 days', () => {
+        before(() => {
+          PartnershipSearchPage.visit();
+          PartnershipSearchPage.shouldBeVisible();
+          PartnershipSearchPage.performSearch({
+            surname: 'TEST', forenames: 'TEST', dop: { day: '00', month: '04', year: '2010' }
+          });
+        });
+        it('displays an error message, requests a valid day with the range of 1 and 30', () => {
+          PartnershipSearchPage.dopDayOutOfRange30();
+        });
+      });
+      describe('invalid day above range for month with 31 days', () => {
+        before(() => {
+          PartnershipSearchPage.visit();
+          PartnershipSearchPage.shouldBeVisible();
+          PartnershipSearchPage.performSearch({
+            surname: 'TEST', forenames: 'TEST', dop: { day: '32', month: '01', year: '2010' }
+          });
+        });
+        it('displays an error message, requests a valid day with the range of 1 and 31', () => {
+          PartnershipSearchPage.dopDayOutOfRange31();
+        });
+      });
+      describe('invalid day above range for month with 31 days', () => {
+        before(() => {
+          PartnershipSearchPage.visit();
+          PartnershipSearchPage.shouldBeVisible();
+          PartnershipSearchPage.performSearch({
+            surname: 'TEST', forenames: 'TEST', dop: { day: '00', month: '01', year: '2010' }
+          });
+        });
+        it('displays an error message, requests a valid day with the range of 1 and 31', () => {
+          PartnershipSearchPage.dopDayOutOfRange31();
+        });
+      });
+      describe('invalid month above range', () => {
+        before(() => {
+          PartnershipSearchPage.visit();
+          PartnershipSearchPage.shouldBeVisible();
+          PartnershipSearchPage.performSearch({
+            surname: 'TEST', forenames: 'TEST', dop: { day: '10', month: '13', year: '2012' }
+          });
+        });
+        it('displays an error message, requests a valid day with the range of 1 and 12', () => {
+          PartnershipSearchPage.dopMonthOutOfRange();
+        });
+      });
+      describe('invalid month below range', () => {
+        before(() => {
+          PartnershipSearchPage.visit();
+          PartnershipSearchPage.shouldBeVisible();
+          PartnershipSearchPage.performSearch({
+            surname: 'TEST', forenames: 'TEST', dop: { day: '10', month: '00', year: '2012' }
+          });
+        });
+        it('displays an error message, requests a valid day with the range of 1 and 12', () => {
+          PartnershipSearchPage.dopMonthOutOfRange();
         });
       });
     });

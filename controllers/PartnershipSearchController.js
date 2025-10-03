@@ -5,6 +5,7 @@ const { getCurrentTimeInMillis, incrementErrorMetrics, incrementRequestMetrics }
 const PartnershipSearchService = require('../services/PartnershipSearchService');
 const requestOptions = require("../helpers/requestOptions");
 const { api } = require("../config");
+const {fieldValidation} = require("../helpers/searchValidation");
 
 class PartnershipSearchController extends DateController {
 
@@ -68,6 +69,14 @@ class PartnershipSearchController extends DateController {
         next(err);
       }
     }
+  }
+
+  async validateFields(req, res, callback) {
+    super.validateFields(req, res, async (errors) => {
+      errors = errors || {};
+      errors = await fieldValidation(req, res, errors, this.Error, 'dop');
+      callback(errors);
+    });
   }
 
   /**

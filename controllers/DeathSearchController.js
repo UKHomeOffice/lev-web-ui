@@ -5,6 +5,7 @@ const { getCurrentTimeInMillis, incrementErrorMetrics, incrementRequestMetrics }
 const DeathSearchService = require('../services/DeathSearchService');
 const requestOptions = require("../helpers/requestOptions");
 const { api } = require("../config");
+const {fieldValidation} = require("../helpers/searchValidation");
 
 class DeathSearchController extends DateController {
 
@@ -55,7 +56,7 @@ class DeathSearchController extends DateController {
         const searchResults = await DeathSearchService.search({
           ...requestOptions(req, api),
           url: '/v1/registration/death',
-          searchParams: { forenames, surname, date }
+          searchParams: {forenames, surname, date}
         });
 
         req.sessionModel.set('searchResults', searchResults);
@@ -71,6 +72,15 @@ class DeathSearchController extends DateController {
       }
     }
   }
+
+  async validateFields(req, res, callback) {
+    super.validateFields(req, res, async (errors) => {
+      errors = errors || {};
+      errors = await fieldValidation(req, res, errors, this.Error, 'dobd');
+      callback(errors);
+    });
+  }
+
 
   /**
    * Returns true if we only have 1 result, otherwise false

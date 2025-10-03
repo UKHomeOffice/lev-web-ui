@@ -77,26 +77,62 @@ class MarriageSearchPage extends SearchPage {
   }
 
   static invalidDOMDay() {
-    cy.get('.error-summary').contains('Fix the following error(s)');
-    cy.get('.govuk-error-summary__list > li').contains('Enter a day using numbers only');
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Day can only contain digits');
     cy.get('#dom-error.govuk-error-message').should('exist');
   }
 
   static invalidDOMMonth() {
-    cy.get('.error-summary').contains('Fix the following error(s)');
-    cy.get('.govuk-error-summary__list > li').contains('Enter a month using numbers only');
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Month can only contain digits');
     cy.get('#dom-error.govuk-error-message').should('exist');
   }
 
   static invalidDOMYear() {
-    cy.get('.error-summary').contains('Fix the following error(s)');
-    cy.get('.govuk-error-summary__list > li').contains('Enter a year using numbers only');
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Year can only contain digits');
     cy.get('#dom-error.govuk-error-message').should('exist');
   }
 
   static domInFuture() {
-    cy.get('.error-summary').contains('Fix the following error(s)');
-    cy.get('.govuk-error-summary__list > li').contains('Please enter a date of marriage in the past');
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Date of marriage must be in the past');
+    cy.get('#dom-error.govuk-error-message').should('exist');
+  }
+
+  static domMonthOutOfRange() {
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Month must be between 1 and 12');
+    cy.get('#dom-error.govuk-error-message').should('exist');
+  }
+
+  static domDayOutOfRange28() {
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Date must be between 1 and 28');
+    cy.get('#dom-error.govuk-error-message').should('exist');
+  }
+
+  static domDayOutOfRange29() {
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Date must be between 1 and 29');
+    cy.get('#dom-error.govuk-error-message').should('exist');
+  }
+
+  static domDayOutOfRange30() {
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Date must be between 1 and 30');
+    cy.get('#dom-error.govuk-error-message').should('exist');
+  }
+
+  static domDayOutOfRange31() {
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Date must be between 1 and 31');
+    cy.get('#dom-error.govuk-error-message').should('exist');
+  }
+
+  static domYearMustHaveFourDigits() {
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Year must be 4 digits long');
     cy.get('#dom-error.govuk-error-message').should('exist');
   }
 }

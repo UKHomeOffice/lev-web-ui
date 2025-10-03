@@ -18,7 +18,8 @@ module.exports = {
     },
     validate: [
       'required',
-      { type: 'maximumlength', fn: (e) => e.length <= 30 }
+      { type: 'maximumlength', fn: (e) => e.length <= 30 },
+      { type: 'regex', arguments: '^[a-zA-Z-\' ]+$'}
     ]
   },
   'forenames': {
@@ -29,7 +30,8 @@ module.exports = {
     },
     validate: [
       'required',
-      { type: 'maximumlength', fn: (e) => e.length <= 30 }
+      { type: 'maximumlength', fn: (e) => e.length <= 30 },
+      { type: 'regex', arguments: '^[a-zA-Z-\' ]+$'}
     ]
   },
   'dom': {

@@ -5,6 +5,7 @@ const { getCurrentTimeInMillis, incrementErrorMetrics, incrementRequestMetrics }
 const MarriageSearchService = require('../services/MarriageSearchService');
 const requestOptions = require("../helpers/requestOptions");
 const { api } = require("../config");
+const {fieldValidation} = require("../helpers/searchValidation");
 
 class MarriageSearchController extends DateController {
 
@@ -55,7 +56,7 @@ class MarriageSearchController extends DateController {
         const searchResults = await MarriageSearchService.search({
           ...requestOptions(req, api),
           url: '/v1/registration/marriage',
-          searchParams: { forenames, surname, dateOfMarriage }
+          searchParams: {forenames, surname, dateOfMarriage}
         });
 
         req.sessionModel.set('searchResults', searchResults);
@@ -70,6 +71,14 @@ class MarriageSearchController extends DateController {
         next(err);
       }
     }
+  }
+
+  async validateFields(req, res, callback) {
+    super.validateFields(req, res, async (errors) => {
+      errors = errors || {};
+      errors = await fieldValidation(req, res, errors, this.Error, 'dom');
+      callback(errors);
+    });
   }
 
   /**

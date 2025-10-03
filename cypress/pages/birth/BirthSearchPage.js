@@ -49,10 +49,10 @@ class BirthSearchPage extends SearchPage {
   }
 
   static noSearchCriteria() {
-    cy.get('.error-summary').contains('Fix the following error(s)');
-    cy.get('.govuk-error-summary__list > li').contains('Please enter a surname');
-    cy.get('.govuk-error-summary__list > li').contains('Please enter at least one forename');
-    cy.get('.govuk-error-summary__list > li').contains('Please enter a date of birth');
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Enter last name');
+    cy.get('.govuk-error-summary__list > li').contains('Enter first name. Middle name is optional');
+    cy.get('.govuk-error-summary__list > li').contains('Enter date of birth');
   }
 
   static noSystemNumber() {
@@ -62,62 +62,106 @@ class BirthSearchPage extends SearchPage {
   }
 
   static invalidLengthSystemNumber() {
-    cy.get('.error-summary').contains('Fix the following error(s)');
-    cy.get('.govuk-error-summary__list > li').contains('The system number should be 9 digits');
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('System number must contain 9 digits');
   }
 
   static noForenames() {
-    cy.get('.error-summary').contains('Fix the following error(s)');
-    cy.get('.govuk-error-summary__list > li').contains('Please enter at least one forename');
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Enter first name. Middle name is optional');
   }
 
   static invalidForenames() {
-    cy.get('.error-summary').contains('Fix the following error(s)');
-    cy.get('.govuk-error-summary__list > li').contains('Forename(s): Your entry cannot exceed 30 characters');
-    cy.get('.govuk-error-message').contains('Forename(s): Your entry cannot exceed 30 characters');
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('First and middle name must be 30 characters or less');
+    cy.get('.govuk-error-message').contains('First and middle name must be 30 characters or less');
   }
 
   static noSurname() {
-    cy.get('.error-summary').contains('Fix the following error(s)');
-    cy.get('.govuk-error-summary__list > li').contains('Please enter a surname');
-    cy.get('.govuk-error-summary__list > li').contains('Please enter at least one forename');
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Enter last name');
+    cy.get('.govuk-error-summary__list > li').contains('Enter first name. Middle name is optional');
   }
 
   static invalidSurname() {
-    cy.get('.error-summary').contains('Fix the following error(s)');
-    cy.get('.govuk-error-summary__list > li').contains('Surname: Your entry cannot exceed 30 characters');
-    cy.get('.govuk-error-summary__list > li').contains('Forename(s): Your entry cannot exceed 30 characters');
-    cy.get('.govuk-error-message').contains('Surname: Your entry cannot exceed 30 characters');
-    cy.get('.govuk-error-message').contains('Forename(s): Your entry cannot exceed 30 characters');
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Last name must be 30 characters or less');
+    cy.get('.govuk-error-summary__list > li').contains('First and middle name must be 30 characters or less');
+    cy.get('.govuk-error-message').contains('Last name must be 30 characters or less');
+    cy.get('.govuk-error-message').contains('First and middle name must be 30 characters or less');
+  }
+
+  static forenameSurnameLettersOnly() {
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Last name can only contain letters');
+    cy.get('.govuk-error-summary__list > li').contains('First and middle name can only contain letters');
+    cy.get('.govuk-error-message').contains('Last name can only contain letters');
+    cy.get('.govuk-error-message').contains('First and middle name can only contain letters');
   }
 
   static invalidDOBDay() {
-    cy.get('.error-summary').contains('Fix the following error(s)');
-    cy.get('.govuk-error-summary__list > li').contains('Enter a day using numbers only');
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Day can only contain digits');
     cy.get('#dob-error.govuk-error-message').should('exist');
   }
 
   static invalidDOBMonth() {
-    cy.get('.error-summary').contains('Fix the following error(s)');
-    cy.get('.govuk-error-summary__list > li').contains('Enter a month using numbers only');
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Month can only contain digits');
     cy.get('#dob-error.govuk-error-message').should('exist');
   }
 
   static invalidDOBYear() {
-    cy.get('.error-summary').contains('Fix the following error(s)');
-    cy.get('.govuk-error-summary__list > li').contains('Enter a year using numbers only');
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Year can only contain digits');
     cy.get('#dob-error.govuk-error-message').should('exist');
   }
 
   static dobInFuture() {
-    cy.get('.error-summary').contains('Fix the following error(s)');
-    cy.get('.govuk-error-summary__list > li').contains('Please enter a date of birth in the past');
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Date of birth must be in the past');
     cy.get('#dob-error.govuk-error-message').should('exist');
   }
 
   static dobBeforeRecordsBegan() {
-    cy.get('.error-summary').contains('Fix the following error(s)');
-    cy.get('.govuk-error-summary__list > li').contains('Please enter a date after our records began (1 July 2009)');
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Enter a date after our records began (1 July 2009)');
+    cy.get('#dob-error.govuk-error-message').should('exist');
+  }
+
+  static dobMonthOutOfRange() {
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Month must be between 1 and 12');
+    cy.get('#dob-error.govuk-error-message').should('exist');
+  }
+
+  static dobDayOutOfRange28() {
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Date must be between 1 and 28');
+    cy.get('#dob-error.govuk-error-message').should('exist');
+  }
+
+  static dobDayOutOfRange29() {
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Date must be between 1 and 29');
+    cy.get('#dob-error.govuk-error-message').should('exist');
+  }
+
+  static dobDayOutOfRange30() {
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Date must be between 1 and 30');
+    cy.get('#dob-error.govuk-error-message').should('exist');
+  }
+
+  static dobDayOutOfRange31() {
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Date must be between 1 and 31');
+    cy.get('#dob-error.govuk-error-message').should('exist');
+  }
+
+  static dobYearMustHaveFourDigits() {
+    cy.get('.error-summary').contains('There is a problem');
+    cy.get('.govuk-error-summary__list > li').contains('Year must be 4 digits long');
     cy.get('#dob-error.govuk-error-message').should('exist');
   }
 
