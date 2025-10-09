@@ -250,6 +250,10 @@
       "notifyUserPage": {
         "title": "Service notification",
         "pageTitle": "Service notification"
+      },
+      "enterMessagePage": {
+        "title": "Enter message",
+        "pageTitle": "Enter message"
       }
     },
     "error": {

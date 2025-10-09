@@ -5,5 +5,8 @@
 module.exports = {
   '/': {
     entryPoint: true
+  },
+  '/enter-message': {
+    entryPoint: true
   }
 };
