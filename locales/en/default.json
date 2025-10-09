@@ -245,6 +245,13 @@
         "pageTitle": "Add user"
       }
     },
+    "service-notification": {
+      "serviceName": "Administration",
+      "notifyUserPage": {
+        "title": "Service notification",
+        "pageTitle": "Service notification"
+      }
+    },
     "error": {
       "title": "Error"
     },

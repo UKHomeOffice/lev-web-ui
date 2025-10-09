@@ -77,6 +77,15 @@
                     }]
                 }) }}
             </div>
+            <div class="govuk-!-width-one-third govuk-!-padding-left-3 govuk-!-padding-bottom-3 govuk-!-display-inline-block">
+                {{ govukServiceNavigation({
+                    classes: 'govuk-!-padding-left-3',
+                    navigation: [{
+                        href: "/admin/notify-users",
+                        text: "Service Notification"
+                    }]
+                }) }}
+            </div>
         {% endif %}
     </div>
     {% endblock %}
