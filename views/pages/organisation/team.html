@@ -43,10 +43,12 @@
       <h2>You have successfully deleted {{ deletedUser }}'s account.</h2>
     {% endset %}
 
-    {{ govukNotificationBanner({
-      html: html,
-      type: "success"
-    }) }}
+    <div class="govuk-!-width-two-thirds">
+      {{ govukNotificationBanner({
+        html: html,
+        type: "success"
+      }) }}
+    </div>
 
   {% endif %}
 
