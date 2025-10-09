@@ -11,6 +11,10 @@ $govuk-assets-path: "/public/";
   text-align: right;
 }
 
+.govuk-table.notification td:last-child {
+  text-align: right;
+}
+
 a.govuk-back-link {
   margin-top: 0;
   padding-top: 0;

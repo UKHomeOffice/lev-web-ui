@@ -254,6 +254,10 @@
       "enterMessagePage": {
         "title": "Enter message",
         "pageTitle": "Enter message"
+      },
+      "summaryPage": {
+        "title": "Check notification details before publishing",
+        "pageTitle": "Check notification details before publishing"
       }
     },
     "error": {

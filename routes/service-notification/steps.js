@@ -8,5 +8,8 @@ module.exports = {
   },
   '/enter-message': {
     entryPoint: true
+  },
+  '/summary': {
+    entryPoint: true
   }
 };
