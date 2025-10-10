@@ -10,55 +10,77 @@
 {% set govukServiceUrl = "/death" %}
 
 {% set hmpoTitle -%}
-    {{- "No" if results.length === 0 else results.length }} records found for {{ values['system-number']}} {{ values.forenames }} {{ values.surname }} {{ values.dobd | date("DD/MM/YYYY")}}
+  {{- "No" if results.length === 0 else results.length }} records found for {{ values['system-number']}} {{ values.forenames }} {{ values.surname }} {{ values.dobd | date("DD/MM/YYYY")}}
 {%- endset %}
 
 {% block mainContent %}
-    {{ super() }}
+  {{ super() }}
 
-    <ul id="records">
-        {% for record in results %}
-        <li>
-            <article>
-                {% set rowsArray = [] %}
-                {% set rowsArray = (rowsArray.push([
-                    {
-                        html: "<h2><a href=\"/death/details/" + record.id + "\">" + record.deceased.forenames + " " + record.deceased.surname + "</a></h2>",
-                        colspan: 2
-                    }
-                ],[
-                    { text: "Date of birth" },
-                    { text: record.deceased.dateOfBirth | date("DD/MM/YYYY")}
-                ],[
-                    { text: "Address" },
-                    { text: record.deceased.address }
-                ],[
-                    { text: "Date of death" },
-                    { text: record.deceased.dateOfDeath | date("DD/MM/YYYY") }
-                ]), rowsArray) %}
+  <ul id="records">
+    {% for record in results %}
+      <li>
+        <article>
+          {% set rowsArray = [] %}
 
-                {{ govukTable({
-                    classes: "results",
-                    firstCellIsHeader: true,
-                    rows: rowsArray
-                }) }}
+          {% if record.deceased.forenames and record.deceased.surname %}
+            {% set _ = rowsArray.push([
+              {
+                html: "<h2><a href=\"/death/details/" + record.id + "\">" + record.deceased.forenames + " " + record.deceased.surname + "</a></h2>",
+                colspan: 2
+              }
+            ]) %}
+          {% else %}
+            {% set _ = rowsArray.push([
+              {
+                html: "<h2><a href=\"/death/details/" + record.id + "\">" + "Name redacted" + "</a></h2>",
+                colspan: 2
+              }
+            ]) %}
+          {% endif %}
 
-                {% if record.flags.refer %}
-                    {{ levFlag(ctx, {key: "refer", type: "alert"}) }}
-                {% endif %}
-                {% if record.flags.corrected %}
-                    {{ levFlag(ctx, {key: "corrected", type: "warning"}) }}
-                {% endif %}
-                {% if record.nextRegistration %}
-                    {{ levFlag(ctx, {key: "replaced", type: "warning"}) }}
-                {% endif %}
-            </article>
-        </li>
-        {% endfor %}
-    </ul>
+          {% if record.deceased.dateOfBirth %}
+            {% set _ = rowsArray.push([
+              { text: "Date of birth" },
+              { text: record.deceased.dateOfBirth | date("DD/MM/YYYY")}
+            ]) %}
+          {% endif %}
 
-    <div class="govuk-button-group">
-        {{ hmpoSubmit(ctx, {id: "newSearch", key: "newSearch", href: "/death"}) }}
-        {{ hmpoSubmit(ctx, {id: "editSearch", key: "editSearch", href: "/death/search", classes: "blue"}) }}
-    </div>
+          {% if record.deceased.address %}
+            {% set _ = rowsArray.push([
+              { text: "Address" },
+              { text: record.deceased.address }
+            ]) %}
+          {% endif %}
+
+          {% if record.deceased.dateOfDeath %}
+            {% set _ = rowsArray.push([
+              { text: "Date of death" },
+              { text: record.deceased.dateOfDeath | date("DD/MM/YYYY") }
+            ]) %}
+          {% endif %}
+
+          {{ govukTable({
+            classes: "results",
+            firstCellIsHeader: true,
+            rows: rowsArray
+          }) }}
+
+          {% if record.flags.refer %}
+            {{ levFlag(ctx, {key: "refer", type: "alert"}) }}
+          {% endif %}
+          {% if record.flags.corrected %}
+            {{ levFlag(ctx, {key: "corrected", type: "warning"}) }}
+          {% endif %}
+          {% if record.nextRegistration %}
+            {{ levFlag(ctx, {key: "replaced", type: "warning"}) }}
+          {% endif %}
+        </article>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <div class="govuk-button-group">
+    {{ hmpoSubmit(ctx, {id: "newSearch", key: "newSearch", href: "/death"}) }}
+    {{ hmpoSubmit(ctx, {id: "editSearch", key: "editSearch", href: "/death/search", classes: "blue"}) }}
+  </div>
 {% endblock %}
