@@ -1,26 +1,13 @@
 const BaseController = require('./BaseController');
-const { getRequest } = require('../services/ServiceNotificationsService');
-const requestOptions = require("../helpers/requestOptions");
-const { iamApi } = require("../config");
 
 class ServiceNotificationsController extends BaseController {
-  async getValues(req, _res, next) {
-    try {
-      const messageResult = await getRequest({
-        ...requestOptions(req, iamApi),
-        url: '/admin/notify-users'
-      });
+  locals(req, res, callback) {
+    super.locals(req, res, (error, locals) => {
+      if (error) return callback(error);
+      locals.livemessage = "Message from the controller";
 
-      console.log(messageResult);
-      // const serviceMessage = messageResult.serviceMessage;
-      //
-      // req.sessionModel.set('serviceMessage', serviceMessage);
-      // next();
-
-    } catch (err) {
-      err.template = 'errors/error';
-      next(err);
-    }
+      callback(null, locals);
+    });
   }
 }
 

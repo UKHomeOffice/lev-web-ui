@@ -1,15 +1,18 @@
 'use strict';
 
-// const ServiceNotificationsController = require('../../controllers/ServiceNotificationsController');
+const ServiceNotificationsController = require('../../controllers/ServiceNotificationsController');
 
 module.exports = {
   '/': {
-    entryPoint: true
+    entryPoint: true,
+    controller: ServiceNotificationsController
   },
   '/enter-message': {
-    entryPoint: true
+    entryPoint: true,
+    controller: ServiceNotificationsController
   },
   '/summary': {
-    entryPoint: true
+    entryPoint: true,
+    controller: ServiceNotificationsController
   }
 };

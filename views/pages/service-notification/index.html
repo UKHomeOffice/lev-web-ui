@@ -3,6 +3,7 @@
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 
 {% set govukServiceNameKey = translate("govuk.serviceName") %}
 {% set govukServiceTitleKey = translate("govuk.serviceName") %}
@@ -20,8 +21,13 @@
     ]
   }) }}
 
-  {{ super() }}
   <div class="govuk-!-width-two-thirds">
+    {{ govukNotificationBanner({
+      html: "<h2>You have successfully added a notification.</h2><p>This will be visible in around 5 minutes.</p>",
+      type: "success"
+    }) }}
+
+  {{ super() }}
     <p>Use notifications to tell all Life Event Verification (LEV) users about:</p>
 
     <ul class="govuk-list govuk-list--bullet">
@@ -39,17 +45,17 @@
     <h1 class="govuk-heading-m">Live notification</h1>
 
 
-  {{ govukTable({
-    classes: "live-notification",
-    firstCellIsHeader: false,
-    head: [{text: "Message"}, {text: ""}],
-    rows: [
-      [
-        {text: "Message"},
-        {html: '<a href="/" class="govuk-link">Delete</a>'}
+    {{ govukTable({
+      classes: "audit live-notification",
+      firstCellIsHeader: false,
+      head: [{text: "Message"}, {text: ""}],
+      rows: [
+        [
+          {text: livemessage},
+          {html: '<a href="/" class="govuk-link">Delete</a>'}
+        ]
       ]
-    ]
-  }) }}
+    }) }}
 
   </div>
 {% endblock %}
