@@ -1,7 +1,6 @@
 'use strict'
 
 const Page = require("../Page");
-const LoginPage = require("../LoginPage");
 const BirthSearchPage = require("../birth/BirthSearchPage");
 const DeathSearchPage = require("../death/DeathSearchPage");
 const MarriageSearchPage = require("../marriage/marriageSearchPage");
