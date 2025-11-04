@@ -5,14 +5,20 @@ const ServiceNotificationsController = require('../../controllers/ServiceNotific
 module.exports = {
   '/': {
     entryPoint: true,
-    controller: ServiceNotificationsController
+    controller: ServiceNotificationsController,
+    template: '/index.html'
   },
   '/enter-message': {
+    fields: ['newNotification'],
     entryPoint: true,
-    controller: ServiceNotificationsController
+    controller: ServiceNotificationsController,
+    template: '/enter-message.html',
+    next: '/admin/notify-users/summary'
   },
   '/summary': {
     entryPoint: true,
-    controller: ServiceNotificationsController
+    controller: ServiceNotificationsController,
+    template: '/summary.html',
+    next: '/admin/notify-users'
   }
 };

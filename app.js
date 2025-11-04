@@ -30,6 +30,11 @@ router.use((req, res, next) => {
   next();
 });
 
+router.use((req, res, next) => {
+  res.locals.liveNotification = req.session.liveNotification || null;
+  next();
+});
+
 // routes for static assets
 router.use('/access-test', accessTest);
 router.use('/accessibility-statement', accessibilityStatement);

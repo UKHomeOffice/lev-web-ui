@@ -2,6 +2,8 @@
 
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "hmpo-form/macro.njk" import hmpoForm %}
+{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
 {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
 
 {% set govukServiceNameKey = translate("govuk.serviceName") %}
@@ -10,7 +12,7 @@
 {% set orgLink = "/admin/notify-users/enter-message" %}
 {% set govukServiceUrl = "admin/notify-users/enter-message" %}
 
-{% block hmpoContent %}
+{% block mainContent %}
   {{ govukBackLink({
     text: "Back",
     href: "/admin/notify-users"
@@ -18,31 +20,25 @@
 
   {{ super() }}
 
-  <div class="govuk-!-width-two-thirds">
-    <p>Use clear, concise language, and make sure the message will remain relevant until deleted.</p>
+    {% call hmpoForm(ctx) %}
+      <p>Use clear, concise language, and make sure the message will remain relevant until deleted.</p>
+      {{ govukCharacterCount({
+        name: "newNotification",
+        id: "newNotification",
+        value: newNotification,
+        maxlength: 150,
+        hint: {
+          text: "For example, \“We are experiencing a high number of searches today. The service may time out, or take longer than usual.\”"
+        },
+        errorMessage: errors.newNotification and {
+          text: errors.newNotification.message
+        }
+      }) }}
 
-    {{ govukCharacterCount({
-      name: "enter-message-box",
-      id: "enter-message-box",
-      maxlength: 150,
-      hint: {
-        text: "For example, \“We are experiencing a high number of searches today. The service may time out, or take longer than usual.\”"
-      }
-    }) }}
-  </div>
-
-  <div class="govuk-button-group">
-    {{ govukButton({
-      text: "Continue",
-      href: "/admin/notify-users/summary"
-    }) }}
-
-    {{ govukButton({
-      text: "Back",
-      classes: "govuk-button--secondary",
-      href: "/admin/notify-users"
-    }) }}
-  </div>
-
+      <div class="govuk-button-group">
+        {{ hmpoSubmit(ctx, {id: "continue", key: "continue"}) }}
+        {{ hmpoSubmit(ctx, {id: "back", key: "back", href: "/admin/notify-users", classes: "govuk-button--secondary"}) }}
+      </div>
+    {% endcall %}
 
 {% endblock %}

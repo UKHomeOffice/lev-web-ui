@@ -9,7 +9,7 @@ services:
       API_PORT: 8080
       MOCK: "true"
       IAM_USER: minch.yoda@theforce.gov
-      ROLES: birth,death,user-management
+      ROLES: birth,death,marriage,partnership,user-management
       API_ORIGINAL_CLIENT: "lev-web-ui"
       REDIS_CONNECTION_STRING: "redis://redis-service:6379"
 #      REDIS_HOST: redis-service

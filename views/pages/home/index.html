@@ -1,5 +1,6 @@
 {% extends "app-template.njk" %}
 {% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 
 {% set govukServiceNameKey = translate("govuk.serviceName") %}
 {% set govukServiceTitleKey = translate("govuk.serviceName") %}
@@ -9,6 +10,14 @@
 
 <div class="govuk-grid-row">
     {% block mainContent %}
+
+    <div class="govuk-grid-column-full govuk-!-width-two-thirds">
+      {% if liveNotification %}
+        {{ govukNotificationBanner({
+          text: liveNotification
+        }) }}
+      {% endif %}
+    </div>
 
     <div class="govuk-grid-column-full govuk-!-margin-bottom-3">
       <h1>Search</h1>
