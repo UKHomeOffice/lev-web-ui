@@ -3,7 +3,7 @@
 const Page = require("../Page");
 const BirthSearchPage = require("../birth/BirthSearchPage");
 const DeathSearchPage = require("../death/DeathSearchPage");
-const MarriageSearchPage = require("../marriage/marriageSearchPage");
+const MarriageSearchPage = require("../marriage/MarriageSearchPage");
 const PartnershipSearchPage = require("../partnership/PartnershipSearchPage");
 
 class serviceNotificationSummaryPage extends Page{
