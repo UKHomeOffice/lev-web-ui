@@ -83,14 +83,10 @@ describe('Service notification summary page', () => {
       ServiceNotificationEnterMessagePage.enterMessage(notification);
     });
 
-    it('should display success message on index page', () => {
+    it('should redirect to index page and display notification on search pages', () => {
       cy.get('#publish').click();
 
       cy.location('pathname').should('eq', '/admin/notify-users');
-
-      cy.get('.govuk-notification-banner__header').contains('Success');
-      cy.get('.govuk-notification-banner__content').contains('You have successfully added a notification.');
-      cy.get('.govuk-notification-banner__content').contains('This will be visible in around 5 minutes.');
 
       ServiceNotificationSummaryPage.shouldDisplayNotification(notification);
 

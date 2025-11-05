@@ -28,8 +28,7 @@ class serviceNotificationIndexPage extends Page{
     if(record === null) {
       cy.get('.govuk-table__cell').contains('No live messages');
     } else {
-      const { liveNotification } = record;
-      cy.get('.govuk-table__cell').contains(liveNotification);
+      cy.get('.govuk-table__cell').contains(record);
     }
   }
 
