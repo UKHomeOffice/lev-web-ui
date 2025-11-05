@@ -57,7 +57,6 @@ class serviceNotificationSummaryPage extends Page{
 
   static shouldDisplayNotification(notification) {
     cy.get('.govuk-service-navigation__link').click();
-    cy.get('.govuk-notification-banner').contains(notification);
 
     BirthSearchPage.visit();
     cy.get('.govuk-notification-banner').contains(notification);

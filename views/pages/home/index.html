@@ -11,14 +11,6 @@
 <div class="govuk-grid-row">
     {% block mainContent %}
 
-    <div class="govuk-grid-column-full govuk-!-width-two-thirds">
-      {% if liveNotification %}
-        {{ govukNotificationBanner({
-          text: liveNotification
-        }) }}
-      {% endif %}
-    </div>
-
     <div class="govuk-grid-column-full govuk-!-margin-bottom-3">
       <h1>Search</h1>
       {% if isExternal == "false" %}

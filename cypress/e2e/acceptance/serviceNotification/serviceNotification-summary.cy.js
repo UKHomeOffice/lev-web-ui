@@ -97,6 +97,7 @@ describe('Service notification summary page', () => {
 
     // eslint-disable-next-line no-undef
     after(() => {
+      // TODO: Use Delete Path if there was no notification to start with
       ServiceNotificationEnterMessagePage.visit();
       ServiceNotificationEnterMessagePage.enterMessage(notificationResults);
       cy.get('#publish').click();

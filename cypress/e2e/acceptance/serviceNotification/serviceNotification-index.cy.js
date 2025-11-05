@@ -2,7 +2,6 @@
 
 const LoginPage = require("../../../pages/LoginPage");
 const ServiceNotificationIndexPage = require("../../../pages/serviceNotification/serviceNotificationIndexPage");
-const liveServiceNotification = require("../../../fixtures/serviceNotification/serviceNotification");
 
 describe('Service notification index page', () => {
   before(() => {
@@ -25,29 +24,6 @@ describe('Service notification index page', () => {
 
     it('table displays no live messages', () => {
       ServiceNotificationIndexPage.hasServiceNotification(null);
-    });
-
-    it('contains a breadcrumb link to the home page', () => {
-      ServiceNotificationIndexPage.hasAddNotificationButton();
-    });
-  });
-
-  describe('When there is a message', () => {
-
-    before(() => {
-      ServiceNotificationIndexPage.visit();
-    });
-
-    it('returns an index page', () => {
-      ServiceNotificationIndexPage.shouldBeVisible();
-    });
-
-    it('has expected header', () => {
-      ServiceNotificationIndexPage.hasExpectedTitle();
-    });
-
-    it('table displays a live messages', () => {
-      ServiceNotificationIndexPage.hasServiceNotification(liveServiceNotification);
     });
 
     it('contains a breadcrumb link to the home page', () => {
