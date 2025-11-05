@@ -86,21 +86,20 @@ describe('Service notification summary page', () => {
     it('should display success message on index page', () => {
       cy.get('#publish').click();
 
-      cy.url().should('include', '/admin/notify-users');
+      cy.location('pathname').should('eq', '/admin/notify-users');
 
       cy.get('.govuk-notification-banner__header').contains('Success');
       cy.get('.govuk-notification-banner__content').contains('You have successfully added a notification.');
       cy.get('.govuk-notification-banner__content').contains('This will be visible in around 5 minutes.');
 
       ServiceNotificationSummaryPage.shouldDisplayNotification(notification);
-    });
 
-    // eslint-disable-next-line no-undef
-    after(() => {
       // TODO: Use Delete Path if there was no notification to start with
-      ServiceNotificationEnterMessagePage.visit();
-      ServiceNotificationEnterMessagePage.enterMessage(notificationResults);
-      cy.get('#publish').click();
+      if(notificationResults) {
+        ServiceNotificationEnterMessagePage.visit();
+        ServiceNotificationEnterMessagePage.enterMessage(notificationResults);
+        cy.get('#publish').click();
+      }
     });
   });
 });
