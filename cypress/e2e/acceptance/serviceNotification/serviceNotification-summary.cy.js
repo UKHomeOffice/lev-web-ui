@@ -3,7 +3,7 @@
 const LoginPage = require("../../../pages/LoginPage");
 const ServiceNotificationIndexPage = require("../../../pages/serviceNotification/serviceNotificationIndexPage");
 const ServiceNotificationSummaryPage = require("../../../pages/serviceNotification/serviceNotificationSummaryPage");
-const ServiceNotificationEnterMessagePage = require("../../../pages/serviceNotification/serviceNotificationEnterMEssagePage");
+const ServiceNotificationEnterMessagePage = require("../../../pages/serviceNotification/serviceNotificationEnterMessagePage");
 
 describe('Service notification summary page', () => {
   const notification = 'Test Notification';
