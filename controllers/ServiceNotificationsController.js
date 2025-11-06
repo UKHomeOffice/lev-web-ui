@@ -61,7 +61,7 @@ class ServiceNotificationsController extends BaseController {
 
         await postRequest( {
           ...requestOptions(req, iamApi),
-          url: `/admin/notify-users/submit/${req.sessionModel.get('newNotification')}`,
+          url: `/admin/notify-users/submit`,
         }, { liveNotification: req.sessionModel.get('newNotification')});
 
         req.sessionModel.set('liveNotification', req.sessionModel.get('newNotification'));
