@@ -1,10 +1,6 @@
 'use strict'
 
 const Page = require("../Page");
-const BirthSearchPage = require("../birth/BirthSearchPage");
-const DeathSearchPage = require("../death/DeathSearchPage");
-const MarriageSearchPage = require("../marriage/MarriageSearchPage");
-const PartnershipSearchPage = require("../partnership/PartnershipSearchPage");
 
 class serviceNotificationSummaryPage extends Page{
   static visit() {
@@ -53,22 +49,6 @@ class serviceNotificationSummaryPage extends Page{
     cy.get(selector).click();
     cy.url().should('include', '/admin/notify-users/enter-message');
     cy.get('#newNotification').contains(notification);
-  }
-
-  static shouldDisplayNotification(notification) {
-    cy.get('.govuk-service-navigation__link').click();
-
-    BirthSearchPage.visit();
-    cy.get('.govuk-notification-banner').contains(notification);
-
-    DeathSearchPage.visit();
-    cy.get('.govuk-notification-banner').contains(notification);
-
-    MarriageSearchPage.visit();
-    cy.get('.govuk-notification-banner').contains(notification);
-
-    PartnershipSearchPage.visit();
-    cy.get('.govuk-notification-banner').contains(notification);
   }
 }
 
