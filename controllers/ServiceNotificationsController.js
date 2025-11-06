@@ -46,9 +46,10 @@ class ServiceNotificationsController extends BaseController {
     });
   }
 
-  async saveValues(req, _res, next) {
+  async saveValues(req, res) {
     if(req.path === '/enter-message') {
       req.sessionModel.set('newNotification', req.body.newNotification);
+      res.redirect(`/admin/notify-users/summary`);
     } else if(req.path === '/summary') {
       try {
         if(req.sessionModel.get('liveNotification')) {
@@ -67,14 +68,14 @@ class ServiceNotificationsController extends BaseController {
         req.sessionModel.set('liveMessageSubmitSuccessful', true);
         req.sessionModel.unset('newNotification');
 
+        res.redirect(`/admin/notify-users`);
       } catch (err) {
         req.sessionModel.set('liveNotification', req.sessionModel.get('newNotification'));
         req.sessionModel.unset('newNotification');
         req.sessionModel.unset('liveMessageSubmitSuccessful');
+        res.redirect(`/admin/notify-users`);
       }
     }
-
-    next();
   }
 
   locals(req, res, callback) {
