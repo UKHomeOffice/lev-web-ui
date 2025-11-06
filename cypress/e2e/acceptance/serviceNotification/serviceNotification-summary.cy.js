@@ -13,7 +13,7 @@ describe('Service notification summary page', () => {
 
   describe('When page is opened', () => {
     before(() => {
-      ServiceNotificationEnterMessagePage.visit()
+      ServiceNotificationEnterMessagePage.visit();
       ServiceNotificationEnterMessagePage.enterMessage(notification);
     });
 
@@ -52,7 +52,7 @@ describe('Service notification summary page', () => {
 
   describe('When back or change is clicked', () => {
     beforeEach(() => {
-      ServiceNotificationEnterMessagePage.visit()
+      ServiceNotificationEnterMessagePage.visit();
       ServiceNotificationEnterMessagePage.enterMessage(notification);
     });
 
