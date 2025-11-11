@@ -11,7 +11,7 @@ module.exports = {
     validate: [
       'required',
       { type: 'length', fn: (e) => e.length <= 150 },
-      { type: 'regex', arguments: '^[a-zA-Z:,.?! -]+$'}
+      { type: 'regex', arguments: '^[a-zA-Z0-9:,.?! -]+$'}
     ]
   }
 };

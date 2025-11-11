@@ -11,20 +11,21 @@ class ServiceNotificationsController extends BaseController {
 
       const notificationResults = await getRequest({
         ...requestOptions(req, iamApi),
-        url: `/admin/notify-users`,
+        url: `/admin/notify-users/get`,
       });
 
-      req.sessionModel.set('liveNotification', notificationResults.service_notification);
+      req.sessionModel.set('liveNotification', notificationResults.serviceNotification);
       req.sessionModel.set('receivedNotification', true);
 
-      if(notificationResults.service_notification === undefined) {
+      if(notificationResults.serviceNotification === undefined) {
         req.sessionModel.unset('receivedNotification');
       }
 
       next();
     } catch (err) {
       req.sessionModel.unset('receivedNotification');
-      next();
+      err.template = 'errors/organisation-error';
+      next(err);
     }
   }
 
