@@ -7,8 +7,6 @@ class ServiceNotificationsController extends BaseController {
   async getValues(req, _res, next) {
 
     try {
-      this.validateGetRequest(req, _res, next);
-
       const notificationResults = await getRequest({
         ...requestOptions(req, iamApi),
         url: `/admin/notify-users/get`,
