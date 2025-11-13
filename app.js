@@ -18,6 +18,7 @@ const { router, app } = setup(options);
 const nunjucksEnv = app.get('nunjucksEnv');
 
 nunjucksEnv.addFilter('relativeDateTime', require('./filters/relativeDateTimeFilter'));
+nunjucksEnv.addFilter('getYear', require('./filters/getYear'));
 nunjucksEnv.addGlobal('displayFeedbackBanner', require('./helpers/feedbackBanner'));
 nunjucksEnv.addGlobal('feedbackContentHtml', process.env.FEEDBACK_CONTENT_HTML);
 nunjucksEnv.addGlobal('govukRebrand', true);
