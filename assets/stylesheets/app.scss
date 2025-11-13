@@ -143,3 +143,20 @@ a, button {
   height: 100%;
   object-fit: contain;
 }
+
+.table-container {
+  position: relative;
+  width: 100%;
+}
+
+.user-table-footer {
+  position: absolute;
+  right: 0;
+  padding-right: 15px;
+}
+
+.pagination-container {
+  margin-top: -10px;
+  display: flex;
+  justify-content: flex-start;
+}
