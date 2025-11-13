@@ -9,6 +9,7 @@ $module: "";
 @import "./results";
 @import "./search";
 @import "./organisation";
+@import "./serviceNotification";
 
 $blue-button-colour: #005ea5;
 $blue-button-hover-colour: govuk-shade($blue-button-colour, 20%);

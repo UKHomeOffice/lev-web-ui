@@ -21,6 +21,7 @@ class HomeController extends BaseController {
     req.sessionModel.set('marriage', marriage);
     req.sessionModel.set('partnership', partnership);
     req.sessionModel.set('manageOrganisation', manageOrg);
+    req.sessionModel.set('serviceNotification', manageOrg);
     next();
   }
   locals(req, res, callback) {
@@ -32,6 +33,7 @@ class HomeController extends BaseController {
       locals.marriage = req.sessionModel.get('marriage') || false;
       locals.partnership = req.sessionModel.get('partnership') || false;
       locals.manageOrganisation = req.sessionModel.get('manageOrganisation') || false;
+      locals.serviceNotification = req.sessionModel.get('serviceNotification') || false;
       locals.isExternal = process.env.IS_EXTERNAL;
       locals.externalURL = process.env.EXTERNAL_URL;
 

@@ -9,6 +9,7 @@ const marriageRoute = require('./routes/marriage');
 const partnershipRoute = require('./routes/partnership');
 const metricsRoute = require('./routes/metrics');
 const organisationsRoute = require('./routes/organisation');
+const serviceNotificationRoute = require('./routes/service-notification');
 const accessTest = require('./routes/access-test');
 const accessibilityStatement = require('./routes/accessibility-statement');
 const syops = require('./routes/syops');
@@ -30,6 +31,11 @@ router.use((req, res, next) => {
   next();
 });
 
+router.use((req, res, next) => {
+  res.locals.liveNotification = req.session.liveNotification || null;
+  next();
+});
+
 // routes for static assets
 router.use('/access-test', accessTest);
 router.use('/accessibility-statement', accessibilityStatement);
@@ -46,4 +52,5 @@ router.use('/death', deathRoute);
 router.use('/marriage', marriageRoute);
 router.use('/partnership', partnershipRoute);
 router.use('/admin/organisations', organisationsRoute);
+router.use('/admin/notify-users', serviceNotificationRoute);
 router.use('/', homeRoute);
