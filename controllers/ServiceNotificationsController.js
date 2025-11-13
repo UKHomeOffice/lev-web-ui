@@ -31,14 +31,17 @@ class ServiceNotificationsController extends BaseController {
     super.validateFields(req, res, async (errors) => {
       errors = errors || {};
 
-      if(errors.newNotification) {
-        if (errors.newNotification.type === 'required') {
-          errors.newNotification.message = 'Enter message';
-        } else if (errors.newNotification.type === 'regex') {
-          errors.newNotification.message = 'Message can only include letters, numbers and punctuation (:,.?!-)';
-        } else if (errors.newNotification.type === 'length') {
-          errors.newNotification.message = 'Message must be 150 characters or less';
+      if(req.path === '/enter-message') {
+        if (errors.newNotification) {
+          if (errors.newNotification.type === 'required') {
+            errors.newNotification.message = 'Enter message';
+          } else if (errors.newNotification.type === 'regex') {
+            errors.newNotification.message = 'Message can only include letters, numbers and punctuation (:,.?!-)';
+          } else if (errors.newNotification.type === 'length') {
+            errors.newNotification.message = 'Message must be 150 characters or less';
+          }
         }
+        req.sessionModel.set('newNotification', req.body.newNotification.trim().replace(/(\r\n|\n|\r)/g, ' ').replace(/\s+/g, ' '));
       }
 
       callback(errors);
@@ -59,8 +62,6 @@ class ServiceNotificationsController extends BaseController {
         req.sessionModel.set('liveMessageSubmitSuccessful', true);
         req.sessionModel.unset('newNotification');
       } catch (err) {
-        console.log("***ERROR***");
-        console.log(JSON.stringify(err));
         req.sessionModel.set('liveNotification', req.sessionModel.get('newNotification'));
         req.sessionModel.unset('newNotification');
         req.sessionModel.unset('liveMessageSubmitSuccessful');
