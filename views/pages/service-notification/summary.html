@@ -1,0 +1,53 @@
+{% extends "app-template.njk" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+{% from "hmpo-form/macro.njk" import hmpoForm %}
+
+{% set govukServiceNameKey = translate("govuk.serviceName") %}
+{% set govukServiceTitleKey = translate("govuk.serviceName") %}
+{% set hmpoPageKey = "service-notification.summaryPage" %}
+{% set orgLink = "/admin/notify-users/summary" %}
+{% set govukServiceUrl = "admin/notify-users/summary" %}
+
+{% block hmpoContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "/admin/notify-users/enter-message"
+  }) }}
+
+  {{ super() }}
+
+  {% call hmpoForm(ctx) %}
+    {{ govukTable({
+      classes: "notification",
+      firstCellIsHeader: true,
+      rows: [
+        [
+          {text: "Organisations"},
+          {text: "All organisations"},
+          {}
+        ],
+        [
+          {text: "Message"},
+          {text: submittedNotification},
+          {html: '<a href="/admin/notify-users/enter-message" class="govuk-link" id="change">Change</a>'}
+        ]
+      ]
+    }) }}
+
+    {{ govukWarningText({
+      text: "This notification will replace any other live one.",
+      iconFallbackText: "Warning"
+    }) }}
+
+    <div class="govuk-button-group">
+      {{ hmpoSubmit(ctx, {id: "publish", key: "publish"}) }}
+      {{ hmpoSubmit(ctx, {id: "back", key: "back", href: "/admin/notify-users/enter-message", classes: "govuk-button--secondary"}) }}
+    </div>
+  {% endcall %}
+
+{% endblock %}

@@ -29,7 +29,9 @@
     "reRegistrationLink": "View the previous registration.",
     "reRegisteredLink": "View the next registration.",
     "exportToCSV": "Export to CSV",
-    "home": "Home"
+    "home": "Home",
+    "continue": "Continue",
+    "publish": "Publish"
   },
   "flags": {
     "refer": "Refer to GRO.",
@@ -245,6 +247,21 @@
         "pageTitle": "Add user"
       }
     },
+    "service-notification": {
+      "serviceName": "Administration",
+      "notifyUserPage": {
+        "title": "Service notification",
+        "pageTitle": "Service notification"
+      },
+      "enterMessagePage": {
+        "title": "Enter message",
+        "pageTitle": "Enter message"
+      },
+      "summaryPage": {
+        "title": "Check notification details before publishing",
+        "pageTitle": "Check notification details before publishing"
+      }
+    },
     "error": {
       "title": "Error"
     },
@@ -418,6 +435,11 @@
       "required": "Enter email domain",
       "length": "Domains must be 128 characters or less",
       "regex": "Email domain can only include letters, numbers, hyphens and full stops (-.)"
+    },
+    "newNotification": {
+      "required": "Enter message",
+      "length": "Message must be 150 characters or less",
+      "regex": "Message can only include letters, numbers and punctuation (:,.?!-)"
     }
   },
   "footer": "Your feedback will help us improve this service. Email us <a class=\"govuk-link\" href=\"mailto:ITnowServiceDesk@homeoffice.gov.uk?subject=LEV%20Feedback\">ITnowServiceDesk@homeoffice.gov.uk</a>"

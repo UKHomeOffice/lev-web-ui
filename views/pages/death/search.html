@@ -4,6 +4,7 @@
 {% from "hmpo-form/macro.njk" import hmpoForm %}
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
 {% from "components/lev-system-number.njk" import levSystemNumber %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 
 {% set hmpoPageKey = "death.searchPage" %}
 {% set govukServiceNameKey = translate("pages.death.serviceName") %}
@@ -11,6 +12,13 @@
 {% set govukServiceUrl = "/death" %}
 
 {% block mainContent %}
+
+    {% if liveNotification %}
+      {{ govukNotificationBanner({
+        text: liveNotification
+      }) }}
+    {% endif %}
+
     {{ super() }}
 
     {% call hmpoForm(ctx) %}

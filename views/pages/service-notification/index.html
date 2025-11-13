@@ -1,0 +1,75 @@
+{% extends "app-template.njk" %}
+
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% from "hmpo-form/macro.njk" import hmpoForm %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+
+{% set govukServiceNameKey = translate("govuk.serviceName") %}
+{% set govukServiceTitleKey = translate("govuk.serviceName") %}
+{% set hmpoPageKey = "service-notification.notifyUserPage" %}
+{% set orgLink = "/admin/notify-users" %}
+{% set govukServiceUrl = "admin/notify-users" %}
+
+{% block hmpoContent %}
+  {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "/"
+      }
+    ]
+  }) }}
+
+  <div class="govuk-!-width-two-thirds">
+
+  {% if liveMessageSubmitSuccessful %}
+      {{ govukNotificationBanner({
+        html: "<h2>You have successfully added a notification.</h2><p>This will be visible in around 5 minutes.</p>",
+        type: "success"
+      }) }}
+  {% endif %}
+
+  {{ super() }}
+    {% call hmpoForm(ctx) %}
+      <p>Use notifications to tell all Life Event Verification (LEV) users about:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>a problem that affects the service as a whole, such as  technical issues</li>
+        <li>something that affects them in particular, such as an approaching deadline they need to meet</li>
+      </ul>
+
+      {{ hmpoSubmit(ctx, {id: "add-notification", text: "Add notification", isStartButton: true}) }}
+
+      <h1 class="govuk-heading-m">Live notification</h1>
+
+      {% set rowsArray = [] %}
+      {% set tableClass = "audit live-notification" %}
+
+      {% if receivedNotification == true %}
+        {% set rowsArray = (rowsArray.push([
+            { text: liveNotification },
+            { html: '<a href="/" class="govuk-link">Delete</a>' }
+          ]), rowsArray) %}
+      {% else %}
+        {% set rowsArray = (rowsArray.push([
+            {
+              text: "No live messages",
+              colspan: 2
+            }
+          ]), rowsArray) %}
+        {% set tableClass = "audit no-live-notification" %}
+      {% endif %}
+
+      {{ govukTable({
+        classes: tableClass,
+        firstCellIsHeader: false,
+        head: [{text: "Message"}, {text: ""}],
+        rows: rowsArray
+      }) }}
+    {% endcall %}
+
+  </div>
+{% endblock %}
