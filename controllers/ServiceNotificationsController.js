@@ -1,5 +1,5 @@
 const BaseController = require('./BaseController');
-const {getRequest, postRequest, deleteRequest} = require("../services/UserManagement/IamApiService");
+const {getRequest, postRequest} = require("../services/UserManagement/IamApiService");
 const requestOptions = require("../helpers/requestOptions");
 const {iamApi} = require("../config");
 
@@ -9,7 +9,7 @@ class ServiceNotificationsController extends BaseController {
     try {
       const notificationResults = await getRequest({
         ...requestOptions(req, iamApi),
-        url: `/admin/notify-users/get`,
+        url: `/admin/notify-users/get-live-notification`,
       });
 
       req.sessionModel.set('liveNotification', notificationResults.serviceNotification);
@@ -45,36 +45,28 @@ class ServiceNotificationsController extends BaseController {
     });
   }
 
-  async saveValues(req, res) {
+  async saveValues(req, res, next) {
     if(req.path === '/enter-message') {
-      req.sessionModel.set('newNotification', req.body.newNotification);
-      res.redirect(`/admin/notify-users/summary`);
+      req.sessionModel.set('newNotification', req.body.newNotification.trim().replace(/(\r\n|\n|\r)/g, ' ').replace(/\s+/g, ' '));
     } else if(req.path === '/summary') {
       try {
-        if(req.sessionModel.get('liveNotification')) {
-          await deleteRequest({
-            ...requestOptions(req, iamApi),
-            url: `/admin/notify-users/delete-live-notification`,
-          });
-        }
-
         await postRequest( {
           ...requestOptions(req, iamApi),
-          url: `/admin/notify-users/submit`,
-        }, { liveNotification: req.sessionModel.get('newNotification')});
+          url: `/admin/notify-users/post-live-notification`
+        }, { submittedNotification: req.sessionModel.get('newNotification')});
 
         req.sessionModel.set('liveNotification', req.sessionModel.get('newNotification'));
         req.sessionModel.set('liveMessageSubmitSuccessful', true);
         req.sessionModel.unset('newNotification');
-
-        res.redirect(`/admin/notify-users`);
       } catch (err) {
+        console.log("***ERROR***");
+        console.log(JSON.stringify(err));
         req.sessionModel.set('liveNotification', req.sessionModel.get('newNotification'));
         req.sessionModel.unset('newNotification');
         req.sessionModel.unset('liveMessageSubmitSuccessful');
-        res.redirect(`/admin/notify-users`);
       }
     }
+    next();
   }
 
   locals(req, res, callback) {
@@ -83,15 +75,22 @@ class ServiceNotificationsController extends BaseController {
 
       if(req.path === '/') {
         req.sessionModel.unset('newNotification');
+        req.sessionModel.unset('submittedNotification');
       }
 
       locals.liveNotification = req.sessionModel.get('liveNotification') || [];
       locals.newNotification = req.sessionModel.get('newNotification') || [];
       locals.liveMessageSubmitSuccessful = req.sessionModel.get('liveMessageSubmitSuccessful') || false;
       locals.receivedNotification = req.sessionModel.get('receivedNotification') || [];
+
+      if(req.path === '/summary') {
+        locals.submittedNotification = req.sessionModel.get('newNotification') || [];
+      }
+
       locals.backLink = false;
 
       req.session.liveNotification = req.sessionModel.get('liveNotification') || [];
+      req.session.submittedNotification = req.sessionModel.get('submittedNotification') || [];
       req.sessionModel.unset('liveMessageSubmitSuccessful');
       req.sessionModel.unset('receivedNotification');
 

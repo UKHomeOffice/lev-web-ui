@@ -78,15 +78,17 @@
                     }]
                 }) }}
             </div>
-            <div class="govuk-!-width-one-third govuk-!-padding-left-3 govuk-!-padding-bottom-3 govuk-!-display-inline-block">
-                {{ govukServiceNavigation({
-                    classes: 'govuk-!-padding-left-3',
-                    navigation: [{
-                        href: "/admin/notify-users",
-                        text: "Service notification"
-                    }]
-                }) }}
-            </div>
+            {% if isExternal == "false" %}
+              <div class="govuk-!-width-one-third govuk-!-padding-left-3 govuk-!-padding-bottom-3 govuk-!-display-inline-block">
+                  {{ govukServiceNavigation({
+                      classes: 'govuk-!-padding-left-3',
+                      navigation: [{
+                          href: "/admin/notify-users",
+                          text: "Service notification"
+                      }]
+                  }) }}
+              </div>
+            {% endif %}
         {% endif %}
     </div>
     {% endblock %}

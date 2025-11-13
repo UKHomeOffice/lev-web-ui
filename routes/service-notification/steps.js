@@ -6,7 +6,8 @@ module.exports = {
   '/': {
     entryPoint: true,
     controller: ServiceNotificationsController,
-    template: '/index.html'
+    template: '/index.html',
+    next: '/admin/notify-users/enter-message'
   },
   '/enter-message': {
     fields: ['newNotification'],
@@ -17,6 +18,7 @@ module.exports = {
   },
   '/summary': {
     entryPoint: true,
+    fields: ['submittedNotification'],
     controller: ServiceNotificationsController,
     template: '/summary.html',
     next: '/admin/notify-users'
