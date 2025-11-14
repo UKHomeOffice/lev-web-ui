@@ -9,7 +9,9 @@
     {% set endIndex = usersMetaData.total %}
   {% endif %}
 
-  {% set userInfo = "Showing <b>" + startIndex + "</b>-<b>" + endIndex + "</b> of <b>" + usersMetaData.total + "</b> records" %}
+  {% set usersOnPage = users.length %}
+
+  {% set userInfo = "Showing <b>" + usersOnPage + "</b> of <b>" + usersMetaData.total + "</b> users" %}
   <p>{{ userInfo | safe }}</p>
 
   {% set usersHeaderArray = [] %}
@@ -57,9 +59,12 @@
   {% endfor %}
 
   {{ govukTable({
-  classes: "details",
+  classes: "details table-container",
   firstCellIsHeader: false,
   head: usersHeaderArray,
   rows: usersArray
   }) }}
+
+  {% set resultsInfo = "Showing results <b>" + startIndex + "</b> to <b>" + endIndex + "</b>" %}
+  <div class="user-table-footer"><p>{{ resultsInfo | safe }}</p></div>
 {% endmacro %}
