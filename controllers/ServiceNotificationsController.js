@@ -1,5 +1,5 @@
 const BaseController = require('./BaseController');
-const {getRequest, postRequest} = require("../services/UserManagement/IamApiService");
+const {getRequest, postRequest, deleteRequest} = require("../services/UserManagement/IamApiService");
 const requestOptions = require("../helpers/requestOptions");
 const {iamApi} = require("../config");
 
@@ -67,6 +67,17 @@ class ServiceNotificationsController extends BaseController {
         req.sessionModel.unset('liveMessageSubmitSuccessful');
       }
     }
+    else if(req.path === '/delete-notification') {
+      try {
+        await deleteRequest({
+          ...requestOptions(req, iamApi),
+          url: `/admin/notify-users/delete-live-notification`
+        });
+        req.sessionModel.set('liveMessageDeleteSuccessful', true);
+      } catch(err) {
+        req.sessionModel.unset('liveMessageDeleteSuccessful');
+      }
+    }
     next();
   }
 
@@ -82,6 +93,7 @@ class ServiceNotificationsController extends BaseController {
       locals.liveNotification = req.sessionModel.get('liveNotification') || [];
       locals.newNotification = req.sessionModel.get('newNotification') || [];
       locals.liveMessageSubmitSuccessful = req.sessionModel.get('liveMessageSubmitSuccessful') || false;
+      locals.liveMessageDeleteSuccessful = req.sessionModel.get('liveMessageDeleteSuccessful') || false;
       locals.receivedNotification = req.sessionModel.get('receivedNotification') || [];
 
       if(req.path === '/summary') {
@@ -93,6 +105,7 @@ class ServiceNotificationsController extends BaseController {
       req.session.liveNotification = req.sessionModel.get('liveNotification') || [];
       req.session.submittedNotification = req.sessionModel.get('submittedNotification') || [];
       req.sessionModel.unset('liveMessageSubmitSuccessful');
+      req.sessionModel.unset('liveMessageDeleteSuccessful');
       req.sessionModel.unset('receivedNotification');
 
       callback(null, locals);

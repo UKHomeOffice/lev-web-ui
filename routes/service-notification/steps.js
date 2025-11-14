@@ -22,5 +22,10 @@ module.exports = {
     controller: ServiceNotificationsController,
     template: '/summary.html',
     next: '/admin/notify-users'
+  },
+  '/delete-notification': {
+    entryPoint: true,
+    controller: ServiceNotificationsController,
+    next: '/admin/notify-users'
   }
 };
