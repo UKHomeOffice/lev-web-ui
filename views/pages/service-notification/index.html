@@ -32,6 +32,13 @@
       }) }}
   {% endif %}
 
+  {% if liveMessageDeleteSuccessful %}
+    {{ govukNotificationBanner({
+      html: "<h2>You have successfully deleted a notification.",
+      type: "success"
+    }) }}
+  {% endif %}
+
   {{ super() }}
     {% call hmpoForm(ctx) %}
       <p>Use notifications to tell all Life Event Verification (LEV) users about:</p>
@@ -51,7 +58,7 @@
       {% if receivedNotification == true %}
         {% set rowsArray = (rowsArray.push([
             { text: liveNotification },
-            { html: '<a href="/" class="govuk-link">Delete</a>' }
+            { html: '<a href="#" class="govuk-link" onclick="deleteNotification()">Delete</a>' }
           ]), rowsArray) %}
       {% else %}
         {% set rowsArray = (rowsArray.push([
@@ -72,4 +79,13 @@
     {% endcall %}
 
   </div>
+
+  <script>
+    function deleteNotification() {
+      const form = document.getElementsByTagName("form")[0];
+      form.action = "notify-users/delete-notification";
+      form.submit();
+    }
+  </script>
+
 {% endblock %}
