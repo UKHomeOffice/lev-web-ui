@@ -2,6 +2,7 @@ const BaseController = require('./BaseController');
 const {getRequest, postRequest, deleteRequest} = require("../services/UserManagement/IamApiService");
 const requestOptions = require("../helpers/requestOptions");
 const {iamApi} = require("../config");
+const {refreshServiceNotificationCache} = require("../helpers/serviceNotificationCache");
 
 class ServiceNotificationsController extends BaseController {
   async getValues(req, _res, next) {
@@ -61,6 +62,7 @@ class ServiceNotificationsController extends BaseController {
         req.sessionModel.set('liveNotification', req.sessionModel.get('newNotification'));
         req.sessionModel.set('liveMessageSubmitSuccessful', true);
         req.sessionModel.unset('newNotification');
+        refreshServiceNotificationCache();
       } catch (err) {
         req.sessionModel.set('liveNotification', req.sessionModel.get('newNotification'));
         req.sessionModel.unset('newNotification');
@@ -73,7 +75,9 @@ class ServiceNotificationsController extends BaseController {
           ...requestOptions(req, iamApi),
           url: `/admin/notify-users/delete-live-notification`
         });
+
         req.sessionModel.set('liveMessageDeleteSuccessful', true);
+        refreshServiceNotificationCache();
       } catch(err) {
         req.sessionModel.unset('liveMessageDeleteSuccessful');
       }
