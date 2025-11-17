@@ -8,8 +8,13 @@
 {% from "hmpo-form/macro.njk" import hmpoForm %}
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "components/service-notification-display.njk" import serviceNotificationDisplay %}
 
 {% block hmpoContent %}
+
+  <div class="govuk-!-width-two-thirds">
+    {{ serviceNotificationDisplay(displayServiceNotification) }}
+  </div>
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">

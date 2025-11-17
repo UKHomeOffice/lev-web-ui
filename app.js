@@ -15,7 +15,7 @@ const accessibilityStatement = require('./routes/accessibility-statement');
 const syops = require('./routes/syops');
 const { healthCheck } = require('./routes/health');
 const { syopsAcceptanceCheck } = require("./middleware/syopsAcceptanceCheck");
-const {serviceNotificationCache} = require("./helpers/serviceNotificationCache");
+const {serviceNotificationCache, serviceNotificationGetRefreshCacheValue} = require("./helpers/serviceNotificationCache");
 const { router, app } = setup(options);
 const nunjucksEnv = app.get('nunjucksEnv');
 
@@ -25,6 +25,7 @@ nunjucksEnv.addFilter('ceil', Math.ceil);
 nunjucksEnv.addGlobal('displayFeedbackBanner', require('./helpers/feedbackBanner'));
 nunjucksEnv.addGlobal('feedbackContentHtml', process.env.FEEDBACK_CONTENT_HTML);
 nunjucksEnv.addGlobal('govukRebrand', true);
+nunjucksEnv.addGlobal('displayServiceNotification');
 
 router.use((req, res, next) => {
   if(!req.url.toLowerCase().includes('syops') && !req.url.toLowerCase().includes('metrics') && !req.url.toLowerCase().includes('access-test') && !req.url.toLowerCase().includes('public') && !req.url.toLowerCase().includes('assets')) {
@@ -34,7 +35,10 @@ router.use((req, res, next) => {
 });
 
 router.use(async (req, res, next) => {
-  res.locals.liveNotification = await serviceNotificationCache(req);
+  if(serviceNotificationGetRefreshCacheValue) {
+    nunjucksEnv.addGlobal('displayServiceNotification', await serviceNotificationCache(req));
+  }
+
   next();
 });
 
