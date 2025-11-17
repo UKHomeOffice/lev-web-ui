@@ -19,22 +19,27 @@
 {% endblock %}
 
 {% block footer %}
-  {{ hmpoFooter({
-    copyright: {
-      text: " "
-    },
-    meta: {
-      items: [
-        {
-          href: "/accessibility-statement",
-          text: "Accessibility statement"
-        },
-        {
-          href: "/syops",
-          text: "Syops"
-        }
-      ],
-      html: hmpoHtml(translate("footer"))
-    }
-  }) }}
+  <footer class="govuk-footer">
+    <div class="govuk-width-container">
+      <div class="govuk-footer__meta">
+        <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
+          <ul class="govuk-footer__inline-list">
+            <li class="govuk-footer__inline-list-item">
+              <a class="govuk-footer__link govuk-body-s" href="/accessibility-statement">
+                {{ translate('footer.links.accessibilityStatement') }}
+              </a>
+            </li>
+            <li class="govuk-footer__inline-list-item">
+              <a class="govuk-footer__link govuk-body-s" href="/syops">
+                {{ translate('footer.links.syops') }}
+              </a>
+            </li>
+          </ul>
+          <span class="govuk-footer__licence-description">
+          &copy; {{ translate('govuk.logoName') }} {{ "" | getYear }}
+        </span>
+        </div>
+      </div>
+    </div>
+  </footer>
 {% endblock %}
