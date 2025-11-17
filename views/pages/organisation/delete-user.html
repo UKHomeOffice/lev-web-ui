@@ -2,6 +2,7 @@
 
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "components/service-notification-display.njk" import serviceNotificationDisplay %}
 
 {% set govukServiceNameKey = translate("pages.user-management.serviceName") %}
 {% set govukServiceTitleKey = translate("pages.user-management.userPage.pageTitle") %}
@@ -11,6 +12,10 @@
 {% set teamLink = orgLink + "/team/" + userInfo.teamID %}
 
 {% block hmpoContent %}
+
+  <div class="govuk-!-width-two-thirds">
+    {{ serviceNotificationDisplay(displayServiceNotification) }}
+  </div>
   <h1>Are you sure you want to delete this user?</h1>
 
   <div class="govuk-!-width-two-thirds">

@@ -4,28 +4,28 @@ const {iamApi} = require("../config");
 let refreshCache = true;
 
 module.exports.serviceNotificationCache = async (req) => {
-  let response = null;
-  if(refreshCache) {
-    try {
-      const notificationResults = await getRequest({
-        ...requestOptions(req, iamApi),
-        url: `/admin/notify-users/get-live-notification`,
-      });
+  try {
+    const notificationResults = await getRequest({
+      ...requestOptions(req, iamApi),
+      url: `/admin/notify-users/get-live-notification`,
+    });
 
-      if (notificationResults.serviceNotification === undefined) {
-        return response;
-      }
+    refreshCache = false;
 
-      response = notificationResults.serviceNotification;
-      refreshCache = false;
-    } catch (err) {
+    if (notificationResults.serviceNotification === undefined) {
       return null;
     }
 
+    return notificationResults.serviceNotification;
+  } catch (err) {
+    return null;
   }
-  return response;
 }
 
 module.exports.refreshServiceNotificationCache = () => {
   refreshCache = true;
+}
+
+module.exports.serviceNotificationGetRefreshCacheValue = () => {
+  return refreshCache;
 }

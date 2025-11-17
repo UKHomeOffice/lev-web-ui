@@ -4,7 +4,7 @@
 {% from "hmpo-form/macro.njk" import hmpoForm %}
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
 {% from "components/lev-system-number.njk" import levSystemNumber %}
-{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% from "components/service-notification-display.njk" import serviceNotificationDisplay %}
 
 {% set hmpoPageKey = "birth.searchPage" %}
 {% set govukServiceNameKey = translate("pages.birth.serviceName") %}
@@ -12,11 +12,7 @@
 {% set govukServiceUrl = "/birth" %}
 
 {% block mainContent %}
-    {% if liveNotification %}
-      {{ govukNotificationBanner({
-        text: liveNotification
-      }) }}
-    {% endif %}
+    {{ serviceNotificationDisplay(displayServiceNotification) }}
 
     {{ super() }}
 
