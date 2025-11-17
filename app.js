@@ -9,6 +9,7 @@ const marriageRoute = require('./routes/marriage');
 const partnershipRoute = require('./routes/partnership');
 const metricsRoute = require('./routes/metrics');
 const organisationsRoute = require('./routes/organisation');
+const serviceNotificationRoute = require('./routes/service-notification');
 const accessTest = require('./routes/access-test');
 const accessibilityStatement = require('./routes/accessibility-statement');
 const syops = require('./routes/syops');
@@ -19,6 +20,7 @@ const nunjucksEnv = app.get('nunjucksEnv');
 
 nunjucksEnv.addFilter('relativeDateTime', require('./filters/relativeDateTimeFilter'));
 nunjucksEnv.addFilter('getYear', require('./filters/getYear'));
+nunjucksEnv.addFilter('ceil', Math.ceil);
 nunjucksEnv.addGlobal('displayFeedbackBanner', require('./helpers/feedbackBanner'));
 nunjucksEnv.addGlobal('feedbackContentHtml', process.env.FEEDBACK_CONTENT_HTML);
 nunjucksEnv.addGlobal('govukRebrand', true);
@@ -27,6 +29,11 @@ router.use((req, res, next) => {
   if(!req.url.toLowerCase().includes('syops') && !req.url.toLowerCase().includes('metrics') && !req.url.toLowerCase().includes('access-test') && !req.url.toLowerCase().includes('public') && !req.url.toLowerCase().includes('assets')) {
     req.session.originalRequestUrl = req.originalUrl;
   }
+  next();
+});
+
+router.use((req, res, next) => {
+  res.locals.liveNotification = req.session.liveNotification || null;
   next();
 });
 
@@ -46,4 +53,5 @@ router.use('/death', deathRoute);
 router.use('/marriage', marriageRoute);
 router.use('/partnership', partnershipRoute);
 router.use('/admin/organisations', organisationsRoute);
+router.use('/admin/notify-users', serviceNotificationRoute);
 router.use('/', homeRoute);
