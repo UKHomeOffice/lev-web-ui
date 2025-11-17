@@ -105,15 +105,15 @@
     classes: "govuk-button--secondary"
   }) }}
 
-    </div>
-  </div>
   <h2>Users</h2>
   {% if users.length == 0 %}
     <p>There are no users in this team.</p>
   {% else %}
-    {{ usersTable(users, usersMetaData, ["User", "Email address", "Last Active", "Account Status"], ctx) }}
+    {{ usersTable(users, usersMetaData, ["User", "Email address", "Last active", "Account status"], ctx) }}
     {{ pagination(usersMetaData.total, usersMetaData.perPage, usersMetaData.currentPage) }}
   {% endif %}
 
   {% endblock %}
+  </div>
+</div>
 {% endblock %}
