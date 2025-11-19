@@ -58,7 +58,7 @@
       {% if receivedNotification == true %}
         {% set rowsArray = (rowsArray.push([
             { text: liveNotification },
-            { html: '<a href="#" class="govuk-link" onclick="deleteNotification()">Delete</a>' }
+            { html: hmpoSubmit(ctx, {id: "delete-notification", html: '<a href="#">Delete</a>', classes: "govuk-link"}) }
           ]), rowsArray) %}
       {% else %}
         {% set rowsArray = (rowsArray.push([
@@ -79,13 +79,4 @@
     {% endcall %}
 
   </div>
-
-  <script>
-    function deleteNotification() {
-      const form = document.getElementsByTagName("form")[0];
-      form.action = "notify-users/delete-notification";
-      form.submit();
-    }
-  </script>
-
 {% endblock %}
