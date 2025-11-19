@@ -7,7 +7,10 @@ module.exports = {
     entryPoint: true,
     controller: ServiceNotificationsController,
     template: '/index.html',
-    next: '/admin/notify-users/enter-message'
+    next: [
+      { fn: 'isDeleteClicked', next: '/admin/notify-users' },
+        '/admin/notify-users/enter-message'
+      ]
   },
   '/enter-message': {
     fields: ['newNotification'],
@@ -21,11 +24,6 @@ module.exports = {
     fields: ['submittedNotification'],
     controller: ServiceNotificationsController,
     template: '/summary.html',
-    next: '/admin/notify-users'
-  },
-  '/delete-notification': {
-    entryPoint: true,
-    controller: ServiceNotificationsController,
     next: '/admin/notify-users'
   }
 };

@@ -25,7 +25,6 @@ nunjucksEnv.addFilter('ceil', Math.ceil);
 nunjucksEnv.addGlobal('displayFeedbackBanner', require('./helpers/feedbackBanner'));
 nunjucksEnv.addGlobal('feedbackContentHtml', process.env.FEEDBACK_CONTENT_HTML);
 nunjucksEnv.addGlobal('govukRebrand', true);
-nunjucksEnv.addGlobal('displayServiceNotification');
 
 router.use((req, res, next) => {
   if(!req.url.toLowerCase().includes('syops') && !req.url.toLowerCase().includes('metrics') && !req.url.toLowerCase().includes('access-test') && !req.url.toLowerCase().includes('public') && !req.url.toLowerCase().includes('assets')) {
@@ -36,7 +35,7 @@ router.use((req, res, next) => {
 
 router.use(async (req, res, next) => {
   if(serviceNotificationGetRefreshCacheValue) {
-    nunjucksEnv.addGlobal('displayServiceNotification', await serviceNotificationCache(req));
+    res.locals.displayServiceNotification = await serviceNotificationCache(req);
   }
 
   next();

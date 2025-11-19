@@ -69,7 +69,7 @@ class ServiceNotificationsController extends BaseController {
         req.sessionModel.unset('liveMessageSubmitSuccessful');
       }
     }
-    else if(req.path === '/delete-notification') {
+    else if(this.isDeleteClicked(req)) {
       try {
         await deleteRequest({
           ...requestOptions(req, iamApi),
@@ -82,7 +82,14 @@ class ServiceNotificationsController extends BaseController {
         req.sessionModel.unset('liveMessageDeleteSuccessful');
       }
     }
+    console.log("***REQUEST PATH***\n" + JSON.stringify(req.path));
+    console.log("***REQUEST BODY***\n" + JSON.stringify(req.body));
+    console.log("***REQUEST PARAMS***\n" + JSON.stringify(req.params));
     next();
+  }
+
+  isDeleteClicked(req) {
+    return req.body["delete-notification"] !== undefined;
   }
 
   locals(req, res, callback) {
