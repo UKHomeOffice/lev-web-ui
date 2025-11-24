@@ -1,4 +1,4 @@
-{% extends "app-template.njk" %}
+{% extends "service-notification-display-template.njk" %}
 
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
@@ -12,10 +12,6 @@
 {% set teamLink = orgLink + "/team/" + userInfo.teamID %}
 
 {% block hmpoContent %}
-
-  <div class="govuk-!-width-two-thirds">
-    {{ serviceNotificationDisplay(displayServiceNotification) }}
-  </div>
   <h1>Are you sure you want to delete this user?</h1>
 
   <div class="govuk-!-width-two-thirds">

@@ -1,4 +1,4 @@
-{% extends "app-template.njk" %}
+{% extends "service-notification-display-template.njk" %}
 
 {% from "hmpo-field/macro.njk" import hmpoField %}
 {% from "hmpo-form/macro.njk" import hmpoForm %}
@@ -14,9 +14,8 @@
 {% set hmpoPageKey = "user-management." + pageName %}
 
 {% block mainContent %}
-    {{ serviceNotificationDisplay(displayServiceNotification) }}
 
-{{ super() }}
+  {{ super() }}
 
   {% call hmpoForm(ctx) %}
 

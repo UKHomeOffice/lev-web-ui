@@ -1,4 +1,4 @@
-{% extends "app-template.njk" %}
+{% extends "service-notification-display-template.njk" %}
 
 {% set govukServiceNameKey = translate("pages.user-management.serviceName") %}
 {% set govukServiceTitleKey = translate("pages.user-management."+pageName+".pageTitle") %}
@@ -10,10 +10,6 @@
 {% from "components/service-notification-display.njk" import serviceNotificationDisplay %}
 
 {% block hmpoContent %}
-
-  <div class="govuk-!-width-two-thirds">
-    {{ serviceNotificationDisplay(displayServiceNotification) }}
-  </div>
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
