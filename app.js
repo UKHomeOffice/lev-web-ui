@@ -15,7 +15,7 @@ const accessibilityStatement = require('./routes/accessibility-statement');
 const syops = require('./routes/syops');
 const { healthCheck } = require('./routes/health');
 const { syopsAcceptanceCheck } = require("./middleware/syopsAcceptanceCheck");
-const {serviceNotificationCache, serviceNotificationGetRefreshCacheValue} = require("./helpers/serviceNotificationCache");
+const { serviceNotificationCache } = require("./helpers/serviceNotificationCache");
 const { router, app } = setup(options);
 const nunjucksEnv = app.get('nunjucksEnv');
 
@@ -34,10 +34,7 @@ router.use((req, res, next) => {
 });
 
 router.use(async (req, res, next) => {
-  if(serviceNotificationGetRefreshCacheValue) {
-    res.locals.displayServiceNotification = await serviceNotificationCache(req);
-  }
-
+  res.locals.displayServiceNotification = await serviceNotificationCache(req);
   next();
 });
 

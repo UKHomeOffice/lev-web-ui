@@ -1,31 +1,30 @@
 const {getRequest} = require("../services/UserManagement/IamApiService");
 const requestOptions = require("./requestOptions");
 const {iamApi} = require("../config");
-let refreshCache = true;
+const redisService = require("../lib/redisCacheService");
+const logger = require('hmpo-logger').get();
 
 module.exports.serviceNotificationCache = async (req) => {
   try {
-    const notificationResults = await getRequest({
+    if(await redisService.get(`serviceNotificationLive`) === true)
+      return null;
+
+    const serviceNotificationPayload = JSON.parse(await redisService.get(`serviceNotification`));
+
+    if (serviceNotificationPayload) {
+      return serviceNotificationPayload.serviceNotification ? serviceNotificationPayload.serviceNotification : null;
+    }
+
+    const serviceNotificationResults = await getRequest({
       ...requestOptions(req, iamApi),
       url: `/admin/notify-users/get-live-notification`,
     });
 
-    refreshCache = false;
+    await redisService.set(`serviceNotification`, JSON.stringify(serviceNotificationResults));
 
-    if (notificationResults.serviceNotification === undefined) {
-      return null;
-    }
-
-    return notificationResults.serviceNotification;
-  } catch (err) {
-    return null;
+    return serviceNotificationResults.serviceNotification;
   }
-}
-
-module.exports.refreshServiceNotificationCache = () => {
-  refreshCache = true;
-}
-
-module.exports.serviceNotificationGetRefreshCacheValue = () => {
-  return refreshCache;
+  catch (err) {
+    logger.log('error', err);
+  }
 }

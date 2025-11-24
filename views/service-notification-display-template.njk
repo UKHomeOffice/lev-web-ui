@@ -1,0 +1,16 @@
+{% extends "app-template.njk" %}
+
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+{% block content %}
+    {% if displayServiceNotification %}
+      <div class="govuk-!-width-two-thirds">
+        {{ govukNotificationBanner({
+          text: displayServiceNotification,
+          id: "serviceNotificationDisplayBanner"
+        }) }}
+      </div>
+    {% endif %}
+
+    {{ super() }}
+{% endblock %}

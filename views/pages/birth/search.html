@@ -1,4 +1,4 @@
-{% extends "app-template.njk" %}
+{% extends "service-notification-display-template.njk" %}
 
 {% from "hmpo-field/macro.njk" import hmpoField %}
 {% from "hmpo-form/macro.njk" import hmpoForm %}
@@ -12,7 +12,6 @@
 {% set govukServiceUrl = "/birth" %}
 
 {% block mainContent %}
-    {{ serviceNotificationDisplay(displayServiceNotification) }}
 
     {{ super() }}
 

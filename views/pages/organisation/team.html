@@ -1,4 +1,4 @@
-{% extends "app-template.njk" %}
+{% extends "service-notification-display-template.njk" %}
 
 {% from "govuk/components/table/macro.njk" import govukTable %}
 {% from "components/pagination.njk" import pagination %}
@@ -19,10 +19,6 @@
 {% set teamLink = orgLink + "/team/" + teamInfo.id %}
 
 {% block hmpoContent %}
-
-  <div class="govuk-!-width-two-thirds">
-    {{ serviceNotificationDisplay(displayServiceNotification) }}
-  </div>
 
   {% set status = '' %}
   {% set html = '' %}

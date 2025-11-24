@@ -1,4 +1,4 @@
-{% extends "app-template.njk" %}
+{% extends "service-notification-display-template.njk" %}
 
 {% from "govuk/components/table/macro.njk" import govukTable %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
@@ -11,10 +11,6 @@
 {% set govukServiceUrl = "/admin/organisations" %}
 
 {% block hmpoContent %}
-
-  <div class="govuk-!-width-two-thirds">
-    {{ serviceNotificationDisplay(displayServiceNotification) }}
-  </div>
 
   <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">

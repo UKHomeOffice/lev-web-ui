@@ -10,6 +10,7 @@
 {% set govukServiceNameKey = translate("govuk.serviceName") %}
 {% set govukServiceTitleKey = translate("govuk.serviceName") %}
 {% set hmpoPageKey = "service-notification.notifyUserPage" %}
+
 {% set orgLink = "/admin/notify-users" %}
 {% set govukServiceUrl = "admin/notify-users" %}
 
@@ -25,21 +26,21 @@
 
   <div class="govuk-!-width-two-thirds">
 
-  {% if liveMessageSubmitSuccessful %}
+    {% if liveMessageSubmitSuccessful %}
+        {{ govukNotificationBanner({
+          html: "<h2>You have successfully added a notification.</h2><p>This will be visible in around 5 minutes.</p>",
+          type: "success"
+        }) }}
+    {% endif %}
+
+    {% if liveMessageDeleteSuccessful %}
       {{ govukNotificationBanner({
-        html: "<h2>You have successfully added a notification.</h2><p>This will be visible in around 5 minutes.</p>",
+        html: "<h2>You have successfully deleted a notification.",
         type: "success"
       }) }}
-  {% endif %}
+    {% endif %}
 
-  {% if liveMessageDeleteSuccessful %}
-    {{ govukNotificationBanner({
-      html: "<h2>You have successfully deleted a notification.",
-      type: "success"
-    }) }}
-  {% endif %}
-
-  {{ super() }}
+    {{ super() }}
     {% call hmpoForm(ctx) %}
       <p>Use notifications to tell all Life Event Verification (LEV) users about:</p>
 
@@ -77,6 +78,5 @@
         rows: rowsArray
       }) }}
     {% endcall %}
-
   </div>
 {% endblock %}

@@ -2,7 +2,6 @@ const BaseController = require('./BaseController');
 const {getRequest, postRequest, deleteRequest} = require("../services/UserManagement/IamApiService");
 const requestOptions = require("../helpers/requestOptions");
 const {iamApi} = require("../config");
-const {refreshServiceNotificationCache} = require("../helpers/serviceNotificationCache");
 
 class ServiceNotificationsController extends BaseController {
   async getValues(req, _res, next) {
@@ -59,10 +58,10 @@ class ServiceNotificationsController extends BaseController {
           url: `/admin/notify-users/post-live-notification`
         }, { submittedNotification: req.sessionModel.get('newNotification')});
 
+
         req.sessionModel.set('liveNotification', req.sessionModel.get('newNotification'));
         req.sessionModel.set('liveMessageSubmitSuccessful', true);
         req.sessionModel.unset('newNotification');
-        refreshServiceNotificationCache();
       } catch (err) {
         req.sessionModel.set('liveNotification', req.sessionModel.get('newNotification'));
         req.sessionModel.unset('newNotification');
@@ -77,14 +76,10 @@ class ServiceNotificationsController extends BaseController {
         });
 
         req.sessionModel.set('liveMessageDeleteSuccessful', true);
-        refreshServiceNotificationCache();
       } catch(err) {
         req.sessionModel.unset('liveMessageDeleteSuccessful');
       }
     }
-    console.log("***REQUEST PATH***\n" + JSON.stringify(req.path));
-    console.log("***REQUEST BODY***\n" + JSON.stringify(req.body));
-    console.log("***REQUEST PARAMS***\n" + JSON.stringify(req.params));
     next();
   }
 
@@ -109,9 +104,12 @@ class ServiceNotificationsController extends BaseController {
 
       if(req.path === '/summary') {
         locals.submittedNotification = req.sessionModel.get('newNotification') || [];
+        locals.backLink = '/admin/notify-users/enter-message';
+      } else if(req.path === '/enter-message') {
+        locals.backLink = '/admin/notify-users';
+      } else {
+        locals.backLink = false;
       }
-
-      locals.backLink = false;
 
       req.session.liveNotification = req.sessionModel.get('liveNotification') || [];
       req.session.submittedNotification = req.sessionModel.get('submittedNotification') || [];
