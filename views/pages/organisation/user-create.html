@@ -1,5 +1,6 @@
 {% extends "app-template.njk" %}
 
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "govuk/components/select/macro.njk" import govukSelect %}
 {% from "hmpo-field/macro.njk" import hmpoField %}
@@ -14,6 +15,18 @@
 {% set govukServiceUrl = "/admin/organisations" %}
 {% set orgLink = "/admin/organisations/" + orgId %}
 {% set teamLink = orgLink + "/team/" + currentTeamId %}
+
+{% set backLink = orgLink %}
+{% if currentTeamId %}
+    {% set backLink = teamLink %}
+{% endif %}
+
+{% block beforeContent %}
+    {{ govukBackLink({
+        text: "Back",
+        href: backLink
+    }) }}
+{% endblock %}
 
 {% block hmpoContent %}
 <div class="govuk-grid-row">
@@ -69,11 +82,7 @@
 
         <div class="govuk-button-group">
             {{ hmpoSubmit(ctx, {id: "submit", key: "submit"}) }}
-            {% if currentTeamId %}
-                {{ hmpoSubmit(ctx, {id: "cancel", key: "cancel", href: teamLink, classes: "govuk-button--secondary"}) }}
-            {% else %}
-                {{ hmpoSubmit(ctx, {id: "cancel", key: "cancel", href: orgLink, classes: "govuk-button--secondary"}) }}
-            {% endif %}
+            {{ hmpoSubmit(ctx, {id: "cancel", key: "cancel", href: backLink, classes: "govuk-button--secondary"}) }}
         </div>
         {% endcall %}
 

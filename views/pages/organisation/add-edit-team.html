@@ -1,5 +1,6 @@
 {% extends "app-template.njk" %}
 
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "hmpo-field/macro.njk" import hmpoField %}
 {% from "hmpo-form/macro.njk" import hmpoForm %}
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
@@ -13,6 +14,13 @@
 
 {% set govukServiceTitleKey = translate("pages.user-management." + pageName + ".pageTitle") %}
 {% set hmpoPageKey = "user-management." + pageName %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: govukServiceUrl
+  }) }}
+{% endblock %}
 
 {% block mainContent %}
 {{ super() }}

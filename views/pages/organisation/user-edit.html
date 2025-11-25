@@ -1,5 +1,6 @@
 {% extends "app-template.njk" %}
 
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "govuk/components/select/macro.njk" import govukSelect %}
 {% from "hmpo-field/macro.njk" import hmpoField %}
@@ -14,6 +15,13 @@
 {% set govukServiceUrl = "/admin/organisations" %}
 {% set orgLink = "/admin/organisations/" + userInfo.orgID %}
 {% set teamLink = orgLink + "/team/" + userInfo.teamID %}
+
+{% block beforeContent %}
+    {{ govukBackLink({
+        text: "Back",
+        href: teamLink + "/user/" +userInfo.email
+    }) }}
+{% endblock %}
 
 {% block hmpoContent %}
 <div class="govuk-grid-row">

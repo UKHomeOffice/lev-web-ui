@@ -1,5 +1,6 @@
 {% extends "app-template.njk" %}
 
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 
@@ -9,6 +10,14 @@
 {% set govukServiceUrl = "/admin/organisations" %}
 {% set orgLink = "/admin/organisations/" + userInfo.orgID %}
 {% set teamLink = orgLink + "/team/" + userInfo.teamID %}
+{% set backLink = teamLink + "/user/" +userInfo.email %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: backLink
+  }) }}
+{% endblock %}
 
 {% block hmpoContent %}
   <h1>Are you sure you want to delete this user?</h1>
@@ -42,7 +51,7 @@
 
     <div class="govuk-button-group">
       {{ hmpoSubmit(ctx, {id: "deleteAccount", key: "deleteAccount", href: teamLink + "/user/" +userInfo.email + "/delete", classes: "govuk-button--warning"}) }}
-      {{ hmpoSubmit(ctx, {id: "back", key: "back", href: teamLink + "/user/" +userInfo.email, classes: "govuk-button--secondary"}) }}
+      {{ hmpoSubmit(ctx, {id: "back", key: "back", href: backLink, classes: "govuk-button--secondary"}) }}
     </div>
 
   </div>
