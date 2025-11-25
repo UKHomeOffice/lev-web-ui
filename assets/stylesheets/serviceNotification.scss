@@ -17,7 +17,7 @@ $govuk-assets-path: "/public/";
 
 a.govuk-back-link {
   margin-top: 15px;
-  margin-bottom: 0;
+  margin-bottom: 15px;
   padding-top: 0;
   font-size: 16px;
 }
@@ -41,6 +41,7 @@ a.govuk-breadcrumbs__link {
   top: -30px;
   line-height: 1.25;
   height: 20px;
+  margin-bottom: 15px;
 }
 
 .govuk-breadcrumbs__list-item {
@@ -50,6 +51,7 @@ a.govuk-breadcrumbs__link {
 
 .govuk-breadcrumbs__list {
   margin-bottom: 15px;
+  padding-bottom: 15px;
   height: 20px;
 }
 
