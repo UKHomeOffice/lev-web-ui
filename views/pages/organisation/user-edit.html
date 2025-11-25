@@ -1,4 +1,4 @@
-{% extends "app-template.njk" %}
+{% extends "service-notification-display-template.njk" %}
 
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "govuk/components/select/macro.njk" import govukSelect %}
@@ -7,6 +7,7 @@
 {% from "hmpo-select/macro.njk" import hmpoSelect %}
 {% from "hmpo-form/macro.njk" import hmpoForm %}
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+{% from "components/service-notification-display.njk" import serviceNotificationDisplay %}
 
 {% set govukServiceNameKey = translate("pages.user-management.serviceName") %}
 {% set govukServiceTitleKey = translate("pages.user-management.userEditPage.pageTitle") %}
@@ -16,69 +17,70 @@
 {% set teamLink = orgLink + "/team/" + userInfo.teamID %}
 
 {% block hmpoContent %}
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-        {% block mainContent %}
-        <div class="govuk-grid-row">
-            <div class="govuk-grid-column-three-quarters">
-                <h1>{{ translate("pages." + hmpoPageKey + ".h1", { default: hmpoTitle }) | safe }}</h1>
-                <h2 id="header">{{ userInfo.firstName }} {{ userInfo.lastName }}</h2>
-            </div>
-        </div>
 
-        {% set userInfoArray = [
-            { key: { text: "Email address" }, value: { text: userInfo.email } },
-            { key: { text: "Organisation" }, value: { html:  "<a href=" + orgLink +">" + userInfo.organisationName + "</a>" } }
-        ]%}
-        <div class="govuk-!-width-two-thirds">
-            {{ govukSummaryList({
-            classes: "detail",
-            rows: userInfoArray
-            }) }}
-        </div>
+  <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+          {% block mainContent %}
+          <div class="govuk-grid-row">
+              <div class="govuk-grid-column-three-quarters">
+                  <h1>{{ translate("pages." + hmpoPageKey + ".h1", { default: hmpoTitle }) | safe }}</h1>
+                  <h2 id="header">{{ userInfo.firstName }} {{ userInfo.lastName }}</h2>
+              </div>
+          </div>
 
-        {% set teamsToShow = [] %}
-        {% for team in orgTeams  %}
-          {% set itemInSelect = { text: team.name, value: team.id } %}
-          {% if team.id == userInfo.teamID %}
-            {% set itemInSelect = { text: team.name, value: team.id, selected: true } %}
-          {% endif %}
-          {% set teamsToShow = (teamsToShow.push( itemInSelect ), teamsToShow) %}
-        {% endfor %}
+          {% set userInfoArray = [
+              { key: { text: "Email address" }, value: { text: userInfo.email } },
+              { key: { text: "Organisation" }, value: { html:  "<a href=" + orgLink +">" + userInfo.organisationName + "</a>" } }
+          ]%}
+          <div class="govuk-!-width-two-thirds">
+              {{ govukSummaryList({
+              classes: "detail",
+              rows: userInfoArray
+              }) }}
+          </div>
 
-        {% call hmpoForm(ctx) %}
-        {{ hmpoText(ctx, {
-            id: "firstName",
-            label: {
-                text: translate("fields.firstName.label"),
-                classes: "govuk-label--s"
-            }
-        }) }}
-        {{ hmpoText(ctx, {
-            id: "lastName",
-            label: {
-                text: translate("fields.lastName.label"),
-                classes: "govuk-label--s"
-            }
-        }) }}
-        {{ hmpoSelect(ctx, {
-            id: "teamSelect",
-            label: {
-                text: translate("fields.teamSelect.label"),
-                classes: "govuk-label--s"
-            },
-            classes: "govuk-!-width-one-half",
-            items: teamsToShow,
-            placeholder: true })
-        }}
+          {% set teamsToShow = [] %}
+          {% for team in orgTeams  %}
+            {% set itemInSelect = { text: team.name, value: team.id } %}
+            {% if team.id == userInfo.teamID %}
+              {% set itemInSelect = { text: team.name, value: team.id, selected: true } %}
+            {% endif %}
+            {% set teamsToShow = (teamsToShow.push( itemInSelect ), teamsToShow) %}
+          {% endfor %}
 
-        <div class="govuk-button-group">
-            {{ hmpoSubmit(ctx, {id: "save", key: "save"}) }}
-            {{ hmpoSubmit(ctx, {id: "back", key: "back", href: teamLink + "/user/" +userInfo.email, classes: "govuk-button--secondary"}) }}
-        </div>
-        {% endcall %}
+          {% call hmpoForm(ctx) %}
+          {{ hmpoText(ctx, {
+              id: "firstName",
+              label: {
+                  text: translate("fields.firstName.label"),
+                  classes: "govuk-label--s"
+              }
+          }) }}
+          {{ hmpoText(ctx, {
+              id: "lastName",
+              label: {
+                  text: translate("fields.lastName.label"),
+                  classes: "govuk-label--s"
+              }
+          }) }}
+          {{ hmpoSelect(ctx, {
+              id: "teamSelect",
+              label: {
+                  text: translate("fields.teamSelect.label"),
+                  classes: "govuk-label--s"
+              },
+              classes: "govuk-!-width-one-half",
+              items: teamsToShow,
+              placeholder: true })
+          }}
 
-        {% endblock %}
-    </div>
-</div>
+          <div class="govuk-button-group">
+              {{ hmpoSubmit(ctx, {id: "save", key: "save"}) }}
+              {{ hmpoSubmit(ctx, {id: "back", key: "back", href: teamLink + "/user/" +userInfo.email, classes: "govuk-button--secondary"}) }}
+          </div>
+          {% endcall %}
+
+          {% endblock %}
+      </div>
+  </div>
 {% endblock %}

@@ -1,4 +1,4 @@
-{% extends "app-template.njk" %}
+{% extends "service-notification-display-template.njk" %}
 
 {% from "govuk/components/table/macro.njk" import govukTable %}
 {% from "components/pagination.njk" import pagination %}
@@ -7,6 +7,7 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+{% from "components/service-notification-display.njk" import serviceNotificationDisplay %}
 
 {% set govukServiceNameKey = translate("pages.user-management.serviceName") %}
 {% set govukServiceTitleKey = translate("pages.user-management.organisationPage.pageTitle") %}
@@ -15,6 +16,7 @@
 {% set orgLink = govukServiceUrl + "/" + orgInfo.id %}
 
 {% block hmpoContent %}
+
   <div class="govuk-grid-row">
     {% block mainContent %}
 

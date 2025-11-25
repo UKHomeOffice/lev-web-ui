@@ -1,4 +1,4 @@
-{% extends "app-template.njk" %}
+{% extends "service-notification-display-template.njk" %}
 
 {% set govukServiceNameKey = translate("pages.user-management.serviceName") %}
 {% set govukServiceTitleKey = translate("pages.user-management."+pageName+".pageTitle") %}
@@ -7,11 +7,14 @@
 {% from "hmpo-text/macro.njk" import hmpoText %}
 {% from "hmpo-form/macro.njk" import hmpoForm %}
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+{% from "components/service-notification-display.njk" import serviceNotificationDisplay %}
 
 {% block hmpoContent %}
+
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
         {% block mainContent %}
+
         <h1 id="header" data-page="{{hmpoPageKey}}">{{ translate("pages." + hmpoPageKey + ".h1", { default: hmpoTitle }) |
             safe }}</h1>
         {% call hmpoForm(ctx) %}

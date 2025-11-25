@@ -1,10 +1,10 @@
-{% extends "app-template.njk" %}
+{% extends "service-notification-display-template.njk" %}
 
 {% from "hmpo-field/macro.njk" import hmpoField %}
 {% from "hmpo-form/macro.njk" import hmpoForm %}
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
 {% from "components/lev-system-number.njk" import levSystemNumber %}
-{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% from "components/service-notification-display.njk" import serviceNotificationDisplay %}
 
 {% set hmpoPageKey = "death.searchPage" %}
 {% set govukServiceNameKey = translate("pages.death.serviceName") %}
@@ -12,12 +12,6 @@
 {% set govukServiceUrl = "/death" %}
 
 {% block mainContent %}
-
-    {% if liveNotification %}
-      {{ govukNotificationBanner({
-        text: liveNotification
-      }) }}
-    {% endif %}
 
     {{ super() }}
 

@@ -15,6 +15,7 @@ const accessibilityStatement = require('./routes/accessibility-statement');
 const syops = require('./routes/syops');
 const { healthCheck } = require('./routes/health');
 const { syopsAcceptanceCheck } = require("./middleware/syopsAcceptanceCheck");
+const { serviceNotificationCache } = require("./helpers/serviceNotificationCache");
 const { router, app } = setup(options);
 const nunjucksEnv = app.get('nunjucksEnv');
 
@@ -32,8 +33,8 @@ router.use((req, res, next) => {
   next();
 });
 
-router.use((req, res, next) => {
-  res.locals.liveNotification = req.session.liveNotification || null;
+router.use(async (req, res, next) => {
+  res.locals.displayServiceNotification = await serviceNotificationCache(req);
   next();
 });
 

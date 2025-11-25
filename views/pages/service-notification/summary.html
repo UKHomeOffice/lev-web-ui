@@ -1,6 +1,5 @@
 {% extends "app-template.njk" %}
 
-{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/table/macro.njk" import govukTable %}
 {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
@@ -14,10 +13,6 @@
 {% set govukServiceUrl = "admin/notify-users/summary" %}
 
 {% block hmpoContent %}
-  {{ govukBackLink({
-    text: "Back",
-    href: "/admin/notify-users/enter-message"
-  }) }}
 
   {{ super() }}
 
