@@ -1,0 +1,11 @@
+{% macro serviceNotificationDisplay(displayServiceNotification) %}
+    {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+    {% if displayServiceNotification %}
+      {{ govukNotificationBanner({
+        text: displayServiceNotification,
+        id: "serviceNotificationDisplayBanner"
+      }) }}
+    {% endif %}
+
+{% endmacro %}

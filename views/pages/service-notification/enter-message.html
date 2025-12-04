@@ -1,6 +1,5 @@
 {% extends "app-template.njk" %}
 
-{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "hmpo-form/macro.njk" import hmpoForm %}
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
@@ -13,11 +12,6 @@
 {% set govukServiceUrl = "admin/notify-users/enter-message" %}
 
 {% block mainContent %}
-  {{ govukBackLink({
-    text: "Back",
-    href: "/admin/notify-users"
-  }) }}
-
   {{ super() }}
 
     {% call hmpoForm(ctx) %}

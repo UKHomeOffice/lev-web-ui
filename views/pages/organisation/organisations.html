@@ -1,8 +1,9 @@
-{% extends "app-template.njk" %}
+{% extends "service-notification-display-template.njk" %}
 
 {% from "govuk/components/table/macro.njk" import govukTable %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "components/service-notification-display.njk" import serviceNotificationDisplay %}
 
 {% set govukServiceNameKey = translate("pages.user-management.serviceName") %}
 {% set govukServiceTitleKey = translate("pages.user-management.organisationsPage.pageTitle") %}
@@ -10,85 +11,86 @@
 {% set govukServiceUrl = "/admin/organisations" %}
 
 {% block hmpoContent %}
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-        {% block mainContent %}
 
-        <div class="govuk-grid-row">
-            <div class="govuk-!-width-two-thirds">
+  <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+          {% block mainContent %}
 
-                {% set status = '' %}
-                {% set html = '' %}
+          <div class="govuk-grid-row">
+              <div class="govuk-!-width-two-thirds">
 
-                {% if addOrgAttempt %}
-                    {% if addOrgSuccess %}
-                        {% set status = "success" %}
-                        {% set html = "<h2>You have successfully added " + addedOrgName + " </h2>" %}
-                    {% else %}
-                        {% set status = "failure" %}
-                        {% if orgExistsError %}
-                            {% set html = "<h2>Unable to add organisation as " + addedOrgName + " already exists</h2>" %}
-                        {% else %}
-                            {% set html = "<h2>There is a problem - Unable to add organisation " + addedOrgName + "</h2>" %}
-                        {% endif %}
-                    {% endif %}
+                  {% set status = '' %}
+                  {% set html = '' %}
 
-                    {{ govukNotificationBanner({
-                    html: html,
-                    type: status
-                    }) }}
-                {% endif %}
-            </div>
+                  {% if addOrgAttempt %}
+                      {% if addOrgSuccess %}
+                          {% set status = "success" %}
+                          {% set html = "<h2>You have successfully added " + addedOrgName + " </h2>" %}
+                      {% else %}
+                          {% set status = "failure" %}
+                          {% if orgExistsError %}
+                              {% set html = "<h2>Unable to add organisation as " + addedOrgName + " already exists</h2>" %}
+                          {% else %}
+                              {% set html = "<h2>There is a problem - Unable to add organisation " + addedOrgName + "</h2>" %}
+                          {% endif %}
+                      {% endif %}
 
-            <div class="govuk-grid-column-three-quarters">
-                <h1 id="header" data-page="{{hmpoPageKey}}">{{ translate("pages." + hmpoPageKey + ".h1", { default: hmpoTitle }) | safe }}</h1>
-            </div>
+                      {{ govukNotificationBanner({
+                      html: html,
+                      type: status
+                      }) }}
+                  {% endif %}
+              </div>
 
-            <div class="govuk-grid-column-one-quarter">
-                {% if IS_EXTERNAL == "false" %}
-                    {{ govukButton({
-                        text: "Add organisation",
-                        href: govukServiceUrl + "/create",
-                        classes: "govuk-button--secondary" })
-                    }}
-                {% endif %}
-            </div>
-        </div>
+              <div class="govuk-grid-column-three-quarters">
+                  <h1 id="header" data-page="{{hmpoPageKey}}">{{ translate("pages." + hmpoPageKey + ".h1", { default: hmpoTitle }) | safe }}</h1>
+              </div>
 
-        {% set orgsHeaderArray = [
-        { text: "Organisation" },
-        { text: "", classes: "govuk-table__header--right" }
-        ] %}
-        {% set orgsArray = [] %}
+              <div class="govuk-grid-column-one-quarter">
+                  {% if IS_EXTERNAL == "false" %}
+                      {{ govukButton({
+                          text: "Add organisation",
+                          href: govukServiceUrl + "/create",
+                          classes: "govuk-button--secondary" })
+                      }}
+                  {% endif %}
+              </div>
+          </div>
 
-        {% for org in orgsInfo %}
-        {% set rowArray = [] %}
-        {% set orgLink = "/admin/organisations/" + org.id %}
+          {% set orgsHeaderArray = [
+          { text: "Organisation" },
+          { text: "", classes: "govuk-table__header--right" }
+          ] %}
+          {% set orgsArray = [] %}
 
-        {% set rowArray = (rowArray.push({
-        html: '<a href="' + orgLink + '">' + org.name + '</a>'
-        }), rowArray) %}
+          {% for org in orgsInfo %}
+          {% set rowArray = [] %}
+          {% set orgLink = "/admin/organisations/" + org.id %}
 
-        {% if IS_EXTERNAL == "false" %}
-            {% set rowArray = (rowArray.push({
-            html: '<a href="' + orgLink + '/manage" class="govuk-link">Manage</a>'
-            }), rowArray) %}
-        {% endif %}
+          {% set rowArray = (rowArray.push({
+          html: '<a href="' + orgLink + '">' + org.name + '</a>'
+          }), rowArray) %}
 
-        {% set orgsArray = (orgsArray.push(rowArray), orgsArray) %}
-        {% endfor %}
+          {% if IS_EXTERNAL == "false" %}
+              {% set rowArray = (rowArray.push({
+              html: '<a href="' + orgLink + '/manage" class="govuk-link">Manage</a>'
+              }), rowArray) %}
+          {% endif %}
 
-        <div class="govuk-!-width-two-thirds">
-            {{ govukTable({
-              classes: "detail",
-              firstCellIsHeader: true,
-              head: orgsHeaderArray,
-              rows: orgsArray
-            }) }}
-        </div>
+          {% set orgsArray = (orgsArray.push(rowArray), orgsArray) %}
+          {% endfor %}
 
-        {% endblock %}
-    </div>
-</div>
+          <div class="govuk-!-width-two-thirds">
+              {{ govukTable({
+                classes: "detail",
+                firstCellIsHeader: true,
+                head: orgsHeaderArray,
+                rows: orgsArray
+              }) }}
+          </div>
+
+          {% endblock %}
+      </div>
+  </div>
 
 {% endblock %}

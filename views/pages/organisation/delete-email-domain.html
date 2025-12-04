@@ -1,4 +1,4 @@
-{% extends "app-template.njk" %}
+{% extends "service-notification-display-template.njk" %}
 
 {% set govukServiceNameKey = translate("pages.user-management.serviceName") %}
 {% set govukServiceTitleKey = translate("pages.user-management."+pageName+".pageTitle") %}
@@ -9,34 +9,36 @@
 {% from "hmpo-form/macro.njk" import hmpoForm %}
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "components/service-notification-display.njk" import serviceNotificationDisplay %}
 
 {% block hmpoContent %}
 
   <div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
-    {% block mainContent %}
-    <h1 id="header" data-page="{{hmpoPageKey}}">{{ translate("pages." + hmpoPageKey + ".h1", { default: hmpoTitle }) |
-      safe }}</h1>
+    <div class="govuk-grid-column-full">
+      {% block mainContent %}
+      <h1 id="header" data-page="{{hmpoPageKey}}">{{ translate("pages." + hmpoPageKey + ".h1", { default: hmpoTitle }) |
+        safe }}</h1>
 
-    <div class="govuk-!-width-two-thirds">
+      <div class="govuk-!-width-two-thirds">
 
-      {{ govukSummaryList({
-        rows: [
-          {
-            key: {
-            text: "Email domain"
-          },
-            value: {
-            text: emailDomainToDelete
-          }
-          }]
-      }) }}
+        {{ govukSummaryList({
+          rows: [
+            {
+              key: {
+              text: "Email domain"
+            },
+              value: {
+              text: emailDomainToDelete
+            }
+            }]
+        }) }}
 
-      <div class="govuk-button-group">
-        {{ hmpoSubmit(ctx, {id: "delete", key: "delete", href: orgLink + '/delete-email-domain/' + emailDomainToDelete, classes: "govuk-button--warning"}) }}
-        {{ hmpoSubmit(ctx, {id: "back", key: "back", href: backLink, classes: "govuk-button--secondary"}) }}
+        <div class="govuk-button-group">
+          {{ hmpoSubmit(ctx, {id: "delete", key: "delete", href: orgLink + '/delete-email-domain/' + emailDomainToDelete, classes: "govuk-button--warning"}) }}
+          {{ hmpoSubmit(ctx, {id: "back", key: "back", href: backLink, classes: "govuk-button--secondary"}) }}
+        </div>
+        {% endblock %}
       </div>
-      {% endblock %}
     </div>
   </div>
 {% endblock %}

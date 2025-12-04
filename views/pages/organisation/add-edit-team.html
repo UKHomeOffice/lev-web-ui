@@ -1,12 +1,11 @@
-{% extends "app-template.njk" %}
+{% extends "service-notification-display-template.njk" %}
 
 {% from "hmpo-field/macro.njk" import hmpoField %}
 {% from "hmpo-form/macro.njk" import hmpoForm %}
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
 
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
-{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
-
+{% from "components/service-notification-display.njk" import serviceNotificationDisplay %}
 
 {% set govukServiceNameKey = translate("pages.user-management.serviceName") %}
 {% set govukServiceUrl = "/admin/organisations" %}
@@ -15,7 +14,8 @@
 {% set hmpoPageKey = "user-management." + pageName %}
 
 {% block mainContent %}
-{{ super() }}
+
+  {{ super() }}
 
   {% call hmpoForm(ctx) %}
 
