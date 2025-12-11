@@ -33,11 +33,6 @@ router.use((req, res, next) => {
   next();
 });
 
-router.use(async (req, res, next) => {
-  res.locals.displayServiceNotification = await serviceNotificationCache(req);
-  next();
-});
-
 // routes for static assets
 router.use('/access-test', accessTest);
 router.use('/accessibility-statement', accessibilityStatement);
@@ -47,6 +42,11 @@ router.use('/metrics', metricsRoute);
 
 // middleware to check syops acceptance
 router.use((req, res, next) => syopsAcceptanceCheck(req, res, next));
+
+router.use(async (req, res, next) => {
+  res.locals.displayServiceNotification = await serviceNotificationCache(req);
+  next();
+});
 
 // routes
 router.use('/birth', birthRoute);
