@@ -1,4 +1,4 @@
-FROM 113355358853.dkr.ecr.eu-west-1.amazonaws.com/ho/hmpo/lev/bac/lev-node:latest AS base
+FROM 113355358853.dkr.ecr.eu-west-1.amazonaws.com/ho/hmpo/lev/bac/lev-node:ef901be0b478a2ea1efeafb1b0674f432c9a025b AS base
 
 RUN apk add --no-cache ca-certificates \
  && apk upgrade --no-cache
