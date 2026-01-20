@@ -3,7 +3,9 @@
 const AccessibilityStatementController = require("../../controllers/AccessibilityStatementController");
 
 module.exports = {
-  '/': {
-    controller: AccessibilityStatementController
+  '/accessibility-statement': {
+    entryPoint: true,
+    controller: AccessibilityStatementController,
+    template: '/index.html'
   }
 }

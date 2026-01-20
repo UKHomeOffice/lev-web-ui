@@ -5,7 +5,7 @@ const getCurrentUser = require("../helpers/getCurrentUser");
 const logger = require('hmpo-logger').get();
 
 class AccessibilityStatementController extends BaseController {
-  async getValues(req, _res) {
+  async getValues(req, _res, next) {
     try {
       const username = await getCurrentUser(req);
       req.sessionModel.set('username', username);
@@ -13,6 +13,7 @@ class AccessibilityStatementController extends BaseController {
     catch (err) {
       logger.log('error', err);
     }
+    next();
   }
 
   locals(req, res, callback) {
