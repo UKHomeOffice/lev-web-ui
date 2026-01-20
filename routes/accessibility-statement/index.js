@@ -1,12 +1,12 @@
 'use strict';
 
 const wizard = require('hmpo-form-wizard');
-const AccessibilityStatementController = require("../../controllers/AccessibilityStatementController");
+const BaseController = require("../../controllers/BaseController");
 
 module.exports = wizard({
   '/': {
     entryPoint: true,
-    controller: AccessibilityStatementController
+    controller: BaseController,
   }
 }, {}, {
   name: 'accessibility-statement',

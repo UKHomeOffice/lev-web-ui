@@ -1,6 +1,7 @@
 'use strict';
 
 const { Controller } = require('hmpo-form-wizard');
+const getCurrentUser = require("../helpers/getCurrentUser");
 
 class BaseController extends Controller {
 
@@ -51,6 +52,15 @@ class BaseController extends Controller {
       };
     }
     return errors;
+  }
+
+  locals(req, res, callback) {
+    super.locals(req, res, (error, locals) => {
+      if (error) return callback(error);
+      locals.username = getCurrentUser(req);
+
+      callback(null, locals);
+    });
   }
 }
 
