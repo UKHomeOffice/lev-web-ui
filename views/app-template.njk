@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block header %}
-  {% if process.env.IAM_USER %}
+  {% if username %}
     {{ levHeader({
       productName: translate("govuk.logoName"),
       serviceName: govukServiceNameKey,
@@ -38,7 +38,7 @@
                 {{ translate('footer.links.accessibilityStatement') }}
               </a>
             </li>
-            {% if process.env.IAM_USER %}
+            {% if username %}
               <li class="govuk-footer__inline-list-item">
                 <a class="govuk-footer__link govuk-body-s" href="/syops">
                   {{ translate('footer.links.syops') }}
