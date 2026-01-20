@@ -8,6 +8,5 @@ module.exports = wizard({
     }
   }, {}, {
   name: 'accessibility-statement',
-  templatePath: 'pages/accessibility-statement',
-  controller: 'AccessibilityStatementController'
+  templatePath: 'pages/accessibility-statement'
 });
