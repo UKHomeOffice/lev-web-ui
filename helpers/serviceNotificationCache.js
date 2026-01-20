@@ -5,7 +5,7 @@ const redisService = require("../lib/redisCacheService");
 const logger = require('hmpo-logger').get();
 
 module.exports.serviceNotificationCache = async (req) => {
-  if (process.env.MOCK) return;
+  if (process.env.MOCK?.toLowerCase() === 'true') return;
 
   try {
     if(await redisService.get(`serviceNotificationLive`) === true)
