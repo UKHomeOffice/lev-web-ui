@@ -19,7 +19,7 @@ class AccessibilityStatementController extends BaseController {
   locals(req, res, callback) {
     super.locals(req, res, (error, locals) => {
       if (error) return callback(error);
-      locals.username = req.sessionModel.get('username') === '';
+      locals.username = req.sessionModel.get('username') !== '';
       locals.accessibilityStatement = true;
 
       console.log("***ACTIVE USERNAME: " + req.sessionModel.get('username'));
