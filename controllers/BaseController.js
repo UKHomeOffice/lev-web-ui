@@ -1,7 +1,6 @@
 'use strict';
 
 const { Controller } = require('hmpo-form-wizard');
-const getCurrentUser = require("../helpers/getCurrentUser");
 
 class BaseController extends Controller {
 
