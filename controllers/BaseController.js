@@ -53,15 +53,6 @@ class BaseController extends Controller {
     }
     return errors;
   }
-
-  locals(req, res, callback) {
-    super.locals(req, res, (error, locals) => {
-      if (error) return callback(error);
-      locals.username = getCurrentUser(req);
-
-      callback(null, locals);
-    });
-  }
 }
 
 module.exports = BaseController;

@@ -9,20 +9,20 @@
 {% endblock %}
 
 {% block header %}
-  {% if username %}
+  {% if accessibilityStatement and not username %}
     {{ levHeader({
       productName: translate("govuk.logoName"),
       serviceName: govukServiceNameKey,
       serviceUrl: govukServiceUrl,
-      home: translate("buttons.home"),
-      logout: translate("buttons.logout")
+      home: translate("buttons.home")
     }) }}
   {% else %}
     {{ levHeader({
       productName: translate("govuk.logoName"),
       serviceName: govukServiceNameKey,
       serviceUrl: govukServiceUrl,
-      home: translate("buttons.home")
+      home: translate("buttons.home"),
+      logout: translate("buttons.logout")
     }) }}
   {% endif %}
 {% endblock %}
@@ -38,7 +38,7 @@
                 {{ translate('footer.links.accessibilityStatement') }}
               </a>
             </li>
-            {% if username %}
+            {% if not accessibilityStatement or username %}
               <li class="govuk-footer__inline-list-item">
                 <a class="govuk-footer__link govuk-body-s" href="/syops">
                   {{ translate('footer.links.syops') }}
