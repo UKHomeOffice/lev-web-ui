@@ -1,13 +1,12 @@
 'use strict';
 
 const BaseController = require("./BaseController");
-const getCurrentUser = require("../helpers/getCurrentUser");
 const logger = require('hmpo-logger').get();
 
 class AccessibilityStatementController extends BaseController {
   async getValues(req, _res, next) {
     try {
-      const username = await getCurrentUser(req);
+      const username = process.env.IAM_USER || '';
       req.sessionModel.set('username', username);
     }
     catch (err) {
