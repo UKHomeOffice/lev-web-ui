@@ -3,10 +3,13 @@
 const BaseController = require("./BaseController");
 const getCurrentUser = require("../helpers/getCurrentUser");
 const logger = require('hmpo-logger').get();
+const requestOptions = require("../helpers/requestOptions");
+const {iamApi} = require("../config");
 
 class AccessibilityStatementController extends BaseController {
   async getValues(req, _res, next) {
     try {
+      requestOptions(req, iamApi);
       const username = getCurrentUser(req);
       console.log("***CONTROLLER API USER: " + process.env.API_USER);
       req.sessionModel.set('username', username);
