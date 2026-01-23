@@ -7,8 +7,16 @@ class AccessibilityStatementController extends BaseController {
   async getValues(req, _res, next) {
     try {
       const rawCookie = req.headers.cookie || '';
-      const cookies = rawCookie.split(';').map(c => c.trim().split('='));
-      const kcAccess = cookies.kc_access;
+      const cookies = rawCookie.split(';');
+      console.log(cookies);
+      const kcAccessPart = cookies.find(c => c.startsWith('kc_access='));
+
+      let kcAccess = null;
+
+      if(kcAccessPart) {
+        kcAccess = kcAccessPart.split('=')[1];
+      }
+
       console.log('kc_access:', kcAccess);
       req.sessionModel.set('loggedIn', !!kcAccess);
     }
