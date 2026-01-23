@@ -1,17 +1,21 @@
 'use strict';
 
 const BaseController = require("./BaseController");
-const getCurrentUser = require("../helpers/getCurrentUser");
 const logger = require('hmpo-logger').get();
-const requestOptions = require("../helpers/requestOptions");
-const {iamApi} = require("../config");
+const { jwtDecode } = require("jwt-decode");
 
 class AccessibilityStatementController extends BaseController {
   async getValues(req, _res, next) {
     try {
-      requestOptions(req, iamApi);
-      const username = getCurrentUser(req);
-      console.log("***CONTROLLER API USER: " + process.env.API_USER);
+      console.log("***REQ: ", req);
+      console.log("***REQ HEADERS: ", req.headers);
+
+      const authorizationHeader = req.headers.authorization;
+      const accessToken = authorizationHeader ? authorizationHeader.split(' ')[1] : '';
+
+      const decodedToken = jwtDecode(accessToken);
+      const username = decodedToken.preferred_username;
+
       req.sessionModel.set('username', username);
     }
     catch (err) {
@@ -23,10 +27,10 @@ class AccessibilityStatementController extends BaseController {
   locals(req, res, callback) {
     super.locals(req, res, (error, locals) => {
       if (error) return callback(error);
-      locals.username = req.sessionModel.get('username') !== '';
+      // locals.username = req.sessionModel.get('username') !== '';
       locals.accessibilityStatement = true;
 
-      console.log("***ACTIVE USERNAME: " + req.sessionModel.get('username'));
+      // console.log("***ACTIVE USERNAME: " + req.sessionModel.get('username'));
       console.log("***USERNAME: " + locals.username);
       console.log("***ACCESSIBILITY STATEMENT: " + locals.accessibilityStatement);
 
