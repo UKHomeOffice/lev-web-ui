@@ -10,7 +10,7 @@ class AccessibilityStatementController extends BaseController {
 
       const referer = req.get('referer');
 
-      const loggedIn = !(referer.contains('keycloak-ho-hmpo') && !referer.endsWith('logout'));
+      const loggedIn = !(referer.includes('keycloak-ho-hmpo') && !referer.endsWith('logout'));
 
       req.sessionModel.set('loggedIn', !!loggedIn);
     }
