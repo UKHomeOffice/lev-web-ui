@@ -6,13 +6,18 @@ const logger = require('hmpo-logger').get();
 class AccessibilityStatementController extends BaseController {
   async getValues(req, _res, next) {
     try {
-      console.log("***REQ REFERER: " + req.get('referer'));
+      const rawCookie = req.headers.cookie || '';
+      const cookies = rawCookie.split(';').map(cookie => cookie.trim());
+      console.log(cookies);
+      const kcAccessPart = cookies.find(c => c.startsWith('kc-access='));
 
-      const referer = req.get('referer');
+      let kcAccess = null;
 
-      const loggedIn = !(referer.includes('keycloak-ho-hmpo') && !referer.endsWith('logout'));
+      if(kcAccessPart) {
+        kcAccess = kcAccessPart.split('=')[1];
+      }
 
-      req.sessionModel.set('loggedIn', !!loggedIn);
+      req.sessionModel.set('loggedIn', !!kcAccess);
     }
     catch (err) {
       logger.log('error', err);
