@@ -8,7 +8,6 @@ class AccessibilityStatementController extends BaseController {
     try {
       const rawCookie = req.headers.cookie || '';
       const cookies = rawCookie.split(';').map(cookie => cookie.trim());
-      console.log(cookies);
       const kcAccessPart = cookies.find(c => c.startsWith('kc-access='));
 
       let kcAccess = null;
