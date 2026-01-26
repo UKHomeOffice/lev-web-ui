@@ -29,13 +29,6 @@ class AccessibilityStatementController extends BaseController {
       if (error) return callback(error);
       locals.loggedIn = req.sessionModel.get('loggedIn');
       locals.accessibilityStatement = true;
-
-      // console.log("***ACTIVE USERNAME: " + req.sessionModel.get('username'));
-      console.log("***USERNAME: " + locals.username);
-      console.log("***ACCESSIBILITY STATEMENT: " + locals.accessibilityStatement);
-
-      console.log("***CONDITION 1: " + (locals.accessibilityStatement &&  !locals.loggedIn));
-      console.log("***CONDITION 2: " + (!locals.accessibilityStatement || locals.loggedIn));
       callback(null, locals);
     });
   }

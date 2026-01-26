@@ -8,7 +8,6 @@ const config = require("../config");
 module.exports = async (req) => {
 
   const username = getCurrentUser(req);
-
   const userMetadata = await redisService.get(`${username}:UserMetadata`);
 
   if (userMetadata) {
