@@ -9,12 +9,18 @@
 {% endblock %}
 
 {% block header %}
+  {% if not loggedIn and accessibilityStatement %}
+    {% set logoutValue = null %}
+  {% else %}
+    {% set logoutValue = translate("buttons.logout") %}
+  {% endif %}
+
   {{ levHeader({
     productName: translate("govuk.logoName"),
     serviceName: govukServiceNameKey,
     serviceUrl: govukServiceUrl,
     home: translate("buttons.home"),
-    logout: translate("buttons.logout")
+    logout: logoutValue
   }) }}
 {% endblock %}
 
@@ -29,11 +35,13 @@
                 {{ translate('footer.links.accessibilityStatement') }}
               </a>
             </li>
-            <li class="govuk-footer__inline-list-item">
-              <a class="govuk-footer__link govuk-body-s" href="/syops">
-                {{ translate('footer.links.syops') }}
-              </a>
-            </li>
+            {% if not accessibilityStatement or loggedIn %}
+              <li class="govuk-footer__inline-list-item">
+                <a class="govuk-footer__link govuk-body-s" href="/syops">
+                  {{ translate('footer.links.syops') }}
+                </a>
+              </li>
+            {% endif %}
           </ul>
           <span class="govuk-footer__licence-description">
           &copy; {{ translate('govuk.logoName') }} {{ "" | getYear }}
