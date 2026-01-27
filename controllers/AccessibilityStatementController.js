@@ -1,22 +1,13 @@
 'use strict';
 
 const BaseController = require("./BaseController");
+const isUserLoggedIn = require("../helpers/isUserLoggedIn");
 const logger = require('hmpo-logger').get();
 
 class AccessibilityStatementController extends BaseController {
   async getValues(req, _res, next) {
     try {
-      const rawCookie = req.headers.cookie || '';
-      const cookies = rawCookie.split(';').map(cookie => cookie.trim());
-      const kcAccessPart = cookies.find(c => c.startsWith('kc-access='));
-
-      let kcAccess = null;
-
-      if(kcAccessPart) {
-        kcAccess = kcAccessPart.split('=')[1];
-      }
-
-      req.sessionModel.set('loggedIn', !!kcAccess);
+      req.sessionModel.set('loggedIn', isUserLoggedIn(req));
     }
     catch (err) {
       logger.log('error', err);

@@ -9,22 +9,19 @@
 {% endblock %}
 
 {% block header %}
-  {% if accessibilityStatement and not loggedIn %}
-    {{ levHeader({
-      productName: translate("govuk.logoName"),
-      serviceName: govukServiceNameKey,
-      serviceUrl: govukServiceUrl,
-      home: translate("buttons.home")
-    }) }}
+  {% if not loggedIn and accessibilityStatement %}
+    {% set logoutValue = null %}
   {% else %}
-    {{ levHeader({
-      productName: translate("govuk.logoName"),
-      serviceName: govukServiceNameKey,
-      serviceUrl: govukServiceUrl,
-      home: translate("buttons.home"),
-      logout: translate("buttons.logout")
-    }) }}
+    {% set logoutValue = translate("buttons.logout") %}
   {% endif %}
+
+  {{ levHeader({
+    productName: translate("govuk.logoName"),
+    serviceName: govukServiceNameKey,
+    serviceUrl: govukServiceUrl,
+    home: translate("buttons.home"),
+    logout: logoutValue
+  }) }}
 {% endblock %}
 
 {% block footer %}
