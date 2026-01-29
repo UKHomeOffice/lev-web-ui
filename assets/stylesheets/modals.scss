@@ -1,0 +1,26 @@
+@import "node_modules/govuk-frontend/dist/govuk/index";
+@import "node_modules/hmpo-components/all";
+
+.modal-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  background-color: #3c3c3c;
+  z-index: 9999;
+  display: none; // Explicitly hide on page load to avoid a momentary "flash" before jQuery UI initialises.
+  flex-direction: column;
+  justify-content: center;
+}
+
+.modal-content {
+  margin: 5%;
+  max-width: 520px;
+  max-height: 310px;
+}
+
+#modal-label-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
