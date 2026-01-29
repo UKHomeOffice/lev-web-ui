@@ -24,6 +24,79 @@
   }) }}
 {% endblock %}
 
+{% block bodyEnd %}
+    {% if loggedIn %}
+        {% include "timeout-modal.njk" %}
+        {% include "redirect-modal.njk" %}
+        {% block timeoutScripts %}
+           <script>
+                const idleInterval = setInterval(timerCheck, 1000); //Increment the idle time counter every second.
+                const timeout = 60 * 1000 * 30; // 30min timeout in milliseconds
+
+                let idleTime = Date.now(); // Initialise idle time to now
+                let now = Date.now();
+                let timeoutCountdown = 12; // 120 second timer counts down once per second until timeout occurs
+                let timeoutWarningDuration = timeoutCountdown * 1000; // timeoutCountdown duration in ms
+
+                function timerCheck() {
+                  now = Date.now();
+                  if (now - idleTime > timeout - timeoutWarningDuration) {
+                    // if < 2 mins until timeout then display timeout warning modal
+                    showTimeoutModal();
+                    timeoutCountdown--;
+                  }
+
+                  if (now - idleTime > timeout) {
+                    // time out the user
+                    clearInterval(idleInterval);
+                    hideTimeoutModal();
+                    showRedirectModal();
+                    window.location = '/oauth/logout';
+                  }
+                }
+
+                function showTimeoutModal() {
+                  const modal = document.getElementById('modal-container');
+                  modal.style.display = 'flex';
+                  const timeoutCountdownLabel = document.getElementById('timeout-countdown-label');
+
+                  if (timeoutCountdown <= 60) {
+                    timeoutCountdownLabel.textContent = timeoutCountdown.toString() + ' seconds.';
+                  } else {
+                    timeoutCountdownLabel.textContent = '2 minutes.';
+                  }
+                }
+
+                function showRedirectModal() {
+                  const redirectModal = document.getElementById('redirect-modal-container');
+                  redirectModal.style.display = 'flex';
+                }
+
+                function hideRedirectModal() {
+                  const redirectModal = document.getElementById('redirect-modal-container');
+                  redirectModal.style.display = 'none';
+                }
+
+                function hideTimeoutModal() {
+                  const modal = document.getElementById('modal-container');
+                  modal.style.display = 'none';
+                }
+
+                document.addEventListener('DOMContentLoaded', function () {
+                  // Initialise modals to be hidden
+                  hideTimeoutModal();
+                  hideRedirectModal();
+
+                  // Zero the idle timer on hitting the Stay signed in button.
+                  document.getElementById('staySignedInBtn').onclick = function () {
+                    window.location.reload();
+                  };
+                });
+           </script>
+        {% endblock %}
+    {% endif %}
+{% endblock %}
+
 {% block footer %}
   <footer class="govuk-footer">
     <div class="govuk-width-container">

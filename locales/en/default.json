@@ -25,6 +25,7 @@
     "back": "Back",
     "backToResults": "Back to results",
     "startAgain": "Start again",
+    "staySignedIn": "Stay signed in",
     "logout": "Sign out",
     "reRegistrationLink": "View the previous registration.",
     "reRegisteredLink": "View the next registration.",
@@ -270,6 +271,10 @@
     },
     "sessionEnded": {
       "title": "Session expired"
+    },
+    "sessionTimeout": {
+      "title": "You have been signed out",
+      "content": "You have not done anything for 30 minutes, so we have signed you out to keep your account secure. </br></br> Any search you may have conducted has been cleared. </br></br> You must sign in again to continue using Life Event Verification."
     }
   },
   "validation": {
@@ -441,6 +446,15 @@
       "length": "Message must be 150 characters or less",
       "regex": "Message can only include letters, numbers and punctuation (:,.?!-)"
     }
+  },
+  "timeoutWarning": {
+    "heading": "You will be signed out soon",
+    "content1": "We will sign you out of your account if you do not do anything in the next ",
+    "content2": " Any search you may have conducted will also be cleared. This is to ensure the security of the service."
+  },
+  "redirectModal": {
+    "heading": "You are being signed out....",
+    "content": "This is because you have not been active for 30 minutes. This is to ensure the security of the service."
   },
   "footer": {
     "links": {

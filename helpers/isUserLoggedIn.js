@@ -3,7 +3,7 @@ module.exports = (req) => {
   const cookies = rawCookie.split(';').map(cookie => cookie.trim());
   const kcAccessPart = cookies.find(c => c.startsWith('kc-access='));
 
-  if(kcAccessPart) {
+  if (kcAccessPart) {
     return kcAccessPart.split('=')[1].trim() !== '';
   } else {
     return false;

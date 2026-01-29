@@ -13,6 +13,7 @@ const serviceNotificationRoute = require('./routes/service-notification');
 const accessTest = require('./routes/access-test');
 const accessibilityStatement = require('./routes/accessibility-statement');
 const syops = require('./routes/syops');
+const sessionTimeout = require('./routes/session-timeout');
 const { healthCheck } = require('./routes/health');
 const { syopsAcceptanceCheck } = require("./middleware/syopsAcceptanceCheck");
 const { serviceNotificationCache } = require("./helpers/serviceNotificationCache");
@@ -38,6 +39,7 @@ router.use('/access-test', accessTest);
 router.use('/accessibility-statement', accessibilityStatement);
 router.use('/health', healthCheck);
 router.use('/syops', syops);
+router.use('/session-timeout', sessionTimeout);
 router.use('/metrics', metricsRoute);
 
 // middleware to check syops acceptance
