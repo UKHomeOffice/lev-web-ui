@@ -5,12 +5,19 @@ export default [
   {
     ignores: [
       'public/**',
+      'coverage/'
     ],
   },
   {
     files: ['**/*.js'],
     rules: {
-      "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }]
+      "no-unused-vars": [
+        "error",
+        {
+          "argsIgnorePattern": "^_",
+          "caughtErrorsIgnorePattern": "^_"
+        }
+      ]
     },
     languageOptions: {
       sourceType: 'script',
@@ -18,8 +25,6 @@ export default [
         ...globals.browser,
         ...globals.node,
         ...globals.jest,
-        cy: 'readonly',
-        Cypress: 'readonly',
         before: 'readonly',
         }
     },
