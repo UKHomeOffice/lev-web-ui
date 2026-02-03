@@ -12,7 +12,7 @@ class ResetUserPasswordController extends BaseController {
         url: `/admin/organisations/${req.params.orgId}/teams/${req.params.teamId}/users/${req.params.username}/reset-password`
       });
       req.sessionModel.set('passwordResetSuccess', true);
-    } catch (err) {
+    } catch (_err) {
       req.sessionModel.set('passwordResetSuccess', false);
     }
     res.redirect(`/admin/organisations/${req.params.orgId}/team/${req.params.teamId}/user/${req.params.username}`);

@@ -106,8 +106,4 @@ public
 # Intellij IDEA
 .idea
 
-# Cypress
-cypress/screenshots
-cypress/reports
-
 logs/

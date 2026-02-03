@@ -32,20 +32,4 @@ services:
     image: 113355358853.dkr.ecr.eu-west-1.amazonaws.com/ho/hmpo/lev/bac/lev-redis:444d9ba50bb252b24de6b3a20ba7c6a9370a79e3
     ports:
     - "6379:6379"
-  acceptance:
-    build:
-      context: .
-      args:
-        HTTP_PROXY: ''
-        HTTPS_PROXY: ''
-      dockerfile: Dockerfile-e2e
-    depends_on:
-      - lev-web-ui
-      - mock-api
-    environment:
-      - CYPRESS_baseUrl=http://lev-web-ui:8001
-    command: npm cypress run --headless --config-file ./cypress.config.js
-    volumes:
-      - ./cypress:/cypress
-      - ./cypress.config.js:/cypress.config.js
 
