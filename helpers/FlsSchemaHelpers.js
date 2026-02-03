@@ -50,6 +50,7 @@ const getNestedValue = (record, path) => {
 
 const isFieldPermitted = (itemPath, permissions) => {
   if (!config.fls.enabled) return true;
+  if (fls.ignoreFieldPermissions.includes(itemPath)) return true;
   if (Array.isArray(itemPath)) {
     return itemPath.some(path =>
       permissions.some(p => p.field === path && p.ui)
@@ -69,6 +70,10 @@ const isFieldPermitted = (itemPath, permissions) => {
  * @returns {{}} An optimised data structure that is much faster to render in Nunjucks
  */
 function optimiseForUserManagementRender(fullMapper, schemaData) {
+
+  // these fields should be shown in all cases, so omitted from fields that admins can remove
+  const flsIgnoreSections = ["overview"];
+
   if (!fls.enabled) return {};
   const optimised = {};
 
@@ -89,6 +94,8 @@ function optimiseForUserManagementRender(fullMapper, schemaData) {
     optimised[dataset] = {};
 
     for (const [sectionKey, section] of Object.entries(sections)) { // Each section mapper (Mother, Registration details etc.)
+      // These are 'hard coded' sections of fields that are not part of fls and removed so admins cannot change permissions
+      if (!flsIgnoreSections?.includes(sectionKey)) {
       optimised[dataset][sectionKey] = {
         header: section.header,
         fields: section.fields.map(field => {
@@ -119,7 +126,7 @@ function optimiseForUserManagementRender(fullMapper, schemaData) {
           };
         })
       };
-    }
+    }}
   }
 
   return optimised;
