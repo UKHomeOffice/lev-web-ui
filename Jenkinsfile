@@ -1,5 +1,5 @@
 library(
-        identifier: 'jenkins-shared@master',
+        identifier: 'jenkins-shared@LEV-1001-trivy-version-update',
         retriever: modernSCM([$class       : 'GitSCMSource',
                               remote       : 'ssh://git@bitbucket.ipttools.info/lev/jenkins-shared.git',
                               credentialsId: 'git'])
