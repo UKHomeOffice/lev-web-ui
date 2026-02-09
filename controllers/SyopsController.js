@@ -7,7 +7,7 @@ const requestOptions = require('../helpers/requestOptions');
 const getUserMetadata = require("../helpers/getUserMetadata");
 const { iamApi, syops } = require("../config");
 const redisService = require("../lib/redisCacheService");
-const logger = require('../logger');
+const logger = require('../logger').get();
 
 class SyopsController extends BaseController {
   // re-running of middleware function is if page is navigated directly to, to not render accept button if accepted already

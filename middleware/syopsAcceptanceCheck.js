@@ -2,7 +2,7 @@ const config = require("../config");
 const SyopsRenewalNotRequired = require("../helpers/SyopsRenewalNotRequired");
 const redisService = require("../lib/redisCacheService");
 const getUserMetadata = require("../helpers/getUserMetadata");
-const logger = require('../logger');
+const logger = require('../logger').get();
 
 module.exports.syopsAcceptanceCheck = async (req, res, next) => {
   if(config.bypassSyops) {

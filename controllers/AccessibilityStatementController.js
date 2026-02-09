@@ -2,12 +2,11 @@
 
 const BaseController = require("./BaseController");
 const isUserLoggedIn = require("../helpers/isUserLoggedIn");
-const logger = require('../logger');
+const logger = require('../logger').get();
 
 class AccessibilityStatementController extends BaseController {
   async getValues(req, _res, next) {
     try {
-      console.log("***REQ:/n", req);
       req.sessionModel.set('loggedIn', isUserLoggedIn(req));
     }
     catch (err) {

@@ -2,7 +2,7 @@ const {getRequest} = require("../services/UserManagement/IamApiService");
 const requestOptions = require("./requestOptions");
 const {iamApi} = require("../config");
 const redisService = require("../lib/redisCacheService");
-const logger = require('../logger');
+const logger = require('../logger').get();
 
 module.exports.serviceNotificationCache = async (req) => {
   if (process.env.MOCK?.toLowerCase() === 'true') return;
