@@ -52,7 +52,7 @@ class UserEditController extends BaseController {
       }, { firstname: firstname, lastname: lastname, teamId: updatedTeamId });
 
       req.sessionModel.set('updatedUser', req.params.username);
-    } catch (err) {
+    } catch (_err) {
       req.sessionModel.set('updatedUser', false);
     }
     res.redirect(`/admin/organisations/${req.params.orgId}/team/${updatedTeamId}/user/${req.params.username}`);
