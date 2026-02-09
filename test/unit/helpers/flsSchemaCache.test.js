@@ -2,7 +2,7 @@ const { flsSchemaCache } = require('../../../helpers/flsSchemaCache');
 const redisService = require("../../../lib/redisCacheService");
 const getUserMetadata = require('../../../helpers/getUserMetadata');
 const { getRequest } = require("../../../services/UserManagement/IamApiService");
-const logger = require('../../../logger');
+const logger = require('hmpo-logger').get();
 const config = require('../../../config');
 
 jest.mock('./../../../lib/redisCacheService');
