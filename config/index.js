@@ -13,7 +13,14 @@ module.exports = {
       app: 'logs/lev-web-ui.log',
       error: false,
       dateRotate: true,
-      maxFiles: 1,
+      maxFiles: 1
+    },
+    meta: {
+      orgId: 'userDetails.orgId',
+      orgName: 'userDetails.orgName',
+      teamId: 'userDetails.teamId',
+      teamName: 'userDetails.teamName',
+      username: 'userDetails.username'
     },
     redis: {
       connectionString: process.env.REDIS_CONNECTION_STRING || undefined,
