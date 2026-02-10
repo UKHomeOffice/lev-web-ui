@@ -1,7 +1,7 @@
 const {getRequest} = require("../services/UserManagement/IamApiService");
 const requestOptions = require("./requestOptions");
 const {iamApi} = require("../config");
-const logger = require("../logger");
+const logger = require("../logger").get();
 const redisService = require("../lib/redisCacheService");
 
 module.exports = async (req) => {
@@ -15,7 +15,7 @@ module.exports = async (req) => {
     else {
       results = await getRequest({
         ...requestOptions(req, iamApi),
-        url: `/admin/organisations/users/${process.env.IAM_USER}`
+        url: `/user/orgAndTeamData`
       });
 
       await redisService.set(`${process.env.IAM_USER}:UserDetails`, JSON.stringify(results), 15);
