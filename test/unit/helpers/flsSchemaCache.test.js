@@ -2,13 +2,13 @@ const { flsSchemaCache } = require('../../../helpers/flsSchemaCache');
 const redisService = require("../../../lib/redisCacheService");
 const getUserMetadata = require('../../../helpers/getUserMetadata');
 const { getRequest } = require("../../../services/UserManagement/IamApiService");
-const logger = require('hmpo-logger').get();
+const logger = require('../../../logger').get();
 const config = require('../../../config');
 
 jest.mock('./../../../lib/redisCacheService');
 jest.mock('../../../helpers/getUserMetadata');
 jest.mock('../../../services/UserManagement/IamApiService');
-jest.mock('hmpo-logger', () => {
+jest.mock('../../../logger', () => {
   const mockLoggerInstance = {
     log: jest.fn()
   };

@@ -1,7 +1,10 @@
 'use strict';
 
+const dotenv = require('dotenv');
+dotenv.config();
+const { options } = require('./config/index');
 const { setup } = require('hmpo-app');
-const { options} = require('./config');
+const { app, router } = setup(options);
 const homeRoute = require('./routes/home');
 const birthRoute = require('./routes/birth');
 const deathRoute = require('./routes/death');
@@ -16,8 +19,8 @@ const syops = require('./routes/syops');
 const { healthCheck } = require('./routes/health');
 const { syopsAcceptanceCheck } = require("./middleware/syopsAcceptanceCheck");
 const { serviceNotificationCache } = require("./helpers/serviceNotificationCache");
-const { router, app } = setup(options);
 const nunjucksEnv = app.get('nunjucksEnv');
+const userDetails = require('./helpers/userDetails');
 
 nunjucksEnv.addFilter('relativeDateTime', require('./filters/relativeDateTimeFilter'));
 nunjucksEnv.addFilter('getYear', require('./filters/getYear'));
@@ -25,6 +28,11 @@ nunjucksEnv.addFilter('ceil', Math.ceil);
 nunjucksEnv.addGlobal('displayFeedbackBanner', require('./helpers/feedbackBanner'));
 nunjucksEnv.addGlobal('feedbackContentHtml', process.env.FEEDBACK_CONTENT_HTML);
 nunjucksEnv.addGlobal('govukRebrand', true);
+
+router.use(async (req, res, next) => {
+  await userDetails(req);
+  next();
+});
 
 router.use((req, res, next) => {
   if(!req.url.toLowerCase().includes('syops') && !req.url.toLowerCase().includes('metrics') && !req.url.toLowerCase().includes('access-test') && !req.url.toLowerCase().includes('public') && !req.url.toLowerCase().includes('assets')) {

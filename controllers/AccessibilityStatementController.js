@@ -2,7 +2,7 @@
 
 const BaseController = require("./BaseController");
 const isUserLoggedIn = require("../helpers/isUserLoggedIn");
-const logger = require('hmpo-logger').get();
+const logger = require('../logger').get();
 
 class AccessibilityStatementController extends BaseController {
   async getValues(req, _res, next) {

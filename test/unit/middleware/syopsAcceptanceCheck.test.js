@@ -15,7 +15,7 @@ jest.mock('../../../services/UserManagement/IamApiService', () => ({
 }));
 jest.mock('../../../config');
 jest.mock('../../../helpers/SyopsRenewalNotRequired');
-jest.mock('hmpo-logger', () => {
+jest.mock('../../../logger', () => {
   mockLoggerInstance = {
     log: jest.fn(),
     info: jest.fn(),
