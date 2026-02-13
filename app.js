@@ -20,6 +20,7 @@ const { healthCheck } = require('./routes/health');
 const { syopsAcceptanceCheck } = require("./middleware/syopsAcceptanceCheck");
 const { serviceNotificationCache } = require("./helpers/serviceNotificationCache");
 const nunjucksEnv = app.get('nunjucksEnv');
+const getUserMetadata = require('./helpers/getUserMetadata');
 const userDetails = require('./helpers/userDetails');
 
 nunjucksEnv.addFilter('relativeDateTime', require('./filters/relativeDateTimeFilter'));
@@ -29,15 +30,16 @@ nunjucksEnv.addGlobal('displayFeedbackBanner', require('./helpers/feedbackBanner
 nunjucksEnv.addGlobal('feedbackContentHtml', process.env.FEEDBACK_CONTENT_HTML);
 nunjucksEnv.addGlobal('govukRebrand', true);
 
-router.use(async (req, res, next) => {
-  await userDetails(req);
-  next();
-});
-
 router.use((req, res, next) => {
   if(!req.url.toLowerCase().includes('syops') && !req.url.toLowerCase().includes('metrics') && !req.url.toLowerCase().includes('access-test') && !req.url.toLowerCase().includes('public') && !req.url.toLowerCase().includes('assets')) {
     req.session.originalRequestUrl = req.originalUrl;
   }
+  next();
+});
+
+router.use(async (req, res, next) => {
+  const metadata = await getUserMetadata(req);
+  await userDetails(req, metadata);
   next();
 });
 
