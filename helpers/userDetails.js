@@ -1,36 +1,17 @@
-const {getRequest} = require("../services/UserManagement/IamApiService");
-const requestOptions = require("./requestOptions");
-const {iamApi} = require("../config");
 const logger = require("../logger").get();
-const redisService = require("../lib/redisCacheService");
 
-module.exports = async (req) => {
+module.exports = async (req, metadata) => {
   try {
-    let results;
-    const userDetails = await redisService.get(`${process.env.IAM_USER}:UserDetails`);
-
-    if (userDetails) {
-      results = JSON.parse(userDetails);
-    }
-    else {
-      results = await getRequest({
-        ...requestOptions(req, iamApi),
-        url: `/user/orgAndTeamData`
-      });
-
-      await redisService.set(`${process.env.IAM_USER}:UserDetails`, JSON.stringify(results), 15);
-    }
-
-    if(results) {
+    if (metadata) {
       req.userDetails = {
-        orgId: results.orgId,
-        orgName: results.orgName,
-        teamId: results.teamId,
-        teamName: results.teamName,
-        username: results.username
+        orgId: metadata.organisationId,
+        orgName: metadata.organisationName,
+        teamId: metadata.teamId,
+        teamName: metadata.teamName,
+        username: metadata.user
       };
     }
   } catch (err) {
-    logger.log("ERROR", err);
+    logger.log('error', err);
   }
 }
