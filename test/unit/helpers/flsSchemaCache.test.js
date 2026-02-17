@@ -114,7 +114,7 @@ describe('FlsSchemaCache', () => {
       getUserMetadata.mockRejectedValue(new Error('fail'));
       console.log('logger.log calls:', logger.log.mock.calls);
       await flsSchemaCache(mockReq);
-      expect(logger.log).toHaveBeenCalledWith('error', expect.any(Error));
+      expect(logger.log).toHaveBeenCalledWith('error', expect.objectContaining({err: expect.any(Error)}));
     });
   });
 });

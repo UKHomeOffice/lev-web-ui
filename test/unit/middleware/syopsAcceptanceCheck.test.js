@@ -123,6 +123,6 @@ describe('syopsAcceptanceCheck', () => {
 
     await syopsAcceptanceCheck(req, res, next);
 
-    expect(mockLoggerInstance.log).toHaveBeenCalledWith("error", error);
+    expect(mockLoggerInstance.log).toHaveBeenCalledWith("error", expect.objectContaining({err: error}));
   });
 });
