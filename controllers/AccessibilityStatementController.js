@@ -10,7 +10,7 @@ class AccessibilityStatementController extends BaseController {
       req.sessionModel.set('loggedIn', isUserLoggedIn(req));
     }
     catch (err) {
-      logger.log('error', err);
+      logger.log('error', { req, err });
     }
     next();
   }

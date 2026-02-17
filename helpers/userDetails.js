@@ -1,7 +1,9 @@
+const getUserMetadata = require("./getUserMetadata");
 const logger = require("../logger").get();
 
-module.exports = async (req, metadata) => {
+module.exports = async (req) => {
   try {
+    const metadata = await getUserMetadata(req);
     if (metadata) {
       req.userDetails = {
         orgId: metadata.organisationId,
@@ -12,6 +14,6 @@ module.exports = async (req, metadata) => {
       };
     }
   } catch (err) {
-    logger.log('error', err);
+    logger.log('error', { req, err });
   }
 }

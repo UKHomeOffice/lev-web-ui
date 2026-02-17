@@ -24,7 +24,7 @@ class SyopsController extends BaseController {
       }
     }
     catch (err) {
-      logger.log('error', err);
+      logger.log('error', { req, err });
     }
     next();
   }

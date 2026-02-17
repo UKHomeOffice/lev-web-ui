@@ -24,7 +24,7 @@ module.exports.syopsAcceptanceCheck = async (req, res, next) => {
     }
   }
   catch (err) {
-    logger.log('error', err);
+    logger.log('error', { req, err });
     next(err);
   }
 }

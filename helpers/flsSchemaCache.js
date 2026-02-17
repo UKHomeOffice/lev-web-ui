@@ -33,6 +33,6 @@ module.exports.flsSchemaCache = async (req) => {
     return flsPayload;
   }
   catch (err) {
-    logger.log('error', err);
+    logger.log('error', { req, err });
   }
 }

@@ -20,7 +20,6 @@ const { healthCheck } = require('./routes/health');
 const { syopsAcceptanceCheck } = require("./middleware/syopsAcceptanceCheck");
 const { serviceNotificationCache } = require("./helpers/serviceNotificationCache");
 const nunjucksEnv = app.get('nunjucksEnv');
-const getUserMetadata = require('./helpers/getUserMetadata');
 const userDetails = require('./helpers/userDetails');
 
 nunjucksEnv.addFilter('relativeDateTime', require('./filters/relativeDateTimeFilter'));
@@ -37,18 +36,18 @@ router.use((req, res, next) => {
   next();
 });
 
+// routes for static assets
+router.use('/access-test', accessTest);
+router.use('/health', healthCheck);
+router.use('/metrics', metricsRoute);
+
 router.use(async (req, res, next) => {
-  const metadata = await getUserMetadata(req);
-  await userDetails(req, metadata);
+  await userDetails(req);
   next();
 });
 
-// routes for static assets
-router.use('/access-test', accessTest);
 router.use('/accessibility-statement', accessibilityStatement);
-router.use('/health', healthCheck);
 router.use('/syops', syops);
-router.use('/metrics', metricsRoute);
 
 // middleware to check syops acceptance
 router.use((req, res, next) => syopsAcceptanceCheck(req, res, next));
