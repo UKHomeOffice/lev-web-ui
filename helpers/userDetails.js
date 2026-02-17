@@ -14,6 +14,6 @@ module.exports = async (req) => {
       };
     }
   } catch (err) {
-    logger.log('error', err);
+    logger.log('error', { req, err });
   }
 }
