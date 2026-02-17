@@ -4,7 +4,7 @@ const requestOptions = require('../helpers/requestOptions');
 const redisService = require("../lib/redisCacheService");
 const getUserMetadata = require("./getUserMetadata");
 const { getRequest } = require("../services/UserManagement/IamApiService");
-const logger = require('hmpo-logger').get();
+const logger = require('../logger').get();
 
 module.exports.flsSchemaCache = async (req) => {
 
@@ -33,6 +33,6 @@ module.exports.flsSchemaCache = async (req) => {
     return flsPayload;
   }
   catch (err) {
-    logger.log('error', err);
+    logger.log('error', { req, err });
   }
 }

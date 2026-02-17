@@ -1,7 +1,10 @@
 'use strict';
 
+const dotenv = require('dotenv');
+dotenv.config();
+const { options } = require('./config/index');
 const { setup } = require('hmpo-app');
-const { options} = require('./config');
+const { app, router } = setup(options);
 const homeRoute = require('./routes/home');
 const birthRoute = require('./routes/birth');
 const deathRoute = require('./routes/death');
@@ -17,8 +20,8 @@ const sessionTimeout = require('./routes/session-timeout');
 const { healthCheck } = require('./routes/health');
 const { syopsAcceptanceCheck } = require("./middleware/syopsAcceptanceCheck");
 const { serviceNotificationCache } = require("./helpers/serviceNotificationCache");
-const { router, app } = setup(options);
 const nunjucksEnv = app.get('nunjucksEnv');
+const userDetails = require('./helpers/userDetails');
 
 nunjucksEnv.addFilter('relativeDateTime', require('./filters/relativeDateTimeFilter'));
 nunjucksEnv.addFilter('getYear', require('./filters/getYear'));
@@ -36,8 +39,15 @@ router.use((req, res, next) => {
 
 // routes for static assets
 router.use('/access-test', accessTest);
-router.use('/accessibility-statement', accessibilityStatement);
 router.use('/health', healthCheck);
+router.use('/metrics', metricsRoute);
+
+router.use(async (req, res, next) => {
+  await userDetails(req);
+  next();
+});
+
+router.use('/accessibility-statement', accessibilityStatement);
 router.use('/syops', syops);
 router.use('/session-timeout', sessionTimeout);
 router.use('/metrics', metricsRoute);

@@ -2,7 +2,7 @@ const config = require("../config");
 const SyopsRenewalNotRequired = require("../helpers/SyopsRenewalNotRequired");
 const redisService = require("../lib/redisCacheService");
 const getUserMetadata = require("../helpers/getUserMetadata");
-const logger = require('hmpo-logger').get();
+const logger = require('../logger').get();
 
 module.exports.syopsAcceptanceCheck = async (req, res, next) => {
   if(config.bypassSyops) {
@@ -24,7 +24,7 @@ module.exports.syopsAcceptanceCheck = async (req, res, next) => {
     }
   }
   catch (err) {
-    logger.log('error', err);
+    logger.log('error', { req, err });
     next(err);
   }
 }

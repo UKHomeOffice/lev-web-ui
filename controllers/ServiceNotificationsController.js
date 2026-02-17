@@ -62,7 +62,7 @@ class ServiceNotificationsController extends BaseController {
         req.sessionModel.set('liveNotification', req.sessionModel.get('newNotification'));
         req.sessionModel.set('liveMessageSubmitSuccessful', true);
         req.sessionModel.unset('newNotification');
-      } catch (err) {
+      } catch (_err) {
         req.sessionModel.set('liveNotification', req.sessionModel.get('newNotification'));
         req.sessionModel.unset('newNotification');
         req.sessionModel.unset('liveMessageSubmitSuccessful');
@@ -76,7 +76,7 @@ class ServiceNotificationsController extends BaseController {
         });
 
         req.sessionModel.set('liveMessageDeleteSuccessful', true);
-      } catch(err) {
+      } catch(_err) {
         req.sessionModel.unset('liveMessageDeleteSuccessful');
       }
     }

@@ -2,7 +2,7 @@
 
 const BaseController = require("./BaseController");
 const isUserLoggedIn = require("../helpers/isUserLoggedIn");
-const logger = require('hmpo-logger').get();
+const logger = require('../logger').get();
 
 class AccessibilityStatementController extends BaseController {
   async getValues(req, _res, next) {
@@ -10,7 +10,7 @@ class AccessibilityStatementController extends BaseController {
       req.sessionModel.set('loggedIn', isUserLoggedIn(req));
     }
     catch (err) {
-      logger.log('error', err);
+      logger.log('error', { req, err });
     }
     next();
   }

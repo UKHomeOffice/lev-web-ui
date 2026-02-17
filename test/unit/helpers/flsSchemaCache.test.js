@@ -2,13 +2,13 @@ const { flsSchemaCache } = require('../../../helpers/flsSchemaCache');
 const redisService = require("../../../lib/redisCacheService");
 const getUserMetadata = require('../../../helpers/getUserMetadata');
 const { getRequest } = require("../../../services/UserManagement/IamApiService");
-const logger = require('hmpo-logger').get();
+const logger = require('../../../logger').get();
 const config = require('../../../config');
 
 jest.mock('./../../../lib/redisCacheService');
 jest.mock('../../../helpers/getUserMetadata');
 jest.mock('../../../services/UserManagement/IamApiService');
-jest.mock('hmpo-logger', () => {
+jest.mock('../../../logger', () => {
   const mockLoggerInstance = {
     log: jest.fn()
   };
@@ -114,7 +114,7 @@ describe('FlsSchemaCache', () => {
       getUserMetadata.mockRejectedValue(new Error('fail'));
       console.log('logger.log calls:', logger.log.mock.calls);
       await flsSchemaCache(mockReq);
-      expect(logger.log).toHaveBeenCalledWith('error', expect.any(Error));
+      expect(logger.log).toHaveBeenCalledWith('error', expect.objectContaining({err: expect.any(Error)}));
     });
   });
 });

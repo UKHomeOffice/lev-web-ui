@@ -15,7 +15,7 @@ jest.mock('../../../services/UserManagement/IamApiService', () => ({
 }));
 jest.mock('../../../config');
 jest.mock('../../../helpers/SyopsRenewalNotRequired');
-jest.mock('hmpo-logger', () => {
+jest.mock('../../../logger', () => {
   mockLoggerInstance = {
     log: jest.fn(),
     info: jest.fn(),
@@ -123,6 +123,6 @@ describe('syopsAcceptanceCheck', () => {
 
     await syopsAcceptanceCheck(req, res, next);
 
-    expect(mockLoggerInstance.log).toHaveBeenCalledWith("error", error);
+    expect(mockLoggerInstance.log).toHaveBeenCalledWith("error", expect.objectContaining({err: error}));
   });
 });

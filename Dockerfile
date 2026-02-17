@@ -14,14 +14,14 @@ COPY --chown=app:app assets/ /app/assets/
 RUN mkdir "logs"
 
 FROM base AS test
-RUN npm ci --legacy-peer-deps
+RUN npm ci
 COPY --chown=app:app . /app
 RUN npm run test
 
 FROM base AS prod
 
 ENV NODE_ENV=production
-RUN npm ci --legacy-peer-deps --only=production
+RUN npm ci --only=production
 COPY --chown=app:app . /app
 
 USER 31337
