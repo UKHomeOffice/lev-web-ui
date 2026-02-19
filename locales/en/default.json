@@ -275,6 +275,10 @@
     "sessionTimeout": {
       "title": "You have been signed out",
       "content": "You have not done anything for 30 minutes, so we have signed you out to keep your account secure. </br></br> Any search you may have conducted has been cleared. </br></br> You must sign in again to continue using Life Event Verification."
+    },
+    "signout": {
+      "title": "You have signed out",
+      "content": "Sign in again if you wish to continue using Life Event Verification."
     }
   },
   "validation": {

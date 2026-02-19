@@ -13,7 +13,7 @@ class HomeController extends BaseController {
     const manageOrg = this.hasRole(req, 'user-management') || false;
 
     if (!birth && !death && !marriage && !partnership && !manageOrg) {
-      _res.redirect('/oauth/logout');
+      _res.redirect('/logout');
     }
 
     req.sessionModel.set('birth', birth);
