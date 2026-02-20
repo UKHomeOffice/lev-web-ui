@@ -2,6 +2,7 @@
 
 const { Controller } = require('hmpo-form-wizard');
 const isUserLoggedIn = require('../helpers/isUserLoggedIn');
+const tokenExpiry = require('../helpers/getTokenExpiry');
 
 class BaseController extends Controller {
 
@@ -58,6 +59,7 @@ class BaseController extends Controller {
     super.locals(req, res, (error, locals) => {
       if (error) return callback(error);
       locals.loggedIn = isUserLoggedIn(req);
+      locals.tokenExpiry = tokenExpiry(req);
 
       callback(null, locals);
     });
