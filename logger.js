@@ -1,8 +1,9 @@
 'use strict'
 
-const hmpoLogger = require('hmpo-logger');
+const { config, logger } = require('hmpo-app');
 const { options } = require('./config/index');
 
-const logger = hmpoLogger.config(options);
+config.setup(options.config);
+logger.setup(options.logs);
 
 module.exports = logger;
