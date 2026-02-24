@@ -4,22 +4,27 @@ const IamApiService = require("../services/UserManagement/IamApiService");
 const requestOptions = require("./requestOptions");
 const { iamApi } = require("../config");
 const config = require("../config");
+const logger = require("../logger").get();
 
 module.exports = async (req) => {
+  try {
+    const username = getCurrentUser(req);
+    const userMetadata = await redisService.get(`${username}:UserMetadata`);
 
-  const username = getCurrentUser(req);
-  const userMetadata = await redisService.get(`${username}:UserMetadata`);
+    if (userMetadata) {
+      return JSON.parse(userMetadata);
+    }
 
-  if (userMetadata) {
-    return JSON.parse(userMetadata);
+    const metadata = await IamApiService.getRequest({
+      ...requestOptions(req, iamApi),
+      url: '/user/metadata'
+    });
+
+    await redisService.set(`${username}:UserMetadata`, JSON.stringify(metadata), config.syops.metadataCacheSeconds);
+
+    return metadata;
+  } catch (err) {
+    logger.log('error', { req, err });
+    return null;
   }
-
-  const metadata = await IamApiService.getRequest({
-    ...requestOptions(req, iamApi),
-    url: '/user/metadata'
-  });
-
-  await redisService.set(`${username}:UserMetadata`, JSON.stringify(metadata), config.syops.metadataCacheSeconds);
-
-  return metadata;
 }
