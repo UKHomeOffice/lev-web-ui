@@ -29,7 +29,7 @@
     };
 
     // timeout set at 30 mins
-    const timeout = 3 * 60 * 1000;
+    const timeout = 30 * 60 * 1000;
     // warning set at 2 mins before timeout
     const warningDuration = 2 * 60 * 1000;
 

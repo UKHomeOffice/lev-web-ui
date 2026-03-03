@@ -25,13 +25,13 @@
 {% endblock %}
 
 {% block bodyEnd %}
-{#    {% if loggedIn %}#}
+    {% if loggedIn %}
         {% include "timeout-modal.njk" %}
         {% include "redirect-modal.njk" %}
         {% block timeoutScripts %}
           <script src="/public/javascripts/timeout.js"></script>
         {% endblock %}
-{#    {% endif %}#}
+    {% endif %}
 {% endblock %}
 
 {% block footer %}
