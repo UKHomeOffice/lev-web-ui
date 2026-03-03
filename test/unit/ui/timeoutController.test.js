@@ -99,11 +99,11 @@ describe('createTimeoutController', () => {
     expect(onTimeout).toHaveBeenCalledTimes(1);
   });
 
-  test('resetIdle resets countdown + idle time', () => {
+  test('reload resets countdown + idle time', () => {
     const onWarning = jest.fn();
     const onTimeout = jest.fn();
 
-    const controller = createTimeoutController({
+    let controller = createTimeoutController({
       timeout: 30000,
       warningDuration: 10000,
       onWarning,
@@ -115,7 +115,13 @@ describe('createTimeoutController', () => {
 
     expect(onWarning).toHaveBeenCalledWith(10);
 
-    controller.resetIdle();
+    // simulate reload of page after button pressed
+    controller = createTimeoutController({
+      timeout: 30000,
+      warningDuration: 10000,
+      onWarning,
+      onTimeout
+    });
 
     advance(5000);
     controller.tick();
