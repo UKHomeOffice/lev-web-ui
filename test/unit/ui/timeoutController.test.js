@@ -99,10 +99,11 @@ describe('createTimeoutController', () => {
     expect(onTimeout).toHaveBeenCalledTimes(1);
   });
 
-  test('reload resets countdown + idle time', () => {
+  test('reload resets countdown', () => {
     const onWarning = jest.fn();
     const onTimeout = jest.fn();
 
+    // First controller instance
     let controller = createTimeoutController({
       timeout: 30000,
       warningDuration: 10000,
@@ -110,12 +111,14 @@ describe('createTimeoutController', () => {
       onTimeout
     });
 
-    advance(25000);
+    // Move time forward so we are inside the warning window
+    advance(25000); // elapsed = 25s → warning should fire with 10s remaining
     controller.tick();
 
     expect(onWarning).toHaveBeenCalledWith(10);
+    expect(onWarning).toHaveBeenCalledTimes(1);
 
-    // simulate reload of page after button pressed
+    // Simulate a page reload by creating a fresh controller
     controller = createTimeoutController({
       timeout: 30000,
       warningDuration: 10000,
@@ -123,10 +126,15 @@ describe('createTimeoutController', () => {
       onTimeout
     });
 
-    advance(5000);
+    // Move time forward only 5 seconds after reload
+    advance(5000); // elapsed = 5s → should NOT be in warning window
     controller.tick();
 
+    // No new warnings should have fired
     expect(onWarning).toHaveBeenCalledTimes(1);
+
+    // And definitely no timeout
     expect(onTimeout).not.toHaveBeenCalled();
   });
+
 });

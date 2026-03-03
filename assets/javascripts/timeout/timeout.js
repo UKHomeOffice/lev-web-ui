@@ -23,8 +23,13 @@
   window.Timeout = { createTimeoutController };
 
   document.addEventListener('DOMContentLoaded', () => {
+
+    document.getElementById('staySignedInBtn').onclick = function () {
+      window.location.reload();
+    };
+
     // timeout set at 30 mins
-    const timeout = 30 * 60 * 1000;
+    const timeout = 3 * 60 * 1000;
     // warning set at 2 mins before timeout
     const warningDuration = 2 * 60 * 1000;
 
@@ -58,10 +63,6 @@
       secondsRemaining <= 60
         ? `${secondsRemaining} seconds.`
         : '2 minutes.';
-
-    document.getElementById('staySignedInBtn').onclick = function () {
-      window.location.reload();
-    };
   }
 
   function hideTimeoutModal() {
