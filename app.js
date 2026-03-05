@@ -16,6 +16,8 @@ const serviceNotificationRoute = require('./routes/service-notification');
 const accessTest = require('./routes/access-test');
 const accessibilityStatement = require('./routes/accessibility-statement');
 const syops = require('./routes/syops');
+const preLogout = require('./routes/pre-logout');
+const logoutHandler = require('./routes/logout-handler');
 const { healthCheck } = require('./routes/health');
 const { syopsAcceptanceCheck } = require("./middleware/syopsAcceptanceCheck");
 const { serviceNotificationCache } = require("./helpers/serviceNotificationCache");
@@ -48,6 +50,10 @@ router.use(async (req, res, next) => {
 
 router.use('/accessibility-statement', accessibilityStatement);
 router.use('/syops', syops);
+router.use('/metrics', metricsRoute);
+
+router.use('/logout', preLogout);
+router.use('/logout-handler', logoutHandler);
 
 // middleware to check syops acceptance
 router.use((req, res, next) => syopsAcceptanceCheck(req, res, next));

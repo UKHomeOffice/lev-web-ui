@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block header %}
-  {% if not loggedIn and accessibilityStatement %}
+  {% if not loggedIn %}
     {% set logoutValue = null %}
   {% else %}
     {% set logoutValue = translate("buttons.logout") %}
@@ -24,6 +24,16 @@
   }) }}
 {% endblock %}
 
+{% block bodyEnd %}
+    {% if loggedIn %}
+        {% include "timeout-modal.njk" %}
+        {% include "redirect-modal.njk" %}
+        {% block timeoutScripts %}
+          <script src="/public/javascripts/timeout.js"></script>
+        {% endblock %}
+    {% endif %}
+{% endblock %}
+
 {% block footer %}
   <footer class="govuk-footer">
     <div class="govuk-width-container">
@@ -35,7 +45,7 @@
                 {{ translate('footer.links.accessibilityStatement') }}
               </a>
             </li>
-            {% if not accessibilityStatement or loggedIn %}
+            {% if loggedIn %}
               <li class="govuk-footer__inline-list-item">
                 <a class="govuk-footer__link govuk-body-s" href="/syops">
                   {{ translate('footer.links.syops') }}

@@ -28,7 +28,7 @@ module.exports = {
       port: process.env.REDIS_PORT || undefined
     },
     session: {
-      ttl: 660
+      ttl: 3600
     }
   },
   api: {
