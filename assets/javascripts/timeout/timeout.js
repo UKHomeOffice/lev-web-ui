@@ -59,10 +59,15 @@
     const label = document.getElementById('timeout-countdown-label');
     if (!label) return;
 
-    label.textContent =
-      secondsRemaining <= 60
-        ? `${secondsRemaining} seconds.`
-        : '2 minutes.';
+    if (secondsRemaining <= 20) {
+      label.textContent = '20 seconds.'
+    } else if (secondsRemaining <= 40) {
+      label.textContent = '40 seconds.'
+    } else if (secondsRemaining <= 60) {
+      label.textContent = '1 minute.'
+    } else {
+      label.textContent = '2 minutes.'
+    }
   }
 
   function hideTimeoutModal() {
