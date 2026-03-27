@@ -38,6 +38,7 @@
       warningDuration,
       onWarning: showTimeoutModal,
       onTimeout: () => {
+        clearInterval(idleInterval);
         hideTimeoutModal();
         showRedirectModal();
         window.location = '/logout?sessionTimeout=true';
@@ -47,7 +48,7 @@
     hideTimeoutModal();
     hideRedirectModal();
 
-    setInterval(() => controller.tick(), 1000);
+    const idleInterval = setInterval(() => controller.tick(), 1000);
   });
 
   function showTimeoutModal(secondsRemaining) {
@@ -60,13 +61,13 @@
     if (!label) return;
 
     if (secondsRemaining <= 20) {
-      label.textContent = '20 seconds.'
+      label.textContent = '20 seconds'
     } else if (secondsRemaining <= 40) {
-      label.textContent = '40 seconds.'
+      label.textContent = '40 seconds'
     } else if (secondsRemaining <= 60) {
-      label.textContent = '1 minute.'
+      label.textContent = '1 minute'
     } else {
-      label.textContent = '2 minutes.'
+      label.textContent = '2 minutes'
     }
   }
 
