@@ -10,47 +10,69 @@
 {% set govukServiceUrl = "/birth" %}
 
 {% set hmpoTitle -%}
-    {{- "No" if results.length === 0 else results.length }} records found for {{ values['system-number']}} {{ values.forenames }} {{ values.surname }} {{ values.dob | date("DD/MM/YYYY")}}
+  {{- "No" if results.length === 0 else results.length }} records found for {{ values['system-number']}} {{ values.forenames }} {{ values.surname }} {{ values.dob | date("DD/MM/YYYY")}}
 {%- endset %}
 
 {% block mainContent %}
-    {{ super() }}
+  {{ super() }}
 
-    <ul id="records">
-        {% for record in results %}
-        <li>
-            <article>
-                {% set rowsArray = [] %}
-                {% set rowsArray = (rowsArray.push([
-                    {
-                        html: "<h2><a href=\"/birth/details/" + record.id + "\">" + record.child.forenames + " " + record.child.surname + "</a></h2>",
-                        colspan: 2
-                    }
-                ],[
-                    { text: "Place of birth" },
-                    { text: record.child.birthplace }
-                ],[
-                    { text: "Mother" },
-                    { text: record.mother.forenames + " " + record.mother.surname }
-                ],[
-                    { text: "Father" },
-                    { text: record.father.forenames + " " + record.father.surname }
-                ]), rowsArray) %}
+  <ul id="records">
+    {% for record in results %}
+      <li>
+        <article>
+          {% set rowsArray = [] %}
 
-                {{ govukTable({
-                    classes: "results",
-                    firstCellIsHeader: true,
-                    rows: rowsArray
-                }) }}
+          {% if record.child.forenames and record.child.surname %}
+            {% set _ = rowsArray.push([
+              {
+                html: "<h2><a href=\"/birth/details/" + record.id + "\">" + record.child.forenames + " " + record.child.surname + "</a></h2>",
+                colspan: 2
+              }
+            ]) %}
+          {% else %}
+            {% set _ = rowsArray.push([
+              {
+                html: "<h2><a href=\"/birth/details/" + record.id + "\">" + "Name redacted" + "</a></h2>",
+                colspan: 2
+              }
+            ]) %}
+          {% endif %}
 
-                {% include "./flags.html" %}
-            </article>
-        </li>
-        {% endfor %}
-    </ul>
+          {% if record.child.birthplace %}
+            {% set _ = rowsArray.push([
+              { text: "Place of birth" },
+              { text: record.child.birthplace }
+            ]) %}
+          {% endif %}
 
-    <div class="govuk-button-group">
-        {{ hmpoSubmit(ctx, {id: "newSearch", key: "newSearch", href: "/birth"}) }}
-        {{ hmpoSubmit(ctx, {id: "editSearch", key: "editSearch", href: "/birth/search", classes: "blue"}) }}
-    </div>
+          {% if record.mother.forenames and record.mother.surname %}
+            {% set _ = rowsArray.push([
+              { text: "Mother" },
+              { text: record.mother.forenames + " " + record.mother.surname }
+            ]) %}
+          {% endif %}
+
+          {% if record.father.forenames and record.father.surname %}
+            {% set _ = rowsArray.push([
+              { text: "Father" },
+              { text: record.father.forenames + " " + record.father.surname }
+            ]) %}
+          {% endif %}
+
+          {{ govukTable({
+            classes: "results",
+            firstCellIsHeader: true,
+            rows: rowsArray
+          }) }}
+
+          {% include "./flags.html" %}
+        </article>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <div class="govuk-button-group">
+    {{ hmpoSubmit(ctx, {id: "newSearch", key: "newSearch", href: "/birth"}) }}
+    {{ hmpoSubmit(ctx, {id: "editSearch", key: "editSearch", href: "/birth/search", classes: "blue"}) }}
+  </div>
 {% endblock %}

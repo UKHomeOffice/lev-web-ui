@@ -10,49 +10,67 @@
 {% set govukServiceUrl = "/partnership" %}
 
 {% set hmpoTitle -%}
-    {{- "No" if results.length === 0 else results.length }} records found for {{ values['system-number']}} {{ values.forenames }} {{ values.surname }} {{ values.dop | date("DD/MM/YYYY")}}
+  {{- "No" if results.length === 0 else results.length }} records found for {{ values['system-number']}} {{ values.forenames }} {{ values.surname }} {{ values.dop | date("DD/MM/YYYY")}}
 {%- endset %}
 
 {% block mainContent %}
-    {{ super() }}
+  {{ super() }}
 
-    <ul id="records">
-        {% for record in results %}
-        <li>
-            <article>
-                {% set rowsArray = [] %}
-                {% set rowsArray = (rowsArray.push([
-                    {
-                        html: "<h2><a href=\"/partnership/details/" + record.id + "\">" + record.partner1.forenames + " " + record.partner1.surname + " & " + record.partner2.forenames + " " + record.partner2.surname + "</a></h2>",
-                        colspan: 2
-                    }
-                ],[
-                    { text: "Date of civil partnership" },
-                    { text: record.dateOfPartnership | date("DD/MM/YYYY")}
-                ],[
-                    { text: "Place of civil partnership" },
-                    { text: record.placeOfPartnership.short }
-                ]), rowsArray) %}
+  <ul id="records">
+    {% for record in results %}
+      <li>
+        <article>
+          {% set rowsArray = [] %}
 
-                {{ govukTable({
-                    classes: "results",
-                    firstCellIsHeader: true,
-                    rows: rowsArray
-                }) }}
+          {% if record.partner1.forenames and record.partner1.surname and record.partner2.forenames and record.partner2.surname %}
+            {% set _ = rowsArray.push([
+              {
+                html: "<h2><a href=\"/partnership/details/" + record.id + "\">" + record.partner1.forenames + " " + record.partner1.surname + " & " + record.partner2.forenames + " " + record.partner2.surname + "</a></h2>",
+                colspan: 2
+              }
+            ]) %}
+          {% else %}
+            {% set _ = rowsArray.push([
+              {
+                html: "<h2><a href=\"/partnership/details/" + record.id + "\">" + "Names redacted" + "</a></h2>",
+                colspan: 2
+              }
+            ]) %}
+          {% endif %}
 
-                {% if record.flags.refer %}
-                    {{ levFlag(ctx, {key: "refer", type: "alert"}) }}
-                {% endif %}
-                {% if record.nextRegistration %}
-                    {{ levFlag(ctx, {key: "replaced", type: "warning"}) }}
-                {% endif %}
-            </article>
-        </li>
-        {% endfor %}
-    </ul>
+          {% if record.dateOfPartnership %}
+            {% set _ = rowsArray.push([
+              { text: "Date of civil partnership" },
+              { text: record.dateOfPartnership | date("DD/MM/YYYY")}
+            ]) %}
+          {% endif %}
 
-    <div class="govuk-button-group">
-        {{ hmpoSubmit(ctx, {id: "newSearch", key: "newSearch", href: "/partnership"}) }}
-        {{ hmpoSubmit(ctx, {id: "editSearch", key: "editSearch", href: "/partnership/search", classes: "blue"}) }}
-    </div>
+          {% if record.placeOfPartnership.short %}
+            {% set _ = rowsArray.push([
+              { text: "Place of civil partnership" },
+              { text: record.placeOfPartnership.short }
+            ]) %}
+          {% endif %}
+
+          {{ govukTable({
+            classes: "results",
+            firstCellIsHeader: true,
+            rows: rowsArray
+          }) }}
+
+          {% if record.flags.refer %}
+            {{ levFlag(ctx, {key: "refer", type: "alert"}) }}
+          {% endif %}
+          {% if record.nextRegistration %}
+            {{ levFlag(ctx, {key: "replaced", type: "warning"}) }}
+          {% endif %}
+        </article>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <div class="govuk-button-group">
+    {{ hmpoSubmit(ctx, {id: "newSearch", key: "newSearch", href: "/partnership"}) }}
+    {{ hmpoSubmit(ctx, {id: "editSearch", key: "editSearch", href: "/partnership/search", classes: "blue"}) }}
+  </div>
 {% endblock %}
